@@ -1,0 +1,78 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div id="ajax_return">
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<td class="text-center">用户名称</td>
+										<td class="text-center">用户手机号</td>
+										<td class="text-center">订单号</td>
+										<td class="text-center">订单金额</td>
+										<td class="text-center">单据状态</td>
+									</tr>
+								</thead>
+								<tbody>
+									<volist name="ticketInfo" id="ticket">
+										<tr>
+											<td class="text-center">{$ticket.user_name}</td>
+											<td class="text-center">{$ticket.mobile}</td>
+											<td class="text-center">{$ticket.order_sn_id}</td>
+											<td class="text-center">{$ticket.price_sum}</td>
+											<td class="text-center">
+												<if condition="$ticket['order_status']==0">未支付</if>
+												<if condition="$ticket['order_status']==1">已支付</if>
+												<if condition="$ticket['order_status']==2">发货中</if>
+												<if condition="$ticket['order_status']==3">已发货</if>
+												<if condition="$ticket['order_status']==4">已收货</if>
+												<if condition="$ticket['order_status']==5">退货审核中</if>
+												<if condition="$ticket['order_status']==6">审核失败</if>
+												<if condition="$ticket['order_status']==7">审核成功</if>
+												<if condition="$ticket['order_status']==8">退款中</if>
+												<if condition="$ticket['order_status']==9">退款成功</if>
+											</td>
+										</tr>
+									</volist>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 text-left"></div>
+						<div class="col-sm-6 text-right">{$data.page}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.row -->
+	<script src="__COMMON__/daterangepicker/moment.js"></script>
+	<script src="__COMMON__/daterangepicker/daterangepicker.js"></script>
+	<script src="__COMMON__/js/alert.js"></script>
+	<script src="__JS__/conpon/SendCoupon.js?a={:time()}"></script>
+	<script>
+		function lookTicketUser(ele){
+			var _url ="{:U('Analysis/ticketUser')}";
+			var _locatUrl =_url+'?ticketId='+ele;
+			layer.open({
+				type: 2,
+				title: '用户信息',
+				shadeClose: true,
+				shade: 0.8,
+				area: ['700px', '500px'],
+				content: _locatUrl
+			});
+		}
+	</script>
+</section>
+</block>

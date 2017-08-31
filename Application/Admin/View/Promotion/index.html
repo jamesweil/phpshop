@@ -1,0 +1,88 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<div class="wrapper">
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<nav class="navbar navbar-default">
+							<div class="collapse navbar-collapse">
+								<form class="navbar-form form-inline"
+									action="{:U('index')}" method="post">
+									<div class="form-group">
+										<input type="text" name="{$proGoodsModel::$name_d}" class="form-control"
+											placeholder="搜索" value="{$_POST[$proGoodsModel::$name_d]}">
+									</div>
+									<button type="submit" class="btn btn-default">提交</button>
+									<div class="form-group pull-right">
+										<a href="{:U('addHtml')}"
+											class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加活动</a>
+									</div>
+								</form>
+							</div>
+						</nav>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body">
+						<div class="row">
+							<div class="col-sm-12">
+								<table id="list-table"
+									class="table table-bordered table-striped dataTable">
+									<thead>
+										<tr role="row">
+											<th class="sorting" tabindex="0">活动名称</th>
+											<th class="sorting" tabindex="0">活动类型</th>
+											<th class="sorting" tabindex="0">适用范围</th>
+											<th class="sorting" tabindex="0">开始时间</th>
+											<th class="sorting" tabindex="0">结束时间</th>
+											<th class="sorting" tabindex="0">操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<if condition="!empty($promotionData['data'])">
+											<foreach name="promotionData['data']" item="vo" key="k">
+												<tr role="row" align="center">
+													<td class="">{$vo[$proGoodsModel::$name_d]}</td>
+													<td><if condition="$vo[$proGoodsModel::$type_d] == -1">买就送代金卷<else/>{$vo[$proType::$promationName_d]}</if></td>
+													<td>{$vo[$proGoodsModel::$group_d]}</td>
+													<td>{$vo[$proGoodsModel::$startTime_d]|date='Y-m-d',###}</td>
+													<td>{$vo[$proGoodsModel::$endTime_d]|date='Y-m-d',###}</td>
+													<td><a href="javascript:;"
+														onclick="Tool.alertEdit('{:U('lookGoods', array('id' => $vo[$proGoodsModel::$id_d]))}','促销商品', 800, 600)"
+														data-url="{:U('Promotion/get_goods',array('id'=>$vo['id']))}"
+														data-toggle="tooltip" title=""
+														class="btn btn-info goods_list">查看商品</a> <a
+														class="btn btn-primary"
+														href="{:U('editHtml',array('id'=>$vo[$proGoodsModel::$id_d]))}"><i
+															class="fa fa-pencil"></i></a> <a class="btn btn-danger"
+														onclick="Tool.ajax('{:U('deletePro')}', {id:{$vo[$proGoodsModel::$id_d]}}, function(res){
+															return Tool.notice(res);
+														})"
+														data-url=" " data-id="{$vo.id}"><i
+															class="fa fa-trash-o"></i></a></td>
+												</tr>
+											</foreach>
+										</if>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 text-left"></div>
+							<div class="col-sm-6 text-right">{$promotionData.page}</div>
+						</div>
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+			</div>
+		</div>
+	</section>
+</div>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script> 
+</block>

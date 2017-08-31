@@ -1,0 +1,24 @@
+<extend name="Public/indexEdit"/>
+	<block name="content">
+		<link href="__PUBLIC__/Home/css/banner.css" rel="stylesheet" type="text/css">
+
+		<script src="__PUBLIC__/Home/js/jquery.min.js"></script>
+		<script src="__PUBLIC__/Home/js/sl.js"></script>
+
+		
+	<!-- 内容区 -->
+	<div class="Content">
+		<div class="search_page">当前的位置：<a href="{:U('Index/index')}">首页</a> >{$result.single_title}</div>
+		<div class="title_bj">{$result.title}</div>
+		<div class="Screen sjkh" >
+			{$result.single_info}
+		</div>
+	</div>
+	</section>
+	<script type="text/javascript">
+	$(function(){
+	  	$.focus("#focus001");
+	});
+</script>
+
+</block>

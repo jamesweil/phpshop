@@ -1,0 +1,321 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+		<div class="ficationFl fl">
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">订单中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Order/order_myorder')}">·&nbsp;&nbsp;我的订单</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('OrderGroup/order_group')}">·&nbsp;&nbsp;团购订单</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('Order/cancel_order_record')}">·&nbsp;&nbsp;取消订单记录</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">资产中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Assets/balance')}">·&nbsp;&nbsp;余额</a>
+				</dd>
+				<dd>
+					<a href="{:U('Cart/goods')}">·&nbsp;&nbsp;我的购物车</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myCollection')}">·&nbsp;&nbsp;我的收藏</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myComment')}">·&nbsp;&nbsp;我的评价</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/coupon')}">·&nbsp;&nbsp;优惠券</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/integral')}">·&nbsp;&nbsp;积分</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/punkte')}">·&nbsp;&nbsp;积分兑换</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/gekauft')}">·&nbsp;&nbsp;我购买过的产品</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myTracks')}">·&nbsp;&nbsp;浏览足迹</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em> 
+					<span class="fl">财务中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Finance/my_invoice')}">·&nbsp;&nbsp;我的发票</a>
+				</dd>				
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+					<dd>
+						<a href="{:U('Finance/my_shipment')}">·&nbsp;&nbsp;我的发货</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/my_payment')}">·&nbsp;&nbsp;我的付款</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/other_orders')}">·&nbsp;&nbsp;其他订单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/closed_order')}">·&nbsp;&nbsp;已出兑账单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/outstanding_order')}">·&nbsp;&nbsp;未出兑账单</a>
+					</dd>
+				</if>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">特色业务</span>
+				</dt>
+				<dd>
+					<a href="{:U('SpecialBusiness/enterprise_group')}">·&nbsp;&nbsp;企业团购</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/purchase_requisition')}">·&nbsp;&nbsp;采购需求单</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/join_application')}">·&nbsp;&nbsp;加盟申请</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/printer_rental')}">·&nbsp;&nbsp;打印机租赁</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">商品中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('GoodsCenter/goods_search')}">·&nbsp;&nbsp;商品搜索</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">客户服务</span>
+				</dt>
+				<dd>
+					<a href="{:U('Service/return_repair')}">·&nbsp;&nbsp;返修退换货</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/after_sale')}">·&nbsp;&nbsp;售后管理</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/advisoryReply')}">·&nbsp;&nbsp;咨询回复</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/opinion')}">·&nbsp;&nbsp;意见建议</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/repair_choice')}">·&nbsp;&nbsp;上门维修服务</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/announcement')}">·&nbsp;&nbsp;网站公告</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/report_center')}">·&nbsp;&nbsp;投诉中心</a>
+				</dd>
+			</dl>
+			<dl data="false" class="active">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">用户设置</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserSet/address')}">·&nbsp;&nbsp;收货地址</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('UserSet/enterprise')}">·&nbsp;&nbsp;企业信息</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('UserSet/security')}">·&nbsp;&nbsp;安全设置</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">个人资料</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserData/user_data')}">·&nbsp;&nbsp;个人资料</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/bind_account')}">·&nbsp;&nbsp;账号绑定</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/special_application')}">·&nbsp;&nbsp;申请账期支付</a>
+				</dd>
+			</dl>
+		</div>
+		<!--内容-->
+		<div class="mordrMain fr userSEI-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">企业信息</a></li>
+				</ul>
+			</div>
+			<empty name="data">
+			    <form action="{:U('enterprise_add')}" method="post">
+					<ul class="content-main">
+						<li class="clearfix">
+							<span class="fl">企业名称：</span>
+							<input type="text" name="name" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<span class="fl">成立时间：</span>
+							<input type="date" name="set_up_time" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<span class="fl">注册资本：</span>
+							<input type="text" name="registered_capital" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<span class="fl">账户余额：</span>
+							<input type="text" name="account_balance" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<span class="fl">固定电话：</span>
+							<input type="text" name="telephone" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<span class="fl">手机号码：</span>
+							<input type="number" name="mobile" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<span class="fl">联系邮箱：</span>
+							<input type="text" name="email" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<span class="fl">注册地址：</span>
+		                    <select name="province"></select><select name="city"></select><select name="area"></select>    	
+		                </li>
+						<li>
+							<span class="fl">公司所在地址：</span>
+							<select name="province1"></select><select name="city1"></select><select name="area1"></select>
+		                </li>
+						<li class="clearfix">
+							<span class="fl">详细地址：</span>
+							<input type="text" name="address" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<span class="fl">传真：</span>
+							<input type="text" name="fax" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<span class="fl">邮编：</span>
+							<input type="text" name="zip_code" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<span class="fl">法人：</span>
+							<input type="text" name="legal_person" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<span class="fl">税务登记：</span>
+							<input type="text" name="tax_reg" class="txt fl">
+						</li>
+						<li class="clearfix">
+							<input type="submit" class="submit">
+						</li>
+					</ul>
+				</form>
+			<else/>
+			    <form action="{:U('enterprise_edit')}" method="post">
+			    	<ul class="content-main">
+						<li class="clearfix">
+							<span class="fl">企业名称：</span>
+							<input type="text" name="name" class="txt fl" value="{$data.name}">
+						</li>
+						<li class="clearfix">
+							<span class="fl">成立时间：</span>
+							<input type="text" name="set_up_time" class="txt fl" value="{$data.set_up_time|date="Y-m-d H:i:s",###}">
+						</li>
+						<li class="clearfix">
+							<span class="fl">注册资本：</span>
+							<input type="text" name="registered_capital" class="txt fl" value="{$data.registered_capital}">
+						</li>
+						<li class="clearfix">
+							<span class="fl">账户余额：</span>
+							<input type="text" name="account_balance" class="txt fl" value="{$data.account_balance}">
+						</li>
+						<li class="clearfix">
+							<span class="fl">固定电话：</span>
+							<input type="text" name="telephone" class="txt fl" value="{$data.telephone}">
+						</li>
+						<li class="clearfix">
+							<span class="fl">手机号码：</span>
+							<input type="number" name="mobile" class="txt fl" value="{$data.mobile}">
+						</li>
+						<li class="clearfix">
+							<span class="fl">联系邮箱：</span>
+							<input type="text" name="email" class="txt fl" value="{$data.email}">
+						</li>
+						<li class="clearfix">
+								<span class="fl">注册地址：</span>
+			                    <select name="province"></select><select name="city"></select><select name="area"></select>    	
+			                </li>
+							<li>
+								<span class="fl">公司所在地址：</span>
+								<select name="province1"></select><select name="city1"></select><select name="area1"></select>
+			                </li>
+						<li class="clearfix">
+							<span class="fl">详细地址：</span>
+							<input type="text" name="address" class="txt fl" value="address">
+						</li>
+						<li class="clearfix">
+							<span class="fl">传真：</span>
+							<input type="text" name="fax" class="txt fl" value="{$data.fax}">
+						</li>
+						<li class="clearfix">
+							<span class="fl">邮编：</span>
+							<input type="text" name="zip_code" class="txt fl" value="{$data.zip_code}">
+						</li>
+						<li class="clearfix">
+							<span class="fl">法人：</span>
+							<input type="text" name="legal_person" class="txt fl" value="{$data.legal_person}">
+						</li>
+						<li class="clearfix">
+							<span class="fl">税务登记：</span>
+							<input type="text" name="tax_reg" class="txt fl" value="{$data.tax_reg}">
+						</li>
+						<li class="clearfix">
+						    <input type="hidden" name="id" value="{$data.id}">
+							<input type="submit" value="修改" class="submit">
+						</li>
+					</ul>
+			    </form>				    
+			</empty>
+
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+
+<script language="javascript" src="__COMMON__/js/PCASClass.js"></script>	
+<script language="javascript">
+	new PCAS("province","city","area","{$data.province}","{$data.city}","{$data.area}");
+	new PCAS("province1","city1","area1","{$data.province1}","{$data.city1}","{$data.area1}");
+</script>
+</block>

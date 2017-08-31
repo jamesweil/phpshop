@@ -1,0 +1,38 @@
+<extend name="Public/publicHTML"/>
+<block name="nav">
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+    <script src="__COMMON__/bootstrap/js/bootstrap.min.js"></script>
+    <div class="nav">
+        <div class="nav_title">
+            <h4><img class="nav_img" src="__IMG__/tab.gif" /><span class="nav_a">商品类型列表</span></h4>
+        </div>
+        <div class="nav_button">
+            <a href="{:U('add')}"><button class="button">+ 添加商品类型</button></a>
+        </div>
+    </div>
+    <br/><br/>
+</block>
+<block name="content">
+    <table class="table table-hover">
+        <tr align="center">
+            <td>ID</td>
+            <td>商品类型</td>
+            <td>创建时间</td>
+            <td>操作</td>
+        </tr>
+        <foreach name="rows" item="row">
+            <tr  align="center">
+                <td>{$row.id}</td>
+                <td>{$row.name}</td>
+                <td>{:date('Y-m-d',$row['create_time'])}</td>
+                <td>
+                    <a href="{:U('edit',['id'=>$row['id']])}" class="btn btn-primary">编辑</a>
+                    <a href="{:U('remove',['id'=>$row['id']])}" class="btn btn-danger">删除</a>
+                </td>
+            </tr>
+        </foreach>
+    </table>
+    <div class="page">{$page_show}</div>
+
+
+</block>

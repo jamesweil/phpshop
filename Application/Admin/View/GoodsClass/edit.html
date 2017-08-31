@@ -1,0 +1,110 @@
+<extend name="Public/publicHTML" />
+<block name="nav">
+<div class="nav">
+	<div class="nav_title">
+		<h4>
+			<img class="nav_img" src="__IMG__/tab.gif" /><span class="nav_a">商品分类修改</span>
+		</h4>
+	</div>
+</div>
+<br />
+<br />
+</block>
+
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/ComboSelect/combo.select.css" />
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<section class="content">
+	<div class="container-fluid">
+		<div class="pull-right">
+			<a href="" data-toggle="tooltip" title="" class="btn btn-default"
+				data-original-title="返回"><i class="fa fa-reply"></i></a>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 商品分类详情
+				</h3>
+			</div>
+			<div class="panel-body">
+
+				<form method="post" action="{:U()}" autocomplete="off">
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab_tongyong">
+							<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<td>分类名称:</td>
+										<td><input type="text" value="{$row1.class_name}"
+											name="class_name" class="form-control" style="width: 400px;" />
+										</td>
+									</tr>
+									<tr>
+										<td>上级分类：</td>
+										<td>
+											<select name="fid" id="first" onchange="Tool.chanfeLevel(this)">
+												 <option value="0" selected="selected">请选择分类</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>商品分类描述</td>
+										<td><textarea rows="3" cols="100" name="description">{$row1.description}</textarea>
+										</td>
+									</tr>
+
+									<tr>
+										<td>分类图片</td>
+										<td><input onclick="Tool.uploadify('{:C('upload_url')}/uploadNum/1/path/class/input/image/config/class_image_conf');"
+											type="button" value="上传图片" /> <input type="text"
+											value="{$row1.pic_url}" name="pic_url" id="image"
+											class="form-control large img_url" readonly="readonly"
+											style="width: 500px; display: initial;" /></td>
+									</tr>
+
+									<tr>
+										<td>是否显示</td>
+										<td><label class="radio-inline"> <input
+												type="radio" name="hide_status" class="status"
+												id="inlineRadio3" value="1"> 是
+										</label> <label class="radio-inline"> <input type="radio"
+												name="hide_status" class="status" id="inlineRadio4"
+												value="0"> 否
+										</label> <input type="hidden" name="id" value="{$row.id}" /></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="pull-right">
+						<input type="hidden" name="id" value="{$row1.id}"> <input
+							type="submit" class="btn btn-primary" data-toggle="tooltip"
+							data-original-title="保存" value='保存'>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="__COMMON__/js/listener.js"></script>
+<script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script>
+<script type="text/javascript"
+	src="__JS__/article/ueditor.config.js?a={:time()}"></script> <script
+	type="text/javascript" src="__JS__/goods/search.js"></script> <script
+	type="text/javascript"
+	src="__JS__/article/ueditor.config.js?a={:time()}"></script> 
+<script
+	type="text/javascript" src="__JS__/goodsclass/goodsclass_add.js?a={:time()}"></script>
+<script type="text/javascript"
+	src="__COMMON__/ComboSelect/jquery.combo.select.js"></script> <script
+	type='text/javascript'>
+	var CLASS_GET_LIST = "{:U('getAllClass')}";
+   //回显商品分类显示
+   var status_value = [{$row1.hide_status|default=1}];
+   Tool.areaData = {$rows};
+    </script> </block>
+
+

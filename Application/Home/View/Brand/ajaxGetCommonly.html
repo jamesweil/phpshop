@@ -1,0 +1,8 @@
+
+<if condition="!empty($brandData)"> <foreach name="brandData"
+	key='key' item='value'> <a href="{:U('Product/ProductList', ['brand' => $value[$brandModel::$id_d]])}" class="fl">
+	<img src="{$value[$brandModel::$brandBanner_d]}" width="283" height="362">
+	<p class="clearfix">
+		<img src="{$value[$brandModel::$brandLogo_d]}" width="163" height="38" class="fl">
+		<span class="fl">{$value[$brandModel::$brandName_d]}</span>
+</p></foreach> </if>

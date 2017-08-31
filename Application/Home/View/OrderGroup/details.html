@@ -1,0 +1,95 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="regod-section clearfix">
+		
+		<!--位置-->
+		<div class="thisPosition w">
+			<span>您的位置：</span><b>首页</b> > <b>我的商城</b> > <b>我的团购订单</b> > <b>订单详情</b>
+		</div>
+		<!--订单信息-->
+		<div class="tradingStatus w clearfix">
+			<div class="minFl fl">
+				<h2>订单信息</h2>
+				<ul>
+					<li>买家留言：{$order.message}</li>
+					<li>订单编号：{$order.order_sn_id}</li>
+					<li>成交时间：{$order.add_time|date="Y-m-d H:i:s",###}</li>
+					<li>付款时间：{$order.pay_time|date="Y-m-d H:i:s",###}</li>
+					<li>商家真实姓名：嘉兴永维贸易有限公司</li>
+					<li>城市：嘉兴市</li>
+					<li>联系电话：15397275116</li>
+				</ul>
+			</div>
+			<div class="minFr fr">
+				<h2>订单状态:
+				    <switch name="order.status">
+				    	<case value="0">待支付</case>
+				    	<case value="1">待兑换</case>
+				    	<case value="2">已兑换</case>	
+				    </switch>	 
+				</h2>
+				<h3>您可以</h3>
+				<if condition="$order.status eq '2'">
+				<div class="max">
+					<input type="button" value="评价">
+					<a href="javascript:;">备忘</a>
+					<a href="javascript:;">索要发票</a>
+				</div>
+				<else/>
+				<div class="max">
+					<a href="javascript:;">备忘</a>
+					<a href="javascript:;">索要发票</a>
+				</div>
+				</if>
+			</div>
+		</div>
+		<!--商品状态-->
+		<div class="commodityStatus w">
+			<ol class="dataTitle clearfix">
+				<li class="fl one">商品</li>
+				<li class="fl two">单价</li>
+				<li class="fl three">数量</li>
+				<li class="fl four">优惠</li>
+				<li class="fl five">状态</li>
+			</ol>
+			<volist name="order.goods" id="goods">
+				<ul class="centent clearfix">
+					<li class="fl clearfix one">
+						<div class="imgPart fl">
+							<img src="__SERVER__/{$goods.images}">
+						</div>
+						<div class="con fl">
+							<p>{$goods.title}</p>
+							<span>商品编号：{$goods.goods_id}</span>
+						</div>
+					</li>
+					<li class="fl two">
+						￥{$goods.goods_price}
+					</li>
+					<li class="fl three">{$goods.goods_num}</li>
+					<li class="fl four"></li>
+					<li class="fl five">
+					<switch name="order.status">
+				    	<case value="0">待支付</case>
+				    	<case value="1">待兑换</case>
+				    	<case value="2">已兑换</case>	
+				    </switch></li>
+				</ul>
+            </volist>
+		</div>
+		<!--金额-->
+		<div class="ordesTotal w">
+			<p class="total"><span>商品总价：</span>    <em>￥{$order.goods_price_num}</em></p>
+			<p class="freight"><span>运费(快递)：</span>    <em>￥{$order.freights}</em></p>
+			<p class="order"><span>订单总价：</span>   <em>￥{$order.price_num}</em></p>
+			<p class="actual"><span>实付款：</span>  <em>￥{$order.price_num}</em></p>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<!-- <script src="js/header.js"></script> -->
+</block>

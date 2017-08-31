@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Common/My97Date/WdatePicker.js"></script>
+<script>
+//刷新
+function refresh(){
+	window.location.href = window.location.href;
+}
+//检查提交
+function check_form(){
+	//过滤判断首个日期 和 所有日期
+	if($('#date0').val()==''){
+		layer.tips('首个日期不能为空', '#date0');
+		return false;
+	}
+	//过滤对于价格不能为空
+	for(var i=0;i<5;i++){
+		if($('#date'+i).val() != ''){
+			if($('#price'+i).val() == ''){
+				layer.tips('价格不能为空', '#price'+i);
+				return false;
+			}	
+		}
+	}
+	return true;
+}
+//弹出计划列表
+function date_list(id){
+	parent.layer.open({
+		type: 2,
+		shadeClose: true,
+		shade: 0.2,
+		area: ['1100px', '90%'],
+		title: '发团计划时间价格列表',
+		content: "{:U('Tourism/tourism_date_list')}?id="+id
+	});
+}
+
+</script>
+</head>
+<body>
+
+<div class="list">
+<form action="__SELF__" method="POST" onSubmit="return check_form();">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details">
+        <tbody>       
+	      <tr>
+	        <td colspan="3"><div align="center"><a href="javascript:;" onClick="date_list({$tourism_id});" style="color:#00F; font-size:16px;">【 .... 查看全部发团计划 .... 】</a></div></td>
+          </tr>
+	      <tr>
+	        <td>
+            <div align="center">
+                最大发团日期：<span style="color:#00F;">{$result[0]['date']}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                成人价格：<span style="color:#00F;">{$result[0]['price']}</span>&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;
+                儿童价格：<span style="color:#00F;">{$result[0]['price_ertong']}</span>&nbsp;元 
+            </div>
+            </td>	        
+          </tr>
+	      <tr>
+	        <td>
+            <div align="center">
+              发团日期：<input name="date[]" id="date0" class="Wdate" type="text" onfocus="WdatePicker({doubleCalendar:true,minDate:'%y-%M-%d',disabledDates:[<php>echo $date_str;</php>]})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              成人：<input type="text" name="price[]" id="price0" style="width:100px;" class="input">&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              儿童：<input type="text" name="price_ertong[]" id="price_ertong0" style="width:100px;" class="input">&nbsp;元
+	        </div>
+            </td>	        
+          </tr>
+          <tr>
+	        <td>
+            <div align="center">
+              发团日期：<input name="date[]" id="date1" class="Wdate" type="text" onfocus="WdatePicker({doubleCalendar:true,minDate:'%y-%M-%d',disabledDates:[<php>echo $date_str;</php>]})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              成人：<input type="text" name="price[]" id="price1" style="width:100px;" class="input">&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              儿童：<input type="text" name="price_ertong[]" id="price_ertong1" style="width:100px;" class="input">&nbsp;元
+	        </div>
+            </td>	        
+          </tr>
+          <tr>
+	        <td>
+            <div align="center">
+              发团日期：<input name="date[]" id="date2" class="Wdate" type="text" onfocus="WdatePicker({doubleCalendar:true,minDate:'%y-%M-%d',disabledDates:[<php>echo $date_str;</php>]})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              成人：<input type="text" name="price[]" id="price2" style="width:100px;" class="input">&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              儿童：<input type="text" name="price_ertong[]" id="price_ertong2" style="width:100px;" class="input">&nbsp;元
+	        </div>
+            </td>	        
+          </tr> 
+          <tr>
+	        <td>
+            <div align="center">
+              发团日期：<input name="date[]" id="date3" class="Wdate" type="text" onfocus="WdatePicker({doubleCalendar:true,minDate:'%y-%M-%d',disabledDates:[<php>echo $date_str;</php>]})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              成人：<input type="text" name="price[]" id="price3" style="width:100px;" class="input">&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              儿童：<input type="text" name="price_ertong[]" id="price_ertong3" style="width:100px;" class="input">&nbsp;元
+	        </div>
+            </td>	        
+          </tr>
+          <tr>
+	        <td>
+            <div align="center">
+              发团日期：<input name="date[]" id="date4" class="Wdate" type="text" onfocus="WdatePicker({doubleCalendar:true,minDate:'%y-%M-%d',disabledDates:[<php>echo $date_str;</php>]})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              成人：<input type="text" name="price[]" id="price4" style="width:100px;" class="input">&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              儿童：<input type="text" name="price_ertong[]" id="price_ertong4" style="width:100px;" class="input">&nbsp;元
+	        </div>
+            </td>	        
+          </tr>      
+        </tbody>
+  </table>
+<div class="footer">
+	 <input type="hidden" name="tourism_id" value="{$tourism_id}"/>
+     <button type="submit" class="button" id="button" style="min-width:200px;">保存信息</button>
+</div>
+</form>
+</div>
+</body>
+</html>

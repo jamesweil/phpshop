@@ -1,0 +1,73 @@
+<extend name="Public/indexEdit" />
+<block name="content">
+<link rel="stylesheet" href="__CSS__/brand/brand.css" />
+	<!--Banner-->
+	<if condition="$navBanners">
+		<div class="brasp-banner w">
+			<ul class="solid">
+				<volist name="navBanners" id="navBanner">
+					<li><a href="{$navBanner.ad_link}"><img src="{$navBanner.pic_url}" width="1200" height="400">></a></li>
+				</volist>
+			</ul>
+			<div class="page"></div>
+			<a href="javascript:;" class="btn-left"><</a>
+			<a href="javascript:;" class="btn-right">></a>
+		</div>
+	</if>
+<div  class="bandStore-wrap">
+  <dl class="link clearfix w1200">
+        <dt class="fl">当前位置：</dt>
+        <dd class="fl">
+            <a href="JavaScript:;">首页</a> >
+            <a href="JavaScript:;" class="active">品牌店</a>
+        </dd>
+    </dl>
+<div class="bandStore-content-main w1200">
+	<div class="FastSeek-wrap">
+		<dl class="hd" id="FastSeek-wrap">
+			<dt class="fl">品牌快搜</dt>
+			<dd class="fl active">A</dd>
+			<dd class="fl">B</dd>
+			<dd class="fl">C</dd>
+			<dd class="fl">D</dd>
+			<dd class="fl">E</dd>
+			<dd class="fl">F</dd>
+			<dd class="fl">G</dd>
+			<dd class="fl">H</dd>
+			<dd class="fl">I</dd>
+			<dd class="fl">J</dd>
+			<dd class="fl">K</dd>
+			<dd class="fl">L</dd>
+			<dd class="fl">M</dd>
+			<dd class="fl">N</dd>
+			<dd class="fl">O</dd>
+			<dd class="fl">P</dd>
+			<dd class="fl">Q</dd>
+			<dd class="fl">R</dd>
+			<dd class="fl">S</dd>
+			<dd class="fl">T</dd>
+			<dd class="fl">U</dd>
+			<dd class="fl">V</dd>
+			<dd class="fl">W</dd>
+			<dd class="fl">X</dd>
+			<dd class="fl">Y</dd>
+			<dd class="fl">Z</dd>
+		</dl>
+		<div class="dd clearfix" id="eng">
+			
+		</div>
+	</div>
+	<div class="content-wrap clearfix" id="addBrand">
+		
+	</div>
+</div>
+</div>
+ <script src="__JS__/common/common.js"></script> <script
+	src="__JS__/expansion.js"></script> <script
+	src="__JS__/navbannerurl.js"></script> <script type="text/javascript">
+	var ajaxBrandURL = "{:U('ajaxGetBrand')}";
+	var addId	  = 'eng';
+</script><script src="__JS__/brand/brand.js"></script> <script
+	type="text/javascript">
+	pjaxData.ajaxGetData("{:U('ajaxGetCommonly')}", 'addBrand');
+</script> </block>

@@ -1,0 +1,133 @@
+<extend name="Public/publicHTML" />
+<block name="nav"></block>
+
+
+<block name="content">
+
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+<div class="wrapper">
+	<section class="content ">
+		<!-- Main content -->
+		<div class="container-fluid">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i>编辑支付配置
+					</h3>
+				</div>
+				<div class="panel-body ">
+					<!--表单数据-->
+					<form method="post" id="group">
+						<!--通用信息-->
+						<div class="tab-content col-md-10">
+							<div class="tab-pane active" id="tab_tongyong">
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<td class="col-sm-4">支付账号：</td>
+											<td class="col-sm-6"><input type="text"
+												class="form-control" name="{$payModel::$payAccount_d}"
+												id="title" />
+											<td class="col-sm-4"></td>
+										</tr>
+										<tr>
+											<td>商户账号：</td>
+											<td><input type="text" class="form-control"
+												name="{$payModel::$mchid_d}"></td>
+										</tr>
+										<tr>
+											<td>支付类型:</td>
+											<td>
+												<div class="col-sm-8">
+													<select name="{$payModel::$payType_id_d}"
+														class="form-control">
+														<option selected="selected">请选择支付类型</option>
+														<foreach name="payType" key="key" item="v">
+														<option value="{$key}">{$v}</option>
+														</foreach>
+													</select>
+												</div>
+											</td>
+										</tr>
+
+										<tr>
+											<td>平台类型:</td>
+											<td>
+												<div class="col-sm-8">
+													<select name="{$payModel::$type_d}" class="form-control">
+														<option selected="selected">请选择支付类型</option>
+														<foreach name="platform" key="key" item="v">
+														<option value="{$key}">{$v}</option>
+														</foreach>
+													</select>
+												</div>
+											</td>
+										</tr>
+
+										<tr>
+											<td>随机字符串：</td>
+											<td><input type="text" class="form-control"
+												id="goods_num" name="{$payModel::$payKey_d}" /></td>
+										</tr>
+										<tr>
+											<td>微信用户标识：</td>
+											<td><input type="text" class="form-control"
+												placeholder="数据只能是数字和英文的组合" /></td>
+											<td class="col-sm-4 red">(微信公众号支付必填)</td>
+										</tr>
+
+										<tr>
+											<td>公钥:</td>
+											<td><textarea rows="10" cols="60"
+													placeholder="微信支付公钥请填写路径"
+													name="{$payModel::$publicPem_d}"></textarea> <span class="rxd"></span>
+											</td>
+										</tr>
+										
+										<tr>
+											<td>密钥:</td>
+											<td><textarea rows="10" cols="60"
+													placeholder="微信支付私钥请填写路径"
+													name="{$payModel::$privatePem_d}"></textarea> <span
+												class="rxd"></span></td>
+										</tr>
+										
+									</tbody>
+									<tfoot>
+										<tr>
+											<td><input class="btn btn-default" type="reset"
+												value="重置"></td>
+											<td class="col-sm-4"></td>
+											<td class="text-right"><input class="btn btn-primary"
+												type="submit"
+												onclick='EditPayConfig.getInstance("group", "{:U("addPayConfig")}").save()'
+												value="添加"></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</form>
+					<!--表单数据-->
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<script type="text/javascript">
+ var prompt = {$prompt};
+ var name   = "{$_GET['pay']}";
+ console.log(prompt);
+</script> <script type="text/javascript" src="__COMMON__/js/jquery-form.js"></script>
+<script type="text/javascript"
+	src="__JS__/payConfig/pay_prompt.js?a=3655"></script> <script
+	type="text/javascript" src="__COMMON__/js/jquery.validate.min.js"></script>
+<script type="text/javascript"
+	src="__COMMON__/js/validateCustom.js?a=3456"></script> <script
+	src="__COMMON__/js/alert.js?a=36723122132313215465465454"></script> <script
+	src="__COMMON__/js/noticeAdmin.js?a=3454"></script> <script
+	type="text/javascript"
+	src="__JS__/payConfig/pay_config.js?a=7819654210"></script> </block>

@@ -1,0 +1,271 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+		<div class="ficationFl fl">
+			<dl data="false" class="active">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">订单中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Order/order_myorder')}">·&nbsp;&nbsp;我的订单</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('OrderGroup/order_group')}">·&nbsp;&nbsp;团购订单</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('Order/cancel_order_record')}">·&nbsp;&nbsp;取消订单记录</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">资产中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Assets/balance')}">·&nbsp;&nbsp;余额</a>
+				</dd>
+				<dd>
+					<a href="{:U('Cart/goods')}">·&nbsp;&nbsp;我的购物车</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myCollection')}">·&nbsp;&nbsp;我的收藏</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myComment')}">·&nbsp;&nbsp;我的评价</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/coupon')}">·&nbsp;&nbsp;优惠券</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/integral')}">·&nbsp;&nbsp;积分</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/punkte')}">·&nbsp;&nbsp;积分兑换</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/gekauft')}">·&nbsp;&nbsp;我购买过的产品</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myTracks')}">·&nbsp;&nbsp;浏览足迹</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em> 
+					<span class="fl">财务中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Finance/my_invoice')}">·&nbsp;&nbsp;我的发票</a>
+				</dd>				
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+					<dd>
+						<a href="{:U('Finance/my_shipment')}">·&nbsp;&nbsp;我的发货</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/my_payment')}">·&nbsp;&nbsp;我的付款</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/other_orders')}">·&nbsp;&nbsp;其他订单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/closed_order')}">·&nbsp;&nbsp;已出兑账单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/outstanding_order')}">·&nbsp;&nbsp;未出兑账单</a>
+					</dd>
+				</if>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">特色业务</span>
+				</dt>
+				<dd>
+					<a href="{:U('SpecialBusiness/enterprise_group')}">·&nbsp;&nbsp;企业团购</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/purchase_requisition')}">·&nbsp;&nbsp;采购需求单</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/join_application')}">·&nbsp;&nbsp;加盟申请</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/printer_rental')}">·&nbsp;&nbsp;打印机租赁</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">商品中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('GoodsCenter/goods_search')}">·&nbsp;&nbsp;商品搜索</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">客户服务</span>
+				</dt>
+				<dd>
+					<a href="{:U('Service/return_repair')}">·&nbsp;&nbsp;返修退换货</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/after_sale')}">·&nbsp;&nbsp;售后管理</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/advisoryReply')}">·&nbsp;&nbsp;咨询回复</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/opinion')}">·&nbsp;&nbsp;意见建议</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/repair_choice')}">·&nbsp;&nbsp;上门维修服务</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/announcement')}">·&nbsp;&nbsp;网站公告</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/report_center')}">·&nbsp;&nbsp;投诉中心</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">用户设置</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserSet/address')}">·&nbsp;&nbsp;收货地址</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('UserSet/enterprise')}">·&nbsp;&nbsp;企业信息</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('UserSet/security')}">·&nbsp;&nbsp;安全设置</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">个人资料</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserData/user_data')}">·&nbsp;&nbsp;个人资料</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/bind_account')}">·&nbsp;&nbsp;账号绑定</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/special_application')}">·&nbsp;&nbsp;申请账期支付</a>
+				</dd>
+			</dl>
+		</div>
+		<!--内容-->
+		<div class="toBeted fr">
+			<ul class="title clearfix">
+				<li class="fl active"><a href="javascript:;">订单商品评价</a></li>
+				<li class="fl"><a href="javascript:;">待晒单<em></em></a></li>
+			</ul>
+			<div class="centent-wrap active">
+				<ol class="tobeData">
+					<li class="fl details">订单详情</li>
+					<li class="fl consignee">收货人</li>
+					<li class="fl dollar">金额</li>
+					<li class="fl operation">操作</li>
+				</ol>
+				<div class="centent-main">
+					<dl>
+						<dt>
+							<span>{$order.create_time|date="Y-m-d H:i:s"}</span>
+							<span>订单号：{$order.order_sn_id}</span>
+						</dt>
+						<dd class="clearfix">
+							<div class="fl conFl clearfix">
+							    <volist name="data" id="vo">
+									<div class="loop">
+										<div class="fl imgParent">
+											<img src="{$vo.images}">
+										</div>
+										<div class="fl conParent">
+											<a href="javscript:;">{$vo.title}</a>
+										</div>
+										<div class="fr numberFr">x{$vo.goods_num}<a href="{:U('Order/comment',array('goods_id'=>$vo['goods_id'],'order_id'=>$order['id']))}" class="fr btn">评价</a></div>
+									</div>
+								</volist>
+							</div>
+							<div class="fr conFr">
+								<span class="fl name">{$address.realname}</span>
+								<span class="fl payment">支付金额￥{$order.price_sum}</span>
+								<span class="fl evaluate">
+									<a href="{:U('Order/order_details',array('id'=>$order['id']))}">订单详情</a><br>
+								</span>
+							</div>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="centent-wrap">
+				<div class="dState clearfix">
+					<span class="fl">商品信息</span>
+					<span class="fl">评论状态</span>
+				</div>
+				<div class="products-parent">
+					<div class="products clearfix">
+						<div class="fl conFl">
+							<div class="screenshot fl">
+								<a href="javascript:;"><img src="__IMG__/con-1.jpg"></a>
+							</div>
+							<div class="products-description fl">
+								<p><a href="javascript:;">小米 红米 3 高配全网通版 3GB内存 32GB</a></p>
+								<span>购买时间：2016-10-02</span>
+							</div>
+						</div>
+						<div class="fr conFr">
+							<a href="javascript:;">继续晒单</a>
+						</div>
+						<span class="triangle"></span>
+					</div>
+				</div>
+				<div class="products-review-main">
+					<div class="experience clearfix">
+						<span class="fl"><b>*</b>心得：</span>
+						<div class="fr keyword clearfix">
+							<em class="fl">屏幕大</em>
+						</div>
+					</div>
+					<ul class="comment">
+						<li>很好用，性价比超级高，买了两台了。</li>
+					</ul>
+					<div class="editor-review clearfix">
+						<span class="fl">晒单：</span>
+						<div class="fl file clearfix">
+							<input type="file">
+							+
+						</div>
+					</div>
+					<div class="publish">
+						<input type="submit" class="submit">
+						<label><input type="checkbox">&nbsp;匿名评论</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script>
+ --><script src="__JS__/toBeEvaluated.js"></script>
+</block>

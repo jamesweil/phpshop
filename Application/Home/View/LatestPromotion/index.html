@@ -1,0 +1,239 @@
+<extend name="Public/indexEdit"/>
+<block name="banner">
+    <!--Banner-->
+    <if condition="$navBanners">
+        <div class="brasp-banner w">
+            <ul class="solid">
+                <volist name="navBanners" id="navBanner">
+                    <li><a href="{$navBanner.ad_link}"><img src="{$navBanner.pic_url}" width="1200" height="400">></a></li>
+                </volist>
+            </ul>
+            <div class="page"></div>
+            <a href="javascript:;" class="btn-left"><</a>
+            <a href="javascript:;" class="btn-right">></a>
+        </div>
+    </if>
+</block>
+
+<block name="content">
+    <div class="lates-centent w">
+        <!--热卖促销-->
+        <div class="promotion">
+            <h2 class="PromotionTitle clearfix">
+                <b>热卖促销</b>
+                <i></i>
+                <span>HOT</span>
+            </h2>
+            <ul class="clearfix">
+                <li class="one fl">
+                    <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_one['id']])}"><img src="{$result_goods_one.nav_img_url}"></a>
+                </li>
+                <li class="two fl">
+                    <div class="con clearfix">
+                        <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_two['id']])}">
+                            <div class="fl conFl">
+                                <p>{$result_goods_two.title}</p>
+                                <div class="price clearfix">
+                                    <em class="fl">价格</em>
+                                    <span class="fl"><i>￥</i>{$result_goods_two.price_market}</span>
+                                </div>
+                            </div>
+                            <div class="fr conFr">
+                                <img src="{$result_goods_two.nav_img_url}" alt="">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="con">
+                        <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_three['id']])}">
+                            <div class="fl conFl">
+                                <p>{$result_goods_three.title}</p>
+                                <div class="price clearfix">
+                                    <em class="fl">价格</em>
+                                    <span class="fl"><i>￥</i>{$result_goods_three.price_market}</span>
+                                </div>
+                            </div>
+                            <div class="fr conFr">
+                                <img src="{$result_goods_three.nav_img_url}" alt="">
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="three fl">
+                    <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_four['id']])}">
+                        <div class="parent">
+                            <p>{$result_goods_four.title}</p>
+                            <div class="price clearfix">
+                                <em class="fl">价格</em>
+                                <span class="fl"><i>￥</i>{$result_goods_four.price_market}</span>
+                            </div>
+                        </div>
+                        <img src="{$result_goods_four.nav_img_url}">
+                    </a>
+                </li>
+                <li class="four fl">
+                    <div class="con">
+                        <p>{$result_goods_five.title}</p>
+                        <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_five['id']])}"><img src="{$result_goods_five.nav_img_url}"></a>
+                    </div>
+                    <div class="con">
+                        <p>{$result_goods_six.title}</p>
+                        <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_six['id']])}"><img src="{$result_goods_six.nav_img_url}"></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <!--热卖精选-->
+        <div class="selected click-tab-mrap" id="selected1">
+            <div class="title clearfix">
+                <h3 class="fl">热卖精选</h3>
+                <ul class="fl clearfix tab-pane">
+                    <li class="fl hover">精选商品</li>
+                    <foreach name="hot_chooses" item="hot_choose" key="k">
+                        <li class="fl">{$k}</li>
+                    </foreach>
+
+                </ul>
+            </div>
+            <div class="tab-content-wrap">
+                <ul class="con-mian clearfix con-main">
+                    <if condition="$careGoods">
+                            <foreach name="careGoods" item="careGood">
+                                <li class="fl">
+                                    <a href="{:U('Goods/goodsDetails',['id'=>$careGood['id']])}"><img src="{$careGood.pic_url}" width="230" height="231"></a>
+                                    <a href="{:U('Goods/goodsDetails',['id'=>$careGood['id']])}" class="title-t">
+                                        <p>{$careGood.title}</p>
+
+                                    </a>
+                                    <span>原价：<i>{$careGood.price_market}</i></span>
+                                    <div class="purchase">
+                                        <b>¥</b>{$careGood.price_market}
+                                        <a href="{:U('Goods/goodsDetails',['id'=>$careGood['id']])}"><span>购买</span></a>
+                                    </div>
+                                </li>
+                            </foreach>
+                        <else/>
+                           <div class="hot-select-shop"><img src="__IMG__/notimg.png" width="315" height="170"/> </div>
+                    </if>
+
+                </ul>
+                <volist name="hot_chooses" id="hot_choose_one">
+                    <ul class="con-mian clearfix con-main">
+                        <if condition="$hot_choose_one">
+                            <volist name="hot_choose_one" id="hot_choose_two">
+                                <li class="fl">
+                                    <a href="{:U('Goods/goodsDetails',['id'=>$hot_choose_two['id']])}">
+                                        <img src="{$hot_choose_two.pic_url}" height="230" width="230">
+                                    </a>
+                                    <a href="{:U('Goods/goodsDetails',['id'=>$hot_choose_two['id']])}" class="title-t">
+                                        <p>{$hot_choose_two.title}</p>
+                                    </a>
+                                    <span>原价：<i>{$hot_choose_two.price_market}</i></span>
+                                    <div class="purchase">
+                                        <b>¥</b>{$hot_choose_two.price_member}
+                                        <a href="{:U('Goods/goodsDetails',['id'=>$hot_choose_two['id']])}">
+                                            <a href="{:U('Goods/goodsDetails',['id'=>$hot_choose_two['id']])}"><span>购买</span></a>
+                                        </a>
+                                    </div>
+                                </li>
+                            </volist>
+                            <else/>
+                               <div class="hot-select-shop"><img src="__IMG__/notimg.png" width="315" height="170"/></div>
+                        </if>
+
+                    </ul>
+                </volist>
+            </div>
+        </div>
+        <!--广告图-->
+        <div class="adt">
+            <foreach name="lastPro_ads" item="last_ad">
+                <a href="javascript:;">
+                    <img src="{$last_ad.pic_url}">
+                </a>
+            </foreach>
+            <span class="delete"></span>
+        </div>
+        <!--人气特卖-->
+        <div class="selected click-tab-mrap" id="selected2">
+            <div class="title clearfix">
+                <h3 class="fl">人气特卖</h3>
+                <ul class="fl clearfix tab-pane">
+                    <li class="fl hover">特卖推荐</li>
+                    <foreach name="popular_sales" item="popular_sale" key="k">
+                        <li class="fl">{$k}</li>
+                    </foreach>
+                </ul>
+            </div>
+            <div class="tab-content-wrap">
+                <ul class="con-mian clearfix con-main">
+                      <if condition="$sale_recos">
+                          <foreach name="sale_recos" item="sale_reco">
+                              <li class="fl">
+                                  <a href="{:U('Goods/goodsDetails',['id'=>$sale_reco['id']])}"><img src="{$sale_reco.pic_url}" width="230" height="231"></a>
+                                  <a href="{:U('Goods/goodsDetails',['id'=>$sale_reco['id']])}" class="title-t">
+                                      <p>{$sale_reco.title}</p>
+                                  </a>
+                                  <span>原价：<i>{$sale_reco.price_market}元</i></span>
+                                  <div class="purchase">
+                                      <b>¥</b>{$sale_reco.price_market}
+                                      <a href="{:U('Goods/goodsDetails',['id'=>$sale_reco['id']])}"><span>购买</span></a>
+                                  </div>
+                              </li>
+                          </foreach>
+                          <else/>
+                             <div class="hot-select-shop">亲，您访问的数据不存在</div>
+                      </if>
+
+
+                </ul>
+                <volist name="popular_sales" id="popular_sale_one">
+                    <ul class="con-mian clearfix con-main">
+                        <if condition="$popular_sale_one">
+                                    <volist name="popular_sale_one" id="popular_sale_two">
+                                        <li class="fl">
+                                            <a href="{:U('Goods/goodsDetails',['id'=>$popular_sale_two['id']])}">
+                                                <img src="{$popular_sale_two.pic_url}" height="230" width="230">
+                                            </a>
+                                            <a href="{:U('Goods/goodsDetails',['id'=>$popular_sale_two['id']])}" class="title-t">
+                                                <p>{$popular_sale_two.title}</p>
+                                            </a>
+                                            <span>原价：<i>{$popular_sale_two.price_market}</i></span>
+                                            <div class="purchase">
+                                                <b>¥</b>{$popular_sale_two.price_member}
+                                                <a href="{:U('Goods/goodsDetails',['id'=>$popular_sale_two['id']])}">
+                                                    <span>购买</span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </volist>
+                            <else/>
+                              <div class="hot-select-shop">亲，您访问的数据不存在</div>
+                        </if>
+
+                    </ul>
+                </volist>
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+
+    <script src="__JS__/expansion.js"></script>
+    <script src="__JS__/header.js"></script>
+    <script src="__JS__/navbannerurl.js"></script>
+    <script src="__JS__/xuanxk.js"></script>
+
+</block>
+
+
+
+
+
+
+
+
+
+

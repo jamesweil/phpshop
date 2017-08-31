@@ -1,0 +1,25 @@
+<li class="fore1 fl clearfix"><em class="fl"></em> <a href="#" onclick="JavaScript:addFavorite2()" class="fl">收藏亿速网络</a></li>
+<!--位置-->
+<li class="fore2 fl clearfix"><if condition="!empty($defaultData)">
+	<em class="fl"></em> <span class="fl" id="location">{$default[$model::$areaId_d]}</span>
+	</if> <a href="javascript:;" class="fl" id="switch">[切换]</a> <!--位置切换选择-->
+	<dl class="cityNav">
+
+		<dt class="clearfix">
+			<span class="fl">您所在的省份可能是：</span> <a href="javascript:;" class="fl">{$areaLocation}</a>
+			<i class="fr cancel"></i>
+		</dt>
+		<if condition="!empty($siteData)">
+			<foreach name="siteData" key="key" item="value">
+				<dd class="clearfix">
+					<h4 class="fl">{$areaConfig[$key]}</h4>
+					<div class="clearfix fl">
+						<foreach name="value" key="item" item="area">
+							<a href="{$area[$siteModel::$url_d]}" class="fl">{$area[$regModel::$name_d]}</a>
+						</foreach>
+					</div>
+				</dd>
+			</foreach>
+		</if>
+</dl></li>
+<script type="text/javascript" src="__JS__/top/areaList.js"></script>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script>
+//删除用户
+function del(id){
+	$("#del"+id+" td").css('background','#CBDFF2');
+	parent.layer.confirm('真的要删除吗？', {
+		btn: ['确认','取消'], //按钮
+		shade: 0.5 //显示遮罩
+	}, function(){
+		$.post("{:U('Goods/goods_shuxing_del')}", { "id": id},function(data){
+			if(data.code == 1){
+				parent.layer.msg('删除成功', { icon: 1, time: 1000 }, function(){
+						$("#del"+id).remove();
+					});
+			}else{
+				parent.layer.msg('删除失败', {icon: 2, time: 2000 }); 
+			}
+		}, "json");
+	},function(){
+		$("#del"+id+" td").css('border-top','0');
+		$("#del"+id+" td").css('border-bottom','1px solid #EFEFEF');
+	});
+}
+
+//添加属性
+function add(){
+	parent.layer.open({
+		type: 2,
+		shadeClose: true,
+		shade: 0.3,
+		area: ['500px', '240px'],
+		title: '添加属性',
+		content: "{:U('Goods/goods_shuxing_add')}"
+	});
+}
+
+function edit(id){
+	parent.layer.open({
+		type: 2,
+		shadeClose: true,
+		shade: 0.3,
+		area: ['500px', '240px'],
+		title: '添加属性',
+		content: "{:U('Goods/goods_shuxing_edit')}?id="+id
+	});
+}
+
+function content(id){
+	parent.layer.open({
+		type: 2,
+		shadeClose: true,
+		shade: 0.3,
+		area: ['500px', '80%'],
+		title: '添加属性内容',
+		content: "{:U('Goods/goods_shuxing_content_add')}?id="+id
+	});
+}
+
+</script>
+</head>
+<body>
+
+<div class="nav">
+	<div class="nav_title">
+    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a"><php>echo urldecode($_GET['menu_title']);</php></span></h4>
+    </div>
+</div>
+
+<form action="__SELF__" method="POST">
+<div class="search" style=" line-height:50px; padding-left:30px; margin-top:3px;">
+    <button type="button" class="button" onclick="add()">添加属性</button>
+    显示在具体商品的购买页面中。（一般包含颜色、尺码）
+</div>
+</form>
+
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="list_table">
+      <thead>
+	    <tr>
+	      <td width="6%"><div align="center">序号</div></td>
+	      <td width="9%"><div align="center">属性名称</div></td>
+	      <td width="9%"><div align="center">前台显示名</div></td>
+	      <td width="56%"><div align="center">属性内容</div></td>
+	      <td width="20%"><div align="center">操作</div></td>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="result" item="vo">
+	    <tr id="del{$vo.id}">
+	      <td height="50"><div align="center">{$vo.id}</div></td>
+	      <td><div align="center">{$vo.name}</div></td>
+	      <td><div align="center">{$vo.home_name}</div></td>
+	      <td><div align="left">
+          <form action="{:U('Goods/goods_shuxing_content_add')}" method="post">
+
+          	<foreach name="vo['shuxing_content']" item="vo_sub">          
+          	  <span><input type="text" name="shuxing_content[]" id="shuxing_content{$vo.id}" style="width:60px; height:22px;" value="{$vo_sub}"><input type="button" name="button" value="×" style="height:26px;" onClick="del_content_input(this)"></span>&nbsp;
+          	</foreach>
+            <span id="append_input{$vo.id}"></span>
+	          <input type="button" name="button" value=" + " onClick="add_content_input({$vo.id});" style=" height:26px;">
+              <input type="submit" name="button" value=" 保存 " style=" height:26px;">
+              <input type="hidden" name="id" value="{$vo.id}" />
+              
+          </form>
+	      </div>
+          </td>
+	      <td>
+          <div align="center"><a class="a_button" href="javascript:;" onClick="edit({$vo.id});">编辑</a>
+          <a class="a_button" href="javascript:;" onclick="del({$vo[id]})">删除</a></div></td>
+        </tr>
+        </foreach>
+        </tbody>
+  </table>
+</div>
+<script>
+function add_content_input(id){
+	var html = '<input type="text" name="shuxing_content[]" id="shuxing_content" style="width:70px; height:22px;"><input type="button" name="button" value="×" style=" height:26px;">&nbsp;';
+	$('#append_input'+id).append(html);
+}
+//删除一个属性
+function del_content_input(_t){
+	$(_t).parent().remove();
+}
+</script>
+<!-- 分页 -->
+<div class="page">
+{$page}
+</div>
+
+
+</body>
+</html>

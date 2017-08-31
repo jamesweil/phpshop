@@ -1,0 +1,67 @@
+<div class="home-section">
+    <!--二级头部-->
+    <div class="home-header">
+        <div class="home-header-main clearfix">
+            <!--logo-->
+            <a href="/" class="logo fl">
+                <img src="{$logo_name}" alt=""/>
+                <h2>{$intnetTitle}</h2>
+            </a>
+            <h5 class="fl title">
+                购物车
+            </h5>
+            <!--搜索框-->
+            <div class="home-search-parent fr">
+                <div class="home-search clearfix">
+                    <input type="text" class="fl input" id="pp"/>
+                    <input type="hidden" name="id" class="fl input" value=""/>
+                    <input type="submit" class="fl btn" id="search" onmouseover="searcher()" value="搜&nbsp;索"/>
+                    <div class="gg"></div> 
+                </div>
+                <dl class="home-hotsearch clearfix">
+                    <dt class="fl">热门搜索：</dt>
+                    <foreach name="hot_words" item="hot_word">
+                        <dd class="fl"><a href="{:U('Product/ProductList',['id'=>$hot_word['id']])}">{$hot_word.hot_words}</a></dd>
+                    </foreach>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function searcher(){
+    var _url ="{:U('Goods/searchOne')}";
+    var _data=$('#pp').val();
+    $.post(_url,{title:_data},function(data){
+        if(data.status==0){
+            layer.msg(data.message);
+        }
+        if(data.status==1){
+            $("input[name='id']").val(data.data);
+        }
+    })
+}
+
+$('#pp').keyup(function(){
+    var _url ="{:U('Goods/search')}";
+    var _data=$(this).val();
+    $.post(_url,{title:_data},function(data){
+        if(data.status==0){
+            /*  layer.msg(data.message);*/
+        }
+        if(data.status==1){
+            var _a=data.data;
+            var _b="{:U('Goods/goodsDetails')}"
+            var _html='';
+            for (var i in _a){
+                _html +='<div><a href="'+_b+'?id='+_a[i].id+'"> '+_a[i].title+'</a></div>';
+            }
+        }
+        $('.gg').html(_html);
+        if(data.status==2){
+            $('.gg').html('');
+        }
+    })
+});
+</script>

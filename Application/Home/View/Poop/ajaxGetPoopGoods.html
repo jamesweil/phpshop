@@ -1,0 +1,36 @@
+<div class="title clearfix">
+	<img src="../images/q5.jpg" class="fl">
+	<h2 class="fl">特惠尾单</h2>
+	<span class="fl">SALE</span>
+</div>
+ <if condition="!empty($goodsData)">
+
+<div class="con-wrap">
+	<ul class="clearfix">
+		<foreach name="goodsData" key="key" item="value">
+			<li class="fl">
+				<div class="screenshot">
+					<a href="{:U('Goods/poopByGoodsDetail', ['id' => $value[$poopModel::$goodsId_d]])}"><img src="{$value[$goodsImages::$picUrl_d]}"></a>
+				</div>
+				<div class="products-description">
+					<p>{$value[$goodsModel::$title_d]}</p>
+					<span class="data"><b>496</b>人已购买</span>
+					<div class="products-prices">
+						<div class="fl">
+							<span>￥
+						<php> $status = $value['poopStatus']; 
+						$price =$value[$goodsModel::$priceMember_d];
+						</php>
+						<switch name="status"> 
+						<case value="0"> {$price *$value[$poopModel::$expression_d]/100}</case> 
+						<case value="1">{$price- $value[$poopModel::$expression_d]}</case> 
+						<case value="2|-1">{$price}</case> </switch></span><br> <em>￥{$price}</em>
+						</div>
+						<div class="fr">{$value[$poopModel::$expression_d]}/{$value[$type::$promationName_d]}</div>
+					</div>
+				</div>
+			</li>
+		</foreach>
+	</ul>
+</div>
+</if>

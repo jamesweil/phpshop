@@ -1,0 +1,16 @@
+<extend name="Nofity/abstract" />
+<block name="content">
+<div class="pay_success_content">
+	<div class="pay_success_content_auto">
+		<div class="pay_success_Payment">
+			<div class="pay_success_Payment_top">
+				<img src="/Public/Home/img/lvseOK.png" alt="" class="lvseOK" />
+				<div class="pay_success_Payment_top_text">
+					您已成功付款<span>{$total_fee|default=0.00}</span>元
+				</div>
+			</div>
+			<include file="$payRelated"/>
+		</div>
+	</div>
+</div>
+</block>

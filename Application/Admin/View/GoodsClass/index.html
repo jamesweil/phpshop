@@ -1,0 +1,119 @@
+<extend name="Public/publicHTML"/>
+
+<block name="nav">
+	<div class="breadcrumbs" id="breadcrumbs">
+	<ol class="breadcrumb">
+        <li>分类列表页</li>
+	</ol>
+</div>
+
+</block>
+
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       		<div class="box">
+	             <div class="box-header">
+	               	<nav class="navbar navbar-default">	     
+				        <div class="collapse navbar-collapse">
+						   <div class="navbar-form row">
+				            	<div class="col-md-1">
+									<button class="btn bg-navy" type="button" onclick="tree_open(this);"><i class="fa fa-angle-double-down"></i>展开</button>
+					            </div>
+					            <div class="col-md-9">
+					            	<span class="warning">温馨提示：顶级分类（一级大类）设为推荐时才会在首页楼层中显示【三秒钟缓存】</span>
+					            </div>
+					            <div class="col-md-2">
+					            <a href="{:U('add')}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>新增分类</a>
+				            	</div>
+				            </div>
+				      	</div>
+	    			</nav> 	               
+	             </div><!-- /.box-header -->
+	           <div class="box-body">
+	           <div class="row">
+	            <div class="col-sm-12">
+	              <table id="list-table" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+	                 <thead>
+	                   <tr role="row">
+	                   	   <th valign="middle">分类ID</th>
+		                   <th valign="middle">分类名称</th>
+                           <th valign="middle">分类图片</th>
+                           <th valign="middle">是否推荐</th>
+		                   <th valign="middle">是否显示</th>
+		                   <th valign="middle">是否热卖单品</th>
+		                   <th valign="middle">是否打印耗材推荐</th>
+		                   <th valign="middle">是否办公硬件推荐</th>
+						   <th valign="middle">排序</th>
+		                   <th style="min-width:350px" valign="middle">操作</th>
+	                   </tr>
+	                 </thead>
+			<tbody>
+			<if condition="!empty($parent['data'])">
+			<foreach name="parent['data']" item="vo" key="k" >
+			  		<tr role="row" align="center" class="{$vo.level}" id="{$vo.level}_{$vo.id}" <if condition="$vo[level] gt 0">style="display:none"</if>>
+			  			 <td>{$vo[$model::$id_d]}</td>
+	                     <td align="left" style="padding-left:<php> echo ($vo['level'] * 5); </php>em"> 
+	                      <if condition="isset($vo['hasSon']) &&  $vo['hasSon'] == 1">
+		                   <span class="glyphicon glyphicon-plus btn-warning" style="padding:2px; font-size:12px;"  id="icon_{$vo.level}_{$vo[$model::$id_d]}" aria-hidden="false" onclick="rowClicked(this)" ></span>&nbsp;				    
+					      </if>
+                             <span>{$vo[$model::$className_d]}</span>
+			     		 </td>
+                         <td><span><img onmouseover="$(this).attr('width','150').attr('height','45');"
+										onmouseout="$(this).attr('width','40').attr('height','30');" 
+										width="40"
+										height="30"
+										src="<if condition='isset($vo[$model::$picUrl_d])'>{$vo[$model::$picUrl_d]}</if>"/>
+							</span></td>
+                         <td>
+                             <img width="20" height="20" title="{$title['recommend']}" src="__COMMON__/img/<if condition='$vo[$model::$shoutui_d] eq 1'>yes.png<else />cancel.png</if>" status="{$vo[$model::$shoutui_d]}" onclick="MySort.sort(this,{$vo[$model::$id_d]}, '{$model::$shoutui_d}','{:U('isRecommend')}')"/>
+                         </td>
+				         <td>
+                             <img width="20" height="20" src="__COMMON__/img/<if condition='$vo[$model::$hideStatus_d] eq 1'>yes.png<else />cancel.png</if>" status="{$vo[$model::$hideStatus_d]}" onclick="MySort.sort(this,{$vo[$model::$id_d]}, '{$model::$hideStatus_d}','{:U('isRecommend')}')"/>                             
+                         </td>
+				         <td>
+							 <img title="{$title['hot']}" width="20" class="hot-control" height="20" data-id="{$vo[$model::$id_d]}" src="__COMMON__/img/<if condition='$vo[$model::$hotSingle_d] eq 1'>yes.png<else />cancel.png</if>" data-flag="<if condition='$vo[$model::$hotSingle_d] eq 1'>true<else />false</if>"/>
+						 </td>
+						<td>
+							<img width="20" class="printing-control" height="20" data-id="{$vo[$model::$id_d]}" src="__COMMON__/img/<if condition='$vo[$model::$isPrinting_d] eq 1'>yes.png<else />cancel.png</if>" data-flag="<if condition='$vo[$model::$isPrinting_d] eq 1'>true<else />false</if>"/>
+						</td>
+						<td>
+							<img width="20" class="hardware-control" height="20" data-id="{$vo[$model::$id_d]}" src="__COMMON__/img/<if condition='$vo[$model::$isHardware_d] eq 1'>yes.png<else />cancel.png</if>" data-flag="<if condition='$vo[$model::$isHardware_d] eq 1'>true<else />false</if>"/>
+						</td>
+	                     <td>
+                         	<input type="text" name="{$model::$sortNum_d}" onblur="MySort.sortNumber(this, '{:U('isRecommend')}', {$vo[$model::$id_d]})" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onpaste="this.value=this.value.replace(/[^\d]/g,'')" size="4" value="{$vo[$model::$sortNum_d]}" class="input-sm" />
+                          </td>
+	                     <td style="min-width:350px">
+	                      <a class="btn btn-primary" href="{:U('edit',['id'=> $vo[$model::$id_d]])}">编辑</a>
+                          <a class="btn btn-danger" href="{:U('remove',['id'=>$vo[$model::$id_d]])}">移除分类</a>
+                     	  <a class="btn btn-danger" href="{:U('delClassGoods',['id'=>$vo[$model::$id_d]])}">移除分类商品</a>
+			     		</td>
+	                   </tr>
+	                  </foreach>
+	                  </if>
+	                   </tbody>
+	               </table></div></div>
+				       <input type="hidden" id="common" value="__COMMON__"/>
+		               <div class="page">
+			               <div class="col-sm-5">
+			               		<div class="dataTables_info" id="example1_info" role="status" aria-live="polite">{$parent['page']}</div>
+			               </div>                                   
+		               </div>
+	             </div><!-- /.box-body -->
+	           </div><!-- /.box -->
+       		</div>
+       </div>
+     </section>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script>
+<script type="text/javascript" src="__JS__/goods/goodsClass.js?a={:time()}"></script>
+<script type="text/javascript" src="__JS__/goodsclass/ajaxchangetype.js"></script>
+<script>
+	var IMAGE_TYPE      = {:json_encode(C('image_type'))};
+	var AJAX_CHAGE_TYPE = '{:U("GoodsClass/changType")}';
+</script>
+
+</block>

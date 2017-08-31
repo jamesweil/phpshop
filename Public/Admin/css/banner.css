@@ -1,0 +1,31 @@
+.slideshow {position:relative;padding:0;margin:0; width:750px; float:left; height:466px;}
+.slideshow a img {	border:none; width:750px; height:466px;}
+.slideshow li.slide {list-style-type:none}
+.slideshow .slides {	height:260px;	margin:0}
+.slideshow .slides li.slide {	visibility:hidden;	position:absolute;	left:0px;	top:0;}
+.slideshow .buttons {	display:none}
+.slideshow .buttons {	display:block;	position:absolute;z-index:100;	left:45%;	bottom:20px;margin:0}
+.slideshow .buttons li {	float:left;	display:inline;	width:10px;	height:10px;
+margin:0;	line-height:21px;	background-image:url('../img/d.png');
+background-repeat:no-repeat;	margin-left:15px}
+.slideshow .buttons li a {	float:left;	text-decoration:none;	width:10px;	height:10px;	color:#fff;	outline:0}
+.slideshow ul.buttons li a:hover {	text-decoration:none;	color:#0a0a0a}
+.slideshow ul.buttons li.active a:hover, .slideshow ul.buttons li.active a {	color:#fff;
+background-image:url(../img/d1.png);	background-repeat:no-repeat}
+.search_page {width:1180px; margin:0 auto; margin-top:20px;font-size: 14px; margin-top: 30px;border: 1px dotted #CCC;padding: 10px;font-weight: 600;color: rgb(102, 102, 102);}
+.footer_page {text-align:center; margin-top:20px;}
+.floor1{border-bottom:1px dotted #CCC; padding-bottom:30px;min-height:100px;*+height:100%;_height:100px;color: rgb(102, 102, 102);}
+.floor1 ul{width: 100%; }
+.floor1 ul li{float: left; margin: 10px 0px 0px 42px;}
+.clear{clear: both;}
+
+.text-overflow{width:200px;height:10px;padding:10px;overflow:hidden;font-size:14px;/* 内容超出宽度时隐藏超出部分的内容 */text-overflow:ellipsis;;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/white-space:nowrap;/* 不换行 */}
+
+.buy1 {border-radius: 6px; border: 1px solid #ffa200;width: 66px; height: 25px;margin-right: 10px;line-height: 25px;margin-top:5px;;margin-bottom: 15px;display: block;float: right;text-align: center;color: #ffa200;font-weight: bold;}
+.market{float: right;}
+.line_height{margin-top: 3px;margin-left: 9px;}
+.jiage{text-decoration: line-through;}
+.price1 {color: #ff9933;font-size: 22px;float: left;margin-left: 10px;margin-top: 10px;}
+.Content { width: 1200px; margin: 0 auto; overflow: hidden;}
+.title_bj{text-align:center; margin:30px 0; font-size:18px;}
+.sjkh{border-bottom:1px dotted #ccc; padding-bottom:30px; min-height:200px;}

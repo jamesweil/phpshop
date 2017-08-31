@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="{$init_key_word}" />
+    <meta name="description" content="{$intnet_description}" />
+	<title>{$intnetTitle}</title>
+	<link rel="stylesheet" href="__CSS__/base.css">
+	<link rel="stylesheet" href="__CSS__/style.css">
+	<link rel="stylesheet" href="__CSS__/reg.css">
+	<script src="__JS__/jquery-1.7.2.min.js"></script>
+	<script src="__LAYER__/layer.js"></script>
+</head>
+<body>
+	<!--头部-->
+	<div class="regiup-header w clearfix">
+		<div class="regiup-headerLeft">
+			<a href="{:U('Index/index')}" class="fl">
+				<img src="{$logo_name}" alt=""/>
+				<h2>{$intnetTitle}</h2>
+			</a>
+			<h4 class="fl">欢迎注册</h4>
+		</div>
+		<div class="regiup-headerRight fr">
+			<span>已有账号</span>
+			<a href="{:U('Public/login')}">请登录</a>
+		</div>
+	</div>
+	<div class="regiup-sectionPt">
+		<div class="regiup-section w">
+			<!--栏目状态-->
+			<ul class="regiup-dataColumn clearfix">
+				<!--<li class="fl clearfix active">-->
+					<!--<em class="fl active">1</em>-->
+					<!--<span class="fl">设置用户名</span>-->
+					<!--<i></i>-->
+				<!--</li>-->
+				<!--<li class="fl clearfix">-->
+					<!--<em class="fl">2</em>-->
+					<!--<span class="fl">填写账号信息</span>-->
+					<!--<i></i>-->
+				<!--</li>-->
+				<!--<li class="fl clearfix">-->
+					<!--<em class="fl">3</em>-->
+					<!--<span class="fl">推荐人编码（选填）</span>-->
+					<!--<i></i>-->
+				<!--</li>-->
+				<!--<li class="fl clearfix">-->
+					<!--<em class="fl">4</em>-->
+					<!--<span class="fl">注册成功</span>-->
+					<!--<i></i>-->
+				<!--</li>-->
+			</ul>
+			<!--设置用户名-->
+			<div class="regiup-form-main one w active">
+				<div class="container">
+					<!--<div class="one clearfix">-->
+						<!--<div class="fl">设置会员名</div>-->
+						<!--<div class="fr">-->
+							<!--<input type="text" class="txt" name="user_name" id="user_name">-->
+							<!--<em>请再次输入你会员名</em>-->
+						<!--</div>-->
+					<!--</div>-->
+					<div class="one clearfix">
+						<div class="fl">设置会员名<a class="xsg_relative">*</a></div>
+						<div class="fr">
+							<input type="text" class="txt"  name="user_name" id="user_name">
+							<span>请再次输入你会员名</span>
+						</div>
+					</div>
+					<!--<div class="one clearfix">-->
+						<!--<div class="fl">登录名</div>-->
+						<!--<div class="fr mobile" >18570623665</div>-->
+					<!--</div>-->
+					<!--<div class="one clearfix">-->
+						<!--<div class="fl">设置邮箱</div>-->
+						<!--<div class="fr">-->
+							<!--<input type="text" class="txt" name="email" id="email">-->
+							<!--<em>设置你的邮箱</em>-->
+						<!--</div>-->
+					<!--</div>-->
+
+					<!--<div class="one clearfix">-->
+						<!--<div class="fl">设置登录密码</div>-->
+						<!--<div class="fr">-->
+							<!--<input type="password" class="txt" name="password" >-->
+							<!--<em>只能输入6-20个字母、数字、下划线 </em>-->
+						<!--</div>-->
+					<!--</div>-->
+					<div class="one clearfix">
+						<div class="fl">设置登录密码<a class="xsg_relative">*</a></div>
+						<div class="fr">
+							<input type="password" class="txt"  name="password" id="password">
+							<span>只能输入6-20个字母、数字、下划线</span>
+						</div>
+					</div>
+					<!--<div class="one clearfix">-->
+						<!--<div class="fl">密码确认</div>-->
+						<!--<div class="fr">-->
+							<!--<input type="password" class="txt" >-->
+							<!--<em>请再次输入你的密码</em>-->
+						<!--</div>-->
+					<!--</div>-->
+					<div class="one clearfix">
+						<div class="fl">密码确认<a class="xsg_relative">*</a></div>
+						<div class="fr">
+							<input type="password" class="txt"  name="password1" id="password1">
+							<span>请再次输入你的密码</span>
+						</div>
+					</div>
+					<!--<div class="three">-->
+						<!--<input type="button" value="下一步" id="aout-btn">-->
+					<!--</div>-->
+					<div class="one clearfix">
+						<div class="fl">验证码<a class="xsg_relative">*</a></div>
+						<div class="fr">
+							<input type="text" class="txt"  id="old_code">
+							<img id="checkpic" onclick="changing(this)" src="__PHP__/checkcode.php">
+							<span>请输入验证码</span>
+						</div>
+					</div>
+					<div class="one clearfix">
+						<div class="fl">手机号</div>
+						<div class="fr">
+							<input type="text" class="txt" id="tel" name="mobile">
+							<span>请输入手机号</span>
+						</div>
+					</div>
+					<div class="one clearfix">
+						<div class="fl code_display">验证<a class="xsg_relative">*</a></div>
+						<input type="hidden" name="get_code">
+						<input type="hidden" name="regester_type" value="{$is_start}">
+						<div class="fr code_display">
+								<input type="text" class="txt1" name="rel_code" id="code">
+							<a href="javascript:;" type="button" class="btn" id="V-btn">获取验证码</a>
+							<span>请输入验证码</span>
+					</div>
+						<div>
+							<div class="fl" id="xsg_email_change">设置邮箱</div>
+							<div class="fr">
+								<input type="text" class="txt"  name="email" id="email">
+								<span>设置你的邮箱</span>
+							</div>
+							</div>
+					<div class="three">
+						<input type="button" value="立即注册" id="user-btn">
+					</div>
+				</div>
+			</div>
+			<!--填写账户信息-->
+			<!--<div class="regiup-form-main two w">-->
+				<!--<div class="container">-->
+					<!--<div class="one clearfix">-->
+						<!--<div class="fl">登录名</div>-->
+						<!--<div class="fr mobile" >18570623665</div>-->
+					<!--</div>-->
+					<!--<div class="one clearfix">-->
+						<!--<div class="fl">设置邮箱</div>-->
+						<!--<div class="fr">-->
+							<!--<input type="text" class="txt" name="email" id="email">-->
+							<!--<em>设置你的邮箱</em>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="one clearfix">-->
+						<!--<div class="fl">设置登录密码</div>-->
+						<!--<div class="fr">-->
+							<!--<input type="password" class="txt" name="password" id="password">-->
+							<!--<em>只能输入6-20个字母、数字、下划线 </em>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="one clearfix">-->
+						<!--<div class="fl">密码确认</div>-->
+						<!--<div class="fr">-->
+							<!--<input type="password" class="txt" id="password1">-->
+							<!--<em>请再次输入你的密码</em>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="one clearfix">-->
+						<!--<div class="fl">设置会员名</div>-->
+						<!--<div class="fr">-->
+							<!--<input type="text" class="txt" name="user_name" id="user_name">-->
+							<!--<em>请再次输入你会员名</em>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="three">-->
+						<!--<input type="button" value="立即注册" id="aout-btn">-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--推荐人编码（选项）-->
+			<!--<div class="regiup-form-main three w">-->
+				<!--<div class="container">-->
+					<!--<div class="one clearfix">-->
+						<!--<div class="fl">推荐人编码（选填）</div>-->
+						<!--<div class="fr">-->
+							<!--<input type="text" class="txt" name="recommendcode" id="recommendcode">-->
+							<!--<em>推荐人编码（选填）</em>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="three">-->
+						<!--<input type="button" value="下一步（跳过）" id="red-btn">-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--注册成功-->
+			<div class="regiup-form-main w">
+				<div class="container-ok">
+					<div class="top">恭喜注册成功，你的账户为：</div>
+					<div class="bottom">
+						<span>登录名 ：<b>18570623665</b></span>
+						<span>商城会员名：<b>张三</b></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--底部-->
+	<ul class="regi-footer">
+		<li>
+			<a href="javascript:;">关于我们</a>
+			<a href="javascript:;">联系我们</a>
+			<a href="javascript:;">加盟我们</a>
+			<a href="javascript:;">商城APP</a>
+			<a href="javascript:;" class="active">友情链接</a>
+		</li>
+		<li>
+			<span>{$record_number}</span>
+			<span class="active">有任何问题请联系我们在线客服 电话：{$intnet_phone}</span>
+		</li>
+		<li>{$str}</li>
+	</ul>
+</body>
+<script src="__JS__/registerSetUp.js"></script>
+<script>
+	$(document).ready(function(){
+		//判断验证状态
+		if($('input[name=regester_type]').val()==0)
+		{
+				$('.code_display').hide();
+		}else{
+			$('#tel').parent().prev().append("<a class='xsg_relative'>*</a>");
+			$('#xsg_email_change').parent().addClass('xsg_one_change');
+
+		}
+	})
+	$('#password').bind('blur', function(){
+		var password = $('#password').val();
+		if (password == '') {
+			layer.tips('请填写密码!','#password');
+			return false;
+		};
+		if (password.length<6) {
+			layer.tips('密码不能小于6位!','#password');
+			return false;
+		};
+		if (password.length>20) {
+			layer.tips('密码不能大于20位!','#password');
+			return false;
+		};
+		if (/^(?:\d+|[a-zA-Z]+|[!@#$%^&*]+)$/.test(password)) {
+            layer.tips('密码强度弱,有盗号风险!','#password');
+		}else if (/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*]+$)(?![\d!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/.test(password)) {
+			layer.tips('密码强度强!','#password');
+		}else if (/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/.test(password)) {
+			layer.tips('密码强度中!','#password');
+		};	
+		return true;
+	});
+	//点击更换验证码
+	function changing(src){
+		document.getElementById('checkpic').src=src.src+'?'+Math.random();
+	}
+
+	$('#V-btn').click(function(){
+//		var mobile_val=$("input[name=mobile]").val();
+		var tel = $('#tel').val();
+		if(!/^1[34578]\d{9}$/.test(tel)){
+			layer.tips('请输入正确的手机号', '#tel');
+			return false;
+		}else {
+
+			$.post("/index.php/Home/Public/mobile_check", {'tel':tel}, function (a) {
+				if (a == 2) {
+					$.ajax({
+						type:"POST",
+						url:"check_code_ajax",
+						data:{tel:tel},
+//				data:'mobile='+$('#tel').val()+'&id=2',
+						success: function (data) {
+							if(data.status == 1){
+								layer.tips('短信发送成功','#tel');
+							}else {
+								layer.tips('未知错误');
+								return false;
+							}
+						}
+					})
+				}else{
+					layer.tips('该手机号已注册!', '#tel');
+					return false;
+				}
+			})
+
+
+//			$.ajax({
+//				url: "check_code_ajax",
+//				data:{tel:mobile_val},
+////				data: 'mobile=' + mobile_val+'&id=1',
+//				type: 'POST',
+//				success: function (data) {
+//					if(data.status == 1){
+//						layer.tips('短信发送成功','#tel');
+//					}else {
+//						layer.tips('未知错误');
+//						return false;
+//					}
+////					 if (data['math_code']) {
+////						$('input[name=get_code]').val(data['math_code']);
+////						layer.tips('短信发送成功','#tel');
+////					} else {
+////						layer.msg('已注册');
+////						return false;
+////					}
+//				}
+//			})
+		}
+	})
+	//输入触发
+	$("#code").bind("input propertychange",function(){
+		$.ajax({
+			type:"POST",
+			url:"check_tel_codestatus",
+			data:'code='+$(this).val(),
+//			data:'code='+$(this).val()+'&print_code='+$('input[name=get_code]').val(),
+			success:function(data){
+				if(data['status']==1)
+				{
+					layer.tips('验证码输入正确','#V-btn');
+				}else{
+					layer.tips('验证码不正确,请重试', '#V-btn');
+				}
+			}
+		})
+	});
+
+	//验证用户名是否存在
+	$('input[name=user_name]').bind("input propertychange",function(){
+		$.ajax({
+			type:"POST",
+			url:"{:U('public/ajax_check_username')}",
+			data:"username="+$(this).val(),
+			success:function(data){
+				if(data['status']==1)
+				{
+					layer.tips('用户名格式正确','#user_name');
+				}else{
+					layer.tips('用户名已存在','#user_name');
+				}
+			}
+		})
+	})
+
+	$('input[name=email]').bind("input propertychange",function(){
+		var email=$(this).val();
+		if(!/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(email)){
+			layer.tips('请填写正确邮箱', 'input[name=email]');
+			return false;
+		}else{
+			layer.tips('邮箱格式正确', 'input[name=email]');
+		}
+	})
+
+	$('#password1').bind("input propertychange",function() {
+		if($('#password').val() != $(this).val())
+		{
+			layer.tips('两次输的密码不一致', $(this));
+			return false;
+		}else {
+			if($(this).val()!=''){
+				layer.tips('输入正确', $(this));
+			}
+		}
+	})
+
+
+//	$('#old_code').bind("input propertychange",function() {
+//		var code_num=$(this).val();
+//		$.ajax({
+//			type:"POST",
+//			url:"{:U('public/check_php_code')}",
+//			data:"code="+code_num,
+//			success:function(msg){
+//				if(msg['msg']!=1){
+//					layer.tips('验证码输入有误', '#checkpic');
+//					return false;
+//				}else
+//					layer.tips('输入正确','#checkpic');
+//			}
+//		})
+//
+//	})
+</script>
+</html> 

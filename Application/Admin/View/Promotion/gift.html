@@ -1,0 +1,87 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<div class="wrapper">
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<nav class="navbar navbar-default">
+							<div class="collapse navbar-collapse">
+								<form class="navbar-form form-inline"
+									action="{:U('gift')}" method="post">
+									<div class="form-group">
+										<input type="text" name="like_data" class="form-control"
+											   placeholder="通过名称或金额搜索">
+									</div>
+									<button type="submit" class="btn btn-default">提交</button>
+									<div class="form-group pull-right">
+										<a href="{:U('addGift')}"
+											class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加商品赠品</a>
+									</div>
+								</form>
+							</div>
+						</nav>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body">
+						<div class="row">
+							<div class="col-sm-12">
+								<table id="list-table"
+									class="table table-bordered table-striped dataTable">
+									<thead>
+										<tr role="row">
+											<th class="sorting" tabindex="0">赠品促销类型</th>
+											<th class="sorting" tabindex="0">商品名称/使用满金额</th>
+											<th class="sorting" tabindex="0">适用范围</th>
+											<th class="sorting" tabindex="0">开始时间</th>
+											<th class="sorting" tabindex="0">结束时间</th>
+											<th class="sorting" tabindex="0">操作</th>
+										</tr>
+									</thead>
+									<tbody>
+											<volist name="gift_list" id="list">
+												<tr role="row" align="center">
+													<td class="">{$list.type_name}</td>
+													<td>{$list.expression}</td>
+													<td>{$list.sum}</td>
+													<td>{$list.start_time|date='y-m-d',###}</td>
+													<td>{$list.end_time|date='y-m-d',###}</td>
+													<td><a href="javascript:;"
+														   onclick="Tool.alertEdit('{:U('Promotion/lookGifts')}?id={$list.id}&type={$list.type}','促销商品', 800, 600)"
+														   data-url="{:U('Promotion/get_gifts',array('id'=>$list.id))}"
+														   data-toggle="tooltip" title=""
+														   class="btn btn-info goods_list">查看赠品</a> <a
+															class="btn btn-primary"
+															href="{:U('Promotion/editGift')}?id={$list.id}"><i
+															class="fa fa-pencil"></i></a> <a class="btn btn-danger"
+																							 onclick="Tool.ajax('{:U('deleteGift')}', {id:{$list.id}}, function(res){
+															alert(res['message']);
+															return Tool.notice(res);
+														})"
+																							 data-url=" " data-id="{$vo.id}"><i
+															class="fa fa-trash-o"></i></a></td>
+												</tr>
+											</volist>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 text-left"></div>
+							<div class="col-sm-6 text-right">{$promotionData.page}</div>
+						</div>
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+			</div>
+		</div>
+	</section>
+</div>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script> 
+</block>

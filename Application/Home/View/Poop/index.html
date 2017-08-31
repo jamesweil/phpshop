@@ -1,0 +1,87 @@
+<extend name="Public/indexEdit"/>
+<block name="content">
+<link rel="stylesheet" href="__CSS__/poop.css" />
+<div class="poopcer-content-wrap">
+	<!--Banner-->
+	<if condition="$navBanners">
+		<div class="brasp-banner w">
+			<ul class="solid">
+				<volist name="navBanners" id="navBanner">
+					<li><a href="{$navBanner.ad_link}"><img src="{$navBanner.pic_url}" width="1200" height="400">></a></li>
+				</volist>
+			</ul>
+			<div class="page"></div>
+			<a href="javascript:;" class="btn-left"><</a>
+			<a href="javascript:;" class="btn-right">></a>
+		</div>
+	</if>
+	<if condition="!empty($goodsData)">
+	<div class="popc-centent-wrap w">
+		<div class="title clearfix">
+			<div class="clock" id="time">
+				<span class="fl"></span> <b class="fl">：</b> <span class="fl"></span>
+				<b class="fl">：</b> <span class="fl"></span>
+			</div>
+		</div>
+	</div>
+	<!--限时抢购-->
+	<div class="time-centent-main w">
+		<a href="javascript:;" class="btn-fl"></a> <a href="javascript:;"
+			class="btn-fr"></a>
+		<ul class="clearfix">
+			<foreach name="goodsData" key="key" item="value">
+
+			<li class="fl">
+				<div class="guild">
+					<span class="fl one">限时</span> <span class="fl">抢购</span>
+				</div>
+				<div class="discount">
+					<div class="span">
+						<php>$total = number_format($value[$poopModel::$expression_d],1)</php>
+						<p>{$total}/折</p>
+						<!--<p>{$value[$type::$promationName_d]}</p>-->
+					</div>
+				</div> <!--缩略图-->
+
+				<div class="screenshot">
+					<a href="{:U('Goods/poopByGoodsDetail', ['id' => $value[$poopModel::$goodsId_d]])}"><img
+						src="{$value[$goodsImages::$picUrl_d]}"></a>
+				</div>
+				<div class="products-description">
+					<p>{$value[$goodsModel::$title_d]}</p>
+					<php> $status = $value['poopStatus']; $price = $value[$goodsModel::$priceMember_d];
+						$price=($price<0.01)?0.01:$price;  $price=sprintf("%.2f", $price);
+					</php>
+					<div class="products-prices">
+						参考价 ￥{$price}
+					</div>
+					<div class="products-prices">
+						活动价 ￥
+						<php> $status = $value['poopStatus'];
+						</php>
+						<switch name="status"> <case value="0"> <php>$new_price=$price*$value[$poopModel::$expression_d]/10 ;$new_price=($new_price<0.01)?0.01:$new_price;$new_price=sprintf("%.2f", $new_price);</php>{$new_price}</case>
+							<case value="1"><php>$new_price1=$price-$value[$poopModel::$expression_d] ;$new_price1=($new_price1<0.01)?0.01:$new_price1; $new_price1=sprintf("%.2f", $new_price1);</php>{$new_price1}</case> <case value="2|-1">{$price}</case>
+						</switch>
+
+					</div>
+					<input type="button" value="加入购物车">
+				</div>
+			</li>
+			</foreach>
+		</ul>
+	</div>
+	<div class="Advertising w">
+		<a href="javascript:;"><img src="../images/gg1.jpg" alt=""></a>
+	</div>
+	</if>
+	<!--特惠尾单-->
+	<div class="preferential-centent-main w" id="addHtml"></div>
+
+</div>
+<script>
+	var sec = {$format};</script>
+	<script src="__JS__/expansion.js"></script>
+	<script src="__JS__/common/common.js"></script>
+	<script src="__JS__/poop/poop.js"></script>
+	<script src="__JS__/navbannerurl.js"></script>
+	<script type="text/javascript">dataObj.getData("{:U('ajaxGetPoopGoods')}", 'addHtml');</script></block>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{$intnetTitle}</title>
+<link rel="stylesheet" href="__CSS__/base.css">
+<link rel="stylesheet" href="__CSS__/style.css">
+<link rel="stylesheet" href="__CSS__/settlement.css">
+<link rel="stylesheet" href="__CSS__/toastr.min.css" />
+<link rel="stylesheet" href="__CSS__/confirm.css">
+<script src="__JS__/jquery-1.7.2.min.js"></script>
+<script src="__LAYER__/layer.js"></script>
+<script type="text/javascript" src="__JS__/toastr.min.js"></script>
+</head>
+<body>
+
+	<div class="home-section">
+		<include file="Public/top" />
+
+		<div class="home-section">
+			<!--二级头部-->
+			<div class="home-header">
+				<div class="home-header-main clearfix">
+					<!--logo-->
+					<a href="{:U('Index/index')}" class="logo fl">
+					 	<img src="{$logo_name}" alt=""/>
+                		<h2>{$intnetTitle}</h2>
+					</a>
+					<h5 class="fl title">结算页</h5>
+					<!--搜索框-->
+					<div class="home-search-parent fr">
+						<div class="home-search clearfix">
+							<input type="text" class="fl input" id="pp"/>
+		                    <input type="hidden" name="id" class="fl input" value=""/>
+		                    <input type="submit" class="fl btn" id="search" onmouseover="searcher()" value="搜&nbsp;索"/>
+		                    <div class="gg"></div>
+						</div>
+						<dl class="home-hotsearch clearfix">
+							<dt class="fl">热门搜索：</dt>
+							<if condition="!empty($hot_words)"> <foreach
+								name="hot_words" item="hot_word">
+							<dd class="fl">
+								<a href="javascript:;">{$hot_word.hot_words}</a>
+							</dd>
+							</foreach> </if>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<block name="content"> </block>
+
+		<include file="address" />
+	</div>
+	<div class="Invoice_background"></div>
+		<include file="Public/indexFooter" />
+<script>
+function searcher(){
+    var _url ="{:U('Goods/searchOne')}";
+    var _data=$('#pp').val();
+    $.post(_url,{title:_data},function(data){
+        if(data.status==0){
+            layer.msg(data.message);
+        }
+        if(data.status==1){
+            $("input[name='id']").val(data.data);
+        }
+    })
+}
+
+$('#pp').keyup(function(){
+    var _url ="{:U('Goods/search')}";
+    var _data=$(this).val();
+    $.post(_url,{title:_data},function(data){
+        if(data.status==0){
+            /*  layer.msg(data.message);*/
+        }
+        if(data.status==1){
+            var _a=data.data;
+            var _b="{:U('Goods/goodsDetails')}"
+            var _html='';
+            for (var i in _a){
+                _html +='<div><a href="'+_b+'?id='+_a[i].id+'"> '+_a[i].title+'</a></div>';
+            }
+        }
+        $('.gg').html(_html);
+        if(data.status==2){
+            $('.gg').html('');
+        }
+    })
+});
+</script>

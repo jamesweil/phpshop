@@ -1,0 +1,165 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="__CSS__/index/index.css" rel="stylesheet" type="text/css">
+    <link href="__COMMON__/css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="__COMMON__/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="__COMMON__/js/jquery-ui.min.js"></script>
+</head>
+<style>
+    .goods_title{
+        word-break: keep-all;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+<body class="iframe_body">
+<div class="warpper">
+    <div class="title">仪表盘</div>
+    <div class="content start_content" style="min-width: 1400px">
+        <div class="contentWarp">
+            <div class="contentWarp_item clearfix">
+                <div class="section_select" id="today">
+                </div>
+            </div>
+            <div class="contentWarp_item clearfix">
+                <div class="section_order_select" id="all">
+                  
+                </div>
+                <div class="clear"></div>
+                <div class="section section_order_count" >
+                <div class="sc_title">
+                <i class="sc_icon"></i>
+                <h3>商品销售排行</h3>
+                </div>
+                <div class="sc_warp">
+                <table cellpadding="0" cellspacing="0" class="system_table">
+                <tbody>
+                <tr>
+                <td class="gray_bg">排行</td>
+                <td>商品信息</td>
+                <td class="gray_bg">销量</td>
+                </tr>
+
+                <foreach name="sells" key="key" item="item">
+                    <if condition="$key lt 3">
+                        <tr>
+                            <td class="gray_bg">{$key + 1}</td>
+                                <td class="goods_title" title="{$item.title}"><a  target="_blank" href="{:C('domain')}/index.php/Home/Goods/goodsDetails/id/{$item.goods_id}">{$item.title} </a></td>
+                            <td class="gray_bg">{$item.sum}</td>
+                        </tr>
+                    <else />
+                        <tr>
+                            <td display="none" class="gray_bg display-none">{$key + 1}</td>
+
+                                <td display="none" class="goods_title display-none"  title="{$item.title}"><a  target="_blank" href="{:C('domain')}/index.php/Home/Goods/goodsDetails/id/{$item.goods_id}">{$item.title}</a></td>
+                            <td  display="none" class="gray_bg display-none">{$item.sum}</td>
+                        </tr>
+                        </if>
+                </foreach>
+                <tr>
+                    <td></td><td><a id="td-toggle" href="javascript:;" onclick="td_toggle()">点击查看更多</a></td><td></td></tr>
+
+                </tbody></table>
+                </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="section section_order_count" >
+            <div class="sc_title">
+                <i class="sc_icon"></i>
+                <h1 style="font-size: large">版本信息</h1>
+            </div>
+            <div class="sc_warp">
+                <table cellpadding="0" cellspacing="0" class="system_table">
+                    <tbody><tr>
+                        <td class="gray_bg">程序版本:</td>
+                        <td>ShopSn {$versionInfor.shop_version}</td>
+                        <td class="gray_bg">更新时间:</td>
+                        <td>{$versionInfor.update_version}</td>
+                    </tr>
+                    <tr>
+                        <td class="gray_bg">程序开发:</td>
+                        <td>{$versionInfor.company_name}</td>
+                        <td class="gray_bg">版权所有:</td>
+                        <td>盗版必究</td>
+                    </tr>
+                    <tr>
+                        <td class="gray_bg">官方授权:</td>
+                        <td><a href="http://{$versionInfor['internet_url']}" target="_blank">
+                            <if condition="S('JOM34LSDM98SDO354') == '1'">已授权 <elseif condition="S('JOM34LSDM98SDO354') == '3'" /> <span style="color: red;">授权已到期,请及时续费</span><else /><span style="color: red;">未授权</span></if>
+                        </a></td>
+                    </tr>
+                    </tbody></table>
+            </div>
+        </div>
+        <div class="contentWarp">
+            <div class="section system_section">
+                <div class="system_section_con">
+                    <div class="sc_title">
+                        <i class="sc_icon"></i>
+                        <h3>系统信息</h3>
+                    </div>
+                    <div class="sc_warp divInfor" id="system_warp">
+                        <table cellpadding="0" cellspacing="0" class="system_table">
+                            <tbody><tr>
+                                <td class="gray_bg">服务器操作系统:</td>
+                                <td>{$osInfor.os}</td>
+                                <td class="gray_bg">服务器域名/IP:</td>
+                                <td>{$osInfor.domain} [ {$osInfor.ip} ]</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">服务器环境:</td>
+                                <td>{$osInfor.web_server}</td>
+                                <td class="gray_bg">PHP 版本:</td>
+                                <td>{$osInfor.phpv}</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">Mysql 版本:</td>
+                                <td>{$osInfor.mysql_version}</td>
+                                <td class="gray_bg">GD 版本:</td>
+                                <td>{$osInfor.gdinfo}</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">文件上传限制:</td>
+                                <td>{$osInfor.fileupload}</td>
+                                <td class="gray_bg">最大占用内存:</td>
+                                <td>{$osInfor.memory_limit}</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">最大执行时间:</td>
+                                <td>{$osInfor.max_ex_time}</td>
+                                <td class="gray_bg">安全模式:</td>
+                                <td>{$osInfor.safe_mode}</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">Zlib支持:</td>
+                                <td>{$osInfor.zlib}</td>
+                                <td class="gray_bg">Curl支持:</td>
+                                <td>{$osInfor.curl}</td>
+                            </tr>
+                            </tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer" class="foor">
+    <p><b>{$str}</b></p>
+</div>
+<script type="text/javascript">
+var TODAY_URL = "{:U('getTodayShopInformation')}";
+var ALL_URL   = "{:U('getAllShopInformation')}"
+</script>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script>
+<script type="text/javascript" src="__JS__/index.js"></script>
+<script type="text/javascript">
+
+</script>
+</body>
+
+</html>

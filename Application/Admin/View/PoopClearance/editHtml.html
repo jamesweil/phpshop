@@ -1,0 +1,108 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<div class="wrapper">
+	<section class="content ">
+		<!-- Main content -->
+		<div class="container-fluid">
+			<div class="pull-right">
+				<a href="javascript:history.go(-1)" data-toggle="tooltip" title=""
+					class="btn btn-default" data-original-title="返回"><i
+					class="fa fa-reply"></i></a>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i> 编辑尾货清仓
+					</h3>
+				</div>
+				<div class="panel-body ">
+					<!--表单数据-->
+					<form method="post" id="promotion">
+						<!--通用信息-->
+						<div class="tab-content col-md-10">
+							<div class="tab-pane active" id="tab_tongyong">
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<td class="col-sm-2">促销活动类型：</td>
+											<td class="col-xs-8"><select id="prom_type"
+												name="{$poopModel::$typeId_d}"
+												onchange="Poop.prom(this, 'expression', '{:U('getCouponModel')}')"
+												class="form-control w150">
+													<option value="0">---请选择---</option>
+													<option value="-1" <if condition="-1 == $data[$poopModel::$typeId_d]"> selected="selected" </if>>买就送代金卷</option>
+													<if condition="!empty($classData)"> <foreach
+														name="classData" key='key' item='value'>
+													<option value="{$key}" <if condition="$key == $data[$poopModel::$typeId_d]"> selected="selected" </if> >{$value[$promotionTypeModel::$promationName_d]}</option>
+													</foreach> </if>
+											</select></td>
+										</tr>
+										<tr id="expression">
+
+										</tr>
+
+										<tr>
+											<td>限时活动：</td>
+											<td><input type="radio" name="{$poopModel::$status_d}"
+												checked="checked" value="1" /> 是 <input type="radio"
+												name="{$poopModel::$status_d}" value="0" /> 否</td>
+										</tr>
+										
+										<tr>
+											<td>排序：</td>
+											<td><input type="text" name="{$poopModel::$sort_d}"
+												 value="50" /> 
+										</tr>
+										
+										<tr>
+											<tr>
+											<td>设置尾货清仓商品：</td>
+											<td>
+												<div class="col-xs-9">
+													<input type="text" disabled="disabled" id="goods_name" value="{$goodsData}"  class="form-control" />
+												</div>
+												<div class="col-xs-3">
+													<input type="hidden" id="goods_id" name="{$poopModel::$goodsId_d}" value="{$data[$poopModel::$goodsId_d]}"/> 
+													<input class="btn btn-primary" type="button"
+														onclick="Poop.selectGoods('{:U('searchGoods')}')" value="选择商品">
+												</div>
+											</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td><input class="btn btn-default" type="reset"
+												value="重置"></td>
+											<td class="text-right"><input class="btn btn-primary"
+												type="button"
+												onclick="Tool.addPromation('promotion', '{:U('saveEditData')}')"
+												value="保存">
+												<input type="hidden"  name="{$poopModel::$id_d}" value="{$data[$poopModel::$id_d]}"/> 
+												</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</form>
+					<!--表单数据-->
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<script type="text/javascript" src="__COMMON__/js/jquery-form.js"></script>
+<script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script>
+<script type="text/javascript" src="__JS__/group/callBack.js"></script>
+<script type="text/javascript"
+	src="__JS__/promation/poop.js?a={:time()}"></script>
+<script type="text/javascript">
+Poop.setExtsionId({$data[$poopModel::$expression_d]});
+Poop.prom(document.getElementById('prom_type'), 'expression', "{:U('getCouponModel')}");
+</script>
+</block>

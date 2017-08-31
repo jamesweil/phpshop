@@ -1,0 +1,53 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<div class="wrapper">
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<i class="fa fa-list"></i>&nbsp;商品咨询列表
+						</h3>
+					</div>
+					<div class="panel-body">
+						<nav class="navbar navbar-default">
+							<div class="collapse navbar-collapse">
+								<form action="{:U('Comment/ask_list')}" id="searchForm"
+									class="navbar-form form-inline" role="search" method="post">
+									<div class="form-group">
+										<input type="text" class="form-control" name="{$model::$content_d}"
+											placeholder="搜索评论内容">
+									</div>
+									 <div class="form-group">
+										<input type="text" class="form-control" name="{$model::$userId_d}"
+											placeholder="搜索用户">
+									</div>
+									<button type="button"
+										onclick="Consulation.ajaxGetHtml('{:U('ajaxGetCoulatation')}', 'searchForm', {$_GET['p']})"
+										class="btn btn-info">
+										<i class="fa fa-search"></i> 筛选
+									</button>
+								</form>
+							</div>
+						</nav>
+						<div id="ajax_return">
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<script src="__COMMON__/js/alert.js?a={:time()}"></script>
+<script src="__COMMON__/js/jquery-form.js"></script> 
+<script src="__JS__/comment/comment.js?a={:time()}"></script> 
+<script type="text/javascript">
+Consulation.ajaxGetHtml("{:U('ajaxGetCoulatation')}", 'searchForm', 1);
+</script>
+</block>

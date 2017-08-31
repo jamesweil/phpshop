@@ -1,0 +1,170 @@
+<extend name="Public/publicHTML" />
+
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+<section class="content">
+	<!-- Main content -->
+	<!--<div class="container-fluid">-->
+	<div class="container-fluid">
+		<form id="form" action="{:U('delivery')}"
+			method="post" onsubmit="return Sender.submitCheck('express')">
+			<!--新订单列表 基本信息-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center">基本信息</h3>
+				</div>
+				<div class="panel-body">
+					<nav class="navbar navbar-default">
+						<div class="collapse navbar-collapse">
+							<div class="navbar-form pull-right margin">
+								<a href="{:U('Order/orderList')}"
+									data-toggle="tooltip" title="" class="btn btn-default"
+									data-original-title="返回"><i class="fa fa-reply"></i></a>
+							</div>
+						</div>
+					</nav>
+					<table class="table table-bordered">
+						<tbody>
+
+							<tr>
+								<td class="text-right">订单号:</td>
+								<td class="text-center">{$order[$orderModel::$orderSn_id_d]}<input id="order_id" type="hidden" name="id" value="{$order.id}"/></td>
+								<td class="text-right">下单时间:</td>
+								<td class="text-center">{$order[$orderModel::$createTime_d]|date='Y-m-d H:i',###}</td>
+							</tr>
+							<tr>
+								<td class="text-right">配送方式:</td>
+								<td class="text-center">{$order[$orderModel::$expId_d]}</td>
+								<td class="text-right">配送费用:</td>
+								<td class="text-center">{$order[$orderModel::$shippingMonery_d]}</td>
+							</tr>
+							<tr>
+								<td class="text-right">配送单号:</td>
+								<td class="text-center"><input class="input-sm"
+									name="express_id" id="{$orderModel::$expressId_d}" value="{$order[$orderModel::$expressId_d]}">
+									<input value="{$order[$orderModel::$id_d]}" name="{$orderModel::$id_d}" type="hidden"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+			<!--新订单列表 收货人信息-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center">收货信息</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td class="text-right">收货人:</td>
+								<td class="text-center">{$order[$userAddressModel::$realname_d]}</td>
+								
+							</tr>
+							<tr>
+								<td class="text-right">地址:</td>
+								<td class="text-center">{$order[$userAddressModel::$provId_d]}、{$order[$userAddressModel::$city_d]}、{$order[$userAddressModel::$dist_d]}、{$order[$userAddressModel::$address_d]}</td>
+								<td class="text-right">邮编:</td>
+								<td class="text-center">{$order[$userAddressModel::$zipcode_d]}</td>
+							</tr>
+							<tr>
+								<td class="text-right">电话:</td>
+								<td class="text-center">{$order[$userAddressModel::$mobile_d]}</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+			<!--新订单列表 商品信息-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center">商品信息</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<td class="text-left">商品</td>
+								<td class="text-left">购买数量</td>
+								<td class="text-left">商品单价</td>
+							</tr>
+						</thead>
+						<tbody>
+							<volist name="goodsInfo" id="good">
+							<tr>
+								<td class="text-left"><a
+									href="">{$good[$goodsModel::$title_d]}</a>
+								</td>
+								<td class="text-left">{$good[$orderGoodsModel::$goodsNum_d]}</td>
+								<td class="text-right">{$good[$orderGoodsModel::$goodsPrice_d]}</td>
+							</tr>
+							</volist>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+			<!--发货状态下课修改订单号-->
+			<if condition="$order['shipping_status'] neq 1"> <!--新订单列表 操作信息-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center">发货信息</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td colspan="4">
+									<div class="form-group text-center">
+										<if condition=" ($order['order_status'] eq 1 && $order['order_status'] lt 3)" >
+										<button  class="btn btn-primary"
+											type="submit">确认发货</button>
+										<else/>
+											<button  class="btn btn-primary"
+											type="button">发货中</button>
+										</if>
+										<button onclick="history.go(-1)" class="btn btn-primary"
+											type="button">返回</button>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			</if>
+
+			<!--新订单列表 操作记录信息-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center">查询</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<td class="text-center">快递公司</td>
+								<td class="text-center">查看</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="text-center">顺丰</td>
+								<td class="text-center"><a href="http://www.kuaidi100.com/"
+									target="_blank">查看物流</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+<script src="__PUBLIC__/Admin/js/sendGoods.js"></script>
+</block>

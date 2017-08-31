@@ -1,0 +1,36 @@
+<extend name="Public/indexEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+    <link rel="stylesheet" type="text/css" href="__COMMON__/css/page.css"/>
+    <div class="person-section clearfix">
+        <!--内容-->
+        <div class="paper-current-main w">
+            当前位置：<span>首页</span> > <span>公告列表</span>
+        </div>
+        <div class="announce-list">
+             <span class="announce-list-left">标题</span>
+             <span class="announce-list-right">时间</span>
+        </div>
+        <dl class="announce-notic-centent">
+            <dt>
+               <ul>
+                    <volist name="announces" id="announce">
+                        <a href="{:U('Service/getAnnouDetails',['id'=>$announce['id']])}">
+                            <li>
+                                <span class="announce-list-li-left">{$announce.title}</span>
+                                <span class="announce-list-li-right">{$announce.create_time|date='Y-m-d h:i:s',###}</span>
+                            </li>
+                        </a>
+                    </volist>
+              </ul>
+            </dd>
+            <div class="page"> {$page_show}</div>
+        </dl>
+    </div>
+    <!--尾部-->
+
+    <script src="__JS__/expansion.js"></script>
+
+</block>

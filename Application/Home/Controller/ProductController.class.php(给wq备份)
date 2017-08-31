@@ -1,0 +1,265 @@
+<?php
+// +----------------------------------------------------------------------
+// | OnlineRetailers [ WE CAN DO IT JUST THINK IT ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2003-2023 www.yisu.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author: 王强 <opjklu@126.com>
+// +----------------------------------------------------------------------
+
+namespace Home\Controller;
+
+use Common\Tool\Tool;
+use Think\Page;
+use Common\Model\BaseModel;
+use Home\Model\GoodsModel;
+
+class ProductController extends BaseController
+{
+    public function index()
+    {
+        //检测传值
+        Tool::checkPost($_GET, array('is_numeric'=> array('sid')), true, array('sid')) === false ? $this->error('灌水机制已打开', U('Index/index')) : true;
+        
+        $this->display();
+    }
+
+    public function ProductList(){
+         $id = $_GET['cid'];
+         $result = M("GoodsClass")->field('fid,class_name,id')->find($id);
+        //顶部菜单
+        if($result['fid']==0){
+            $str = $this->getCategory($id);
+            $str = rtrim($str,",");
+            $results = M("GoodsClass")
+                       ->field('id,fid,class_name')
+                       ->where(['id'=>['in',$str]])
+                       ->select();
+            // 该id的商品
+            $ids = $this->getCategory($id);
+            $resultGoods = $this->allGoods($ids);
+            echo 111;
+            exit;
+            $reGoodsImgs = $this->allGoodsImgs($resultGoods);
+
+            //去除商品相册为空的数据
+            $resultGoodsImgs = $this->removeNullImgs($reGoodsImgs);
+
+
+            $count=count($resultGoodsImgs);
+            $page=new Page($count,4);
+
+            $resultGoodsImgs = array_slice($resultGoodsImgs,$page->firstRow,$page->listRows);
+            $page_show = $page->show();
+            
+            $this->assign('page_show',$page_show);
+
+
+            //顶级菜单
+            $top_cate = M("GoodsClass")->field("id,fid,class_name")->find($id);
+
+
+
+
+            $this->assign("top_cate",$top_cate);
+            //右边的分类
+            $this->assign("results",$results);
+            //商品分类
+            $this->assign("resultGoodsImgs",$resultGoodsImgs);
+
+
+
+
+
+
+            $this->display();
+            exit;
+        }else{
+            $result1 = M("GoodsClass")->field('fid,class_name,id')->find($result['fid']);
+            //二级菜单
+            if($result1['fid']==0){
+                $str = $this->getCategory($result1['id']);
+                $str = rtrim($str,",");
+                $results = M("GoodsClass")
+                    ->field('id,fid,class_name')
+                    ->where(['id'=>['in',$str]])
+                    ->select();
+                // 该id的商品
+                $ids = $this->getCategory($id);
+                $resultGoods = $this->allGoods($ids);
+                $reGoodsImgs = $this->allGoodsImgs($resultGoods);
+                //去除商品相册为空的数据
+                $resultGoodsImgs = $this->removeNullImgs($reGoodsImgs);
+                $count=count($resultGoodsImgs);
+                $page=new Page($count,4);
+                $resultGoodsImgs = array_slice($resultGoodsImgs,$page->firstRow,$page->listRows);
+                $page_show = $page->show();
+
+                $this->assign('page_show',$page_show);
+
+
+                //顶级菜单
+                $top_cate = M("GoodsClass")->field("id,fid,class_name")->find($result1['id']);
+
+                //当前点击的二次菜单
+                $current_cat = M("GoodsClass")->field("id,fid,class_name")->find($id);
+                $this->assign("current_cat",$current_cat);
+
+
+
+
+
+                $this->assign("top_cate",$top_cate);
+                //右边的分类
+                $this->assign("results",$results);
+                //商品分类
+                $this->assign("resultGoodsImgs",$resultGoodsImgs);
+
+
+                $this->display();
+
+            }else{
+
+                $str = $this->getCategory($result1['fid']);
+                $str = rtrim($str,",");
+
+                $results = M("GoodsClass")
+                    ->field('id,fid,class_name')
+                    ->where(['id'=>['in',$str]])
+                    ->select();
+
+
+                // 该id的商品
+                $resultGoods = M("Goods")
+                              ->field('id,price_market,price_member')
+                              ->where(['class_id'=>$id])
+                              ->select();
+
+                $reGoodsImgs = $this->allGoodsImgs($resultGoods);
+                //去除商品相册为空的数据
+                $resultGoodsImgs = $this->removeNullImgs($reGoodsImgs);
+
+                $count=count($resultGoodsImgs);
+                $page=new Page($count,4);
+                $resultGoodsImgs = array_slice($resultGoodsImgs,$page->firstRow,$page->listRows);
+                $page_show = $page->show();
+
+
+                //考虑到点击第3级菜单的时候，商品列表中显示的菜单和以前的不一样，要显示出自己和兄弟出来
+                //先找到父亲，通过父亲查找子类显示出来
+                $third_parent = M("GoodsClass")->field("fid")->find($id) ;
+                $third_parent_id = $third_parent['fid'];
+                $third_brother = $this->getCategory($third_parent_id);
+                $third_brother = rtrim($third_brother,",");
+                $third_parent_childs = M("GoodsClass")
+                                     ->field("id,class_name,fid")
+                                     ->where(['id'=>['in',$third_brother]])
+                                     ->select();
+
+
+                 $this->assign("third_parent_id",$third_parent_id);
+                 $this->assign("third_parent_childs",$third_parent_childs);
+                 $this->assign('page_show',$page_show);
+
+                //当前菜单的父级菜单
+                $top_cate = M("GoodsClass")->field("id,fid,class_name")->find($result1['fid']);
+
+
+
+
+
+
+                //当前点击的三次菜单
+                $current_third_cat = M("GoodsClass")->field("id,fid,class_name")->find($id);
+
+                $this->assign("current_third_cat",$current_third_cat);
+
+
+
+
+
+                $this->assign("top_cate",$top_cate);
+                //右边的分类
+                $this->assign("results",$results);
+                //商品分类
+                $this->assign("resultGoodsImgs",$resultGoodsImgs);
+                $this->display();
+                exit;
+            }
+
+        }
+
+    }
+
+
+
+    /**
+     * 寻找子类的id
+     * @param integer $category_id 父级分类
+     * @return string $category_ids 该父级分类的子类
+     */
+    private  function getCategory($category_id ){
+        $category_ids = $category_id.",";
+        $child_category = M("GoodsClass") -> field("id,class_name")->where(['fid'=>$category_id])->select();
+        foreach( $child_category as $key => $val ){
+            $category_ids .= $this->getCategory( $val["id"] );
+        }
+        return $category_ids;
+    }
+
+    /**
+     * 获取全部分类的商品基本信息
+     * @param string $categoy 商品分类的id
+     * @return mixed  商品的基本信息
+     */
+    private function allGoods($categoy)
+    {
+        $goodsModel = BaseModel::getInstance(GoodsModel::class);
+        
+        $categoryGoods=$goodsModel->getAttribute([
+            'field' => [
+                GoodsModel::$id_d, 
+                GoodsModel::$priceMarket_d, 
+                GoodsModel::$priceMember_d
+            ],
+            'where' => [
+                [
+                    GoodsModel::$classId_d =>['in',$categoy], 
+                    GoodsModel::$pId_d => 0
+                ]
+            ]
+        ]);
+       return $categoryGoods;
+    }
+
+    /**
+     * 获取全部商品分类的商品信息
+     * @param array $allgoods 商品基本信息
+     * @return mixed 返回商品相册信息
+     */
+    private function allGoodsImgs($allgoods){
+        foreach($allgoods as &$allgood){
+            $pic_url = M("GoodsImages")->where(['goods_id'=>$allgood['id']])->limit(1)->find();
+            $allgood['pic_url'] = $pic_url['pic_url'];
+        }
+       unset($allgood);
+       return $allgoods;
+    }
+
+    /**
+     * 去除商品信息中商品相册为空的数据
+     * @param array $reGoodsImgs 商品相册信息
+     * @return mixed $reGoodsImgs 返回商品信息：商品相册不为空的数据
+     */
+    private function removeNullImgs($reGoodsImgs){
+        foreach($reGoodsImgs as $k=>$reGoodsImg){
+            if(empty($reGoodsImg['pic_url'])){
+                unset($reGoodsImgs[$k]);
+            }
+        }
+     return $reGoodsImgs;
+    }
+
+}

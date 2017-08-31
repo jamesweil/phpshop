@@ -1,0 +1,173 @@
+<extend name="Public/indexEdit"/>
+<block name="content">
+	<!--轮播-->
+	<div class="hpTopNews clearfix">
+		<div class="null fl"></div>
+		<div class="hpTopBanner fl">
+			<ul class="fl slides clearfix">
+				<li class="fl"><a href="javscript:;"><img></a></li>
+				<li class="fl"><a href="javscript:;"><img></a></li>
+			</ul>
+			<a href="javascript:;" class="left"><</a>
+			<a href="javascript:;" class="right">></a>
+			<div class="page">
+				<input type="hidden" id="banner_url" value="{:U('Index/banner')}"/>
+			</div>
+		</div>
+		<div class="fl hpLeftBanner">
+			<div class="special-sales">
+				<h2 class="clearfix">
+					<span class="fl">新品</span>
+					<a href="{:U('Product/ProductList',['show'=>'show','new'=>'new'])}" class="fr">更多></a>
+				</h2>
+				<div class="mc">
+					<ul>
+						<volist name="newThrees" id="top">
+							<li style="overflow: hidden;" <if condition='$i==1'>class="active"</if> ><a href="{$top.ad_link}"><img width="284" height="115" class="lazy" src="__IMG__/load1.jpg" data-original="{$top.pic_url}" /></a></li>
+						</volist>
+
+					</ul>
+					<ol class="clearfix">
+						<volist name="newThrees" id="top" key="i">
+							<li  <if condition='$i==1'>class="fl hover"</if><if condition='$i==2'>class="fl active"</if><if condition='$i==3'>class="fl"</if>>
+							{$top.title}
+							</li>
+						</volist>
+					</ol>
+				</div>
+			</div>
+			<div class="jdnews">
+				<h3 class="clearfix">
+					<b class="fl">亿速公告</b>
+					<a href="{:U('Service/getAnnounceList')}" class="fr">更多></a>
+				</h3>
+				<foreach name="announcements" item="announce">
+					<p>
+						<a href="{:U('Service/getAnnouDetails',array('id'=>$announce['id']))}" class="clearfix">
+							<em class="fl">[公告]</em>
+								<span class="fl">
+									{$announce.title|msubstr=0,12,'utf-8',true}
+								</span>
+							<if condition="$announce.type eq 1">
+								<span><img src="__IMG__/new.gif" alt=""></span>
+							</if>
+						</a>
+					</p>
+				</foreach>
+			</div>
+		</div>
+	</div>
+
+	<div class="home-today w">
+		<div class="fl home-today-fl">
+			<img src="__IMG__/t-title.jpg" alt="">
+			<i class="mrtj-sj"></i>
+			<ol class="mrtj-tab clearfix">
+				<li class="fl active">我喜欢的产品</li>
+				<li class="fl" onclick="restric()">超值让利</li>
+				<li class="fl">最新爆款</li>
+			</ol>
+		</div>
+		<div class="fl home-today-fr">
+
+			<ul class="clearfix active">
+				<volist name="tuijian" id="tuijian">
+					<li class="fl"><a href="{$tuijian.ad_link}"><img height="165" width="247" class="lazy" src="__IMG__/load2.jpg" data-original="{$tuijian.pic_url}" alt=""></a></li>
+				</volist>
+			</ul>
+			<ul class="clearfix">
+				<volist name="restric" id="restric">
+					<li class="fl"><a href="{$restric.ad_link}"><img height="165" width="247" class="lazy" src="__IMG__/load2.jpg" data-original="{$restric.pic_url}" alt=""></a></li>
+				</volist>
+			</ul>
+			<ul class="clearfix">
+				<volist name="newTop" id="newTop">
+					<li class="fl"><a href="{$newTop.ad_link}"><img height="165" width="247" class="lazy" src="__IMG__/load2.jpg" data-original="{$newTop.pic_url}" alt=""></a></li>
+				</volist>
+			</ul>
+			<ul class="clearfix">
+				<li class="fl"><a href="javascript:;"><img class="lazy" src="__IMG__/load2.jpg" data-original="img/con_four.jpg" alt=""></a></li>
+				<li class="fl"><a href="javascript:;"><img class="lazy" src="__IMG__/load2.jpg" data-original="img/con_four.jpg" alt=""></a></li>
+				<li class="fl"><a href="javascript:;"><img class="lazy" src="__IMG__/load2.jpg" data-original="img/con_four.jpg" alt=""></a></li>
+				<li class="fl"><a href="javascript:;"><img class="lazy" src="__IMG__/load2.jpg" data-original="img/con_four.jpg" alt=""></a></li>
+			</ul>
+		</div>
+	</div>
+	<!--1f-->
+	<volist name="bigInfor" id="big" key="a">
+		<div class="home-section{$a} home-section" >
+			<div class="floor-main-top clearfix">
+				<em class="fl">{$a}F</em>
+				<h2 class="fl">
+					<b><a href="{$big.url}" style="color:black;">{$big.class_name}</a></b>
+				</h2>
+			</div>
+			<div class="floor-main w clearfix">
+				<ul class="saleZone-fl fl">
+					<li class="saleInfo">
+						<a href="{:U('Product/ProductList',['id'=>$big['class_id']])}"><img class="lazy" data-original="{$big.class_pic_url}" src="__IMG__/load3.jpg" height="296" width="196"></a>
+					</li>
+					<li class="saleNav clearfix">
+						<h4 class="fl">推荐</h4>
+						<volist name="big.brand" id="brand">
+							<a href="{:U('Brand/index',['brand'=>$brand['id']])}" class="fl">{$brand.brand_name}</a>
+						</volist>
+					</li>
+				</ul>
+				<div class="saleZone-fr fl">
+					<div class="content-main clearfix">
+						<div class="fl">
+							<dl class="clearfix con fl active">
+								<if condition="$big['one']!=null">
+									<dd class="fl">
+										<a href="{:U('Goods/goodsDetails',['id'=>$big['one']['id']])}">
+											<div class="img-parent-warp">
+												<img class="lazy" data-original="{$big.one.pic_url}" src="__IMG__/load4.jpg" alt="">
+											</div>
+											<p>{$big.one.title}</p>
+											<span>￥{$big.one.price_member}</span>
+										</a>
+									</dd>
+								</if>
+								<dt class="fl">
+									<a href="{$big.brand.ad_link}"><img class="lazy" data-original="{$big.brand.pic_url}" src="__IMG__/load5.jpg" alt=""></a>
+								</dt>
+								<volist name="big.goods" id="goods">
+									<dd class="fl">
+										<a href="{:U('Goods/goodsDetails',['id'=>$goods['id']])}">
+											<div class="img-parent-warp">
+												<img class="lazy" data-original="{$goods.pic_url}" src="__IMG__/load4.jpg" alt="">
+											</div>
+											<p>{$goods.title}</p>
+											<span>￥{$goods.price_member}</span>
+										</a>
+									</dd>
+								</volist>
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<if condition="$big['ad']!=null">
+			<div class="advertisement1">
+				<a data="{$big.ad.ad_link}" gg="{$big.ad.id}" onclick="addAd(this)" href="javascript:;">
+					<img class="lazy" data-original="__SERVER__/{$big.ad.pic_url}" src="__IMG__/load5.jpg" alt="{$big.ad.title}" height="110">
+				</a>
+			</div>
+		</if>
+	</volist>
+	</div>
+	</div>
+	<!--左侧下楼梯菜单-->
+	<div id="menu">
+		<ul>
+			<volist name="bigInfor" id="big">
+				<li>{$big.class_name}<span>{$big.class_name}</span></li>
+			</volist>
+		</ul>
+	</div>
+	<input type="hidden" id="loading" value="__SERVER__"/>
+	<script src="__JS__/jquery.lazyload.min.js"></script>
+	<script src="__JS__/index.js"></script>
+</block>

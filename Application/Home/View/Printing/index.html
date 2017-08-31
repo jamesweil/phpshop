@@ -1,0 +1,236 @@
+<extend name="Public/indexEdit"/>
+<block name="banner">
+    <!--Banner-->
+    <if condition="$navBanners">
+        <div class="brasp-banner w">
+            <ul class="solid">
+                <volist name="navBanners" id="navBanner">
+                    <li><a href="{$navBanner.ad_link}"><img src="{$navBanner.pic_url}" width="1200" height="400">></a></li>
+                </volist>
+            </ul>
+            <div class="page"></div>
+            <a href="javascript:;" class="btn-left"><</a>
+            <a href="javascript:;" class="btn-right">></a>
+        </div>
+    </if>
+</block>
+<block name="content">
+    <div class="lates-centent w">
+        <!--热卖促销-->
+        <div class="promotion">
+            <h2 class="PromotionTitle clearfix">
+                <b>厨具热卖</b>
+                <i></i>
+                <span>HOT</span>
+            </h2>
+            <ul class="clearfix">
+                <li class="one fl">
+                    <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_one['id']])}"><img src="{$result_goods_one.nav_img_url}"></a>
+                </li>
+                <li class="two fl">
+                    <div class="con clearfix">
+                        <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_two['id']])}">
+                            <div class="fl conFl">
+                                <p>{$result_goods_two.title}</p>
+                                <div class="price clearfix">
+                                    <em class="fl">价格</em>
+                                    <span class="fl"><i>￥</i>{$result_goods_two.price_market}</span>
+                                </div>
+                            </div>
+                            <div class="fr conFr">
+                                <img src="{$result_goods_two.nav_img_url}" alt="">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="con">
+                        <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_three['id']])}">
+                            <div class="fl conFl">
+                                <p>{$result_goods_three.title}</p>
+                                <div class="price clearfix">
+                                    <em class="fl">价格</em>
+                                    <span class="fl"><i>￥</i>{$result_goods_three.price_market}</span>
+                                </div>
+                            </div>
+                            <div class="fr conFr">
+                                <img src="{$result_goods_three.nav_img_url}" alt="">
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="three fl">
+                    <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_four['id']])}">
+                        <div class="parent">
+                            <p>{$result_goods_four.title}</p>
+                            <div class="price clearfix">
+                                <em class="fl">价格</em>
+                                <span class="fl"><i>￥</i>{$result_goods_four.price_market}</span>
+                            </div>
+                        </div>
+                        <img src="{$result_goods_four.nav_img_url}">
+                    </a>
+                </li>
+                <li class="four fl">
+                    <div class="con">
+                        <p>{$result_goods_five.title}</p>
+                        <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_five['id']])}"><img src="{$result_goods_five.nav_img_url}"></a>
+                    </div>
+                    <div class="con">
+                        <p>{$result_goods_six.title}</p>
+                        <a href="{:U('Goods/goodsDetails',['id'=>$result_goods_six['id']])}"><img src="{$result_goods_six.nav_img_url}"></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--推荐-->
+        <div class="work-centent-main">
+            <h2 class="title">家具厨具推荐</h2>
+            <div class="content-main clearfix click-tab-mrap">
+                <div class="fl main-left">
+                    <img src="__SERVER__/{$print_pic}" alt="">
+                    <dl class="clearfix">
+                        <dt class="fl">热门搜索</dt>
+                        <volist name="hot_goods" id="hot">
+                            <dd class="fl"><a href="{:U('Goods/goodsDetails',['id'=>$hot['id']])}">{$hot.title}</a></dd>
+                        </volist>
+                    </dl>
+                </div>
+                <div class="fr main-right">
+                    <div class="nav clearfix">
+                        <ol class="fl clearfix life-use-rec-title tab-pane">
+                            <li class="fl active"><img src="../images/d_15.png">全部</li>
+                            <foreach name="print_others" item="print_other" key="k">
+                                <li class="fl">{$k}</li>
+                            </foreach>
+                        </ol>
+                        <a href="javascript:;" class="fr">查看更多 ></a>
+                    </div>
+                    <div class="life-use-rec-content tab-content-wrap">
+                        <ul class="content clearfix con-main">
+                            <foreach name="print_all" item ="print_all_child">
+                                <li class="fl">
+                                    <div class="screenshot">
+                                        <a href="{:U('Goods/goodsDetails',['id'=>$print_all_child['id']])}"><img src="__SERVER__/{$print_all_child['pic_url']}"></a>
+                                    </div>
+                                    <p class="products-description"><a href="{:U('Goods/goodsDetails',['id'=>$print_all_child['id']])}">{$print_all_child['title']}</a></p>
+                                    <i class="products-prices">¥{$print_all_child['price_market']}</i>
+                                    <a href="{:U('Goods/goodsDetails',['id'=>$print_all_child['id']])}" class="products">
+                                    </a>
+                                </li>
+                            </foreach>
+                        </ul>
+                        <foreach name="print_others" item="print_other">
+                            <ul class="content clearfix con-main">
+                                <foreach name="print_other" item="print_other_child">
+                                    <li class="fl">
+                                        <div class="screenshot">
+                                            <a href="{:U('Goods/goodsDetails',['id'=>$print_other_child['id']])}"><img src="__SERVER__{$print_other_child['pic_url']}"></a>
+                                        </div>
+                                        <p class="products-description"><a href="{:U('Goods/goodsDetails',['id'=>$print_other_child['id']])}">{$print_other_child['title']}</a></p>
+                                        <i class="products-prices">¥{$print_other_child['price_market']}</i>
+                                        <a href="{:U('Goods/goodsDetails',['id'=>$print_other_child['id']])}" class="products">
+                                        </a>
+                                    </li>
+                                </foreach>
+                            </ul>
+                        </foreach>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lates-content">
+            <div class="selected click-tab-mrap" id="selected1">
+                <div class="title clearfix">
+                    <h3 class="fl">热卖精选</h3>
+                    <ul class="fl clearfix block best-sellers-title tab-pane">
+                        <li class="fl hover">精选商品</li>
+                        <foreach name="hot_selects" item="hot_select" key="k">
+                            <li class="fl">{$k}</li>
+                        </foreach>
+                    </ul>
+                    <a href="javascript:;" class="fr link">更多商品分类></a>
+                </div>
+                <div class="best-sellers-choose tab-content-wrap">
+                    <ul class="con-mian clearfix block con-main">
+                        <if condition="careGoods">
+                                <foreach name="careGoods" item="careGood">
+                                    <li class="fl">
+                                        <a href="{:U('Goods/goodsDetails',['id'=>$careGood['id']])}"><img src="{$careGood.pic_url}" width="230" height="230"></a>
+                                        <a href="{:U('Goods/goodsDetails',['id'=>$careGood['id']])}" class="title-t">
+                                            <p>{$careGood.title}</p>
+                                        </a>
+                                        <span>原价：<i>{$careGood.price_market}元</i></span>
+                                        <div class="purchase">
+                                            <b>¥</b>{$careGood.price_market}
+                                            <a href="{:U('Goods/goodsDetails',['id'=>$careGood['id']])}"><span>购买</span></a>
+                                        </div>
+                                    </li>
+                                </foreach>
+                            <else/>
+                                <div class="hot-select-shop">亲，您访问的数据不存在</div>
+                        </if>
+                    </ul>
+                    <foreach name="hot_selects" item="hot_select_one">
+                        <ul class="con-mian clearfix con-main">
+                            <if condition="$hot_select_one">
+                                    <foreach name="hot_select_one" item="hot_select_two">
+                                        <li class="fl">
+                                            <a href="{:U('Goods/goodsDetails',['id'=>$hot_select_two['id']])}"><img src="__SERVER__/{$hot_select_two['pic_url']}"  width="230" height="230"></a>
+                                            <a href="{:U('Goods/goodsDetails',['id'=>$hot_select_two['id']])}" class="title-t">
+                                                <p>{$hot_select_two['title']}</p>
+                                            </a>
+                                            <span>原价：<i>{$hot_select_two['price_market']}</i></span>
+                                            <div class="purchase">
+                                                <b>¥</b>{$hot_select_two['price_market']}
+                                                <a href="{:U('Goods/goodsDetails',['id'=>$hot_select_two['id']])}"><span>购买</span></a>
+                                            </div>
+                                        </li>
+                                    </foreach>
+                                <else/>
+                                <div class="hot-select-shop">亲，您访问的数据不存在</div>
+                            </if>
+
+                        </ul >
+                    </foreach>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <script src="__JS__/expansion.js"></script>
+    <script src="__JS__/header.js"></script>
+    <script src="__JS__/navbannerurl.js"></script>
+    <script>
+
+        $(function(){
+            $.fn.extend({
+                //点击选项卡   abtnClass 操作按钮class  conClass 内容添加class
+                clickTab: function (aBtnClass, conClass) {
+                    //默认值
+                    var json = {};
+                    json.aBtnClass = aBtnClass || 'active';
+                    json.conClass = conClass || 'active';
+                    $(this).each(function (index, obj) {
+                        var aBtn = $(this).find('.tab-pane li');
+                        var aCon = $(this).find('.tab-content-wrap .con-main');
+                        aBtn.eq(0).addClass(json.aBtnClass);
+                        aCon.eq(0).addClass(json.conClass);
+                        aBtn.on('click', function () {
+                            aBtn.removeClass(json.aBtnClass).eq($(this).index()).addClass(json.aBtnClass);
+                            aCon.removeClass(json.conClass).eq($(this).index()).addClass(json.conClass);
+                        });
+                    });
+                }
+            });
+            $('.click-tab-mrap').clickTab('active','active');
+            var aLi = $('.work-centent-main .content-main .main-right .content li');
+            aLi.on('mouseenter',function(){
+                $(this).addClass('active');
+            }).on('mouseleave',function(){
+                $(this).removeClass('active');
+            });
+        });
+
+    </script>
+</block>

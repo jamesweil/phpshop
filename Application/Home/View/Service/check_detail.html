@@ -1,0 +1,238 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+		<div class="ficationFl fl">
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">订单中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Order/order_myorder')}">·&nbsp;&nbsp;我的订单</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('OrderGroup/order_group')}">·&nbsp;&nbsp;团购订单</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('Order/cancel_order_record')}">·&nbsp;&nbsp;取消订单记录</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">资产中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Assets/balance')}">·&nbsp;&nbsp;余额</a>
+				</dd>
+				<dd>
+					<a href="{:U('Cart/goods')}">·&nbsp;&nbsp;我的购物车</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myCollection')}">·&nbsp;&nbsp;我的收藏</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myComment')}">·&nbsp;&nbsp;我的评价</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/coupon')}">·&nbsp;&nbsp;优惠券</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/integral')}">·&nbsp;&nbsp;积分</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/punkte')}">·&nbsp;&nbsp;积分兑换</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/gekauft')}">·&nbsp;&nbsp;我购买过的产品</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myTracks')}">·&nbsp;&nbsp;浏览足迹</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em> 
+					<span class="fl">财务中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Finance/my_invoice')}">·&nbsp;&nbsp;我的发票</a>
+				</dd>				
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+					<dd>
+						<a href="{:U('Finance/my_shipment')}">·&nbsp;&nbsp;我的发货</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/my_payment')}">·&nbsp;&nbsp;我的付款</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/other_orders')}">·&nbsp;&nbsp;其他订单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/closed_order')}">·&nbsp;&nbsp;已出兑账单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/outstanding_order')}">·&nbsp;&nbsp;未出兑账单</a>
+					</dd>
+				</if>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">特色业务</span>
+				</dt>
+				<dd>
+					<a href="{:U('SpecialBusiness/enterprise_group')}">·&nbsp;&nbsp;企业团购</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/purchase_requisition')}">·&nbsp;&nbsp;采购需求单</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/join_application')}">·&nbsp;&nbsp;加盟申请</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/printer_rental')}">·&nbsp;&nbsp;打印机租赁</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">商品中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('GoodsCenter/goods_search')}">·&nbsp;&nbsp;商品搜索</a>
+				</dd>
+			</dl>
+			<dl data="false" class="active">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">客户服务</span>
+				</dt>
+				<dd>
+					<a href="{:U('Service/return_repair')}">·&nbsp;&nbsp;返修退换货</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/after_sale')}">·&nbsp;&nbsp;售后管理</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/advisoryReply')}">·&nbsp;&nbsp;咨询回复</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/opinion')}">·&nbsp;&nbsp;意见建议</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/repair_choice')}">·&nbsp;&nbsp;上门维修服务</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/announcement')}">·&nbsp;&nbsp;网站公告</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/report_center')}">·&nbsp;&nbsp;投诉中心</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">用户设置</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserSet/address')}">·&nbsp;&nbsp;收货地址</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('UserSet/enterprise')}">·&nbsp;&nbsp;企业信息</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('UserSet/security')}">·&nbsp;&nbsp;安全设置</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">个人资料</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserData/user_data')}">·&nbsp;&nbsp;个人资料</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/bind_account')}">·&nbsp;&nbsp;账号绑定</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/special_application')}">·&nbsp;&nbsp;申请账期支付</a>
+				</dd>
+			</dl>
+		</div>
+		<!--内容-->
+		<div class="mordrMain fr asmd-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl">
+					<li class="fl hover active"><a href="javascript:;">售后管理</a></li>
+				</ul>
+			</div>
+			<dl class="content-main">
+				<dt>
+					<switch name="data.status">
+						<case value="0">审核中</case>
+						<case value="1">审核失败</case>
+						<case value="2">审核通过</case>
+						<case value="3">退货中</case>
+						<case value="4">退款中</case>
+						<case value="5">已完成</case>	
+						<case value="6">已撤销</case>
+					</switch>
+				</dt>
+				<dd><i>售后编号：</i><span>{$data.id}</span></dd>
+				<eq name="data.type" value="2">
+				<dd><i>售后类型：</i><span>
+					<switch name="data.is_receive">
+						<case value="1">未收到货</case>
+						<case value="2">已收到货</case>
+					</switch></span>
+				</dd>
+				</eq>
+				<dd><i>售后要求：</i><span>
+					<switch name="data.type">
+						<case value="1">要求退货</case>
+						<case value="2">要求退款</case>
+					</switch></span>
+				</dd>
+				<dd><i>售后状态：</i><span>
+					<switch name="data.status">
+						<case value="0">审核中</case>
+						<case value="1">审核失败</case>
+						<case value="2">审核通过</case>
+						<case value="3">退货中</case>
+						<case value="4">退款中</case>
+						<case value="5">已完成</case>	
+						<case value="6">已撤销</case>
+					</switch></span>
+				</dd>
+				<dd><i>货物状态：</i>
+				    <span>
+						<if condition="$data.type eq '2' AND $data.is_receive eq '1'">
+						    未收到货
+						<else/>
+						    已收到货
+						</if>
+				    </span>
+				</dd>
+				<dd><i>问题描述：</i><span>{$data.explain}</span></dd>
+				<dd><i>申请时间：</i><span>{$data.create_time|date="Y-m-d H:i:s",###}</span></dd>
+				<eq name="data.status" value="6">
+				<dd><i>撤销时间：</i><span>{$data.revocation_time|date="Y-m-d H:i:s",###}</span></dd>
+				</eq>
+				<dd><i>退款金额：</i><span><b>{$data.price}</b> 元</span></dd>
+			</dl>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+</block>

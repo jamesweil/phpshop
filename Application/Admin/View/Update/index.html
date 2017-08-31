@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Common/Layer/extend/layer.ext.js"></script>
+<script src="__PUBLIC__/Common/My97Date/WdatePicker.js"></script>
+
+<script>
+//查看详情
+	function look_detail(id){
+		parent.layer.open({
+			type: 2,
+			title: '订单',
+			shadeClose: true,
+			shade: 0.5,
+			maxmin: true,
+			area: ['80%', '90%'],
+			content: "{:U('Goods/order_lst_detail')}?id="+id //iframe的url
+		});
+	}
+	function refresh(){
+		window.location.href="{:U('Goods/orders_list')}"
+	}
+</script>
+</head>
+<body>
+<style>
+	.tr_content {
+		line-height: 32px;
+		height:32px;
+		font-size: 14px;
+	}
+	
+	.layui-layer-title{
+		font-weight:bold;
+	}
+</style>
+<div class="nav">
+	<div class="nav_title">
+    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a">APP发布</span></h4>
+    </div>
+</div>
+	<div class="search" style=" line-height:50px; padding-left:30px; margin-top:3px;">
+		<button type="button" class="button" onclick="show_info()">发布新版本</button>
+	</div>
+
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="list_table">
+      <thead>
+	    <tr>
+	      <td width="9%"><div align="center">序号</div></td>
+	      <td width="14%"><div align="center">APP类型</div></td>
+	      <td width="10%"><div align="center">版本号</div></td>
+	      <td><div align="center">更新内容</div></td>
+	      <td width="12%"><div align="center">发布时间</div></td>
+		  <td><div align="center" width="14%">操作</div></td>
+
+        </tr>
+        </thead>
+        <tbody>
+			<volist name='rows' id='row'>
+	  		<tr class="tr_content" onmouseover="$(this).css('color','red')" onmouseleave="$(this).css('color','#555')">
+				<td width="9%" style="height: 40px"><div align="center">{$i}</div></td>
+				<td width="14%"><div align="center">{$row.app_type}</div></td>
+				<td><div align="center">{$row.version_num}</td>
+				<td><div align="center">{$row.intro}</div></td>
+				<td width="10%"><div align="center">{$row.create_time|date='Y-m-d H:i:s',###}</div></td>
+				<td width="12%">
+				<div align="center">
+				<!-- <a href="javascript:void (0);" style=" background-color: #146AC1; padding: 8px; border-radius: 4px; color: #ffffff" onclick="look_detail({$row.id})">详情</a> -->
+				 <a class="a_button" href="{:U('del',array('id'=>$row['id']))}">删除</a>
+				</div>
+				</td>
+			</tr>
+			</volist>
+        </tbody>
+<script>
+	function show_info(){
+		window.location.href="{:U('Update/add')}"
+	}
+</script>
+  </table>
+</div>
+
+<!-- 分页 -->
+<div class="page">
+{$page}
+</div>
+
+
+</body>
+</html>

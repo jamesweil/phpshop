@@ -1,0 +1,475 @@
+<extend name="Public/indexEdit"/>
+<block name="content">
+    <link rel="stylesheet" href="__CSS__/page.css">
+    <!--当前位置-->
+    <if condition="$local_position">
+        <div class="paper-current-main w">
+            当前位置：<span>{$local_position}</span>
+        </div>
+        </else>
+        <div class="product-location"></div>
+    </if>
+    <!--内容-->
+    <div class="productDeta-main w clearfix">
+
+        <div class="productDetaLeft fl">
+            <if condition="!$show">
+                <div class="categoryList">
+                    <foreach name="results" item="second_cat">
+                        <eq name="second_cat.fid" value="$top_cate['id']">
+                            <dl>
+                                <dt data="false"><i></i>{$second_cat.class_name}</dt>
+                                <foreach name="results" item="third_cat">
+                                    <eq name="third_cat.fid" value="$second_cat.id">
+                                        <dd class="third" data-third-id="{$third_cat.id}"><a href="{:U('Product/ProductList',['cid'=>$third_cat['id']])}">·&nbsp;&nbsp;{$third_cat.class_name}</a></dd>
+                                    </eq>
+                                </foreach>
+                            </dl>
+                        </eq>
+                    </foreach>
+
+                </div>
+            </if>
+            <div class="categoryOne">
+                <h2><i></i>本店搜索</h2>
+                <form action="{:U('Product/ProductList')}" method="get">
+                    <div>
+                        <p class="clearfix one">
+                            <span class="fl">关键字&nbsp;&nbsp;</span>
+                            <input type="text" class="fl" name="keyword" value="">
+                        </p>
+                        <p class="clearfix two">
+                            <span class="fl">价格&nbsp;&nbsp;</span>
+                            <i class="fl">￥<input type="text" name="begin_price" value=""></i>
+                            <i class="fl">￥<input type="text" name="end_price" value=""></i>
+                            <input type="hidden" name="show" value="show"/>
+                        </p>
+                        <p class="three"><input type="submit" value="搜&nbsp;索" class="btn product-search"></p>
+                    </div>
+                </form>
+            </div>
+            <dl class="proTop10">
+                <dt><i></i>畅销排行Top10</dt>
+                <foreach name="ranks" item="vo"  key="k">
+                    <if condition="$k elt 2">
+                        <dd class="top10Item">
+                            <a href="{:U('Goods/goodsDetails',['id'=>$vo['id']])}">
+                                <div class="img-parent fl">
+                                    <img src="{$vo.pic_url}">
+                                    <span>{$k+1}</span>
+                                </div>
+                                <div class="top10Item-fr fl product-top10">
+                                    <p>{$vo['title']|msubstr=0,20}</p>
+                                    <span>¥{$vo.price_market}</span>
+                                </div>
+                            </a>
+                        </dd>
+                     <else/>
+                        <dd class="clearfix top10Item2">
+                            <span class="fl">{$k+1}</span>
+                            <a href="{:U('Goods/goodsDetails',['id'=>$vo['id']])}" class="fl">{$vo.title}</a>
+                        </dd>
+                    </if>
+                </foreach>
+            </dl>
+        </div>
+        <!--内容左-->
+        <div class="productDetaRight fr">
+            <div class="productDetagg">
+                <a href="{$goods_ad.ad_link}"></a><img src="{$goods_ad.pic_url}" alt="" width="970" height="110"></a>
+            </div>
+            <div class="chooseCondition">
+                        <if condition="$show1">
+                            <dl class="clearfix">
+                                <dt class="fl">类型</dt>
+                                <dd class="fl">
+                                    <a href="javascript:;" class="active">全部</a>
+                                    <foreach name="goods_classes" item="goods_class">
+                                        <a href="{:U('Product/ProductList',['cid'=>$goods_class['id'],'keyword'=>$_GET['keyword']])}" >{$goods_class.class_name}</a>
+                                    </foreach>
+                                </dd>
+                            </dl>
+                        <else/>
+                              <dl class="clearfix class-type">
+                                    <dt class="fl">类型</dt>
+                                    <dd class="fl">
+                                        <a href="javascript:;" class="active all_cate" data-id="{$all_right_id}"  data-value="{$cid}">全部</a>
+                                        <present name="third_parent_id">
+                                            <foreach name="third_parent_childs" item="second_cat">
+                                                <eq name="second_cat.fid" value="$third_parent_id">
+                                                    <a href="javascript:;" class="data_curent" data-current-id="{$second_cat.id}" data-id="{$second_cat.id}">{$second_cat.class_name}</a>
+                                                </eq>
+                                            </foreach>
+                                            <else />
+                                            <foreach name="results" item="second_cat">
+                                                <eq name="second_cat.fid" value="$top_cate.id">
+                                                    <a href="javascript:;" class="data_curent" data-current-id="{$second_cat.id}" data-id="{$second_cat.id}">{$second_cat.class_name}</a>
+                                                </eq>
+                                            </foreach>
+                                        </present>
+                                    </dd>
+                              </dl>
+                </if>
+                <dl class="clearfix class-brand">
+                    <dt class="fl">品牌</dt>
+                    <dd class="fl f2"><a href="javascript:;" class="active" id-value="all">全部</a>
+                    <foreach name="brand_list" item="brand">
+                        <a href="javascript:;" id-value="{$brand['id']}">{$brand['brand_name']}</a>
+                    </foreach>
+                    </dd>
+
+                </dl>
+                <dl class="clearfix class-price">
+                    <dt class="fl">价格</dt>
+                    <dd class="fl f2">
+                        <a href="javascript:;" class="active" data-value="all" id="id-all-price">全部</a>
+                        <a href="javascript:;">0-19</a>
+                        <a href="javascript:;">20-39</a>
+                        <a href="javascript:;">40-59</a>
+                        <a href="javascript:;">60-199</a>
+                        <a href="javascript:;">200以上</a>
+                        <input type="text" id="price_before">-<input type="text" id="price_after"><input type="button" id="id-btn" value="确定">
+                    </dd>
+                </dl>
+                <dl class="class-num">
+                    <dt>规格</dt>
+                    <dd><a href="javascript:;" class="active" data-value="all">全部</a><foreach name="goods_speces" item="goods_spec"><a href="javascript:;">{$goods_spec.name}</a></foreach></dd>
+
+                </dl>
+            </div>
+            <div class="sortCondition clearfix">
+                <div class="fl" id="sortCondition">
+                    <span>排序：</span>
+                    <a href="javascript:;" class="active">销量</a>
+                    <a href="javascript:;">价格</a>
+                    <a href="javascript:;">评论数</a>
+                    <a href="javascript:;">上架时间</a>
+                </div>
+            </div>
+            <!--商品展示-->
+
+                <ul class="productList1 clearfix productlist-error-xs">
+                    <if condition="!$resultGoodsImgs">
+                        <div class="product-list-not-error">
+                           <h1>亲，你访问的数据不存在</h1>
+                        </div>
+                        <else/>
+                        <volist name="resultGoodsImgs" id="reGoodsImg">
+                            <li class="fl">
+                                <div class="proPic-img">
+                                    <a href="{:U('Goods/goodsDetails',['id'=>$reGoodsImg['id']])}">
+                                        <img src="{$reGoodsImg['pic_url']}" width="190" height="190" style="margin-top:10px">
+                                    </a>
+                                </div>
+                                <div class="pingJia clearfix">
+                                    <i class="fl"></i>
+                                    <i class="fl"></i>
+                                    <i class="fl"></i>
+                                    <i class="fl"></i>
+                                    <i class="fl"></i>
+                                    <div class="fr">
+                                       商品销量 <b>{$reGoodsImg['sales_sum']}</b>
+                                    </div>
+                                </div>
+                                <div class="itemDescBack">
+                                    <p class="proDesc"><a href="{:U('Goods/goodsDetails',['id'=>$reGoodsImg['id']])}">{$reGoodsImg['title']|msubstr=0,34}</a></p>
+                                    <span class="proPrice">￥{$reGoodsImg['price_market']}</span>
+                                    <p class="addCart1">
+                                        <a href="{:U('Goods/goodsDetails',['id'=>$reGoodsImg['id']])}">加入购物车</a>
+                                        <a href="javascript:;">收藏</a>
+                                    </p>
+                                </div>
+                            </li>
+                        </volist>
+                    </if>
+
+                </ul>
+
+                <!--换页-->
+                <!--  <div class="paper-page-parent clearix">-->
+
+                <div class="page" id="page">{$page_show}</div>
+                <!--</div>-->
+
+
+            <!--猜你喜欢-->
+            <div class="guessYouLike">
+                <div class="guessYouLike1 clearfix">
+                    <h4 class="fl">猜你喜欢</h4>
+                    <span class="fr clearfix" id="exchange">换一换</span>
+                </div>
+                <ul class="guessYouLike2" id="guessYouLike2">
+                    <foreach name="guess_goods" item="guess_good">
+                        <li class="fl">
+                            <div class="like2-img">
+                                <a href="{:U('Goods/goodsDetails',['id'=>$guess_good['id']])}"><img src="__SERVER__{$guess_good.pic_url}" alt="" width="100" height="100"></a>
+                            </div>
+                            <p>{$guess_good.title}</p>
+                            <span>(已有{$guess_good.comment_member}人评论)</span>
+                            <i>￥{$guess_good.price_market}</i>
+                        </li>
+                    </foreach>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+    <input type="hidden" name="current_cat" id="current_cat" value="{$current_cat.id}"/>
+    <input type="hidden" name="third_cat" id="current_third_cat" value="{$current_third_cat.id}"/>
+    <input type="hidden" name="serch_kerword" id="serarch-title" value="<?php echo $_GET['keyword'] ?>"/>
+    <input type="hidden" name="serch_begin_price" id="ser-begin-price" value="<?php echo $_GET['begin_price'];?>"/>
+    <input type="hidden" name="serch_end_price" id="ser-end-price" value="<?php echo $_GET['end_price'];?>"/>
+    <script src="__JS__/header.js"></script>
+    <script src="__JS__/expansion.js"></script>
+    <script src="__JS__/offcePaper.js"></script>
+    <script>
+
+        $(function(){
+            $("#exchange").on('click',function(){
+                var url = '{:U("Product/guess")}';
+                $.ajax({
+                    type:"get",
+                    url:url,
+                    error:function(){
+                      alert("服务器忙，请联系管理员！")
+                    },
+                    success:function(data){
+                        $("#guessYouLike2").html(data);
+                    }
+                })
+
+            });
+
+        });
+        $(function(){
+            var cid = "<?php echo $_GET['id'];?>";
+            //选中二级菜单
+            var current_cat = $("#current_cat").val();
+
+            if(current_cat){
+
+                $(".all_cate").removeClass("active");
+                $(".data_curent").each(function(i,v){
+                  if($(v).attr("data-current-id")==current_cat){
+                      $(this).addClass("active");
+                      //$(v).children(":first").addClass("active");
+                  }
+                });
+            }
+            //选中第三级菜单的对应的选项
+            var third_cat = $("#current_third_cat").val();
+            if(third_cat){
+                $(".third").each(function(i,v){
+                    if(third_cat == $(v).attr("data-third-id")){
+                        $(v).children(":first").css("color","red");
+                        $(v).prev().attr("data","true");
+                        $(v).parent().addClass("active");
+                    }
+
+                    $(".all_cate").removeClass("active");
+                    $(".data_curent").each(function(i,v){
+                        if($(v).attr("data-current-id")==third_cat){
+                          $(this).addClass("active");
+                            //$(v).children(":first").addClass("active");
+                        }
+                    });
+
+               });
+            }
+            /**
+             * 点击事件  选择类型
+             */
+             var change_type = $(".class-type dd");
+             change_type.on('click','a',function() {
+                 change_type.children('a').removeClass('active').eq($(this).index()).addClass('active');
+                 var price = $(".class-price .active").text();
+                 clickAjax(price);
+                 return false;
+             });
+
+            /**
+             *   点击事件  选择品牌
+             *
+             */
+
+            var change_brand = $(".class-brand dd");
+            change_brand.on('click','a',function(){
+                change_brand.children('a').removeClass('active').eq($(this).index()).addClass('active');
+                var price = $(".class-price .active").text();
+                clickAjax(price);
+                return false;
+            });
+
+
+            /**
+             * 点击事件 选择价格
+             */
+            var change_price = $(".class-price .f2");
+            change_price.on('click','a',function(){
+                change_price.children('a').removeClass('active').eq($(this).index()).addClass('active');
+                var price = $(".class-price .active").text();
+                //清楚文本框的值，增强用户视觉效果
+                $("#price_before").val('');
+                $("#price_after").val('');
+                clickAjax(price);
+                return false;
+            });
+
+            /**
+             * 点击事件 选择规格
+             */
+            var change_num = $(".class-num dd");
+            change_num.on('click','a',function(){
+                change_num.children('a').removeClass('active').eq($(this).index()).addClass('active');
+                var price = $(".class-price .active").text();
+                clickAjax(price);
+                return false;
+            });
+
+
+
+            /**
+             * 点击事件 选择价格搜索
+             */
+            $("#id-btn").on('click',function(){
+                var begin_price = $("#price_before").val();
+                var end_price = $("#price_after").val();
+                //当文本框的为空时，点击按钮
+                if(!(begin_price || end_price)) {
+                    $(".class-price .f2").children('a').removeClass("active");
+                    $("#id-all-price").addClass('active');
+                    var price = $(".class-price .active").text();
+                }else{
+                    $(".class-price .f2").children('a').removeClass("active");
+                    var price = begin_price+'-'+end_price;
+                }
+
+                clickAjax(price);
+            });
+
+            /**
+             *点击事件  选择销量、价格、评论、上架时间
+             * @param price
+             */
+            var sortCond =  $("#sortCondition");
+            sortCond.on('click','a',function(){
+                var cid =  "<?php echo $_GET['cid'];?>";
+                sortCond.find('a').removeClass('active').eq($(this).index()-1).addClass('active');
+                var sortChoose = $("#sortCondition .active").text()                  ;
+                clickAjax('',sortChoose,cid);
+            });
+            //点击封装ajax 函数
+            function  clickAjax(price,sortChoose,cid1){
+                //如果搜索
+                var kerword = $("#serarch-title").val();
+                var begin_price1 = $("#ser-begin-price").val();
+                var end_price1 =  $("#ser-end-price").val();
+
+                var cid = $(".class-type .active").attr("data-id");
+                if(!cid){
+                    cid = cid1;
+                }
+                var brand = $(".class-brand .active").attr("id-value");
+                var num = $(".class-num .active").text();
+                var price = price;
+                if(price=="全部"){price = "all";}
+                if(num=="全部"){num =  "all";}
+                if(sortChoose){
+                    var sortCond = sortChoose;
+                }
+                var url = "{:U('Product/productlist')}";
+                var data = {cid:cid,brand:brand,price:price,goods_spec:num,sortCond:sortCond,keyword:kerword,begin_price:begin_price1,end_price:end_price1};
+                $.getJSON(url,data,function(json){
+                    if(json.data.length){
+                        var data = json.data;//更新数据
+                        var page_str = "";
+                        for(i =0;i<data.length;i++){
+                            page_str+= '<li class="fl">'+
+                                    '<div class="proPic-img">'+
+                                    '<a href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">'+
+                            '<img src="'+data[i].pic_url+'" width="190" height="190" style="margin-top:10px">'+
+                            '</a>'+
+                            '</div>'+
+                            '<div class="pingJia clearfix">'+
+                            '<i class="fl"></i>'+
+                            '<i class="fl"></i>'+
+                            '<i class="fl"></i>'+
+                            '<i class="fl"></i>'+
+                            '<i class="fl"></i>'+
+                            '<div class="fr">'+
+                            '商品销量 <b>'+data[i].sales_sum+'</b>'+
+                            '</div>'+
+                            '</div>'+
+                            '<div class="itemDescBack">'+
+                            '<p class="proDesc"><a href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">'+data[i].title+'</a></p>'+
+                            '<span class="proPrice">'+"￥"+data[i].price_market+'</span>'+
+                            '<p class="addCart1">'+
+                            '<a href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">加入购物车</a>'+
+                            '<a href="javascript:;">收藏</a>'+
+                            '</p>'+
+                            '</div>'+
+                            '</li>';
+                        }
+
+                        $(".productList1").html(page_str);//更新内容
+
+                        if(!json.page){
+                            $("#page").html("");
+                        }else{
+                            $("#page").html(json.page);
+                        }
+                    }else{
+                        $(".productlist-error-xs").html('<div class="product-list-not-error"><h1>亲，你访问的数据不存在</h1> </div>');
+                    }
+                });
+            }
+            //点击分页  页数 无刷新
+            $("#page a").live("click",function(){
+                var cid = $(".class-type .active").attr("data-id");
+                var brand = $(".class-brand .active").attr("id-value");
+                var num = $(".class-num .active").text();
+                var price = $(".class-price .active").text();
+                if(price=="全部"){price = "all";}
+                if(num=="全部"){num =  "all";}
+                var url=$(this).attr("href");
+                var data = {cid:cid,brand:brand,price:price,num};
+                $.getJSON(url,data,function(json){
+                    $("html,body").animate({scrollTop:200},500);
+                    var data = json.data;//更新数据
+                    var page_str = "";
+                    for(i =0;i<data.length;i++){
+                        page_str+= '<li class="fl">'+
+                                '<div class="proPic-img">'+
+                                '<a href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">'+
+                        '<img src="'+data[i].pic_url+'" width="190" height="190" style="margin-top:10px">'+
+                        '</a>'+
+                        '</div>'+
+                        '<div class="pingJia clearfix">'+
+                        '<i class="fl"></i>'+
+                        '<i class="fl"></i>'+
+                        '<i class="fl"></i>'+
+                        '<i class="fl"></i>'+
+                        '<i class="fl"></i>'+
+                        '<div class="fr">'+
+                        '商品销量 <b>'+data[i].sales_sum+'</b>'+
+                        '</div>'+
+                        '</div>'+
+                        '<div class="itemDescBack">'+
+                       '<p class="proDesc"><a href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">'+data[i].title+'</a></p>'+
+                        '<span class="proPrice">'+"￥"+data[i].price_market+'</span>'+
+                        '<p class="addCart1">'+
+                       '<a href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">加入购物车</a>'+
+                        '<a href="javascript:;">收藏</a>'+
+                        '</p>'+
+                        '</div>'+
+                        '</li>';
+                    }
+
+                    $(".productList1").html(page_str);//更新内容
+                    $("#page").html(json.page);
+                });
+                return false;
+            });
+        });
+    </script>
+ </block>

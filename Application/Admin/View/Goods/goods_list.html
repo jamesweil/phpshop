@@ -1,0 +1,299 @@
+<extend name="Public/publicHTML"/>
+<block name="nav">
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <script src="__COMMON__/bootstrap/js/bootstrap.min.js"></script>
+    <br/>
+</block>
+<block name="content">
+    <section class="content">
+    <div class="container-fluid">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-list"></i> 商品列表</h3>
+        </div>
+        <div class="panel-body">
+          <div class="navbar navbar-default">
+              <form action="{:U('goods_list')}" name="searchform" id="search" class="navbar-form form-inline" method="get">
+                <div class="form-group">
+                  <select name="{$goodsModel::$classId_d}" id="cat_id" class="form-control">
+                    <option value="">所有分类</option>
+                    <if condition="!empty($classData)">
+	                    <foreach name="classData"  key="k" item="v">
+	                        <option <if condition="$_GET[$goodsModel::$classId_d] == $k">selected="selected"</if> value="{$k}"> {$v}</option>
+				 		</foreach>
+				 	</if>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <select name="{$goodsModel::$brandId_d}" id="brand_id" class="form-control">
+                    <option value="">所有品牌</option>
+                    	<if condition="!empty($brandList)">
+	                        <foreach name="brandList"  key="key" item="value">
+	                           <option  <if condition="$_GET[$goodsModel::$brandId_d] == $key">selected="selected" </if> value="{$key}">{$value}</option>
+							</foreach>
+						</if>
+                  </select>
+                </div>                
+
+                <div class="form-group">
+                  <select name="{$goodsModel::$shelves_d}" id="is_on_sale" class="form-control">
+                    <option value="" selected="selected">全部</option>
+                    <option value="1">上架</option>
+                    <option value="0">下架</option>
+                  </select>
+                </div>                
+
+                <div class="form-group">
+                  <label class="control-label" for="input-order-id">关键词</label>
+                  <div class="input-group">
+                    <input type="text" name="{$goodsModel::$title_d}" value="{$_GET[$goodsModel::$title_d]}" placeholder="搜索词" id="input-order-id"   class="form-control input-order-id">
+                  </div>
+                </div>                  
+                <!--排序规则-->
+                  <button type="submit" id="button-filter search-order"  onclick="javascript:$('#search').submit();" class="btn btn-primary"><i class="fa fa-search"></i> 筛选</button>
+                 <!--  <button type="button"  class="btn btn-primary all-export">全部导出execl</button> -->
+                  <button type="button"  class="btn btn-primary current-export">当前页导出execl</button>
+                  <button type="button" onclick="location.href='{:U('goods_add')}'" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加新商品</button>
+              </form>
+          </div>
+                 <div id="ajax_return">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="sorting text-left" width="50px">选项</th>
+                                    <th class="sorting text-left">Id</th> 
+                                    <th class="sorting text-left">商品名称</th>
+                                 
+                                    <th class="sorting text-left">商品分类</th>
+                                   <!--  <th valign="middle">市场价</th>
+                                    <th class="sorting text-left">会员价</th> -->
+                                    <th class="sorting text-left"  width="80px">库存</th>
+                                    <th class="sorting text-left"  width="80px">是否上架</th>
+                                    <th class="sorting text-left"  width="80px">是否推荐</th>
+                                    <th class="sorting text-left">上架时间</th>
+                                    <th class="sorting text-left">排序</th>
+                                    <th class="sorting text-left">操作 <a href="javascript:;" onclick="$('#form2').submit()" class="btn btn-primary" >批量编辑</a><a href="javascript:;" id="goods_more_deleted" class="btn btn-primary">批量删除</a></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <form action="{:U('Goods/goods_more_save')}" method="post" id="form2">
+                                <volist name="rows" id="row">
+                                    <tr>
+                                        <td class="text-left" width="50px"><input type="checkbox" name="checkbox[]" id="more_deleted" value="{$row.id}"></td>
+                                          <td class="text-left margin-padding" >{$row.id}</td>
+                                        <td class="text-left margin-padding" >{$row.title}</td>
+                                        <td class="text-left">{$goods_class[$row['class_id']]}</td>
+                                       <!--  <td class="text-left">{$row.price_market}</td>
+                                        <td class="text-left">{$row.price_member}</td> -->
+                                        <td class="text-left"  width="50px">{$row.stock}</td>
+                                        <td class="text-left shelves-one" width="80px">
+                                            <if condition="($row['shelves']) eq 1">
+                                                <img  src="__COMMON__/img/yes.png" key="shelves" onclick="GoodsOption.isShelves('{:U('isShelves')}', this)"  data-status="{$row['shelves']}" data-id="{$row.id}"/>
+                                                <else/>
+                                                <img  src="__COMMON__/img/cancel.png"   key="shelves" onclick="GoodsOption.isShelves('{:U('isShelves')}', this)"  data-status="{$row['shelves']}" data-id="{$row.id}"/>
+                                            </if></td>
+                                        <td class="text-left  shelves-two" width="80px">
+                                            <if condition="($row['recommend']) eq 1">
+                                                <img title="{$title['recommend']}" src="__COMMON__/img/yes.png"  key="recommend" onclick="GoodsOption.isShelves('{:U('isShelves')}', this)"  data-status="{$row['recommend']}" data-id="{$row['id']}"/>
+                                                <else/>
+                                                <img title="{$title['recommend']}" src="__COMMON__/img/cancel.png"  key="recommend" onclick="GoodsOption.isShelves('{:U('isShelves')}', this)"  data-status="{$row['recommend']}"  data-id="{$row.id}"/>
+                                            </if>
+                                        </td>
+                                         <td class="text-left">
+                                           {$row.create_time|date='Y-m-d', ###}
+                                        </td>
+                                        <td class="text-left">
+                                            <input type="txet" data-id="{$row.id}" value="{$row.sort|default=50}" name="sort" class="form-control" style="width:90px;" />
+                                        </td>
+                                        <td  class="text-left">
+                                        	<a href="javascript:;"
+														onclick="Tool.alertEdit('{:U('lookGoods', array('id' => $row['id']))}','商品列表', 1000, 600)"
+														data-toggle="tooltip" title=""
+														class="btn btn-info goods_list">查看</a> 
+											<a href="{:U('modifyGoods', array('id' => $row['id']))}" class="btn btn-primary">编辑</a> 
+                                            <input type="button" class="btn btn-danger del_btn confirm_btn" onclick="Tool.deleteData('{:U('removeGoods')}', {$row.id})" data-id="{$row.id}" data-toggle="modal" data-target="#myModal" value="删除"/>
+                                        </td>
+                                    </tr>
+                                </volist>
+                                    </form>
+                                </tbody>
+                                <input type="hidden" id="p-value" value="<?php echo $_GET['p'];?>"/>
+                                <input type="hidden" id="common" value="__COMMON__"/>
+                            </table>
+                            <div class="page">{$page_show}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript" src="__COMMON__/js/alert.js"></script> 
+  <script type="text/javascript">
+      $(function() {
+
+          //全部导出excel
+          $('.all-export').on('click', function () {
+              //商品分类
+              var cat_id_value = $("#cat_id").val();
+              //品牌
+              var brand_value = $("#brand_id").val();
+              //上架和下架
+              var shelves_value = $("#is_on_sale").val();
+              //关键词
+              var title_value = $("#input-order-id").val();
+              var data = {class_id: cat_id_value, brand_id: brand_value, shelves: shelves_value, title: title_value};
+              var url = '{:U("Goods/expGoods")}';
+              var tj_value = JSON.stringify(data);
+              submitForm(url,tj_value);
+          });
+
+          //当前页导出
+          $(".current-export").on('click',function(){
+              //商品分类
+              var cat_id_value = $("#cat_id").val();
+              //品牌
+              var brand_value = $("#brand_id").val();
+              //上架和下架
+              var shelves_value = $("#is_on_sale").val();
+              var p_value = $("#p-value").val();
+              p_value?p_value:p_value=1;
+              //关键词
+              var title_value = $("#input-order-id").val();
+              var data = {class_id: cat_id_value, brand_id: brand_value, shelves: shelves_value, title: title_value,p:p_value};
+              var url = '{:U("Goods/expGoods")}';
+              var tj_value = JSON.stringify(data);
+              submitForm(url,tj_value);
+          });
+
+          /**
+           * js模拟表单get提交
+           * @param action url地址
+           * @param params 要传递的值
+           */
+          function submitForm(action, params) {
+              var form = $("<form></form>");
+              form.attr('action', action);
+              form.attr('method', 'get');
+              form.attr('target', '_self');
+              var input1 = $("<input type='hidden' name='tj_value' value='' />");
+              input1.attr('value', params);
+              form.append(input1);
+              form.appendTo("body");
+              form.css('display', 'none');
+              form.submit();
+          }
+      });
+  $(document).ready(function() {
+
+     
+
+      $(".form-control").on('change',function(){
+          var id = $(this).attr("data-id");
+          var sort = $(this).val();
+          var data = {id:id,sort:sort};
+          var url = '{:U("Goods/editSorm")}';
+          $.getJSON(url,data,function(json){
+              if(json.msg == 1){
+                  layer.open({
+                      title: '排序信息'
+                      ,content: '更新排序成功'
+                  });
+              }
+          });
+      });
+
+  });
+
+
+//批量删除操作-动态绑定
+     $(document).ready(function(){
+         $(document).on("click","#goods_more_deleted",function(){
+             parent.layer.confirm('真的要删除吗？', {
+                 btn: ['确认','取消'], //按钮
+                 shade: 0.5 //显示遮罩
+             },function() {
+                 //获取所有被全选中的checkbox值
+                 var spCodesTemp = "";
+                 $('input:checkbox[id=more_deleted]:checked').each(function (i) {
+                     if (0 == i) {
+                         spCodesTemp = $(this).val();
+                     } else {
+                         spCodesTemp += ("," + $(this).val());
+                     }
+                 });
+                 console.log(spCodesTemp);
+                 $.ajax({
+                     type: 'POST',
+                     url: "{:U('goods/ajax_goods_more_deleted')}",
+                     data: 'formdata=' + spCodesTemp,
+                     success: function (data) {
+                         if (data['delete'] == true) {
+                             parent.layer.msg('批量删除成功,2秒后刷新页面');
+                             setTimeout(url_href = function () {
+                                 window.location.href = data['url'];
+                             }, 2000);
+                         }
+                     }
+                 })
+             },function(){})
+         })
+     })
+      //手动单击切换换上架
+    /*  var bFlag = false;//用来js点击事件反应完成后，才执行第二次点击的事件
+      $(".shelves-one img").on("click",function(){
+          if(bFlag == true)return;
+          bFlag = true;
+          var _this = $(this);
+          var id = _this.attr("data-id");
+          //获取域名
+          var common = $("#common").val();
+          var data_flag = _this.attr("data-flag");
+          var data = {id:id,data_flag:data_flag};
+          var url = '{:U("Goods/changeShelves")}';
+          $.getJSON(url,data,function(json){
+              if(json == "no"){
+                  _this.attr("src",common+"/img/cancel.png");
+                  _this.attr("data-flag","false");
+                  bFlag = false;
+              }else{
+                  _this.attr("src",common+"/img/yes.png");
+                  _this.attr("data-flag","true");
+                  bFlag = false;
+              }
+          });
+      });
+
+      //手动单击切换是否推荐
+      var flag = false;//用来js点击事件反应完成后，才执行第二次点击的事件
+      $(".shelves-two img").on("click",function(){
+          if(flag == true)return;
+          flag = true;
+          _thisreco = $(this);
+          var id = _thisreco.attr("data-id");
+          //获取域名
+          var common = $("#common").val();
+          var data_flag = _thisreco.attr("data-flag");
+          var data = {id:id,data_flag:data_flag};
+          var url = '{:U("Goods/changeRecommend")}';
+          $.getJSON(url,data,function(json){
+              if(json == "no"){
+                  _thisreco.attr("src",common+"/img/cancel.png");
+                  _thisreco.attr("data-flag","false");
+                  flag = false;
+              }else{
+                  _thisreco.attr("src",common+"/img/yes.png");
+                  _thisreco.attr("data-flag","true");
+                  flag = false;
+              }
+          });
+      });*/
+
+  </script>
+<script type="text/javascript" src="__JS__/goods/goods.js?a={:time()}"></script> 
+<script type="text/javascript">
+GoodsOption.imgUrl = '__COMMON__';
+</script>
+</block>

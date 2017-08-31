@@ -1,0 +1,80 @@
+<extend name="Public/publicHTML" />
+<block name="nav">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<script src="__COMMON__/bootstrap/js/bootstrap.min.js"></script> <br />
+</block>
+<block name="content">
+<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i>运费设置列表
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="navbar navbar-default">
+					<form action="{:U('index')}" id="search"
+						class="navbar-form form-inline" method="get">
+						<div class="form-group">
+							<label class="control-label" for="input-order-id">关键词</label>
+							<div class="input-group">
+								<input type="text" name="{$model::$freightId_d}" value="{$_GET[$model::$freightId_d]}" placeholder="搜索词"
+									id="input-order-id" class="form-control">
+							</div>
+						</div>
+						<!--排序规则-->
+						<button type="submit" id="button-filter search-order"
+							onclick="javascript:$('#search').submit();"
+							class="btn btn-primary">
+							<i class="fa fa-search"></i> 筛选
+						</button>
+						<button type="button"
+							onclick="location.href='{:U('carryModeSet')}'"
+							class="btn btn-primary pull-right">
+							<i class="fa fa-plus"></i>添加运费设置
+						</button>
+					</form>
+				</div>
+				<div id="ajax_return">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<foreach name="notes" key="key" item="value">
+									<th class="sorting text-left">{$value}</th>
+									</foreach>
+								</tr>
+							</thead>
+							<tbody>
+								<if condition="!empty($data['data'])"> <foreach
+									name="data['data']" item="row">
+								<tr>
+									<td class="text-left">{$row[$model::$id_d]}</td>
+									<td class="text-left">{$row[$model::$freightId_d]}</td>
+									<td class="text-left">{$row[$model::$firstThing_d]}</td>
+									<td class="text-left">{$row[$model::$firstWeight_d]}</td>
+									<td class="text-left">{$row[$model::$fristVolum_d]}</td>
+									<td class="text-left">{$row[$model::$fristMoney_d]}</td>
+									<td class="text-left">{$row[$model::$continuedHeavy_d]}</td>
+									<td class="text-left">{$row[$model::$continuedVolum_d]}</td>
+									<td class="text-left">{$row[$model::$continuedMoney_d]}</td>
+									<td class="text-left">{$row[$model::$carryWay_d]}</td>
+									<td class="text-left"><a
+										href="{:U('edit', array('id' => $row[$model::$id_d]))}"
+										class="btn btn-primary">编辑</a> <input type="button"
+										class="btn btn-danger del_btn confirm_btn" data-id="{$row.id}"
+										data-toggle="modal" data-target="#myModal" value="删除" /></td>
+								</tr>
+								</foreach> </if>
+							</tbody>
+						</table>
+						<div class="page">{$data['page']}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script src="__COMMON__/js/alert.js"></script> <script
+	src="__JS__/express/express.js"></script> </block>

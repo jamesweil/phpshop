@@ -1,0 +1,32 @@
+<table class="table table-bordered" id="attri">
+    <tr>
+        <td colspan="2"><b>商品规格:</b></td>
+    </tr>
+    <foreach name="specList" item="vo" key="k" >
+    <tr id="">
+        <td>{$vo[name]}:</td>
+        <td>
+            <foreach name="vo[spec_item]" item="vo2" key="k2" >
+                <button type="button" onclick="GoodsOption.getAttr('#attri button', '{:U('getAddContentByGoodsAttribute')}', 'spec_input_tab', this)"  data-spec_id='{$vo[id]}' data-item_id='{$k2}' class="btn <?php
+                             if(in_array($k2, $itemsId))
+                                    echo 'btn-success';
+                             else
+                                echo 'btn-default';
+                             ?>" >
+                    {$vo2}
+                </button>
+                     <!--   <img width="35" height="35" src="{$specImageList[$k2]|default='__COMMON__/img/add-button.jpg'}" id="item_img_{$k2}" onclick="GetUploadify3('{$k2}');"/>
+                        <input type="hidden" name="item_img[{$k2}]" value="{$specImageList[$k2]}" />-->
+                &nbsp;&nbsp;&nbsp;
+            </foreach>
+        </td>
+    </tr>
+    </foreach>
+</table>
+<div id="goods_spec_table2"> <!--ajax 返回 规格对应的库存--> </div>
+
+<script>
+
+GoodsOption.getAttr('#attri button', '{:U('getAddContentByGoodsAttribute')}', 'spec_input_tab')
+
+</script>

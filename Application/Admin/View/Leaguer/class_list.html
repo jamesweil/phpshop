@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Common/Ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="__PUBLIC__/Common/uploadPreview.min.js"></script>
+<script>
+   window.onload = function () { 
+        new uploadPreview({ UpBtn: "pic_url", DivShow: "imgdiv", ImgShow: "imgShow" });
+    }
+</script>
+<script>
+//删除用户
+function del(id){
+	$("#del"+id+" td").css('background','#CBDFF2');
+	parent.layer.confirm('删除之后，商品关联将失效，真的要删除吗？', {
+		btn: ['确认','取消'], //按钮
+		shade: 0.3 //显示遮罩
+	}, function(){
+		$.post("{:U('Goods/class_del')}", { "id": id},function(data){
+			if(data == 2){
+				parent.layer.msg('此分类下有商品,不可删除', {icon: 2, time: 2000 });
+			}else if(data == 1){
+				parent.layer.msg('删除成功', { icon: 1, time: 1000 }, function(){
+						$("#del"+id).remove();
+					});
+			}else{
+				parent.layer.msg('删除失败', {icon: 2, time: 2000 }); 
+			}
+		}, "json");
+	},function(){
+		$("#del"+id+" td").css('border-top','0');
+		$("#del"+id+" td").css('border-bottom','1px solid #EFEFEF');
+	});
+}
+//隐藏或者打开
+function hide(id){
+	$("#del"+id+" td").css('background','#CBDFF2');
+	var hide_status = $('#hide_status'+id).val();
+	if(hide_status == 1){
+		hide_status = 0;
+	}else{
+		hide_status = 1;
+	}	
+	parent.layer.confirm('确认操作吗？', {
+		btn: ['确认','取消'], //按钮
+		shade: 0.3 //显示遮罩
+	}, function(){
+		$.post("{:U('Goods/class_hide')}", { id: id, hide_status: hide_status },function(data){
+			if(data == 1){
+				parent.layer.msg('操作成功', { icon: 1, time: 1000 }, function(){
+						window.location.href="__SELF__"; 
+				});
+			}else{
+				parent.layer.msg('操作失败', {icon: 2, time: 2000 }); 
+			}
+		}, "json");
+	},function(){
+		$("#del"+id+" td").css('border-top','0');
+		$("#del"+id+" td").css('border-bottom','1px solid #EFEFEF');
+	});
+}
+//排序
+function sort(){
+	var str_id = '';
+	var str_sort = '';
+	$('input[name="id"]').each(function(){
+		var id = $(this).val();
+ 		var sort_num = $('#sort_num'+id).val();
+		str_id +=  ','+id;
+		str_sort += ','+sort_num;
+	});
+	$.get("{:U('Goods/class_sort')}", { str_id: str_id,str_sort:str_sort },function(data){
+		if(data == 1){
+			parent.layer.msg('排序成功', {
+				icon: 1,
+				shade: 0.3,
+				time: 2000 //2秒关闭（如果不配置，默认是3秒）
+			}, function(){
+				window.location.href="__SELF__";
+			});
+		}else{
+			layer.msg('排序失败');
+		}
+	});
+}
+
+//编辑
+function edit(id){
+	parent.layer.confirm('确认要更新吗？', {
+		btn: ['确认','取消'], //按钮
+		shade: 0.3 //显示遮罩
+	}, function(){
+		var class_name = $('#class_name'+id).val();
+		var sort_num = $('#sort_num'+id).val();
+		if(class_name == ''){
+			layer.tips('分类名称', '#class_name'+id);
+			return false;
+		}
+		if(sort_num == ''){
+			layer.tips('排序ID不能为空', '#sort_num'+id);
+			return false;
+		}	
+		$.post("{:U('Goods/class_update')}", { class_name: class_name,sort_num:sort_num,id:id },function(data){
+			console.log(data);
+			if(data == 1){
+				parent.layer.msg('更新成功', {
+					icon: 1,
+					shade: 0.3,
+					time: 1000 		//2秒关闭（如果不配置，默认是3秒）
+				}, function(){
+					window.location.href="__SELF__";
+				});
+			}else{
+				layer.msg('更新失败');
+			}
+		},"json");
+	});
+}
+function check_form(){
+	var class_name = $('#class_name_add').val();
+	if(class_name == ''){
+		layer.tips('分类名称不能为空', '#class_name_add', {tips:3});
+		return false;
+	}
+	var pic_url = $('#pic_url').val();
+	if(pic_url == ''){
+		layer.msg('代表图片不能为空');
+		return false;
+	}
+	return true;	
+}
+
+//首页推荐
+function shoutui(id){
+	$.ajax({
+		   url: "{:U('Goods/shoutui')}",
+           type: "POST",
+           data: {id:id},
+           dataType: "json",
+           success: function(result){
+           	 if(result == 3){
+           		layer.msg('首页推荐不能超过十个',{icon: 2});
+           	 return false;
+             }else if(result == 1){
+            	window.location.href="__SELF__";
+             }else if(result == 2){
+            	 window.location.href="__SELF__";
+             }
+           }
+       });
+}
+
+</script>
+</head>
+<body>
+
+<div class="nav">
+	<div class="nav_title">
+    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a"><php>echo urldecode($_GET['menu_title']);</php></span></h4>
+    </div>
+</div>
+
+<form action="__SELF__" method="POST" enctype="multipart/form-data" onSubmit="return check_form()">
+<div class="search" style="line-height:50px; padding-left:30px; margin-top:3px;">
+分类名称：&nbsp;&nbsp;<input type="text" class="input" name="class_name" id="class_name_add" style="width:200px;" />
+
+
+分类图片：&nbsp;&nbsp;<span id="imgdiv"><img style="position:relative;top:6px;margin-right:30px;" id="imgShow" width="80" height="30" />
+<input type="file" name="pic_url" id="pic_url" /></span>
+
+
+&nbsp;&nbsp;<button type="submit" class="button">保存添加</button>
+&nbsp;&nbsp;<button type="button" class="button" style="background:#146AC1;">保存排序</button>
+</div>
+</form>
+
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="list_table">
+      <thead>
+	    <tr>
+	      <td width="10%"><div align="center">ID</div></td>
+	      <td width="15%"><div align="center">
+	        排序
+	      </div>
+		  </td>
+	      <td width="15%"><div align="center">分类名称</div></td>
+	      <td width="15%"><div align="center">分类图片</div></td>
+		  <td width="15%"><div align="center">显示状态</div></td>
+	      <td width="30%"><div align="center">操作</div></td>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="result" item="result">        
+	    <tr id="del{$result.id}">
+	      <td><div align="center">{$result.id}</div></td>
+	      <td height="50"><div align="center">
+          	  <input type="text" name="sort_num" id="sort_num{$result.id}" style="width:60px;height:30px;text-align:center;font-size:14px;" value="{$result.sort_num}">
+              <input type="hidden" name="id" id="id{$result.id}" value="{$result.id}"/></div></td>
+	      <td><div align="center">
+	          <input type="text" class="input" name="class_name" id="class_name{$result.id}" value="{$result.class_name}">
+	      </div></td>
+	      
+	      <td><div align="center">
+	          <img style="height:30px; width:80px; border-radius:4px;" src="__PUBLIC__/Uploads/class/{$result.pic_url}" />
+	      </div></td>
+		
+		  <td><div align="center">
+			  <if condition="$result.hide_status == 1">已隐藏<else/>已打开</if> ，
+			  <a class="a_button" href="javascript:;" onClick="hide({$result.id});"><if condition="$result.hide_status == 1">打开<else/>隐藏</if></a>
+	      </div></td>
+	      <td><div align="center">
+			<input type="hidden" name="hide_status" id="hide_status{$result.id}" value="{$result.hide_status}" />
+			<a class="a_button" href="javascript:;" onClick="shoutui({$result.id});"><if condition="$result.shoutui == 0">首页推荐<else/>取消推荐</if></a>
+			<if condition="$result['fid'] eq 0">
+			<a class="a_button" href="javascript:;" onClick="addPage({$result.id});">添加子类</a>	
+			</if>		
+	        <a class="a_button" href="javascript:;" onClick="edit({$result.id});">保存</a>
+	        <a class="a_button" href="javascript:;" onclick="del({$result[id]})">删除</a></div></td>
+        </tr>
+	        <volist name="result.vo"   id="vv" key="q">
+		        <tr id="del{$vv.id}">
+			      <td style="padding-left:100px;"><div align="center">&nbsp;&nbsp;&nbsp;&nbsp;┠─&nbsp;&nbsp;{$vv.id}</div></td>
+			      <td height="50"><div align="center">
+		          	  <input type="text" name="sort_num" id="sort_num{$vv.id}" style="width:60px;height:30px;text-align:center;font-size:14px;" value="{$vv.sort_num}">
+		              <input type="hidden" name="id" id="id{$vv.id}" value="{$vv.id}"/></div></td>
+			      <td><div align="center">
+			          <input type="text" class="input" name="class_name" id="class_name{$vv.id}" value="{$vv.class_name}">
+			      </div></td>
+			      
+			      <td><div align="center">
+			          	无
+			      </div></td>
+				
+				  <td><div align="center">
+					  <if condition="$vv.hide_status == 1">已隐藏<else/>已打开</if> ，
+					  <a class="a_button" href="javascript:;" onClick="hide({$vv.id});"><if condition="$vv.hide_status == 1">打开<else/>隐藏</if></a>
+			      </div></td>
+			      <td><div align="center">
+					<input type="hidden" name="hide_status" id="hide_status{$vv.id}" value="{$vv.hide_status}" />	
+			        <a class="a_button" href="javascript:;" onClick="edit({$vv.id});">保存</a>
+			        <a class="a_button" href="javascript:;" onclick="del({$vv[id]})">删除</a></div></td>
+		        </tr>
+	        </volist>
+        </foreach>
+        </tbody>
+  </table>
+</div>
+
+<!-- 分页 -->
+<div class="page">
+  <div align="center">{$page}</div>
+</div>
+<script>
+	function addPage(id){
+		parent.layer.open({
+			type: 2,
+			shadeClose: true,
+			shade: 0.3,
+			area: ['700px', '80%'],
+			title: '添加子类',
+			content: "{:U('Leaguer/leaguer_addpage')}?id="+id
+		});
+	}
+</script>
+
+</body>
+</html>

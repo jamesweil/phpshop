@@ -1,0 +1,53 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name='content'>
+	<div class="repair-content-main">
+		<div class="img-parent">
+			<img src="__IMG__/w41.jpg">
+			<div class="link">
+				<h2>请选择商品维修类型</h2>
+				<ul class="clearfix">
+					<li class="fl">
+						<div class="WeChat-img">
+							<a href="{:U('Service/repair_ys')}">
+								<img src="__IMG__/w44.jpg">
+								<img src="__IMG__/d8.png" class="move">
+							</a>
+							<p>商城商品维修</p>
+						</div>
+					</li>
+					<li class="fl">
+						<div class="WeChat-img">
+							<a href="{:U('Service/repair')}">
+								<img src="__IMG__/w45.jpg">
+								<img src="__IMG__/d7.png" class="move">
+							</a>
+							<p>非商城商品维修</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+    <script>
+		//划入效果
+		$('.repair-content-main .link .WeChat-img a').on('mouseenter mouseleave',function(e){
+			var w = $(this).width(); 
+			var h = $(this).height(); 
+			var x = (e.pageX - $(this).offset().left - (w / 2)) * (w > h ? (h / w) : 1); 
+			var y = (e.pageY - $(this).offset().top - (h / 2)) * (h > w ? (w / h) : 1); 
+			var direction = Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90) + 3) % 4; 
+			var eventType = e.type;
+			var aPos=[{left:0,top:-136},{left:118,top:0},{left:0,top:136},{left:-118,top:0}];
+			if(eventType == 'mouseenter'){
+				$(this).find('.move').css(aPos[direction]).stop(true,true).animate({left:0,top:0},200);
+			}else{
+				$(this).find('.move').stop(true,true).animate(aPos[direction],200);    
+			}
+		});
+	</script>
+	</script>
+</block>

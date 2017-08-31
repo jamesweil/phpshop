@@ -1,0 +1,70 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<section class="content">
+	<!-- Main content -->
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title text-center">发放优惠券</h3>
+			</div>
+			<div class="panel-body">
+				<form action="" method="post">
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td>类型名称:</td>
+								<td>
+									<div class="input-prepend input-group">
+										<input disabled="disabled" type="text" value="{$coupon[$couponModel::$name_d]}"
+											class="form-control active cou_300" id="{$couponModel::$name_d}" name="{$couponModel::$name_d}"
+											>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>优惠券金额:</td>
+								<td>
+									<div class="input-prepend input-group">
+										<input disabled="disabled" type="text" value="{$coupon[$couponModel::$money_d]}"
+											class="form-control active cou_300" id="{$couponModel::$money_d}" name="{$couponModel::$money_d}"
+											>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>发放数量:</td>
+								<td>
+									<div class="input-prepend input-group">
+										<input type="text" value="0" class="form-control active cou_300"
+											id="num" name="num" />
+										<input type="hidden" value="{$coupon[$couponModel::$id_d]}" 
+											 name="{$couponModel::$id_d}" />
+										<input type="hidden" value="{$coupon[$couponModel::$type_d]}" 
+											 name="{$couponModel::$type_d}" />
+									</div>
+								</td>
+							</tr>
+
+							<tr>
+								<td></td>
+								<td>
+									<button type="button" onclick="SendCoupon.makeCoupon('{:U('makeCouponUser')}')" class="btn btn-info">
+										<i class="ace-icon fa fa-check bigger-110"></i> 发放
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- /.content -->
+	<script src="__COMMON__/js/alert.js"></script>
+	<script src="__JS__/conpon/SendCoupon.js"></script>
+</section>
+</block>

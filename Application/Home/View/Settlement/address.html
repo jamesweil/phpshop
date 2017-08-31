@@ -1,0 +1,55 @@
+<!--地址编辑and新建-->
+<div class="ui-dialog" id="however">
+	<div class="ui-dialog-child"></div>
+	<div class="consignee">
+		<div class="ui-dialog-title clearfix">
+			<span class="fl">新增收货人信息</span> <a href="javascript:;" class="fr"></a>
+		</div>
+		<div class="inPtn">
+			<form id="formAddressId" method="post">
+				<p class="clearfix">
+					<span class="fl"><i>*</i> 收货人：</span> <input type="text"
+						msg="请输入中文" name="{$region::$realname_d}" validateRule="1"
+						class="fl itxt req">
+				</p>
+				<p class="clearfix">
+					<span class="fl"><i>*</i> 所在地区：</span> <select isNumber="1"
+						name="{$region::$provId_d}" class="fl req" id="parent"
+						onclick="InterAddress.getAreaListClear($(this), '{:U('getAreaList')}', $('#city'));">
+						<option value="0">—请选择—</option>
+					</select> <select name="{$region::$city_d}" class="fl req" id="city"
+						isNumber="1" class="req"
+						onclick="InterAddress.getAreaListClear($(this), '{:U('getAreaList')}', $('#dist'));">
+						<option value="0">—请选择—</option>
+					</select> <select name="{$region::$dist_d}" class="fl req" isNumber="1"
+						class="req" id="dist">
+						<option value="0">—请选择—</option>
+					</select>
+				</p>
+				<p class="clearfix">
+					<span class="fl"><i>*</i> 详细地址：</span> <input type="text"
+						name="{$region::$address_d}" class="fl req" nsg="请输入详细地址">
+				</p>
+				<p class="clearfix">
+					<span class="fl"><i>*</i> 手机号码：</span> <input type="text"
+						isNumber="1" name="{$region::$mobile_d}" validateRule="2"
+						class="fl itxt req" msg="请输入电话号码"> <span
+						class="fl deviation">固定电话：</span> <input type="text" isNumber="1"
+						name="{$region::$telphone_d}" validateRule="3" class="fl itxt req">
+				</p>
+				<p class="clearfix">
+					<span class="fl">&nbsp;&nbsp; 邮箱：</span> <input type="text"
+						validateRule="4" name="{$region::$email_d}" class="fl itxt req">
+					<em class="fl deviation ">用来接收订单提醒邮件，便于您及时了解订单状态</em>
+				</p>
+				<p class="clearfix">
+					<span class="fl">地址别名：</span> <input type="text"
+						name="{$region::$alias_d}" class="fl itxt">
+				</p>
+				<input type="submit"
+					onclick="InterAddress.addUserAddress('formAddressId', '{:U('UserAddress/addReceiveAddress')}');"
+					class="submit" value="保存收货人信息">
+			</form>
+		</div>
+	</div>
+</div>

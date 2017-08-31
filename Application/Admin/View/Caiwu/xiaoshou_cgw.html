@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Common/Layer/extend/layer.ext.js"></script>
+<script src="__PUBLIC__/Common/My97Date/WdatePicker.js"></script>
+
+<script>
+//查看详情
+	function look_detail(id){
+		parent.layer.open({
+			type: 2,
+			title: '订单',
+			shadeClose: true,
+			shade: 0.5,
+			maxmin: true,
+			area: ['80%', '90%'],
+			content: "{:U('Goods/order_lst_detail')}?id="+id //iframe的url
+		});
+	}
+	function refresh(){
+		window.location.href="{:U('Goods/orders_list')}"
+	}
+
+//删除用户
+function del(id){
+	$("#del"+id+" td").css('background','#CBDFF2');
+	parent.layer.confirm('真的要删除吗？', {
+		btn: ['确认','取消'], //按钮
+		shade: 0.5 //显示遮罩
+	}, function(){
+		$.post("{:U('Goods/goods_orders_del')}", { "id": id},function(data){
+			if(data == 1){
+				parent.layer.msg('删除成功', { icon: 1, time: 1000 }, function(){
+						$("#del"+id).remove();
+					});
+			}else{
+				parent.layer.msg('删除失败', {icon: 2, time: 2000 }); 
+			}
+		}, "json");
+	},function(){
+		$("#del"+id+" td").css('border-top','0');
+		$("#del"+id+" td").css('border-bottom','1px solid #EFEFEF');
+	});
+}
+</script>
+</head>
+<body>
+<style>
+	.tr_content {
+		line-height: 32px;
+		height:32px;
+		font-size: 14px;
+	}
+	
+	.layui-layer-title{
+		font-weight:bold;
+	}
+</style>
+<div class="nav">
+	<div class="nav_title">
+    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a">用户管理 - 采购网明细表</span></h4>
+    </div>
+</div>
+
+<form action="__SELF__" method="get">
+	<div class="search" style=" line-height:50px; padding-left:30px; margin-top:3px;">
+		用户手机号：<input type="text" class="input" name="mobile" value="{$_GET['orders_num']}" maxlength="30" size="20" />
+		&nbsp;&nbsp;&nbsp;&nbsp;
+	  <button type="submit" class="button">查 询</button>
+	</div>
+</form>
+
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="list_table">
+      <thead>
+	    <tr>
+	      <td><div align="center">用户ID</div></td>
+	      <td><div align="center">用户手机号</div></td>
+	      <td><div align="center">购买的商品</div></td>
+	      <td><div align="center">商品规格</div></td>
+	      <td><div align="center">单价</div></td>
+	      <td><div align="center">数量</div></td>
+	      <td><div align="center">到期收益+本金</div></td>
+	      <td><div align="center">到期时间</div></td>
+	      <td><div align="center">购买时间</div></td>
+	      <td><div align="center">操作</div></td>
+	    </tr>
+        </thead>
+        <tbody>
+        <foreach name="result" item="vo" key="k">
+	  		<tr class="tr_content" onmouseover="$(this).css('color','red')" onmouseleave="$(this).css('color','#555')">
+	  		<!-- <tr id="del{$vo.id}"> -->
+				<td><div align="center">{$vo.user_id}</div></td>
+				<td><div align="center">{$vo.mobile}</div></td>
+				<td><div align="center">{$vo.name}</div></td>
+				<td><div align="center">{$vo.standard}</div></td>
+				<td><div align="center">{$vo.price}</div></td>
+				<td><div align="center">{$vo.product_num}</div></td>
+				<td><div align="center">{$vo.income}.00</div></td>
+				<td><div align="center">{$vo.deadtime}</div></td>
+				<td><div align="center">{$vo.update_time}</div></td>
+				<td><div align="center"><!--<a class="xq button" href="javascript:void(0);">续期</a>--><a class="gb button" href="javascript:void(0);">完成并关闭</a></div></td>
+				<input type="hidden" class="pid" data-id="{$vo.id}">
+			</tr>
+        </foreach>
+        </tbody>
+<script>
+
+function done(id){	
+	//prompt层
+	var index=layer.prompt({
+	  title: '输入操作密码，并确认',
+	  formType: 1 //prompt风格，支持0-2
+	}, function(pass){
+	$(".layui-layer-btn0").attr("disabled","disabled");
+	$(".layui-layer-btn0").text("提交中...");
+	  $.post("{:U('Goods/done')}",{
+					   'order_id':id,
+					   'password':pass
+					},function(data){
+						if(data==1){
+							layer.close(index);
+							layer.msg('已经成功标记为确认收货', {
+								  icon: 1,
+								  time: 2000 //2秒关闭（如果不配置，默认是3秒）
+								}, function(){
+									window.location.href="__SELF__";
+								});
+						}else if(data==2){
+							layer.close(index); 
+							layer.msg('密码错误');
+						}else{
+							layer.close(index);
+							layer.msg('标记出错');
+						}
+					})
+	});	
+}
+
+</script>        
+
+</table>
+</div>
+
+<!-- 分页 -->
+<div class="page">
+  <div align="center">{$page}</div>
+</div>
+
+<script>
+    $(function () {
+		//点击续期
+        $('.xq').click(function(){
+		var pid = $(this).parent().parent().parent().find('input[class*=pid]').attr('data-id');
+			$.getJSON("/index.php/Admin/Caiwu/cgw_edit", { pid: pid, type: "xq" },function(data){
+				layer.msg(data,{time: 2000},function(){
+					window.location.reload();				
+				});
+			});
+		})
+		//点击完成并关闭
+		$('.gb').click(function(){
+			var pid = $(this).parent().parent().parent().find('input[class*=pid]').attr('data-id');
+			$.getJSON("/index.php/Admin/Caiwu/cgw_edit", { pid: pid, type: "gb" },function(data){
+				layer.msg(data,{time: 2000},function(){
+					window.location.reload();				
+				});
+			});
+		})
+    })
+</script>
+</body>
+</html>

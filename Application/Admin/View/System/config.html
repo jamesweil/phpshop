@@ -1,0 +1,107 @@
+<extend name="Public:publicHTML"/>
+
+
+<block name="content">
+	<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+	
+	<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i> 配置内容列表
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="navbar navbar-default">
+						<form class="navbar-form form-inline" action="" method="post">
+							<!--
+				            <div class="form-group">
+				              	<input type="text" class="form-control" placeholder="搜索">
+				            </div>
+				            <button type="submit" class="btn btn-default">提交</button>
+                         -->
+							<div class="form-group pull-right">
+								<a onclick="Tool.alertEdit('{:U('addConfig')}', '添加配置分类', 600, 550)"
+									class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加配置分类</a>
+							</div>
+						</form>
+					</div>
+					<div id="ajax_return">
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<td  class="text-center w1"><input
+											type="checkbox"
+											onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+										<td class="text-center">配置编号</td>
+										<td class="text-center">分类名称</td>
+										<td class="text-center">添加时间</td>
+										<td class="text-center">更新时间</td>
+										<td class="text-center">操作</td>
+									</tr>
+								</thead>
+								<tbody>
+									<if condition="!empty($data['data'])">
+										<foreach name="data['data']" item="list">
+											<tr>
+												<td class="text-center"><input type="checkbox"
+													name="selected[]" value="{$list[$model::$id_d]}	"></td>
+												<td class="text-center">{$list[$model::$id_d]}</td>
+												<td >{$list[$model::$configClass_name_d]}</td>
+												<td class="text-center">{$list[$model::$createTime_d]|date='Y-m-d',###}</td>
+												<td class="text-center">{$list[$model::$updateTime_d]|date='Y-m-d',###}</td>
+												<td class="text-center">
+													<a
+														onclick="hot_words.edit_or_add('{:U('editConfig', array('id'=> $list[$model::$id_d]))}')"
+														data-toggle="tooltip" title="" class="btn btn-info"
+														data-original-title="编辑"><i class="fa fa-pencil"></i></a>
+													 <a
+														onclick="hot_words.deleteConfigClass({$list[$model::$id_d]}, '{:U('delConfig')}', '{:U('isHaveClass')}')"
+														href="javascript:;"
+														data-toggle="tooltip" title="" class="btn btn-danger"
+														data-original-title="删除"><i class="fa fa-trash-o"></i></a>
+													</td>
+											</tr>
+				                            <foreach name="list['children']" item="sub">
+					                           <tr>
+					                           		<td class="text-center"><input type="checkbox" name="selected[]" value="{$sub[$model::$id_d]}	"></td>
+					                                <td class="text-center"><div align="center">{$sub[$model::$id_d]}</div></td>
+					                                <td >&nbsp;&nbsp;&nbsp;&nbsp;┠─&nbsp;&nbsp;{$sub[$model::$configClass_name_d]}</td>
+					                                <td class="text-center">{$sub[$model::$createTime_d]|date='Y-m-d',###}</td>
+													<td class="text-center">{$sub[$model::$updateTime_d]|date='Y-m-d',###}</td>
+					                                <td class="text-center">
+					                                    <a href="javascript:;" onclick="Tool.alertEdit('{:U('editConfig', array('id'=> $sub[$model::$id_d]))}', '编辑', 600, 550)"
+						                                    data-toggle="tooltip" title="" class="btn btn-info"
+															data-original-title="编辑"><i class="fa fa-pencil"></i></a>
+					                                    <a href="javascript:;" onclick="hot_words.deleteConfigClass({$sub[$model::$id_d]}, '{:U('delConfig')}', '{:U('isHaveClass')}')"
+						                                    data-toggle="tooltip" title="" class="btn btn-danger"
+															data-original-title="删除"><i class="fa fa-trash-o"></i></a>
+					                                </td>
+					                            </tr>
+					                        </foreach>
+										</foreach>
+									</if>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="page">
+						<div class="col-sm-6 text-left"></div>
+						<div class="col-sm-6 text-right">{$data.page}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.row -->
+</section>
+<script src="__COMMON__/js/alert.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/goods/hot_words.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/system/system.js?a=123"></script>
+<script>/*hot_words.tree("{:U('index')}", 'jklj')*/</script>
+</block>

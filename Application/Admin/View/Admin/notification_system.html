@@ -1,0 +1,45 @@
+<extend name="Public/publicHTML"/>
+
+<block name="nav">
+<div class="nav">
+	<div class="nav_title">
+    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a">通知系统</span></h4>
+    </div>
+    <div class="nav_button">
+    </div>
+</div>
+</block>
+<block name="content">
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="list_table">
+      <thead>
+	    <tr>
+	      <td width="23%"><div align="center">通知类型</div></td>
+	      <td width="34%"><div align="center">状态</div></td>
+	      <td width="29%"><div align="center">操作</div></td>
+        </tr>
+        </thead>
+
+		<foreach name="sms_types" item="value">
+	    <tr id="">
+	      <td><div align="center">短信通知({$value.sms_title})</div></td>
+	      <td></td>
+	      <td><div align="center">
+			  <a class="a_button" onClick="admin_system();" href="javascript:;">配置</a>
+			<a class="a_button" name="edit" href="{:U('sms_template',['sms_id' =>$value['id']])}">模板</a>
+		  </div></td>
+	      </tr>
+			</foreach>
+		<script type="text/javascript">
+			var ADMIN_SYSTEM_SAVE  = "{:U('admin_system_save')}";
+			//		var ADMIN_EDIT = "{:U('admin_edit')}";
+			//		var ADMIN_DEL  = "{:U('admin_del')}";
+		</script>
+		<script type="text/javascript" src="__JS__/admin/admin.js"></script>
+  </table>
+</div>
+<!-- 分页 -->
+<div class="page">
+{$page}
+</div>
+</block>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>订单中心</title>
+	<link rel="stylesheet" href="__CSS__/base.css">
+	<link rel="stylesheet" href="__CSS__/style.css">
+	<link rel="stylesheet" href="__CSS__/payment.css">
+	<link rel="stylesheet" href="__COMMON__/css/page.css">
+	<script src="__JS__/jquery-1.7.2.min.js"></script> 
+	<block name="header"></block>
+</head>
+<body>
+	<!--头部-->
+	<div class="top1">
+		<div class="header-2016">
+			<div class="w clearfix">
+				<!--头部左内容-->
+				<ul class="fl" id="areaList">
+					
+				</ul>
+				<!--头部右内容-->
+				<ul class="fr clearfix nav-right">
+					<li class="fl clearfix">                    
+                    <if condition="$userId['user_name']!=null">
+                        <span class="fl"><span style="color:red;">{$userId.user_name}</span>&nbsp;欢迎来到亿速网络！</span>
+                        <a href="{:U('public/logout')}" class="fl active">【退出】</a>
+                    </if>
+                    <if condition="$userId['user_name']==null">
+                        <span class="fl">欢迎来到亿速网络！</span>
+                        <a href="{:U('public/login')}" class="fl active">【登录】</a>
+                        <a href="{:U('public/reg')}" class="fl active">【注册】</a>
+                    </if>
+                </li>
+					<li class="fl">
+						|<a href="{:U('Order/index')}">我的订单</a>|
+					</li>
+					<li class="fl customerService">
+						<a href="{:U('Order/index')}">个人中心<i></i></a>
+						<div>
+							<p><a href="{:U('UserData/user_data')}">我的信息</a></p>
+							<p><a href="{:U('Order/order_myorder')}">我的订单</a></p>
+							<p><a href="{:U('Assets/coupon')}">我的优惠券</a></p>
+							<p><a href="{:U('Assets/myCollection')}">我的收藏</a></p>
+							<p><a href="{:U('Assets/integral')}">我的积分</a></p>
+						</div>
+					</li>
+					<li class="fl clearfix mobile">
+						<span class="fl">|</span>
+						<div class="mobile-phone fl">
+							<b></b>
+							<s></s>
+						</div>
+						<a href="javascript:;" class="fl">APP下载</a>
+					</li>
+					<li class="fl customerService">
+						|<a href="javascript:;">客户服务<i></i></a>|
+						<div>
+							<p><a href="{:U('Service/return_repair')}">返修退换货</a></p>
+							<p><a href="{:U('Service/after_sale')}">售后管理</a></p>
+							<p><a href="{:U('Service/advisoryReply')}">咨询回复</a></p>
+							<p><a href="{:U('Service/opinion')}">意见建议</a></p>
+							<p><a href="{:U('Service/repair_choice')}">上门维修服务</a></p>
+							<p><a href="{:U('Service/announcement')}">网站公告</a></p>
+							<p><a href="{:U('Service/report_center')}">投诉中心</a></p>
+						</div> 
+					</li>
+					<li class="fl customerService">
+						<a href="javascript:;">网站导航<i></i></a>
+						<div>
+							<p><a href="{:U('UserData/user_data')}">我的信息</a></p>
+							<p><a href="{:U('Order/order_myorder')}">我的订单</a></p>
+							<p><a href="{:U('Assets/coupon')}">我的优惠券</a></p>
+							<p><a href="{:U('Assets/myCollection')}">我的收藏</a></p>
+							<p><a href="{:U('Assets/integral')}">我的积分</a></p>
+						</div>
+					</li>
+					<li class="fl telephone"><em></em>{$intnet_phone}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+<!--二级头部-->
+	<div class="public-header1">
+		<div class="center-parent w clearfix">
+			<!--logo-->
+			<a href="{:U('Index/index')}" class="logo fl">
+				<h2>亿速网络</h2>
+				<img src="__IMG__/logo_center.png">
+			</a>
+			<!--返回主页-->
+			<div class="myHome fl">
+				<h2>我的商城</h2>
+				<a href="{:U('Index/index')}">返回商城首页</a>
+			</div>
+			<!--导航-->
+			<ul class="nav clearfix fl">
+				<li class="fl">
+					<a href="{:U('Index/index')}">首页</a>
+				</li>
+				<li class="fl clearfix">
+					<a href="javascript:;" class="fl">账户设置</a>
+					<em class="fl"></em>
+					<div class="like clearfix">
+						<em></em>
+						<dl class="fl">
+							<dt>安全设置</dt>
+							<dd><a href="{:U('UserSet/password_edit')}">修改登录密码</a></dd>
+							<dd><a href="javascript:;">手机绑定</a></dd>
+							<dd><a href="{:U('UserSet/security_question')}">密保问题设置</a></dd>
+						</dl>
+						<dl class="fl">
+							<dt>个人资料</dt>
+							<dd><a href="{:U('UserSet/address')}">收货地址</a></dd>
+							<dd><a href="{:U('UserData/user_data')}">修改头像、昵称</a></dd>
+						</dl>
+						<dl class="fl">
+							<dt>账号绑定</dt>
+							<dd><a href="{:U('userData/bind_account')}">支付宝绑定</a></dd>
+							<dd><a href="javascript:layer.msg('暂不支持');">银行卡绑定</a></dd>
+							<dd><a href="javascript:layer.msg('暂不支持');">微信绑定</a></dd>
+							<dd><a href="{:U('userData/bind_account')}">微博绑定</a></dd>
+							<dd><a href="javascript:layer.msg('暂不支持');">分享绑定</a></dd>
+						</dl>
+					</div>
+				</li>
+				<li class="fl">
+					<a href="{:U('Order/logistics_message')}">消息</a>
+					<i><empty name="mes_count">0<else/>{$mes_count}</empty></i>
+				</li>
+			</ul>
+			<!--购物车and搜索框-->
+			<div class="mainRight fr clearfix">
+				<!--搜索框-->
+				<form  id="formsarch" action="{:U('Product/ProductList')}" method="get" class="clearfix fl search">
+					<input type="hidden" name="show" value="show"/>
+                    <input type="text" class="fl input" id="pp" name="keyword" value=""/>
+                    <input type="hidden" id="ser-id" name="id" class="fl input" value=""/>
+                    <input type="submit" class="fl btn" id="search" onmouseover="searcher()" value="搜&nbsp;索"/>
+                    <div class="gg"></div>   
+                </form>
+
+				<!--购物车--> 
+				<div class="home-shopping hover fl">
+					<div class="home-shopping-top clearfix">
+						<em class="fl"></em>
+						<span class="fl"><a href="{:U('Cart/goods')}">我的购物车</a></span>
+						<i class="fl"></i>
+					</div>
+					<div class="home-individual clearfix">
+						<span class="fl"></span>
+						<em class="fl" id="couts">{$cartCount?$cartCount:0}</em>
+						<i></i>
+					</div>
+					<dl class="home-shopping-up">
+						<if condition="$cartCount==0"><dt>购物车没有任何东西，赶紧选吧。</dt></if>
+						<if condition="$cartCount!=0">
+							<volist name="carts" id="cart">
+								<dd class="clearfix active">
+									<a href="javscript:;" class="fl">
+										<img src="{$cart.pic_url}" alt="">
+									</a>
+									<a href="{:U('Goods/goods_details',['id'=>$cart['id'],'goods_num'=>$cart['goods_num']])}" class="fl con">
+										{$cart.title}
+									</a>
+									<strong class="fl">
+										<span>￥{$cart.price_new}</span>x{$cart.goods_num}<br>
+										<a href="javascript:;" class="dels" data="{$cart.id}">删除</a>
+									</strong>
+								</dd>
+							</volist>
+						</if>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</div>
+	 <!--ajax商品搜索功能-->
+<script>
+        var _this = null;
+        var clear = null;
+        var timer = null;
+        $('#pp').on('input',function(){
+            _this = $(this);
+            clearInterval(clear);
+            clear = setTimeout(function(){
+                var _url ="{:U('Goods/search')}";
+                var _data = _this.val();
+                $.post(_url,{title:_data},function(data){
+                    if(data.status==0){
+                        /*	layer.msg(data.message);*/
+                    }
+                    if(data.status==1){
+                        var _a=data.data;
+                        var _b="{:U('Goods/goodsDetails')}"
+                        var _html='';
+                        for (var i in _a){
+                            _html +='<div><a href="'+_b+'?id='+_a[i].id+'"> '+_a[i].title+'</a></div>';
+                        }
+                    }
+                    $('.gg').html(_html);
+                    $('input[name="id"]').val(_a[0].id);
+                    if(data.status==2){
+                        $('.gg').html('');
+                    }
+                },'json')
+            },300);
+        }).on('keydown',function(ev){
+            if(ev.keyCode == 13){
+                if($(this).val() == ''){
+                    alert('搜索不能为空！');
+                }else{
+                    clearTimeout(timer);
+                    timer = setTimeout(function(){
+                        $('#pp').parents('form').submit();
+                    },800);
+                }
+                return false;
+            }
+            ev.stopPropagation();
+        });
+    </script>
+    <!--ajax删除购物车里面的商品-->
+    <script>
+        $('.dels').click(function(){
+            var _url="{:U('Goods/dels')}";
+            var _id=$(this).attr('data');
+            $.post(_url,{id:_id},function(data){
+                if(data.status==0){
+                    layer.msg(data.message);
+                }
+            })
+            var _count=parseInt($('#couts').html());
+            $(this).parent().parent().remove('dd');
+            $('#couts').html(_count-1);
+        })
+    </script>
+    <!--搜索跳转-->
+    <!--<script>
+        function searcher(){
+            var _url ="{:U('Goods/searchOne')}";
+            var _data=$('#pp').val();
+            $.post(_url,{title:_data},function(data){
+                if(data.status==0){
+                    layer.msg(data.message);
+                }
+                if(data.status==1){
+                    $("input[name='id']").val(data.data);
+                }
+            })
+        }
+    </script>-->
+    <script>
+        function addAd(ele){
+            var _id=$(ele).attr('g');
+            var _reurl=$(ele).attr('data');
+            var _locatUrl="{:U('Ad/addhit')}";
+            $.post(_locatUrl, {id:_id},function(data){
+                console.log(data.msg);
+            },'JSON')
+            window.location.href=_reurl;
+        }
+    </script>
+	<script>
+		$("#formsarch").submit(function(){
+			$("#ser-id").remove();
+		});
+
+	</script>

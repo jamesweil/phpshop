@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+.aw-content-wrap { margin: -9px 0 0 -5px;padding: 0 15px 2px;min-height: 100%;height: auto;}
+.aw-content-wrap .mod {margin-bottom: 10px;box-shadow: 0 1px 2px #d5d7d8;}
+.aw-content-wrap .mod > .mod-head, .mod-echat-info .mod-head { margin: 10px 0 0; height: 44px;border: 1px solid #e2e1e1; background: #f4f4f4; color: #333;}
+.aw-content-wrap .mod-head .pull-left { margin-right: 20px; padding-left: 15px;font-size: 14px;line-height: 10px;}
+.pull-left { float: left!important;}
+.aw-content-wrap .mod-site-save { margin: -15px 0px 0 0;}
+.pull-right {float: right!important;line-height: 10px;}
+
+.aw-content-wrap .mod-body, .aw-content-wrap .mod-content { padding: 20px; border: 1px solid #e2e1e1; border-top: none; background: #fff;}
+
+.center-block {display: block;margin-right: auto;margin-left: auto;}
+.mod-one-btn { text-align: center;}
+.table {margin-bottom: 0;}
+
+

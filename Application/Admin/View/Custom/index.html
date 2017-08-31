@@ -1,0 +1,97 @@
+<extend name="Public/publicHTML" />
+<block name="nav"></block>
+
+
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 自定义页面列表
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="navbar navbar-default">
+					<form id="search-form2" class="navbar-form form-inline"
+						method="post" action="{:U('index')}">
+						<div class="form-group">
+							<label for="input-order-id" class="control-label">页面名称:</label>
+							<div class="input-group">
+								<input type="text" class="form-control" id="input-order-id"
+									placeholder="页面名称" value="{$_POST[$customModel::$name_d]}" name="{$customModel::$name_d}">
+							</div>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-primary" id="button-filter search-order"
+								type="submit">
+								<i class="fa fa-search"></i> 筛选
+							</button>
+						</div>
+						<button type="button" class="btn btn-primary pull-right"
+							onclick="javascript:location.href='{:U('addCustomPage')}'">
+							<i class="fa fa-plus"></i> 添加自定义页面
+						</button>
+					</form>
+				</div>
+
+				<div>
+
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<foreach name="colum" key="key" item="value">
+										<th class="sorting text-left">{$value}</th>
+									</foreach>
+									<th class="sorting text-left">操作</th>
+								</tr>
+							</thead>
+							<tbody id="ajax_return">
+								<if condition="!empty($brand['data'])"> <foreach
+									name="brand['data']" item="list">
+								<tr>
+									<td class="text-right">{$list[$model::$id_d]}</td>
+									<td class="text-left">{$list[$model::$brandName_d]}</td>
+									<td class="text-left"><a
+										href="{$list[$model::$brandLogo_d]}?a={:time()}"
+										target="_blank"><img
+											onmouseover="$(this).attr('width','80').attr('height','45');"
+											onmouseout="$(this).attr('width','40').attr('height','30');"
+											width="40" height="30" src="{$list[$model::$brandLogo_d]}" /></a></td>
+									<td class="text-left">{$list[$classModel::$className_d]}</td>
+									<td><img width="20" height="20" src="__COMMON__/img/
+									<if condition='$list[$model::$recommend_d] eq 1'>yes.png<else />cancel.png</if>?a={:time()}"
+										onclick="Brand.recommend({$list[$model::$id_d]},
+										{$list[$model::$recommend_d]}, '{:U('isRecommend')}')"/></td>
+									<td class="text-left">{$list[$model::$updateTime_d]|date='Y-m-d
+										H:i:s', ###}</td>
+									<td class="text-left"><a
+										onclick="Tool.alertEdit('{:U('editBrandHtml',array($model::$id_d=>$list[$model::$id_d]))}','编辑品牌', 900, 600)"
+										href="javascript:;" data-toggle="tooltip" title=""
+										class="btn btn-primary" data-original-title="编辑"><i
+											class="fa fa-pencil"></i></a> <a href="javascript:void(0);"
+										onclick="Brand.delBrand({$list[$model::$id_d]}, '{:U('delBrand')}')"
+										id="button-delete6" data-toggle="tooltip" title=""
+										class="btn btn-danger" data-original-title="删除"><i
+											class="fa fa-trash-o"></i></a></td>
+								</tr>
+								</foreach> </if>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="page">
+						<div class="col-sm-6 text-left"></div>
+						<div class="col-sm-6 text-right">{$brand.page}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script> <script
+	type="text/javascript" src="__JS__/brand/brand.js"></script> </block>

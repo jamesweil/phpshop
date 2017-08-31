@@ -1,0 +1,126 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<section class="content ">
+	<!-- Main content -->
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 添加会员
+				</h3>
+			</div>
+			<div class="panel-body ">
+				<!--表单数据-->
+				<form method="post" id="form">
+					<!--通用信息-->
+					<div class="tab-content col-md-10">
+						<div class="tab-pane active" id="tab_tongyong">
+							<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<td class="col-sm-2">用户名：</td>
+										<td class="col-sm-4"><input type="text"
+											class="form-control validate" name="{$userModel::$userName_d}">
+											<span id="err_attr_name" class="rxd">用户名格式有误不允许有特殊字符</span>
+											<label id="err_attr_name" class="rxd">用户名格式有误不允许有特殊字符</label>	
+										</td>
+										<td class="col-sm-4">用户名</td>
+									</tr>
+									<tr>
+										<td>昵称：</td>
+										<td>
+											<input type="text" class="form-control validate" id="money" name="{$userModel::$nickName_d}"/>
+											<span id="err_attr_name" class="rxd">昵称格式不规范</span>
+										 </td>
+										<td class="col-sm-4">用户昵称</td>
+									</tr>
+									<tr>
+										<td>手机号：</td>
+										<td><input type="text" class="form-control active " 
+											id="mobile" name="{$userModel::$mobile_d}"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" />
+										<span id="err_attr_name" class="rxd">手机号码格式有误</span>
+										</td>
+											
+										<td class="col-sm-4">用户手机号码</td>
+									</tr>
+									<tr>
+										<td>密码:</td>
+										<td id="pwd-status">
+											<input name="{$userModel::$password_d}[]" id="pwdS" class="form-control " type="password"/>
+											<span id="err_attr_name" class="rxd">密码格式不规范</span>
+										</td>
+										<td class="col-sm-4">请输入密码密码</td>
+									</tr>
+									
+									<tr>
+										<td>再次输入密码密码:</td>
+										<td id="order-status">
+											<input name="{$userModel::$password_d}[]" type="password"  id='pwsK'  class="form-control"/>
+											<span id="err_attr_name" class="rxd">密码格式不规范</span>
+										</td>
+										<td class="col-sm-4">请输入密码</td>
+									</tr>
+									
+									<tr class="timed">
+										<td>会员等级:</td>
+										<td>
+											<input name="{$userModel::$memberStatus_d}" type="radio" value="0">普通会员
+											<input name="{$userModel::$memberStatus_d}" type="radio" value="1">渠道会员
+											<input name="{$userModel::$memberStatus_d}" type="radio" value="2">月结会员
+										</td>
+										<td class="col-sm-4"></td>
+									</tr>
+
+									<tr class="timed">
+										<td>会员折扣率:</td>
+										<td>
+											<input type="text" class="form-control active"
+											id="condition" name="{$userModel::$memberDiscount_d}"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" /></td>
+										<td class="col-sm-4">会员折扣率</td>
+										<td class="col-sm-4"></td>
+									</tr>
+									<tr>
+										<td>上级会员:</td>
+										<td>
+											<select name="{$userModel::$pId_d}">
+												<option>请选择会员</option>
+												<foreach name="userData" key='key' item='value'>
+													<option value="{$key}">{$value}</option>
+												</foreach>
+											</select>
+										</td>
+										<td class="col-sm-4"></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td class="col-sm-4"></td>
+										<td class="text-right"><input class="btn btn-primary"
+											type="submit"
+											onclick="UserLevel.addUser('form', '{:U('addUserData')}');"
+											value="保存"></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</form>
+				<!--表单数据-->
+			</div>
+		</div>
+	</div>
+</section>
+<script src="__COMMON__/js/jquery-form.js"></script> 
+<script src="__COMMON__/js/jquery.validate.min.js"></script> 
+<script src="__COMMON__/js/validateCustom.js?a={:time()}"></script>
+<script src="__COMMON__/js/alert.js?a={:time()}"></script>  
+<script src="__JS__/user/user.js?a={:time()}"></script> 
+</block>

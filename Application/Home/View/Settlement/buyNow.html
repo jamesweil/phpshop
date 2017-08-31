@@ -1,0 +1,164 @@
+<extend name="settleIndex" />
+<block name="content">
+	<!--引入发票提示样式-->
+	<link rel="stylesheet" type="text/css" href="__CSS__/buynow.css">
+<form id="formId" method="post" action="{:U('BuliderOrder')}">
+	<div class="conrm-section w">
+		<div class="thisPon">
+			<div class="ponState clearfix">
+				<span class="fl one">1</span> <span class="fl two">2</span> <span
+					class="fl three active">3</span>
+			</div>
+			<div class="ponTitle clearfix">
+				<i class="fl l">我的购物车</i> <i class="fl c">确认订单信息</i> <i
+					class="fl r active">成功提交订单</i>
+			</div>
+		</div>
+		<!--填写核对订单信息-->
+		<div class="orInfio">
+			<h2 class="t">填写并核对订单信息</h2>
+			<ul class="detailed">
+				<li class="receipt">
+					<div class="clearfix receiptCh">
+						<h6 class="fl">收货人信息</h6>
+						<a href="javascript:;" class="fr sd">新增加收货地址</a>
+					</div>
+					<div id="receive" class="receive"></div>
+				</li>
+				<li class="method">
+					<h5>支付方式</h5>
+					<div class="payment clearfix">
+						<if condition="!empty($pay)"> <foreach name="pay" key="key"
+							item="value"> <span
+							class='fl balance_money <if condition="$value[$payModel::$isDefault_d] == 1"> active</if>'
+							value="{$value[$payModel::$id_d]}">{$value[$payModel::$typeName_d]}<em></em></span>
+						</foreach> </if>
+					</div>
+				</li>
+				<li class="distribution" id="expressData"></li>
+				<li class="confirm">
+					<div class="clearfix titPart">
+						<h4 class="fl">确认订单信息</h4>
+						<a href="{:U('Cart/goods')}" class="fr">返回修改购物车</a>
+					</div>
+					<div class="payment clearfix">
+						<include file="$goods_html"/>
+					</div>
+				</li>
+				<!--满赠商品-->
+				<li class="confirm">
+					<div class="clearfix titPart">
+						<h4 class="fl">满赠商品(只能选择一件商品)</h4>
+					</div>
+					<div class="payment clearfix">
+						{$no_gifts}
+						<volist name="goods_type" id="ty"> <volist name="ty"
+							id="da">
+						<div class="paymentCon clearfix">
+							<div class="con-parent clearfix fl">
+								<a href="javascript:;" class="fl position-parent"> <input
+									type="checkbox" name="gift_id[]" value="{$da.gift_id}">
+									<img src="{$gift.img_url}"> <span class="icon">赠品</span>
+								</a>
+								<div class="fl ition">
+									<a href="javascript:;">{$da.title}</a>
+								</div>
+							</div>
+							<div class="fl atte">{$da.new_type}</div>
+							<div class="fl price">{$da.price}.00</div>
+							<div class="fl number">{$da.gift_number}</div>
+							<div class="fl dint">{$da.discount}</div>
+							<div class="fl sual" id="sslh">{$da.Subtotal}.00</div>
+						</div>
+						</volist> </volist>
+						<!--订单备注-->
+					</div>
+				</li>
+				<!--发票信息-->
+				<li class="iceInion">
+					<h6>发票信息</h6>
+					<!--拷贝京东html代码-->
+					<div class="tips-new-white">
+					<b></b><span><i></i>开企业抬头发票须填写纳税人识别号，以免影响报销</span>
+				</div>
+					<div class="whether">
+						<div id="new_a" style="display:inline">
+						<if condition="$invoice_data eq false">
+							<span>默认</span>
+							<else />
+							<span style='margin-right:20px;'>{$invoice_data.invoice_type}</span><span style='margin-right:20px;'>{$invoice_data.invoice_header}</span><span>{$invoice_data.invoice_title}</span>
+						</if>
+						</div><a
+							href="javascript:;">修改</a>
+					</div>
+				</li>
+				<input type="hidden" value="{$invoice_info['id']}" name="invoice_id">
+				<li id="invoiceHTML"></li>
+				<li class="Coupon" id="userConpon"></li>
+			</ul>
+			<div class="atmoney">
+				<p>
+					<b><php> echo $myNumber = empty($numberTotal) ?
+						$_POST['goods_num'] : $numberTotal;</php></b>件商品，总商品金额：￥<em id="totalMonery">{$totalMonery}</em>
+				</p>
+				<p>
+					优惠券：<em id="whatCoupon">0.0</em>
+				</p>
+				<p id="shipping">
+					<em>运费：￥</em>0.00
+				</p>
+			</div>
+			<div class="total">
+				<p class="one">
+					<span>应付总额：</span>￥ <b id="total">{$totalMonery}</b>
+				</p>
+				<p class="two">寄送至： {$data[$region::$provId_d]}
+					{$data[$region::$city_d]} {$data[$region::$dist_d]}
+					{$data[$region::$address_d]} 收货人：{$data[$region::$realname_d]}
+					{:substr_replace($data[$region::$mobile_d],'****',3,4);}</p>
+			</div>
+
+			<div class="randbtn clearfix">
+				<input type="hidden" name="formWhat"
+					value="{$_SESSION['bulidOrder']}" /> <input type="hidden"
+					name="{$orderModel::$wareId_d}" value="{$_POST['ware_id']}" /> <input
+					type="hidden" id="expId" name="{$orderModel::$expId_d}" /> <input
+					type="hidden" id="expressType" /> <input type="hidden"
+					name="{$orderModel::$shippingMonery_d}" id="shippingMonery" /> <input
+					type="hidden" name="couponListId" id="couponListId" /> <input
+					type="hidden" id="payType" name="{$orderModel::$payType_d}" /> <input
+					type="hidden" id="addressId" name="{$orderModel::$addressId_d}" />
+				<input type="hidden" id="priceMonery"
+					name="{$orderModel::$priceSum_d}" /> <input type="hidden"
+					id="express" name="{$orderModel::$freightId_d}" /> <input
+					type="button" onclick="InterAddress.submitOrder('formId')"
+					value="提交订单" class="fr" /> <a href="{:U('Cart/goods')}" class="fr">返回购物车</a>
+				<span id="font-botton">库存以实际支付时间为准，手慢无</span>
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script> <script
+	type="text/javascript" src="__COMMON__/js/jquery-form.js"></script> <script
+	type="text/javascript" src="__COMMON__/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="__COMMON__/js/validateCustom.js"></script>
+<script type="text/javascript" src="__JS__/Settlement.js?a={:time()}"></script>
+<script type="text/javascript" src="__JS__/confirm.js?a={:time()}"></script>
+<script type="text/javascript" src="__JS__/settlement/address.js"></script>
+<script type="text/javascript">
+		var PAY_ID = {:C('balanceId')};
+		var AREA_LIST = "{:U('getAreaList')}";
+		var SHIPPING  = "{:U('shipping')}";
+		var COUPON	  = "{:U('coupon')}";
+		var INVOICE	  = "{:U('invoice')}";
+		var BALANCE   = "{:U('getBalaceMoney')}"
+		var GOODS_NUM = {$myNumber};
+		var RECEIVE   = "{:U('getAreaListByUserId')}";
+		var allBox = $(":checkbox");
+		allBox.click(function () {
+			allBox.removeAttr("checked");
+			$(this).attr("checked", "checked");
+		});
+</script>
+<script type="text/javascript" src="__JS__/settlement/pay_type.js"></script>
+ </block>

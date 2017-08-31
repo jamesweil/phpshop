@@ -1,0 +1,77 @@
+<extend name="Public/publicHTML" />
+
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 快递公司列表
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="navbar navbar-default">
+					<form action="{:U('Admin/order/export_order')}" id="conditionForm"
+						class="navbar-form form-inline" method="post" url="{:U('ajaxGetData')}">
+						<div class="form-group">
+							<label class="control-label" for="input-order-id">收货人</label>
+							<div class="input-group">
+								<input type="text" name="realname" placeholder="收货人"
+									id="input-member-id" class="input-sm wx_100">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="input-order-id">订单编号</label>
+							<div class="input-group">
+								<input type="text" name="order_sn_id" placeholder="订单编号"
+									id="input-order-id" class="input-sm" >
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="input-date-added">下单日期</label>
+							<div class="input-group">
+								<input type="text" name="timegap"
+									onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+									value="{$timegap}" placeholder="下单日期" id="create_time"
+									class="input-sm">
+							</div>
+						</div>
+						<div class="form-group">
+							<select name="order_status" class="input-sm" >
+								<option value="">订单状态</option>
+								<if condition="!empty($condition)">
+									<foreach name="condition" key="k" item="v">
+										<option value="{$k}">{$v}</option>
+									</foreach>
+								</if>
+							</select> <input type="hidden" name="order_by" value="order_id"> <input
+								type="hidden" name="sort" value="desc"> <input
+								type="hidden" name="user_id" value="{$_GET['user_id']}">
+						</div>
+						<div class="form-group">
+							<a href="javascript:void(0)"
+									onclick="Order.ajaxForMyOrder('conditionForm',1)"
+								id="button-filter search-order" class="btn btn-primary"><i
+								class="fa fa-search"></i> 筛选</a>
+						</div>
+						<a href="{:U('addFreightHTML')}"
+							id="button-filter" class="btn btn-primary pull-right"><i
+							class="fa fa fa-plus"></i> &nbsp;添加快递</a>
+						
+					</form>
+				</div>
+				<div id="ajaxGetReturn"></div>
+
+			</div>
+		</div>
+	</div>
+	<!-- /.row -->
+</section>
+<script src="__COMMON__/My97Date/WdatePicker.js"></script> 
+<script src="__COMMON__/js/jquery-form.js"></script>
+<script src="__COMMON__/js/alert.js"></script>
+<script src="__JS__/order.js"></script>
+</block>

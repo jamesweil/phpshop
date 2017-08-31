@@ -1,0 +1,30 @@
+<extend name="Public/indexEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+    <div class="person-section clearfix">
+        <!--内容-->
+        <div class="paper-current-main w">
+            当前位置：<span>首页</span> > <span>商城网站公告详情</span>
+        </div>
+        <dl class="notic-centent">
+            <dt>
+            <h2>{$data.title}</h2>
+            <p>更新时间：{$data.create_time|date="Y-m-d",###}</p>
+            </dt>
+            <dd>
+                <h5>{$data.intro}</h5>
+            </dd>
+            <dd>
+                {$data.content}
+            </dd>
+        </dl>
+        <!--右侧一键到顶 and 客服-->
+        <include file="Order/personalHomeTop"/>
+    </div>
+    <!--尾部-->
+
+    <script src="__JS__/expansion.js"></script>
+
+</block>

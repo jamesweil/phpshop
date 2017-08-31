@@ -1,0 +1,236 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="regod-section clearfix">
+<script src="__JS__/order/order.js"></script>		
+		<!--位置-->
+		<div class="thisPosition w">
+			<span>您的位置：</span><b>首页</b> > <b>我的商城</b> > <b>我的订单</b> > <b>申请售后</b>
+		</div>
+		<!--申请状态-->
+		<div class="applyData clearfix">
+			<div class="fl refund parent active">
+				<h2>买家申请退款</h2>
+				<div class="col clearfix">
+					<em class="fl">1</em>
+					<span class="fl">
+						<b></b>
+					</span>
+				</div>
+			</div>
+			<div class="fl center parent">
+				<h2>商家处理退款申请</h2>
+				<div class="col clearfix">
+					<em class="fl">2</em>
+					<span class="fl">
+						<b></b>
+					</span>
+				</div>
+			</div>
+			<div class="fl complete parent">
+				<h2>退款完成</h2>
+				<div class="col clearfix">
+					<span class="fl">
+						<b></b>
+					</span>
+					<em class="fl">3</em>
+				</div>
+			</div>
+		</div>
+		<!--退货商品内容-->
+		<div class="layout-main clearfix w">
+			<div class="fl column-sub">
+				<dl>
+					<dt>退款/退货商品</dt>
+					<dd>
+						<div class="refund-item-info clearfix">
+							<div class="imgParent fl">
+								<a href="javascript:;"><img src="{$goods.images}" width="50" height="50"></a>
+							</div>
+							<div class="conFeft fr">
+								<p>
+									<a href="javascript:;">
+										{$goods.title}
+									</a>
+								</p>
+								<span>{$goods.key_name}</span>
+							</div>
+						</div> 
+						<ul class="refund-info-bot">
+							<li class="clearfix">
+								<span class="fl">单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：</span>
+								<em class="fl">￥{$goods.goods_price}</em>
+								<div class="fr"><i>x{$goods.goods_num}</i>(数量)</div>
+							</li>
+							<li class="clearfix">
+								<span class="fl">小&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;计：</span>
+								<em class="fl active">￥{$goods.goods_price_sum}</em>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl class="order">
+					<dt>订单信息</dt>
+					<dd>
+						<p>
+							<span>订单编号：</span>
+							<em>{$order.id}</em>
+						</p>
+						<p>
+							<span>运      费：</span>
+							<em>￥{$order.shipping_monery}</em>
+						</p>
+						<p>
+							<span>总  优 惠：</span>
+							<em>-￥{$coupon.money}</em>
+						</p>
+						<p>
+							<span>总      计：</span>
+							<em class="active">￥{$order.price_sum}</em>
+						</p>
+						<p>
+							<span>成交时间：</span>
+							<em>{$order.create_time|date="Y-m-d H:i;s",###}</em>
+						</p>
+
+					</dd>
+				</dl>
+			</div>
+			<!--退货申请按钮-->
+			<div class="fl column-main clearfix">
+				<a href="javascript:;" class="fl" data="{$order.order_status}">我要退货</a>
+				<a href="javascript:;" class="fl" data="{$order.order_status}">我要退款<span>无需退货</span></a>
+				<a href="javascript:;" class="fl active" data="{$order.order_status}">发票补寄：索要发票</a>
+			</div>
+			<!--退款方式-->
+			<div class="apply-main fr">
+				<ol class="fn-tab clearfix">
+					<li class="fl active" data="{$order.order_status}">我要退货</li>
+					<li class="fl" data="{$order.order_status}">我要退款（无需退货）</li>
+				</ol>
+				<form action="{:U('Service/return_goods_add')}" method="post" onsubmit="return return_goods();" enctype="multipart/form-data">
+					<div class="panel-entry">
+						<div class="form-field clearfix">
+							<span class="title fl">退货原因 <b>*</b>：</span>
+							<input type="text" class="fl" name="tuihuo_case" id="tuihuo_case">
+							<em class="fl active">请选择退货原因</em>
+						</div>
+						<div class="form-field clearfix">
+							<span class="title fl">退货金额 <b>*</b>：</span>
+							<input type="text" class="fl" name="price" id="price" readOnly="true" value="{$goods.goods_price_sum}">
+							<em class="fl">最多￥<b>{$goods.goods_price_sum}</b></em>
+						</div>
+						<div class="form-field clearfix">
+							<span class="title fl">退货说明 <b>&nbsp;&nbsp;</b>：</span>
+							<textarea class="fl" name="explain" id="explain"></textarea>
+							<em class="fl realTime">还可以输入<b>200</b>字</em>
+						</div>
+						<div class="form-field clearfix">
+							<span class="title fl">上传凭证：</span>
+							<div class="filePt fl">
+								<input type="file" name="voucher[]" id="voucher" multiple='multiple'>
+							</div>
+							<em class="fl">每张图片大小不超过5M，最多3张，支持GIF、JPG、PNG、BMP格式</em>
+						</div>
+						<div class="form-field clearfix">
+							<input type="hidden" name="goods_id" value="{$goods.goods_id}">
+						    <input type="hidden" name="order_id" value="{$goods.order_id}">
+							<input type="submit" class="submit" value="提交退货申请">
+						</div>
+					</div>
+				</form>
+
+				<form action="{:U('Service/return_price_add')}" method="post" onsubmit="return return_price();" enctype="multipart/form-data">
+					<div class="panel-entry">
+						<div class="form-field clearfix">
+							<span class="title fl">是否收货 <b>*</b>：</span>
+							<label class="fl">
+								<input type="radio" name="is_receive" id="is_receive" class="whether" value="1">
+								未收到货
+							</label>
+							<label class="fl">
+								<input type="radio" name="is_receive" class="whether" value="2">
+								已收到货
+							</label>
+						</div>
+						<div class="form-field clearfix">
+							<span class="title fl">退款原因 <b>*</b>：</span>
+							<input type="text" name="tuihuo_case" id="a_tuihuo_case" class="fl">
+							<em class="fl active">请选择退款原因</em>
+						</div>
+						<div class="form-field clearfix">
+							<span class="title fl">退款金额 <b>*</b>：</span>
+							<input type="text" class="fl" name="price" id="a_price">
+							<input type="hidden" value="{$goods.goods_price_sum}" id="hidden_price">
+							<em class="fl">￥<b>{$goods.goods_price_sum}</b></em>
+						</div>
+						<div class="form-field clearfix">
+							<span class="title fl">退款说明 <b>&nbsp;&nbsp;</b>：</span>
+							<textarea class="fl" name="explain" id="a_explain"></textarea>
+							<em class="fl realTime">还可以输入<b>200</b>字</em>
+						</div>
+						<div class="form-field clearfix">
+							<span class="title fl">上传凭证：</span>
+							<div class="filePt fl">
+								<input type="file" name="voucher[]" class="voucher" id="a_voucher" multiple='multiple'>
+							</div>
+							<em class="fl">每张图片大小不超过5M，最多3张，支持GIF、JPG、PNG、BMP格式</em>
+						</div>
+						<div class="form-field clearfix">
+							<input type="hidden" name="goods_id" value="{$goods.goods_id}">
+							<input type="hidden" name="order_id" value="{$goods.order_id}">
+							<input type="submit" class="submit" value="提交退款申请">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script>
+	//退款声明实时输入
+	var oB = parseInt($('.layout-main .apply-main .panel-entry .realTime b').html());
+	$('.layout-main .apply-main .panel-entry textarea').on('input',function(){
+		var iNow = $(this).val().length;
+		if(iNow >= oB){
+			$('.layout-main .apply-main .panel-entry.active .realTime').html('输入以超过上限');
+			$('.layout-main .apply-main .panel-entry.active .realTime').css('color','red');
+		}else{
+			$('.layout-main .apply-main .panel-entry.active .realTime').html('还可以输入<b>2</b>字');
+			$('.layout-main .apply-main .panel-entry.active .realTime b').html(oB - iNow);
+			$('.layout-main .apply-main .panel-entry.active .realTime').css('color','#999');
+		}
+	});
+
+	//退货方式选择
+	$('.layout-main .column-main a').eq(0).on('click',function(){
+		if($(this).attr('data') != 4)return;
+		$('.layout-main .column-main').addClass('active');
+		$('.layout-main .apply-main').addClass('active');
+		$('.layout-main .apply-main .panel-entry').removeClass('active').eq($(this).index()).addClass('active');
+		$('.layout-main .apply-main .fn-tab li').removeClass('active').eq($(this).index()).addClass('active');
+	});
+	$('.layout-main .column-main a').eq(1).on('click',function(){
+		$('.layout-main .column-main').addClass('active');
+		$('.layout-main .apply-main').addClass('active');
+		$('.layout-main .apply-main .panel-entry').removeClass('active').eq($(this).index()).addClass('active');
+		$('.layout-main .apply-main .fn-tab li').removeClass('active').eq($(this).index()).addClass('active');
+	});
+	$('.layout-main .apply-main .fn-tab li').on('click',function(){
+		if($(this).attr('data') != 4)return;
+		$('.layout-main .apply-main .fn-tab li').removeClass('active').eq($(this).index()).addClass('active');
+		$('.layout-main .apply-main .panel-entry').removeClass('active').eq($(this).index()).addClass('active');
+	});
+	//导航隐藏层弹出
+	$('.public-header1 .center-parent .nav li').on('mouseenter',function(){
+		$('.public-header1 .center-parent .nav li').eq($(this).index()).addClass('active');
+	}).on('mouseleave',function(){
+		$('.public-header1 .center-parent .nav li').removeClass('active');
+	});
+</script>
+
+</block>

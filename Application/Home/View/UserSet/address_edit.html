@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>修改收货地址</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__JS__/jquery-1.7.2.min.js"></script>
+<script src="__LAYER__/layer.js"></script>
+<script type="text/javascript" src="__JS__/userset/address.js"></script>
+</head>
+<body>
+<form id="from_address_data" onsubmit="return false;">
+<div class="list">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="details">
+        <tbody>
+	        <tr>
+		      	<td width="32%"><label class="label">
+		      	    <div align="right">省：</div>
+		      	</label></td>
+		      	<td width="68%">
+		      	    <select name="prov" id="prov">
+		      	    	<option value="{$data.prov_id}">{$data.prov}</option>
+		      	    	<volist name="prov" id="vo">
+		      	    		<option value="{$vo.id}">{$vo.name}</option>
+		      	    	</volist>
+		      	    </select>
+		      	</td>
+		    </tr>
+	        <tr>
+		      	<td width="32%"><label class="label">
+		      	    <div align="right">市：</div>
+		      	</label></td>
+		      	<td width="68%">
+		      	    <select name="city" id="city">
+		      	    	<option value="{$data.city_id}">{$data.city}</option>
+		      	    </select>
+		      	</td>
+		    </tr>
+		    <tr>
+		      	<td width="32%"><label class="label">
+		      	    <div align="right">地区：</div>
+		      	</label></td>
+		      	<td width="68%">
+		      	    <select name="dist" id="dist">
+		      	    	<option value="{$data.dist_id}">{$data.dist}</option>
+		      	    </select>
+		      	</td>
+		    </tr>
+		    <tr>
+		      	<td width="32%"><label class="label">
+		      	    <div align="right">详细地址：</div>
+		      	</label></td>
+		      	<td width="68%"><input type="text" name="address" id="address" value="{$data.address}"></td>
+		    </tr>
+		    <tr>
+		      	<td width="32%"><label class="label">
+		      	    <div align="right">收货人：</div>
+		      	</label></td>
+		      	<td width="68%"><input type="text" name="realname" id="realname" value="{$data.realname}"></td>
+		    </tr>
+		    <tr>
+		      	<td width="32%"><label class="label">
+		      	    <div align="right">电话：</div>
+		      	</label></td>
+		      	<td width="68%"><input type="text" name="mobile" id="mobile" value="{$data.mobile}"></td>
+		    </tr>
+		    <tr>
+		      	<td width="32%"><label class="label">
+		      	    <div align="right">邮政编码：</div>
+		      	</label></td>
+		      	<td width="68%"><if condition="$data.zipcode neq true">
+					<select id="select_change">
+					<option value="0">无</option>
+					<option value="1">填写</option>
+				</select>
+					<else/>	<input type="text" name="zipcode" id="zipcode" value="{$data.zipcode}"></if>
+					<input style="display:none;" type="text" name="zipcode" id="zipcode"></td>
+		    </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="footer">
+	<div class="save_button">
+    	<input type="hidden" name="id" value="{$data.id}" />
+        <button type="submit" class="button" onclick="ajax_address_data();" style="width:180px;">保 存</button>
+    </div>
+</div>
+</form>
+<script>
+$(function(){
+    $('#prov').change(function(){
+        var code=$('#prov option:selected').val();
+        $.get('{:U('UserSet/city')}',{'code':code},function(data){
+        	if (data.data==1) {
+        		$('#city').html('<option value="">请选择城市</option>');
+                for (var i = 0; i<data['city'].length; i++) {
+                	$('#city').append('<option value="'+data['city'][i].id+'">'+data['city'][i].name+'</option>');
+                };
+        	}else{
+        		$('#city').html('');
+        	};
+              
+        }) 
+    }) 
+
+    $('#city').change(function(){
+        var code=$('#city option:selected').val();
+        $.get('{:U('UserSet/area')}',{'code':code},function(data){
+        	if (data.data==1) {
+        		$('#dist').html('<option value="">请选择地区</option>');
+                for (var i = 0; i<data['dist'].length; i++) {
+                	$('#dist').append('<option value="'+data['dist'][i].id+'">'+data['dist'][i].name+'</option>');
+                };
+        	}else{
+        		$('#dist').html('');
+        	};
+        })
+    })
+$('#select_change').change(function(){
+	if($(this).val()==1)
+	{
+		$(this).css('display','none');
+		$('#zipcode').css('display','block');
+	}
+})
+
+})
+</script>
+</body>
+</html>

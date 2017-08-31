@@ -1,0 +1,76 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+
+	<div class="myTck-content-wrap w">
+		<div class="nav-wrap clearfix">
+			<ul class="nav clearfix fl">
+				<li class="fl btn1">
+				    <empty name="class_name">
+						<span>全部类目</span>
+					<else/>
+						<span>{$class_name.class_name}</span>
+					</empty>
+					<div class="dorpmenu">
+						<ul>
+						    <volist name="data" id="vo">
+							    <a href="{:U('Assets/myTracks_class',array('class_id'=>$vo['id']))}"><li class="option">{$vo.class_name}</li></a>
+							</volist>
+						</ul>
+					</div>
+				</li>
+			</ul>
+			<a href="javascript:;" class="fr btn">批量删除</a>
+		</div>
+		<ul class="con-main clearfix">
+		    <volist name="goods" id="vo">
+				<li class="fl" id="del{$vo.id}">
+					<div class="screenshot">
+						<a href="javascript:;"><img src="{$vo.images}"></a>
+					</div>
+					<div class="products-description">
+						<p><a href="javascript:;">{$vo.title|substr=0,80}</a></p>
+						<span>¥ {$vo.price_member}</span>
+					</div>
+					<div class="products-operation clearfix">
+						<a href="{:U('Product/ProductList',array('cid'=>$vo['class_id']))}" class="fl find">找相似</a>		
+						<input type="button" value="删除" class="fl del" data-value="{$vo.id}">
+					</div>
+				</li>
+			</volist>
+		</ul>
+		<div class="page">{$page}</div>
+	</div>
+
+	<!--右侧一键到顶 and 客服-->
+	<include file="Order/personalHomeTop"/>
+	
+	<!--尾部-->
+<script src="__JS__/Assets/assets.js"></script>
+<!-- <script src="js/header.js"></script> -->
+<script>
+	$('.myTck-content-wrap .con-main li:nth-child(5n)').addClass('active');
+	//下拉菜单
+	var oSpan = $('.myTck-content-wrap .nav-wrap .nav .btn1 span');
+	$('.myTck-content-wrap .nav-wrap .nav .btn1').on('mouseenter',function(){
+		$(this).addClass('active');
+	}).on('mouseleave',function(){
+		$(this).removeClass('active');
+	});
+	$('.myTck-content-wrap .nav-wrap .nav li .dorpmenu li').on('mouseenter',function(){
+		$(this).addClass('hover');
+	}).on('mouseleave',function(){
+		$(this).removeClass('hover');
+	}).on('click',function(){
+		oSpan.html($(this).html());
+	});
+	//内容划入
+	$('.myTck-content-wrap .con-main li').on('mouseenter',function(){
+		$(this).addClass('hover');
+	}).on('mouseleave',function(){
+		$(this).removeClass('hover');
+	});
+</script>
+</block>

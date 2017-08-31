@@ -1,0 +1,10 @@
+<foreach name="guess_goods" item="guess_good">
+    <li class="fl">
+        <div class="like2-img">
+            <a href="{:U('Goods/goodsDetails',['id'=>$guess_good['id']])}"><img src="__SERVER__{$guess_good.pic_url}" alt="" width="100" height="100"></a>
+        </div>
+        <p>{$guess_good.title}</p>
+        <span>(已有{$guess_goods['comment_member']}人评论)</span>
+        <i>￥{$guess_good.price_market}</i>
+    </li>
+</foreach>

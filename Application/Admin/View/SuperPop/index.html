@@ -1,0 +1,50 @@
+<extend name="Public/publicHTML" />
+<block name="nav"></block>
+
+
+<block name="content">
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <div class="wrapper">
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="fa fa-list"></i>超强人气
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <div class="table-responsive">
+                                <table id="list-table" class="table table-bordered table-hover font_size">
+                                    <thead>
+                                    <tr role="row" align="center">
+                                        <th class="sorting"  align="center">热卖商品导航的不规格标题</th>
+                                        <th class="sorting" tabindex="0">操作</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr role="row" align="center">
+                                            <td align="center" class="sd">超强人气</td>
+                                            <td>
+                                                <a class="btn btn-primary" href="{:U('SuperPop/edit',['nav_type'=>'超强人气'])}"><i class="fa fa-pencil"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </section>
+    </div>
+    <script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script>
+</block>

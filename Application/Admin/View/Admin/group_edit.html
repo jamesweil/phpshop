@@ -1,0 +1,72 @@
+<extend name="Public/publicHTML"/>
+<block name="nav">
+<div class="nav">
+	<div class="nav_title">
+    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif"><span class="nav_a">编辑用户组</span></h4>
+    </div>
+    <div class="nav_button">
+    	<a href="{:U('Admin/auth_group')}"><button class="button">返回上一层</button></a>
+    </div>
+</div>
+</block>
+<block name="content">
+<form name="myform" action="{:U('saveEdit')}" method="post" onsubmit="return check_form();">
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details">
+        <tbody>
+	      <tr>
+	      	<td width="12%"><div align="right">组名称：</div></td>
+	      	<td width="88%">
+            <input type="hidden" name="id" value="{$reuslt.id}" />
+            <input type="text" name="title" id="title" size="24" value="{$reuslt.title}" style="margin-left:10px;width:195px;" />
+            * 栏目或操作的中文名称
+            </td>
+	      </tr>
+          <tr>
+	      	<td><div align="right">分配的权限：</div></td>
+	      	<td>
+            	<input type="hidden" id="all" value="1" />
+            	<input type="button" value="全选 / 取消" class="btn" id="all_checkbox" style="width:200px;" />
+                * 给组分配的权限
+           
+            </td>
+	      </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>
+            <ul class="first_checkbox" style=" margin-left:10px;">
+            <foreach name="data" item="vo">
+            
+            	<li><input type="hidden" id="box{$vo.id}" value="0" />    
+            		<if condition="in_array($vo['id'],$reuslt['rules'], true)">
+					<input type="checkbox" name="rules[]" class="checkbox{$vo.id}" id="{$vo.id}" onclick="checkbox({$vo.id})" value="{$vo.id}" checked="checked" />
+					<else/>
+					<input type="checkbox" name="rules[]" class="checkbox{$vo.id}" id="{$vo.id}" onclick="checkbox({$vo.id})" value="{$vo.id}" />
+					</if>
+					<label for="{$vo.id}">{$vo.title}</label><br/>
+                    <div class="two_checkbox">
+	                    ┠─&nbsp;&nbsp;
+	                    <foreach name="vo['children']" item="sub">
+		                    <if condition="in_array($sub['id'],$reuslt['rules'], true)">
+		                         <input type="checkbox" name="rules[]" class="checkbox{$vo.id}" id="{$sub.id}" value="{$sub.id}" checked="checked" />
+		                    <else/>
+		                    	<input type="checkbox" name="rules[]" class="checkbox{$vo.id}" id="{$sub.id}" value="{$sub.id}"  />
+		                    </if>
+		                    <span><label for="{$sub.id}">{$sub.title}</label></span>
+	                     </foreach>
+                    </div>
+                </li>
+			</foreach>
+            </ul>
+            </td>
+          </tr>
+        </tbody>
+  </table>
+</div>
+<div style="height:150px;"></div>
+<div class="footer">
+	<button type="submit" class="button" style="min-width:180px;">确 认</button>
+</div>
+</form>
+<script type="text/javascript" src="__JS__/admin/groupAdminEdit.js"></script>
+</block>

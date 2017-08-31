@@ -1,0 +1,92 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i> 优惠券列表
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="navbar navbar-default">
+						<form class="navbar-form form-inline" action="" method="post">
+				            <div class="form-group">
+								<a href="" class="btn btn-primary">名称</a>
+				              	<input type="text" name="name" value="{:I('post.name')}" class="form-control" placeholder="请输入全名">
+				            </div>
+							<div class="form-group">
+								<a href="" class="btn btn-primary">金额</a>
+								<input type="text" name="money" value="{:I('post.money')}" class="form-control" placeholder="请输入金额">
+							</div>
+							<!--<div class="form-group">
+								<a href="" class="btn btn-primary">使用开始时间</a>
+								<input type="text" onclick="WdatePicker({dataFmt:'2012-08-03 15:00:00'})" class="form-control active" id="send_start_time" name="send_start_time">
+								<input type="text" class="form-control" id="send_end_time" name="send_end_time">
+							</div>-->
+				            <button type="submit" class="btn btn-default">提交</button>
+						</form>
+					</div>
+					<div id="ajax_return">
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<td class="text-center">优惠券名称</td>
+										<td class="text-center">面额</td>
+										<td class="text-center">已使用</td>
+										<td class="text-center">查看使用用户</td>
+									</tr>
+								</thead>
+								<tbody>
+									<volist name="couponInfoes" id="coupon">
+										<tr>
+											<td class="text-center">{$coupon.name}</td>
+											<td class="text-center">{$coupon.money}</td>
+											<td class="text-center">{$coupon.use_num}</td>
+											<td class="text-center">
+												<a data-toggle="tooltip" title="" class="btn btn-info"
+												   onclick="lookTicketUser({$coupon.id});"
+													data-original-title="查看"><i class="fa fa-eye"></i></a>
+												</td>
+										</tr>
+									</volist>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 text-left"></div>
+						<div class="col-sm-6 text-right">{$data.page}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.row -->
+	<script src="__COMMON__/daterangepicker/moment.js"></script>
+	<script src="__COMMON__/daterangepicker/daterangepicker.js"></script>
+	<script src="__COMMON__/js/alert.js"></script>
+	<script src="__JS__/conpon/SendCoupon.js?a={:time()}"></script>
+	<script>
+		function lookTicketUser(ele){
+			var _url ="{:U('Analysis/ticketUser')}";
+			var _locatUrl =_url+'?ticketId='+ele;
+			layer.open({
+				type: 2,
+				title: '用户信息',
+				shadeClose: true,
+				shade: 0.8,
+				area: ['700px', '500px'],
+				content: _locatUrl
+			});
+		}
+	</script>
+</section>
+</block>

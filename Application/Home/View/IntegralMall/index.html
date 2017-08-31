@@ -1,0 +1,341 @@
+<extend name="Public/indexEdit"/>
+
+
+<block name="content">
+<!--头部-->
+<div class="home-section">
+
+	<!--Banner-->
+	<div class="integraM-content-wrap">
+		<div class="brasp-banner w clearfix">
+			<div class="main-left fl">
+				<div class="portrait">
+					<img src="{$user['user_header']|default='__IMG__/user_avatar.png'}">
+				</div>
+				<div class="detailed clearfix">
+				 <if condition="$user">
+					<h2 class="name fl">Dear：
+					<if condition="empty($user['nick_name'])">
+						{$user['user_name']}
+						<else />
+						{$user['nick_name']}
+					</if>
+					</h2>
+					<span class="state fl">欢迎回来</span>
+					<span class="integral fl">积分</span>
+					<em class="fl">{$user.integral|default=0}</em>
+				<else />
+					<a href="{:U('/Home/public/login')}"><span class="state fl">请登录</span></a>
+				 </if>
+				</div>
+				<ul class="link">
+					<li>
+						<a href="#we_change" class="clearfix">
+							<em class="fl">·</em>
+							<span class="fl">我能兑换</span>
+							<i class="fr">></i>
+						</a>
+					</li>
+					<li>
+						<a href="{:U('about')}" class="clearfix">
+							<em class="fl">·</em>
+							<span class="fl">兑换须知</span>
+							<i class="fr">></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="main-right fr">
+				<div class="banner">
+					<ul class="solid">
+					<foreach name="ads" item="vo">
+						<li><a onclick="addAd(this)" data="{$vo['ad_link']}" gg="{$vo['id']}" href="javascript:;"><img src="{$vo['pic_url']}" width="980" height="364"></a></li>
+					</foreach>
+					</ul>
+					<div class="page"></div>
+					<a href="javascript:;" class="btn-left"><</a>
+					<a href="javascript:;" class="btn-right">></a>
+				</div>
+				<dl class="clearfix">
+					<dt class="fl">按分值浏览 :</dt>
+					<dd class="fl"><a href="{:U('goods', ['min'=>0, 'max'=>1000])}">0-1000</a></dd>
+					<dd class="fl"><a href="{:U('goods', ['min'=>1000, 'max'=>2000])}">1000-2000</a></dd>
+					<dd class="fl"><a href="{:U('goods', ['min'=>2000, 'max'=>3000])}">2000-3000</a></dd>
+					<dd class="fl"><a href="{:U('goods', ['min'=>3000, 'max'=>5000])}">3000-5000</a></dd>
+					<dd class="fl"><a href="{:U('goods', ['min'=>5000, 'max'=>10000])}">5000-10000</a></dd>
+					<dd class="fl"><a href="{:U('goods', ['min'=>10000, 'max'=>20000])}">10000-20000</a></dd>
+					<dd class="fl"><a href="{:U('goods', ['min'=>20000])}">20000以上</a></dd>
+				</dl>
+			</div>
+		</div>
+		<div class="hot-content-main w">
+			<div class="title">
+				<h2><span>热兑商品</span>排行榜</h2>
+				<p>购商品返积分，聚惠享不停</p>
+			</div>
+			<div class="con-main">
+				<a href="javascript:;" class="btn-left"></a>
+				<a href="javascript:;" class="btn-right"></a>
+				<ul class="clearfix">
+
+					<foreach name="hot" item="vo" key="k">
+						<li class="fl">
+<span class='branding 
+<if condition="$k eq 0">
+one
+<elseif condition="$k eq 1"/>
+two
+<elseif condition="$k eq 2"/>
+three
+</if> '></span>
+							<div class="creenshot">
+								<a href="javascript:;"><img src="{$vo['pic_url']}" alt="{$vo['title']}"></a>
+							</div>
+							<div class="products-description">
+								<p><a href="javascript:;">{$vo['title']}</a></p>
+								<span class="integral">积分 {$vo['integral']}</span>&nbsp;<span class="integral">¥ {$vo['money']}</span><br>
+					<input type="button" value="马上兑换" data-url="{:U('cart', ['goods_id'=>$vo['goods_id']])}" onclick="addtocar(this)">
+							</div>
+						</li>
+					</foreach>
+
+				</ul>
+			</div>
+			<if condition="$adm">
+			<div class="banner">
+				<a data="{$adm['ad_link']}" gg="{$adm['id']}" onclick="addAd(this)" href="javascript:;">
+					<img src="{$adm['pic_url']}">
+				</a>
+			</div>
+			</if>
+		</div>
+		<div class="ex-content-main w" id="we_change">
+			<div class="title">
+				<h2><span>我能兑换</span>的商品</h2>
+				<p>购商品返积分，聚惠享不停</p>
+			</div>
+			<!-- <ol class="nav1 clearfix">
+				<li class="fl active">精选推荐</li>
+				<li class="fl">现金＋</li>
+				<li class="fl">文管用品</li>
+				<li class="fl">综合文具</li>
+				<li class="fl">办公用品</li>
+				<li class="fl">纸品本册</li>
+				<li class="fl">学生用品</li>
+			</ol> -->
+			<div class="nav2 clearfix">
+				<dl class="clearfix fl">
+					<dt class="fl">热门分类 :</dt>
+					<dd class="fl active" data-url="{:U('canGoods')}">全部</dd>
+					<if condition="$class">
+						<foreach name="class" item="vo">
+							<dd class="fl" data-url="{:U('canGoods', ['class'=>$vo['id']])}">{$vo['class_name']}</dd>
+						</foreach>
+					</if>
+				</dl>
+				<a href="{:U('goods')}" class="fr">查看更多 ></a> 
+			</div>
+			<ul class="centent clearfix">
+
+			<foreach name="can" item="vo" key="k">
+				<li class="fl <if condition='$k%5 eq 4'>active</if> ">
+					<div class="creenshot">
+						<a href="javascript:;"><img src="{$vo['pic_url']}" alt="{$vo['title']}"></a>
+					</div>
+					<div class="products-description">
+						<p><a href="javascript:;">{$vo['title']}</a></p>
+						<span class="integral">积分 {$vo['integral']}</span>
+						<span class="integral">¥ {$vo['money']}</span><br>
+				<input type="button" value="马上兑换" data-url="{:U('cart', ['goods_id'=>$vo['goods_id']])}" onclick="addtocar(this)">
+					</div>
+				</li>
+			</foreach>
+
+			</ul>
+		</div>
+	</div>
+
+</div>
+<script src="__JS__/header.js"></script>
+<script src="__JS__/expansion.js"></script>
+<script>
+	$(function(){
+		//热门排行
+		var oBtnfl  = $('.integraM-content-wrap .hot-content-main .con-main .btn-left');
+		var oBtnfr  = $('.integraM-content-wrap .hot-content-main .con-main .btn-right');
+		var oParent = $('.integraM-content-wrap .hot-content-main .con-main');
+		var oMove   = $('.integraM-content-wrap .hot-content-main .con-main ul');
+		var aLi     = $('.integraM-content-wrap .hot-content-main .con-main ul li');
+		var aSpan   = $('.integraM-content-wrap .hot-content-main .con-main ul .branding');
+		var Width   = 1200;
+		var iNow    = 0;
+		var length  = parseInt(aLi.length/5) + 1;
+
+		// 添加索引
+		aLi.each(function(index,obj){
+			aSpan.eq(index).html($(obj).index()+1);
+		});
+		oParent.on('mouseenter',function(){
+			oBtnfl.addClass('active');
+			oBtnfr.addClass('active');
+		}).on('mouseleave',function(){
+			oBtnfl.removeClass('active');
+			oBtnfr.removeClass('active');
+		});
+		// 点击向左滚动
+		oBtnfl.on('click',function(){
+			iNow--;
+			if (iNow < length) {
+				iNow = 0;
+			}
+			oMove.stop().animate({left:-iNow*Width});
+		}).on('mouseenter',function(){
+			if(iNow <= 0){
+				$(this).addClass('hover');
+			}else{
+				$(this).removeClass('hover');
+			}
+		});
+		// 点击向右滚动
+		oBtnfr.on('click',function(){
+			iNow++;
+			if (iNow >= length) {
+				iNow = length-1;
+				return false; 
+			}
+			oMove.stop().animate({left:-iNow*Width});
+		});
+		// 内容导航
+		$('.integraM-content-wrap .nav1 li').on('mouseenter',function(){
+			$('.integraM-content-wrap .nav1 li').removeClass('active').eq($(this).index()).addClass('active');
+		});
+		$('.integraM-content-wrap .nav2 dd').on('click',function(){
+			$('.integraM-content-wrap .nav2 dd').removeClass('active').eq($(this).index()-1).addClass('active');
+			requestGoods(this);
+		});
+
+		// 轮播
+		$('.brasp-banner .solid li').eq(0).css('zIndex','1');
+		var Length = $('.brasp-banner .solid li').length,
+			iNow = 0,
+			timer = null,
+			_this = null,
+			clear = null,
+			bFlag = false;
+		for(var i = 0; i < Length; i++){
+			$('.brasp-banner .page').append($('<a href="javascript:;"></a>'))
+		}
+		$('.brasp-banner .page a').eq(0).addClass('hover');
+		function move(){
+			$('.brasp-banner .solid li').eq(iNow).fadeIn(600).siblings().fadeOut(600); 
+			$('.brasp-banner .page a').eq(iNow).addClass('hover').siblings('a').removeClass('hover');
+		}
+		function block(){
+			iNow++;
+			if(iNow >= Length){
+				iNow = 0;
+			}
+			move();
+		}
+		timer = setInterval(block,3000);
+		$('.brasp-banner').on('mouseenter',function(){
+			clearInterval(timer);
+			$('.brasp-banner .btn-left').addClass('active');
+			$('.brasp-banner .btn-right').addClass('active');
+		}).on('mouseleave',function(){
+			timer = setInterval(block,3000);
+			$('.brasp-banner .btn-left').removeClass('active');
+			$('.brasp-banner .btn-right').removeClass('active');
+		});
+		$('.brasp-banner .page a').on('mouseenter',function(){
+			_this = $(this).index();
+			clear = setTimeout(function(){
+				iNow = _this;
+				move();
+			},100);
+		}).on('mouseleave',function(){
+			clearInterval(clear);
+		});
+		$('.brasp-banner .btn-left').on('click',function(){
+			if(bFlag == true)return;
+			bFlag = true;
+			setTimeout(function(){
+				bFlag = false;
+			},600)
+			iNow--;
+			if(iNow <= -1){
+				iNow = Length-1;
+			}
+			move();
+		});
+		$('.brasp-banner .btn-right').on('click',function(){
+			if(bFlag == true)return;
+			bFlag = true;
+			setTimeout(function(){
+				bFlag = false;
+			},600)
+			iNow++;
+			if(iNow >= Length){
+				iNow = 0;
+			}
+			move();
+		});
+	});
+
+	// 添加到积分购物车
+	function addtocar(input) {
+		var href = $(input).attr('data-url');
+		window.location.href = href;
+	}
+
+	// 获取分类下的产品
+	function requestGoods(ele) {
+		var url = $(ele).attr('data-url');
+		var obj = $('.integraM-content-wrap .centent');
+		$.get(url, [], function(ret){
+			if (!ret) {
+				layer.msg('数据加载失败!请刷新后重试');
+				return false;
+			}
+
+			// 遍历插入数据
+			obj.html('');
+			$.each(ret, function(index, goods) {
+				var li  = $('<li></li>');
+				li.addClass('fl');
+				var div = $('<div></div>');
+				div.addClass('creenshot');
+				var a   = $('<a href="javascript:;"></a>');
+				var img = $('<img />');
+				img.attr('src', goods.pic_url);
+				img.attr('alt', goods.title);
+				a.append(img);
+				div.append(a);
+				li.append(div);
+
+				var div2 = $('<div></div>');
+				div2.addClass('products-description');
+				var p2   = $('<p></p>');
+				var a2   = $('<a href="javascript:;"></a>')
+				a2.text(goods.title);
+				p2.append(a2);
+				div2.append(p2);
+				var span = $('<span></span>');
+				span.addClass('integral');
+				span.text('积分 '+goods.integral);
+				div2.append(span);
+				div2.append('<br>');
+				var input = $('<input/>');
+				input.attr('type', 'button');
+				input.attr('value', '马上兑换');
+				input.attr('data-url', '{:U(cart)}'+'/goods_id/'+goods.goods_id);
+				input.attr('onclick', 'addtocar(this)');
+				div2.append(input);
+				li.append(div2);
+				obj.append(li);
+			});
+		})
+	}
+</script>
+</block>
+

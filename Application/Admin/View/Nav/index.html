@@ -1,0 +1,99 @@
+<extend name="Public/publicHTML"/>
+<block name="nav">
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+    <script src="__COMMON__/bootstrap/js/bootstrap.min.js"></script>
+
+    <div class="nav">
+        <div class="nav_title">
+            <h4><img class="nav_img" src="__IMG__/tab.gif" /><span class="nav_a">导航菜单列表</span></h4>
+        </div>
+        <div class="nav_button">
+            <a href="{:U('add')}"><button class="button">+ 添加导航菜单</button></a>
+        </div>
+    </div>
+    <br/><br/>
+</block>
+<block name="content">
+    <table class="table table-hover">
+        <tr align="center">
+            <td>ID</td>
+            <td>导航菜单名称</td>
+            <td>是否显示</td>
+            <td>排序</td>
+            <td>创建时间</td>
+            <td>操作</td>
+        </tr>
+        <foreach name="rows" item="row">
+            <tr  align="center">
+                <td>{$row.id}</td>
+                <td>{$row.nav_titile}</td>
+                <td>
+                    <img width="20" class="sort-control" height="20" data-id="{$row.id}" src="__COMMON__/img/<if condition='$row.status eq 1'>yes.png<else />cancel.png</if>" data-flag="<if condition='$row.status eq 1'>true<else />false</if>"/>
+                </td>
+                <td><input type="text" class="dj-sort" data-id="{$row.id}" value="{$row.sort|default=50}"/></td>
+                <td>{:date('Y-m-d',$row['create_time'])}</td>
+                <td>
+                     <a href="{:U('edit',['id'=>$row['id']])}" class="btn btn-primary">编辑</a>
+                      <a href="{:U('remove',['id'=>$row['id']])}" class="btn btn-danger">删除</a>
+                </td>
+            </tr>
+        </foreach>
+    </table>
+    <div class="page">{$page_show}</div>
+    <input type="hidden" id="common" value="__COMMON__"/>
+    <script type="text/javascript">
+        //改变排序框的css
+        $(".dj-sort").css({
+            width:"80px",
+            height:"30px"
+        });
+        $(function(){
+            //改变排序的值
+            $(".dj-sort").on("change",function(){
+                var sort_id = $(this).attr("data-id");
+                var sort_val = $(this).val();
+                var data = {id:sort_id,sort:sort_val};
+                var url = '{:U("Nav/changeSort")}';
+                $.getJSON(url,data,function(json){
+                    if(json.msg == 1){
+                        layer.open({
+                            title: '排序信息'
+                            ,content: '更新排序成功'
+                        });
+                    }else{
+                        layer.open({
+                            title: '排序信息'
+                            ,content: '更新排序失败'
+                        });
+                    }
+                });
+            });
+
+            //单击改变是否显示
+            var bFlag = false;//用来js点击事件反应完成后，才执行第二次点击的事件
+            $(".sort-control").on('click',function(){
+
+                if(bFlag == true)return;
+                bFlag = true;
+                var _this = $(this);
+                var id = _this.attr("data-id");
+                //获取域名
+                var common = $("#common").val();
+                var data_flag = _this.attr("data-flag");
+                var data = {id:id,data_flag:data_flag};
+                var url = '{:U("Nav/changStatus")}';
+                $.getJSON(url,data,function(json){
+                    if(json == "no"){
+                        _this.attr("src",common+"/img/cancel.png");
+                        _this.attr("data-flag","false");
+                        bFlag = false;
+                    }else {
+                        _this.attr("src", common+"/img/yes.png");
+                        _this.attr("data-flag", "true");
+                        bFlag = false;
+                    }
+                });
+            });
+        });
+    </script>
+</block>

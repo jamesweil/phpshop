@@ -1,0 +1,72 @@
+<extend name="Public/publicHTML" />
+
+
+<block name='content'>
+	<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="__CSS__/user/user.css" />
+<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 用户列表
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="navbar navbar-default">
+					<form action="" id="conditionForm" class="navbar-form form-inline"
+						method="post" onsubmit="return false" url="{:U('ajaxUserList')}">
+						<div class="form-group">
+							<label class="control-label" for="input-mobile">手机号码</label>
+							<div class="input-group">
+								<input type="text" name="{$userModel::$mobile_d}" value="" placeholder="手机号码"
+									id="input-mobile" class="form-control">
+								<!--<span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>-->
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label" for="input-email">email</label>
+							<div class="input-group">
+								<input type="text" name="{$userModel::$email_d}" value="" placeholder="email"
+									id="input-email" class="form-control">
+								<!--<span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>-->
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="hidden" name="order_by" value="{$userModel::$id_d}"> <input
+								type="hidden" name="sort" value="desc">
+							<button type="submit" onclick="Order.ajaxForMyOrder('conditionForm', 1);"
+								id="button-filter search-order"
+								class="btn btn-primary pull-right">
+								<i class="fa fa-search"></i> 筛选
+							</button>
+						</div>
+						<button type="button" onclick="send_message(0);"
+							class="btn btn-primary">
+							<i class="fa"></i> 发送站内信
+						</button>
+						<button type="button" onclick="send_mail(0);"
+							class="btn btn-primary">
+							<i class="fa"></i> 发送邮箱
+						</button>
+						<button type="button" onclick="Tool.alertEdit('{:U('addUser')}', '添加用户', 830, 600);" class="btn btn-primary  pull-right">
+							<i class="fa fa-plus"></i>添加用户</i>
+						</button>
+						<button type="button"  class="btn btn-primary current-export cover_reload">当前页导出execl</button>
+					</form>
+				</div>
+				<div id="ajaxGetReturn"></div>
+			</div>
+		</div>
+	</div>
+	<!-- /.row -->
+</section>
+<script src="__COMMON__/js/alert.js"></script>
+<script src="__JS__/order.js"></script>
+<script src="__JS__/user/excel.js"></script>
+<script>
+	var EXCEL_URL =  '{:U("User/expGoods")}';
+</script>
+</block>

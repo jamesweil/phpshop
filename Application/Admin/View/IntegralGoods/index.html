@@ -1,0 +1,88 @@
+<include file="Public/min-header" />
+<div class="wrapper">
+	<include file="Public/breadcrumb"/>
+	<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       		<div class="box">
+	             <div class="box-header">
+	               	<nav class="navbar navbar-default">	     
+				        <div class="collapse navbar-collapse">
+				          <form class="navbar-form form-inline" action="{:U('index')}" method="post">
+				            <div class="form-group">
+				              	<input type="text" name="keywords" class="form-control" placeholder="请输入商品名称" value="{$keywords}">
+				            </div>
+				            <div class="form-group">
+				            	 <select name="status" class="form-control">
+                                    <option value="-1" <if condition='$status eq -1'>selected</if>>==所有==</option>
+                                    <option value="1" <if condition='$status eq 1'>selected</if>>显示</option>
+                                    <option value="0" <if condition='$status eq 0'>selected</if>>关闭</option>
+                                 </select>   
+				            </div>
+				            <button type="submit" class="btn btn-primary">查询</button>
+				            <div class="form-group pull-right">
+					            <a href="{:U('integral', ['act'=>'add'])}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> 新增积分商品</a>
+				            </div>		          
+				          </form>
+				      	</div>
+	    			</nav>
+	             </div>
+	             <div class="box-body">
+	           	 <div class="row">
+	            	<div class="col-sm-12">
+		              <table id="list-table" class="table table-bordered table-striped dataTable">
+		                 <thead>
+		                   <tr role="row">
+                               <th>商品ID</th>
+                               <th>商品名称</th>
+			                   <th>需要积分</th>	
+			                   <th>会员价</th>	                   
+			                   <th>库存</th>
+			                   <th>是否显示</th>
+		                  	   <th>添加时间</th>
+		                  	   <th>操作</th>
+		                   </tr>
+		                 </thead>
+						<tbody>
+                          <foreach name="list" item="vo">
+                             <tr role="row">    
+                             <td>{$vo['goods_id']}</td>
+                             <td>{$vo['title']}</td>
+		                     <td>{$vo['integral']}</td>	                    
+		                     <td>{$vo['price_member']}</td>
+		                     <td>{$vo['stock']}</td>                           
+		                     <td>
+                                 <img width="20" height="20" src="__PUBLIC__/Admin/img/<if condition='$vo[status] eq 1'>yes.png<else />cancel.png</if>" onclick="changeTableVal('IntegralGoods','id','{$vo.id}','status',this)"/>
+		                     </td>
+		                     <td>
+                             {$vo['create_time']|date="Y-m-d H:m:s",###}	                     	
+		                     </td>
+		                     <td>
+		                      <a class="btn btn-primary" href="{:U('integral',['act'=>'edit','id'=>$vo['id']])}"><i class="fa fa-pencil"></i></a>
+		                      <a class="btn btn-danger" onclick="delfunc(this)" data-url="{:U('goodsHandle', ['act'=>'del'])}" data-id="{$vo.id}"><i class="fa fa-trash-o"></i></a>
+				            </td>
+		                   </tr>
+		                  </foreach>
+		                   </tbody>
+		                 <tfoot>
+		                 
+		                 </tfoot>
+		               </table>
+	               </div>
+	          </div>
+              <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page">{$page}</div>
+                    </div>		
+              </div>
+	          </div>
+	        </div>
+       	</div>
+       </div>
+   </section>
+<script>
+
+</script>
+</div>
+</body>
+</html>   

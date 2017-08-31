@@ -1,0 +1,252 @@
+<include file="Public/indexPublic"/>
+<div class="home-section">
+    <!--头部广告-->
+    <!--头部广告过渡动画前-->
+    <if condition='$show_category'>
+        <div class="header-advertisement-one">
+            <foreach name="top_big_ad" item="big_ad">
+                <div class="advertisement">
+                    <a data="{$big.ad_link}" gg="{$big.id}" onclick="addAd(this)" target=_blank>
+                        <img src="__SERVER__{$big_ad.pic_url}" width="100%" height="100"> </a>
+                        <input type="button" class="advertisement_delete" id="advertisement_delete"/>
+                </div>
+            </foreach>
+            <span class="home-delete-one">x</span>
+        </div>
+        <div class="header-advertisement">
+            <foreach name="top_small_ad" item="small_ad">
+                <div class="advertisement">
+                    <a onclick="javascript:location.href='{$small_ad.ad_link}'" target=_blank><img src="__SERVER__{$small_ad.pic_url}" width="100%" height="100"> </a>
+                </div>
+            </foreach>
+            <span class="home-delete"></span>
+        </div>
+    </if>
+    <!--二级头部-->
+    <div class="home-header">
+        <div class="home-header-main clearfix">
+            <!--logo-->
+            <a href="{:U('Index/index')}" class="logo fl">
+               <img src="{$logo_name}" alt=""/>
+                <h2>{$intnetTitle}</h2>
+            </a>
+            <!--搜索框-->
+            <div class="home-search-parent fl">
+                <div class="home-search clearfix">
+                    <form  id="formsarch" action="{:U('Product/ProductList')}" method="get">
+                        <input type="text" class="fl input" name="keyword" id="pp" <if condition="!empty($goods_title)">value="{$goods_title|msubstr=0,40}"</if>/>
+                        <input type="hidden" name="show" value="show"/>
+                        <input type="hidden" name="id" class="fl input"  id="ser-id" value=""/>
+                        <input type="submit" class="fl btn" id="search" value="搜&nbsp;索"/>
+                        <div class="gg"></div>
+                    </form>
+
+                </div>
+                <dl class="home-hotsearch clearfix">
+                <dt class="fl">热门搜索：</dt>
+                <foreach name="hot_words" item="hot_word">
+                    <dd class="fl"><a href="{:U('Product/ProductList',['id'=>$hot_word['id']])}">{$hot_word.hot_words}</a></dd>
+                </foreach>
+            </dl>
+            </div>
+            <!--购物车-->
+            <div class="home-shopping fl">
+                <div class="home-shopping-top clearfix">
+                    <em class="fl"></em>
+                    <span class="fl"><a href="{:U('Cart/goods')}">我的购物车</a></span>
+                    <i class="fl"></i>
+                </div>
+                <div class="home-individual clearfix">
+                    <span class="fl"></span>
+                    <em class="fl" id="couts"><if condition="$cartCount eq true"> {$cartCount} <else/> 0</if></em>
+                    <i></i>
+                </div>
+                <dl class="home-shopping-up"id="new_cart_data">
+                    <if condition="empty($cartCount)"><dt id="cart_no">购物车没有任何东西，赶紧选吧。</dt>
+                    <else/>
+                        <volist name="carts" id="cart">
+                            <if condition="$cart['buy_type']==1">
+                            <dd class="clearfix active">
+                                <a href="javscript:;" class="fl">
+                                    <img src="{$cart.pic_url}" alt="">
+                                </a>
+                                <a href="{:U('Goods/goodsDetails',['id'=>$cart['goods_id'],'goods_num'=>$cart['goods_num']])}" class="fl con">
+                                    {$cart.title}
+                                </a>
+                                <strong class="fl">
+                                    <span>￥{$cart.price_new}</span>x{$cart.goods_num}<br>
+                                    <a href="javascript:;" class="dels" data="{$cart.id}">删除</a>
+                                </strong>
+                            </dd>
+                            </if>
+                            <if condition="$cart['buy_type']==2">
+                                <dd class="clearfix active">
+                                    <a href="javscript:;" class="fl">
+
+                                    </a>
+                                    <a href="{:U('Cart/goods')}" class="fl con">
+                                        套餐
+                                    </a>
+                                    <strong class="fl">
+                                        <span>￥{$cart.price_new}</span><br>
+                                        <a href="javascript:;" class="dels" data="{$cart.id}">删除</a>
+                                    </strong>
+                                </dd>
+                            </if>
+                        </volist>
+                    </if>
+                </dl>
+            </div>
+            <!--二维码-->
+            <div class="fr home-code"></div>
+        </div>
+    </div>
+
+    <!--二级导航-->
+    <div class="homeNavBar">
+        <div class="w clearfix" style="z-index:2;">
+            <dl <if condition='$show_category'>class="fl level homeNavBar-index"<else/> class="fl level paperone"</if>>
+                <dt class="clearfix">
+                    <i class="fl"></i>
+                    <span class="fl">全部商品分类</span>
+                    <em class="fl"></em>
+                </dt>
+                <foreach name="goods_categories" item="top_cat">
+                    <eq name="top_cat.fid" value="0" >
+                        <dd class="menu">
+                            <div class="clearfix">
+                                <i class="fl {$top_cat.css_class}"></i>
+                                <span class="fl"><a href="{:U('Product/ProductList',['cid'=>$top_cat['id']])}">{$top_cat.class_name}</a></span>
+                                <em class="fr"></em>
+                            </div>
+                            <div class="i-mc">
+                                <foreach name="goods_categories" item="second_cat">
+                                    <eq name="second_cat.fid" value="$top_cat.id">
+                                        <dl class="classification2 clearfix">
+                                            <dt class="fl">
+                                                <a href="{:U('Product/ProductList',['cid'=>$second_cat['id']])}">{$second_cat.class_name}&nbsp;<b>></b></a>
+                                            </dt>
+                                            <dd class="fl clearfix">
+                                                <foreach name="goods_categories" item="third_cat">
+                                                    <eq name="third_cat.fid" value="$second_cat.id">
+                                                            <a href="{:U('Product/ProductList',['cid'=>$third_cat['id']])}" class="fl">
+                                                                {$third_cat.class_name}
+                                                            </a>
+                                                    </eq>
+                                                </foreach>
+                                            </dd>
+                                        </dl>
+                                    </eq>
+                                </foreach>
+                            </div>
+                        </dd>
+                    </eq>
+                </foreach>
+                </dd>
+            </dl>
+            <ul class="fr clearfix navitems-2016">
+                <!--<li class="fl"><a href="__SERVER__">首页</a></li>-->
+                <foreach name="navs" item="nav">
+                    <li class="fl">
+                        <a <if condition="$nav['link']==$nowurl">class="active"</if> href="{$nav.link}">{$nav.nav_titile}</a>
+                        <if condition="$nav.type eq 1">
+                            <span><img src="__IMG__/new1.gif" alt=""></span>
+                        </if>
+                    </li>
+                </foreach>
+            </ul>
+        </div>
+    </div>
+
+    <!--ajax商品搜索功能-->
+    <script>
+        var _this = null;
+        var clear = null;
+        var timer = null;
+        $('#pp').on('input',function(){
+            _this = $(this);
+            clearInterval(clear);
+            clear = setTimeout(function(){
+                var _url ="{:U('Goods/search')}";
+                var _data = _this.val();
+                $.post(_url,{title:_data},function(data){
+                    if(data.status==0){
+                        /*	layer.msg(data.message);*/
+                    }
+                    if(data.status==1){
+                        var _a=data.data;
+                        var _b="{:U('Goods/goodsDetails')}"
+                        var _html='';
+                        for (var i in _a){
+                            _html +='<div><a href="'+_b+'?id='+_a[i].id+'"> '+_a[i].title+'</a></div>';
+                        }
+                    }
+                    $('.gg').html(_html);
+                    $('input[name="id"]').val(_a[0].id);
+                    if(data.status==2){
+                        $('.gg').html('');
+                    }
+                },'json')
+            },300);
+        }).on('keydown',function(ev){
+            if(ev.keyCode == 13){
+                if($(this).val() == ''){
+                    alert('搜索不能为空！');
+                }else{
+                    clearTimeout(timer);
+                    timer = setTimeout(function(){
+                        $('#pp').parents('form').submit();
+                    },800);
+                }
+                return false;
+            }
+            ev.stopPropagation();
+        });
+    </script>
+    <!--ajax删除购物车里面的商品-->
+    <script>
+        $('#new_cart_data').on('click','.dels',function(){
+            var _url="{:U('Goods/dels')}";
+            var _id=$(this).attr('data');
+            $.post(_url,{id:_id},function(data){
+                if(data.status==0){
+                    layer.msg(data.message);
+                }
+            })
+            var _count=parseInt($('#couts').html());
+            $(this).parent().parent().remove('dd');
+            $('#couts').html(_count-1);
+        })
+    </script>
+    <!--搜索跳转-->
+    <!--<script>
+        function searcher(){
+            var _url ="{:U('Goods/searchOne')}";
+            var _data=$('#pp').val();
+            $.post(_url,{title:_data},function(data){
+                if(data.status==0){
+                    layer.msg(data.message);
+                }
+                if(data.status==1){
+                    $("input[name='id']").val(data.data);
+                }
+            })
+        }
+    </script>-->
+    <script>
+        function addAd(ele){
+            var _id=$(ele).attr('gg');
+            var _reurl=$(ele).attr('data');
+            var _locatUrl="{:U('Ad/addhit')}";
+            $.post(_locatUrl, {id:_id},function(data){
+                console.log(data.msg);
+            },'JSON')
+            window.location.href=_reurl;
+        }
+    </script>
+   <script>
+       $("#formsarch").submit(function(){
+           $("#ser-id").remove();
+       });
+
+   </script>

@@ -1,0 +1,50 @@
+<div class="categoryOne">
+	<h2>
+		<i></i>本店搜索
+	</h2>
+	<div>
+		<form action="{:U('Product/ProductList')}" method="get">
+
+
+		<p class="clearfix one">
+			<span class="fl">关键字&nbsp;&nbsp;</span> <input type="text" class="fl" name="keyword">
+		</p>
+		<p class="clearfix two">
+			<span class="fl">价格&nbsp;&nbsp;</span>
+			<i class="fl">￥<input type="text" name="begin_price" value=""></i>
+			<i class="fl">￥<input type="text" name="end_price" value=""></i>
+			<input type="hidden" name="show" value="show"/>
+		</p>
+		<p class="three">
+			<input type="submit" value="搜&nbsp;索" class="btn product-search">
+		</p>
+		</form>
+	</div>
+</div>
+<if condition="!empty($recGoods)">
+	<dl class="proTop10">
+		<dt>
+			<i></i>畅销排行Top10
+		</dt>
+		<foreach name="recGoods" key="key" item='value'>
+			<if condition="!empty($value[$goodsImages::$picUrl_d])">
+				<dd class="top10Item">
+					<a href="javascript:;">
+						<div class="img-parent fl">
+							<img src="{$value[$goodsImages::$picUrl_d]}" height="80" width="80"> <span>{$key+1}</span>
+						</div>
+						<div class="top10Item-fr fl">
+							<p>{$value[$goodsModel::$title_d]}</p>
+							<p>{$value[$goodsModel::$description_d]}</p>
+							<span>¥<if condition="!empty($_SESSION['user_id'])">{$value[$goodsModel::$priceMember_d]}<else/>{$value[$goodsModel::$priceMarket_d]} </if></span>
+						</div>
+					</a>
+				</dd>
+			<else/>
+				<dd class="clearfix top10Item2">
+					<span class="fl">{$key}</span> <a href="javascript:;" class="fl">{$value[$goodsModel::$title_d]}</a>
+				</dd>
+			</if>
+		</foreach>
+	</dl>
+</if>

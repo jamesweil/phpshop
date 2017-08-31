@@ -1,0 +1,102 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<include file="Public/assets_header"/>
+
+
+
+	<!--内容-->
+		<div class="mordrMain fr">
+			<div class="title clearfix">
+				<ul class="clearfix fl">
+					<li class="fl hover active"><a href="javascript:;">余额</a></li>
+				</ul>
+			</div>
+			<!--订单搜索范围查找-->
+			<div class="rangeSearch"></div>
+			<!--可用余额-->
+			<div class="balan-title clearfix">
+				<span class="fl">可用余额：<em>￥{$balance.account_balance}</em></span>
+				<span class="fl">锁定余额：<em>￥{$balance.lock_balance}</em></span>
+				<span class="fl">账户状态：<em>
+											    <switch name="balance.status">
+											   		<case value="1">有效</case>
+											   		<case value="2">已过期</case>
+											   		<case value="3">有效</case>
+											   		<case value="4">有效</case>
+											    </switch>	
+				                           </em></span>
+				<span class="fl"><a href="javascript:;">安全中心</a>保护账户资产安全</span>
+				<a href="{:U('Assets/recharge')}" class="fl recharge">充值</a>
+			</div>
+			<!--收支明细-->
+			<div class="balance-detailed">
+				<ul class="nav clearfix">
+				    <if condition="$status eq '1'">
+						<li class="fl active">近三个月收支明细</li>
+						<li class="fl" id="aa">三个月前收支明细</li>
+					<else/>
+						<li class="fl">近三个月收支明细</li>
+						<li class="fl active" id="aa">三个月前收支明细</li>
+					</if>
+				</ul>
+				<dl>
+					<dt class="clearfix">
+						<span class="fl timer">时间</span>
+						<span class="fl deposit">存入</span>
+						<span class="fl expenditure">支出</span>
+						<span class="fl remarks">备注</span>
+					</dt>
+					<empty name="data.res">
+						<dd align="center" style="color:red;margin-top:10px;">暂时没有记录!</dd>
+					<else />
+						<volist name="data.res" id="vo">
+							<dd class="clearfix">
+								<span class="fl timer">{$vo.recharge_time}</span>
+								<span class="fl deposit">￥{$vo.deposit}</span>
+								<span class="fl expenditure">￥{$vo.pay}</span>
+								<span class="fl remarks">{$vo.description}</span>
+							</dd>
+						</volist>
+					</empty>
+				</dl>
+				<div class="page">{$data.page}</div>
+			</div>
+			
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<!-- <script src="__JS__/header.js"></script> -->
+<script src="__JS__/Calendar.js"></script>
+<!-- <script src="__JS__/assets/assets.js"></script> -->
+<script>
+	var aLi = $('.person-section .balance-detailed .nav li');
+	var N = 0;
+	aLi.on('click',function(){
+		aLi.removeClass('active').eq($(this).index()).addClass('active');
+		N = $(this).index()+1;
+		$.ajax({
+			url : '{:U("Assets/balance_front")}',
+			dataType : "json",
+			type : 'get',
+			data : {flag:N},
+			success:function(data){              
+				$('.person-section .balance-detailed dl dd').remove();
+				var page = data.page;
+				$('.page').html(page);
+                for(var i = 0; i < data.res.length; i++){
+               		$('.person-section .balance-detailed dl').append('<dd class="clearfix"><span class="fl timer">'+data.res[i].recharge_time+'</span><span class="fl deposit">￥'+data.res[i].deposit+'</span><span class="fl expenditure">￥'+data.res[i].pay+'</span><span class="fl remarks">'+data.res[i].description+'</span></dd>');
+                }
+			},
+			error:function(){
+              
+			},
+		});
+	});
+
+</script>
+</block>

@@ -1,0 +1,45 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+<div class="wrapper">
+	<section class="content">
+		<div class="container-fluid">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<td class="text-left">商品名称</td>
+								<td class="text-left">价格</td>
+								<td class="text-left">库存</td>
+								</tr>
+							</thead>
+							<tbody id="goos_table">
+								<if condition="!empty($proGoods['data'])">
+									<foreach name="proGoods['data']" item="list">
+										<tr>
+											<td class="text-left">{$list[$goodsModel::$title_d]}</td>
+											<td class="text-left">{$list[$goodsModel::$priceMember_d]}</td>
+											<td class="text-left">{$list[$goodsModel::$stock_d]}</td>
+										</tr>
+									</foreach>
+								</if>
+							</tbody>
+						</table>
+					</div>
+					<div class="row">
+						<div class="text-left col-sm-10">{$proGoods['page']}</div>
+						<div class="text-right col-sm-2"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+
+</block>

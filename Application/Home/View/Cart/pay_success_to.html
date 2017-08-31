@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>掌中游商城首页</title>
+    <link href="__PUBLIC__/Home/css/index.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/Home/css/banner.css" rel="stylesheet" type="text/css">
+
+    <script src="__PUBLIC__/Home/js/jquery.min.js"></script>
+    <script src="__PUBLIC__/Home/js/sl.js"></script>
+
+
+    <script type="text/javascript">
+        $(function(){
+            $.focus("#focus001");
+        });
+    </script>
+</head>
+
+<body>
+
+
+<include file="Public:header" />
+
+
+
+<div class="Content">
+    <div class="daohang">当前的位置：<a href="{:U('Index/index')}">首页</a> > 支付成功</div>
+    <div class="news_ul">
+            <p style="font-size: 20px; font-weight: bold; color: #F34D2E;text-align: center; width: 200px; margin: 0 auto; height: 100px; line-height: 100px">恭喜您,您已支付成功</p>
+        <p style="font-size: 14px; font-weight: bold; color: #F34D2E;text-align: center; width: 200px; margin: 0 auto">
+            <a href="{:U('Index/index')}"  style="color: #F34D2E;">返回首页</a></p>
+
+    </div>
+</div>
+
+
+
+
+
+<include file="Public:footer" />
+
+</body>
+
+</html>

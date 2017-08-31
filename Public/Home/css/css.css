@@ -1,0 +1,52 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0px; padding:0px;}
+ul,ol{list-style:none;}
+input,img{border:0;font-family:"微软雅黑"; vertical-align:middle}
+a{ color:#333; text-decoration:none;}
+b, h2, h3, strong, big, del{font-weight:normal;}
+a:hover{text-decoration:none;}
+input, select, textarea, button {outline:0 none; vertical-align: middle;}
+li {list-style: none outside none;}
+img{ max-width:100%; height:auto; width: auto\9; border:0;}
+.clear{ clear:both;}
+body{ font-family:"微软雅黑";  font-size:12px; font-weight:normal; width:100%; color:#333;background-attachment:fixed;background-size: cover;background-repeat: no-repeat;}
+/* 公共样式 */
+.size14{font-size:14px;}
+.size18{font-size:18px;}
+.size28{font-size:28px;margin-left: 12px;}
+.size20{font-size:20px;}
+.black{color:#333;}
+.blue{color:#3e81f2;}
+.gray{color:#CCC;}
+.left{float:left;}
+.right{float:right;}
+.line-height{line-height:30px;}
+.line-height45{line-height:75px;margin-left: 12px;}
+/* 登录 */
+.head{width:1000px; margin:0 auto; height:80px;}
+.content-bj{ border-top:1px solid #c81623; border-bottom:1px solid #c81623; padding:20px 0;}
+.Logon{width:1000px; background:url(../img/banner.jpg) no-repeat left; margin:0 auto; height:473px;} 
+.Logon ul{border:2px solid #c81623;overflow:hidden; width:316px; height:300px; float:right; margin-top:70px; padding:15px;}
+.Logon ul h3{overflow:hidden;}
+.Logon ul li{border:1px solid #c2c2c2; margin-top:30px; height:40px; overflow:hidden; }
+.Logon ul li span{border-right:1px solid #c2c2c2; background-color:#f3f3f3; overflow:hidden; height:40px;width:13%; display:block; float:left}
+.Logon ul li span img{margin-top:5px; margin-left:5px;}
+.Logon ul li input{border:0; width:270px; height:40px; float:left; color:#999; text-indent:10px;}
+.registered{background:url(../img/registered.jpg) 0 4px no-repeat; text-indent:5%; color:#a9181d}
+.Logon ul p{margin:20px 0; overflow:hidden;}
+.Login-button{background-color:#e43a3d; color:#FFF; text-align:center; width:100%; height:45px; line-height:45px; font-size:14px; display:block;}
+.bottom{ width:1000px; margin:20px auto;} 
+.bottom a{margin-right:8px; color:#666666; }
+.bottom span{margin-right:8px;}
+/* 注册 */
+.registered1{width:1200px; overflow:hidden; margin:30px auto; font-size:14px;}
+.registered1 ul{min-width:400px; float:left; margin-left:180px; padding-right:100px; margin-right:10px; border-right:1px solid #e6e6e6;}
+.registered1 ul li{border:1px solid #dadada; margin-bottom:25px; height:52px; line-height:32px;} 
+.registered1 ul li span{width:100px; margin-right:10px; text-align:right; float:left; margin-top:10px;}
+.registered1 ul li input{border:0; color:#333; width:280px; height:32px; float:left; margin-top:10px;}
+.registered1 ul li select{border:0; width:80px; float:left; margin-right:10px; height:32px; margin-top:10px;}
+.Obtain{background-color:#f2f2f2; width:110px; height:46px; text-align:center; color:#000; line-height:46px; margin-top:3px; margin-right:3px;}
+
+/*****************************************************************/
+.address_add{width:24%; border:none;font-size:1em;}

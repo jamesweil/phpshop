@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>客户管理</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Common/My97Date/WdatePicker.js"></script>
+</head>
+<body>
+<form name="form" action="__SELF__" method="post">
+<div style="margin-top:20px; text-align:center;">
+<h2>选择时间段,时间跨度请保持在2个月内</h2>
+<br/>
+开始时间：<input name="begin_time" class="Wdate" onClick="WdatePicker()" type="text" style="height:30px;" value="{$data['begin_time']}"/> &nbsp;&nbsp;&nbsp;&nbsp;
+结束时间：<input name="end_time" class="Wdate" onClick="WdatePicker()" type="text" style="height:30px;" value="{$data['end_time']}"/>
+<br/><br/><br/>
+<button name="export_user" type="submit" class="button">立即导出用户资料</button>
+</div>
+</form>
+</body>
+</html>

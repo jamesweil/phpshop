@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Common/Ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="__PUBLIC__/Common/uploadPreview.min.js"></script>
+</head>
+<body>
+
+<form id="form3" method="post" action="{:U('Financial/edit')}" >
+<div class="list"><!-- onsubmit="return false;" -->
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details" style=" margin-top:2px;">
+      	  <tr>
+	        <td colspan="2" style=" background:#E4EEFA;"><h3 style="margin-left:50px;">编辑理财产品档次信息</h3></td>
+       	  </tr>
+        <tbody>
+	     <tr>
+	        <td><div align="right">消费档次：</div></td>
+	        <td><input type="text" style="color:#F00; font-weight:600;" name="grade" id="grade" value="{$row.grade}"></td>
+          </tr>
+		  <tr>
+	        <td><div align="right">年利率：</div></td>
+	        <td><input type="text" style="color:#F00; font-weight:600;" name="annual_rate" id="annual_rate" value="<?php echo $row['annual_rate'] *100;?>">%</td>
+          </tr>
+		  <tr>
+	        <td><div align="right">半年利率：</div></td>
+	        <td><input type="text" style="color:#F00; font-weight:600;" name="half_rate" id="half_rate" value="<?php echo $row['half_rate'] *100;?>">%</td>
+          </tr>
+		  <tr>
+	        <td><div align="right">最大可购买理财金额：</div></td>
+	        <td>
+				<input type="text" style="color:#F00; font-weight:600;" name="max_buy" id="max_buy" value="<?php echo $row['max_buy'] -0;?>">
+				<input type="hidden" style="color:#F00; font-weight:600;" name="id" id="id" value="{$row.id}">
+			</td>
+          </tr>
+        </tbody>
+  </table> 
+</div>
+<div class="footer">
+     <button type="button" class="button"  id="button" style="min-width:160px;" onclick="check_form();">保存信息</button>
+</div>
+</form>
+<script>
+function refresh(){
+		window.location.href="{:U('Financial/edit')}"
+	}
+function check_form(){
+	if($("#annual_rate").val()==''){
+		return false;
+	}else{
+		$("#form3").submit();
+	}
+}
+</script>
+</body>
+</html>

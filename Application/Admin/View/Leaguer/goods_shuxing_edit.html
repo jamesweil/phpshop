@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+</head>
+<body>
+<form method="post" action="__SELF__">
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details">
+        <tbody>
+	      <tr>
+	        <td width="44%"><div align="right">
+	        <div align="right">商品属性名称：</div></td>
+	        <td width="56%">
+	          <input name="name" type="text" class="input" id="name" value="{$result.name}"></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">前台显示名称：</div></td>
+	        <td><input name="home_name" type="text" class="input" id="home_name" value="{$result.home_name}"></td>
+          </tr>
+        </tbody>
+  </table> 
+</div>
+<div class="footer">
+	 <input type="hidden" name="id" value="{$result.id}">
+     <button type="submit" class="button" id="button" style="min-width:160px;" onclick="admin_add();">保存修改</button>
+</div>
+</form>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<extend name="Public:publicHTML" />
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<div class="wrapper">
+	<section class="content">
+		<!-- Main content -->
+		<div class="container-fluid">
+			<div class="pull-right">
+				<a href="javascript:history.go(-1)" data-toggle="tooltip" title=""
+					class="btn btn-default" data-original-title="返回"><i
+					class="fa fa-reply"></i></a> 
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i> 商品属性
+					</h3>
+				</div>
+				<div class="panel-body">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#tab_tongyong" data-toggle="tab">商品属性</a></li>
+					</ul>
+					<!--表单数据-->
+					<form method="post" id="saveGoodsAttributeForm">
+						<!--通用信息-->
+						<div class="tab-content">
+							<div class="tab-pane active" id="tab_tongyong">
+
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<td>属性名称：</td>
+											<td>
+												<input  class="checkValue" isMust="1" required="required" type="text" value="{$current[$model::$attrName_d]}" name="{$model::$attrName_d}" /> <span id="err_attr_name"  class="rxd"></span>
+											</td>
+										</tr>
+										<tr>
+											<td>所属商品类型：</td>
+											<td><select name="type_id" id="{$model::$typeId_d}">
+													<option value="">请选择</option>
+													<foreach name="parentClassData" key="key" item="vo">
+														<option  <if condition="$current[$model::$typeId_d] == $key">selected="selected"</if>   value="{$key}">{$vo}</option>
+													</foreach>
+											</select> <span id="err_type_id" class="rxd"></span>
+											</td>
+										</tr>
+										<tr>
+											<td>能否进行检索：</td>
+											<td><input type="radio" <if condition="$current[$model::$attrIndex_d] == 0"> checked="checked"</if>value="0" name="{$model::$attrIndex_d}"/>不需要检索
+											 	<input type="radio" <if condition="$current[$model::$attrIndex_d] == 1"> checked="checked"</if> value="1" name="{$model::$attrIndex_d}"/>关键字检索
+											</td>
+										</tr>
+									
+										<tr>
+											<td>该属性值的录入方式：</td>
+											<td>
+											 <foreach name="input_type" key="key" item="value">
+												<input type="radio" value="{$key}" <if condition="$current[$model::$attrType_d] == $key"> checked="checked"</if>  name="{$model::$inputType_d}"/>{$value}
+											</foreach>
+										</tr>
+										<tr>
+											<td>可选值列表：</td>
+											<td><textarea rows="5" class="checkValue" cols="30" name="{$model::$attrValues_d}">{$current[$model::$attrValues_d]}</textarea>
+												录入方式为手工或者多行文本时，此输入框不需填写。 <span id="err_attr_values"
+												class="rxd"></span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="pull-right">
+							<input type="hidden" name="{$model::$id_d}" value="{$current[$model::$id_d]}">
+							<button class="btn btn-primary" title="" data-toggle="tooltip"
+								type="submit"
+								onclick="selectTool.addAttribute('saveGoodsAttributeForm','{:U('saveEditAttribute')}');"
+								data-original-title="保存">
+								<i class="fa fa-save"></i>
+							</button>
+						</div>
+					</form>
+					<!--表单数据-->
+				</div>
+			</div>
+		</div>
+		<!-- /.content -->
+	</section>
+</div>
+<script type="text/javascript" src="__COMMON__/js/jquery-form.js"></script>
+<script type="text/javascript" src="__COMMON__/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="__COMMON__/js/validateCustom.js?a={:time()}"></script>
+<script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script>
+<script type="text/javascript" src="__JS__/goods/attribute.js?a={:time()}"></script> 
+</block>
+

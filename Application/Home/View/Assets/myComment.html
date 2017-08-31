@@ -1,0 +1,158 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="toBeted fr">
+			<ul class="title clearfix">
+				<li class="fl active"><a href="javascript:;">待评价订单<em>（<empty name="count">0<else/> {$count}</empty>）</em></a></li>
+				<li class="fl"><a href="javascript:;">待晒单<em>（<empty name="w_count">0<else/> {$w_count}</empty>）</em></a></li>
+				<li class="fl"><a href="javascript:;">已评价</a></li>
+			</ul>
+			<div class="centent-wrap active">
+				<ol class="tobeData">
+					<li class="fl details">订单详情</li>
+					<li class="fl consignee">收货人</li>
+					<li class="fl dollar">金额</li>
+					<li class="fl operation">操作</li>
+				</ol>
+				<div class="centent-main">
+				    <volist name="data" id="vo">
+						<dl>
+							<dt>
+								<span>{$vo.create_time|date="Y-m-d H:i;s",###}</span>
+								<span>订单号：{$vo.order_id}</span>
+							</dt>
+							<dd class="clearfix">
+								<div class="fl conFl clearfix">
+								    <volist name="vo.goods" id="goods">
+										<div class="loop">
+											<div class="fl imgParent">
+												<img src="{$goods.images}">
+											</div>
+											<div class="fl conParent">
+												<a href="{:U('Goods/goodsDetails',array('id'=>$goods['goods_id']))}">{$goods.title}</a>
+											</div>
+											<div class="fr numberFr">x{$goods.goods_num}
+                                            <if condition="$goods.comment eq '1'">
+                                            	<a href="javaScript:;" class="fr btn">已评价</a>
+                                            <else/>
+												<a href="{:U('Order/comment',array('goods_id'=>$goods['goods_id'],'order_id'=>$vo['order_id']))}" class="fr btn">评价</a>
+											</if>
+											</div>
+										</div>
+									</volist>
+								</div>
+								<div class="fr conFr">
+									<span class="fl name">{$vo.realname}</span>
+									<span class="fl payment">支付金额￥{$vo.price_sum}</span>
+									<span class="fl evaluate">
+										<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}">订单详情</a><br>										
+									</span>
+								</div>
+							</dd>
+						</dl>
+					</volist>
+					<div class="page">
+						{$page}
+					</div>
+				</div>
+			</div>
+			<div class="centent-wrap">
+				<div class="dState clearfix">
+					<span class="fl">商品信息</span>
+					<span class="fl">评论状态</span>
+				</div>
+				<volist name="Waiting_goods" id="w_goods">
+					<div class="products-parent">
+						<div class="products clearfix">
+							<div class="fl conFl">
+								<div class="screenshot fl">
+									<a href="javascript:;"><img src="{$w_goods.images}"></a>
+								</div>
+								<div class="products-description fl">
+									<p><a href="javascript:;">{$w_goods.title}</a></p>
+									<span>购买时间：{$w_goods.create_time|date="Y-m-d",###}</span>
+								</div>
+							</div>
+							<div class="fr conFr">
+								<a href="javascript:;" data-value="{$w_goods.id}">继续晒单</a>
+							</div>
+							<span class="triangle"></span>
+						</div>
+					</div>				
+					<div class="products-review-main" id="review{$w_goods.id}" style="display:none;">
+						<div class="experience clearfix">
+							<span class="fl"><b>*</b>心得：</span>
+							<div class="fr keyword clearfix">
+							    <volist name="w_goods.feel" id="feel">
+									<em class="fl">{$feel.title}</em>
+                                </volist>
+							</div>
+						</div>
+						<div class="experience clearfix">
+							<span class="fl"><b>*</b>评论内容：</span>
+							<div class="fr keyword clearfix">
+							    {$w_goods.content}
+							</div>
+						</div>
+						<form action="{:U('Assets/uploadImage')}" enctype="multipart/form-data" method="post" >
+							<div class="editor-review clearfix">
+								<span class="fl">晒单：</span>
+								<div class="fl file clearfix">
+									<input type="file"  name="file[]" multiple="multiple"/>
+									+
+								</div>
+								<div class="dd">最多一次传6张照片!</div>
+							</div>
+							<div class="publish">
+							    <input type="hidden" name="id" value="{$w_goods.id}">
+								<input type="submit" class="submit">
+								<label><input type="checkbox" name="anonymous" value="1">&nbsp;匿名评论</label>
+							</div>
+						</form>
+					</div>
+				</volist>
+			</div>
+			<div class="centent-wrap">
+				<ol class="clearfix products-title">
+					<li class="fl products-description">商品详情</li>
+					<li class="fl data">状态</li>
+					<li class="fl state">操作</li>
+				</ol>
+				<volist name="Alreadygoods" id="a_goods">
+					<ul class="centent-main">
+						<li class="clearfix">
+							<div class="products-description fl clearfix">
+								<div class="fl screenshot">
+									<a href="javascript:;"><img src="{$a_goods.images}"></a>
+								</div>
+								<a href="javascript:;" class="details fl">{$a_goods.title}</a>
+							</div>
+							<div class="fl data">{$a_goods.create_time|date="Y-m-d H:i:s",###} 初评</div>
+							<div class="fl state"><a href="{:U('Assets/comment_check',array('id'=>$a_goods['id']))}">查看评论</a></div>
+						</li>
+					</ul>
+                </volist>
+			</div>
+		</div>
+
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script>
+ -->
+ <script src="__JS__/toBeEvaluated.js"></script>
+
+
+<script type="text/javascript">
+     $('.person-section .toBeted .centent-wrap .products-parent .products .conFr a').on('click',function(){
+     	var id = $(this).attr('data-value');
+     	$('#review'+id+'').toggle(); 
+     })
+</script>
+</block>

@@ -1,0 +1,78 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="viewts-centent-wrap fr">
+			<div class="title">
+				<h2>评价详情</h2>
+				<p>快乐的你分享完美的使用心得~</p>
+			</div>
+			<div class="con-main clearfix">
+				<div class="fl products">
+					<div class="screenshot"><img src="{$data.images}"></div>
+					<p class="products-description">
+						<a href="javascript:;">{$data.title}</a>
+					</p>
+					<p class="products-prices">¥{$data.price_member}</p>
+				</div>
+				<div class="fl products-review">
+					<div class="timer">{$data.create_time|date="Y-m-d H:i:s",###}</div>
+					<div class="score clearfix">
+					    <if condition="$data.score eq '1'">
+							<span class="fl active"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+						<elseif condition="$data.score eq '2'" />
+							<span class="fl active"></span>
+							<span class="fl active"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+						<elseif condition="$data.score eq '3'" />
+							<span class="fl active"></span>
+							<span class="fl active"></span>
+							<span class="fl active"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+						<elseif condition="$data.score eq '4'" />
+							<span class="fl active"></span>
+							<span class="fl active"></span>
+							<span class="fl active"></span>
+							<span class="fl active"></span>
+							<span class="fl"></span>
+						<elseif condition="$data.score eq '5'" />
+							<span class="fl active"></span>
+							<span class="fl active"></span>
+							<span class="fl active"></span>
+							<span class="fl active"></span>
+							<span class="fl active"></span>
+						<else/>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+						</if>
+						<em class="fl">{$data.score}分</em>
+					</div>
+					<p class="editor-review">{$data.content}</p>
+					<div class="choice-review clearfix">
+					    <volist name="data.feel" id="feel">
+						<span class="fl">{$feel.title}</span>
+						</volist>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

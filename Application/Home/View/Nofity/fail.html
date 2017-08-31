@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$intnetTitle}</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/base.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/pay.css">
+    <script src="__JS__/jquery-1.7.2.min.js"></script>
+    <script src="__LAYER__/layer.js"></script>
+</head>
+
+<body>
+<div class="center">
+    <div class="left fl">
+        <img src="/Public/Home/img/failure.png">
+    </div>
+        <div class="right fl">
+            <h2>付款失败</h2>     
+            <p>订单编号:{$out_trade_no|default="0918230912"}</p>
+            <p>请刷新后再试试</p>
+            <a class="btn btn-default" href="/">返回首页</a>
+        </div>
+        <div style="clear: both;"></div>
+</div>
+</body>
+</html>

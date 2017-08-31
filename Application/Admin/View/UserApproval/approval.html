@@ -1,0 +1,61 @@
+<extend name="Public/publicHTML" />
+
+
+<block name='content'>
+
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+<div class="wrapper">
+
+	<section class="content">
+		<div class="container-fluid">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i> 用户列表
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="navbar navbar-default">
+						<form action="" id="conditionForm" class="navbar-form form-inline"
+							method="post" onsubmit="return false" url="{:U('ajaxGetApprovalUserList')}">
+							<if condition="!empty($search)">
+								<foreach name="search" key='key' item='value'>
+									<div class="form-group">
+										<label class="control-label" for="input-mobile">{$value}</label>
+										<div class="input-group">
+											<input type="text" name="{$key}" value=""
+												placeholder="{$value}" id="input-mobile" class="form-control">
+											<!--<span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>-->
+										</div>
+									</div>
+								</foreach>
+							</if>
+							<div class="form-group">
+								<input type="hidden" name="order_by" value="{$userModel::$id_d}">
+								<input type="hidden" name="sort" value="desc">
+								<button type="submit"
+									onclick="Tool.ajaxGetList('conditionForm', 1, 'ajaxGetReturn');"
+									id="button-filter search-order"
+									class="btn btn-primary pull-right">
+									<i class="fa fa-search"></i> 筛选
+								</button>
+							</div>
+							<button type="button" onclick="send_mail(0);"
+								class="btn btn-primary">
+								<i class="fa"></i> 发送邮箱
+							</button>
+						</form>
+					</div>
+					<div id="ajaxGetReturn"></div>
+				</div>
+			</div>
+		</div>
+		<!-- /.row -->
+	</section>
+</div>
+<script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script>
+<script type="text/javascript" src="__JS__/user/showList.js"></script>
+</block>

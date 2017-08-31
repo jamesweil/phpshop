@@ -1,0 +1,41 @@
+<extend name="Public/indexEdit"/>
+	<block name="content">
+	<link href="__PUBLIC__/Home/css/banner.css" rel="stylesheet" type="text/css">
+	<div class="Selling">
+		<div class="daohang search_page" >当前的位置：<a href="{:U('Index/index')}">首页</a> > 搜索结果列表</div>
+			<div class="floor1">
+				<if condition="!empty($result['data'])">
+					<ul>
+						<foreach name="result.data" item="vo">
+								<li >
+									<a href="{:U('Goods/goods_details',array('id' => $vo['id']))}"><img style="height:200;" width="200" src="{$vo.pic_url}"></a>
+									<p class="text-overflow" >{$vo.title}</p>
+									<p class="line_height"><span class="jiage">市场价:{$vo.price_old}</span>
+							            <span class="market">送积分: <span style="color:#FF9933; font-weight:600;">{$vo.fanli_jifen}积分&nbsp;&nbsp;</span></p>
+										<p><span class="price1">￥{$vo.price_new}</span> 
+										<a href="{:U('Goods/goods_details',array('id' => $vo['id']))}" class="buy1">立即购买</a>
+									</p>
+								</li>
+								<if condition="0">
+									<li style="padding:20px 9px;">
+										<a style="height:210px;display:block;" href="{:U('Index/lvyou_details')}?id={$vo.id}"><img style="margin-top:35px;" src="{$vo.pic_url}"></a>
+										<p class="title1" style="font-weight:500; height:50px; font-size:12px;">{$vo.title|msubstr=0,20,'utf-8',true}</p>
+										<p style="height:24px;"><span style="text-decoration:line-through;">市场价:{$vo.price_old}</span>
+							            <span style="float:right;">送积分: <span style="color:#FF9933; font-weight:600;">{$vo.fanli_jifen}积分&nbsp;&nbsp;</span></p>
+										<p><span class="price1" style="float:none; margin-left:0;">￥{$vo.price_new}</span> 
+										<a href="{:U('Index/lvyou_details')}?id={$vo.id}" class="buy1">立即预订</a></p>
+									</li>
+								</if>
+						</foreach>
+					</ul>
+					<div class="clear"></div>
+				<else/>
+					<div style="text-align:center; margin-top:40px;">没有查询到数据</div>
+				</if>
+			    <div class="clear"></div>
+			    <div class="footer_page">{$result.page}</div>
+			</div>
+		</div>	
+	</section>	
+<script>function chongzhi(){window.location.href = window.location.href;}</script>
+</block>

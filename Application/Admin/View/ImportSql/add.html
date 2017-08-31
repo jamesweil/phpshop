@@ -1,0 +1,50 @@
+<extend name="Public/publicHTML"/>
+<block name="nav">
+    <script src="__COMMON__/js/Ueditor/ueditor.config.js"></script>
+    <script src="__COMMON__/js/Ueditor/ueditor.all.min.js"> </script>
+    <script src="__COMMON__/js/Ueditor/lang/zh-cn/zh-cn.js"></script>
+    <link rel="stylesheet" href="__COMMON__/uploadify/common.css"/>
+    <div class="nav">
+        <div class="nav_title">
+            <h4><img class="nav_img" src="__IMG__/tab.gif" /><span class="nav_a">导入sql文件</span></h4>
+        </div>
+    </div>
+    <br/>
+</block>
+<block name="content">
+    注意：在上传的之前，备份好网站的数据库文件，以免上传错误文件会毁坏数据。请确定好上传的文件.<br/>
+    上传文件的格式：sql<br/>
+    <div id="file">
+        <form action="{:U()}" method="post" enctype="multipart/form-data">
+            <input type="file" id="sql_file" />
+       </form>
+    </div>
+    <script src="__COMMON__/uploadify/jquery.uploadify.js"></script>
+    <script>
+        $(function(){
+            $options = {
+                swf:'__COMMON__/uploadify/uploadify.swf',
+                uploader:'{:U("ImportSql/uploadSql")}',
+                buttonText:' 选择文件 ',
+                fileObjName:'file_data',
+                onUploadSuccess:function(file_item,response){
+                    //根据返回的status来判定是否成功
+                    var data = $.parseJSON(response);
+                    if(data.status){
+                        $('#logo').val(data.file_url);
+                        layer.alert(data.msg, {icon: 6});
+                    }else{
+//                        alert(data.msg);
+                        layer.alert(data.msg, {icon: 5});
+                    }
+                },
+            };
+            $('#sql_file').uploadify($options);
+
+
+        });
+    </script>
+
+
+</block>
+

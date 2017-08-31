@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+</head>
+<body>
+<div class="nav">
+	<div class="nav_title">
+    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a">添加子类</span></h4>
+    </div>
+</div>
+
+
+<form name="myform" method="post" action="__SELF__" enctype="multipart/form-data">
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details">
+        <tbody>
+          <!--  <tr>
+	        <td style="border-top:0;"><div align="right">请选择上级：</div></td>
+	        <td style="border-top:0;">
+	          <label for="ad_name"></label>
+	          	<select class="input" name="fid" id="pageid" style="width:360px;">
+	          		<volist name="resone" id="vv">
+	          			<option value="{$vv.id}">{$vv.class_name}</option>
+	          		</volist>	
+	          	</select>
+            </td>
+          </tr>-->
+        
+	      <tr>
+	        <td style="border-top:0;"><div align="right">子类名称：</div></td>
+	        <td style="border-top:0;">
+	          <label for="ad_name"></label>
+	          <input class="input" type="text" name="class_name" id="class_name" style="width:345px;">
+            </td>
+          </tr>
+          
+	      <!-- <tr>
+	        <td><div align="right">广告跳转地址：</div></td>
+	        <td>
+	          <label for="ad_link"></label>
+	          <input class="input" type="text" name="ad_link" id="ad_link" style="width:345px;"> 
+	          100个字符内
+            </td>
+          </tr> -->
+          <tr>
+            <td>&nbsp;</td>
+            <td><button type="submit" class="button" id="button" style="min-width:160px;" onclick="admin_add();">添加子类</button></td>
+          </tr>
+         </tbody>
+  		</table>
+</div>
+</form>
+<script>
+	$("#button").click(function(){
+		var pageid = $("#pageid").val();
+		var page_name = $("#class_name").val();
+		/*if(!pageid){
+			layer.alert('父类不能为空');
+			return false;
+		}*/
+		if(!page_name){
+			layer.alert('子类名称不能为空');
+			return false;
+		}
+		return true;
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!--咨询-->
+<link rel="stylesheet" href="__CSS__/goodsDetail.css?a={:time()}">
+	<dt>商品咨询</dt>
+	<dd>
+		<div class="clearfix put-input">
+			<input type="text" class="fl" name="{$model::$content_d}"/> 
+			<input type="button" 
+				value="我要提问"  onclick="GoodsObj.Consulation(this, '{:U('consulationSubmit')}')" class="fl btn">
+		</div>
+	</dd>
+		<if condition ="!empty($data['data'])">
+			<foreach name="data['data']" key="key" item="value">
+				<dd>
+					<div class="clearfix con-title">
+						<em class="fl"></em>
+						<h2 class="fl">{$value[$model::$content_d]}</h2>
+						<span class="fr">{$value[$model::$addTime_d]|date="Y-m-d H:i:s", ###}</span>
+					</div>
+					<div class="clearfix centent">
+						<em class="fl"></em>
+						<p class="fl">
+							{$value['reply_content']}<span>{$value['reply_time']|date="Y-m-d H:i:s", ###}</span>
+						</p>
+					</div>
+				</dd>
+			</foreach>
+		</if>
+	<dd>
+		<div class="pro-comment_Paging">{$data['page']}</div>
+	</dd>
+	<script>
+    $(".pagination  a").click(function(){
+        var page = $(this).data('p');
+        console.log(page);
+        GoodsObj.ajaxGetGuess('Consultation', page, "{:U('ajaxGetGoodsConsulation')}");
+    });
+</script>

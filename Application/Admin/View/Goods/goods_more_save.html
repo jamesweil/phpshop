@@ -1,0 +1,74 @@
+<extend name="Public/publicHTML"/>
+    <block name="nav">
+        <div class="nav">
+            <div class="nav_title">
+                <h4><img class="nav_img" src="__IMG__/tab.gif" /><span class="nav_a">添加商品类型</span></h4>
+            </div>
+        </div>
+        <br/><br/>
+    </block>
+
+<block name="content">
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/font-awesome.min.css"/>
+    <section class="content">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 商品批量编辑</h3>
+                </div>
+                <div class="panel-body">
+                    <!--表单数据-->
+                    <form method="post" action="{:U('Goods/good_save_post')}" >
+                        <!--通用信息-->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_tongyong">
+
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <volist name="save_data" id="data">
+                                        <input type="hidden" value="{$data.id}" name="goods[{$data.id}][id]">
+                                    <tr>
+                                        <td>商品名称:</td>
+                                        <td>
+                                            <input type="text" value="{$data.title}" name="goods[{$data.id}][title]" class="form-control" style="width:400px;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>设置:</td>
+                                        <td><input type="checkbox"   <if condition="$data.shelves eq 1" >checked='checked'<else/>''</if>
+                                                   class="shelves" value="1" name="goods[{$data.id}][shelves]" /> 上架&nbsp;&nbsp; <input
+                                                type="checkbox"  <if condition="$data.recommend eq 1" >checked='checked'<else/>''</if> class="shelves" value="1"
+                                                name="goods[{$data.id}][recommend]" />推荐&nbsp;&nbsp;</td>
+                                    </tr>
+                                        </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <input type="submit" class="btn btn-primary" data-toggle="tooltip"   data-original-title="保存" value='保存'>
+                        </div>
+                    </form><!--表单数据-->
+                </div>
+            </div>
+        </div>    <!-- /.content -->
+    </section>
+    <script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script>
+    <js href='__COMMON__/js/jquery-1.11.3.min.js'/>
+    <script type='text/javascript'>
+        $(function(){
+            //回显公告状态
+            $('.status').val([{$row.status|default=1}]);
+            //回显公告类型
+            $('.type').val([{$row.type|default=0}]);
+        });
+    </script>
+
+</block>
+
+

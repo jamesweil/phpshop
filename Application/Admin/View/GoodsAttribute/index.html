@@ -1,0 +1,50 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<div class="wrapper">
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-list"></i> 商品属性</h3>
+        </div>
+        <div class="panel-body">
+          <div class="navbar navbar-default">
+              <form action="" id="searchForm"  url="{:U('ajaxGetData')}" class="navbar-form form-inline" method="post" onsubmit="return false">
+                <div class="form-group">
+                  <select name="{$model::$typeId_d}" id="type_id" class="form-control">
+                    	<option value="">所有分类</option>
+                        <foreach name="parentClassData" item="v" key="k" >
+                           <option value="{$k}">{$v}</option>
+		        		</foreach>
+                   </select>
+                </div>                  
+                <div class="form-group">                 
+	                <button type="submit" onclick="selectTool.ajaxGetList('searchForm', 1, 'ajaxReturn')" id="button-filter" class="btn btn-primary pull-right">
+	                 <i class="fa fa-search"></i> 筛选
+	                </button>
+                </div>
+                <button type="button" onclick="Tool.alertEdit('{:U('addGoodsAttribute')}', '添加属性', 850, 600)" class="btn btn-primary pull-right">
+                 <i class="fa fa-plus"></i> 添加属性
+                </button>
+              </form>
+          </div>
+          <div id="ajaxReturn"> </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row --> 
+  </section>
+  <!-- /.content --> 
+</div>
+<!-- /.content-wrapper --> 
+<script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script>
+<script type="text/javascript" src="__JS__/goods/attribute.js?a={:time()}"></script> 
+<script>
+selectTool.ajaxGetList("searchForm", 1, 'ajaxReturn');
+</script> 
+</block>

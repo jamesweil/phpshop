@@ -1,0 +1,84 @@
+<extend name="Public/indexEdit"/>
+
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	
+		<div class="details_con">
+			<!-- 商品菜单 -->
+			<div class="details_con_center">
+				<div class="details_con_position">
+					当前位置：<i>首页</i> <span>></span> <i>商品列表</i>
+				</div>
+				<div class="details_con_menu">
+					<dl class="clearfix">
+						<dt class="fl">商品分类：</dt>
+						<foreach name="classData['pData']" key='key' item='value'>
+							<dd class="fl">
+								<a href="{:U('Goods/goods', array('class_id' => $value['id']))}">{$value.class_name}</a>
+							</dd>
+						</foreach>
+					</dl>
+					<dl class="clearfix">
+						<dt class="fl">二级分类：</dt>
+						<foreach name="classData['children']" key='key' item='value'>
+							<dd class="fl">
+								<a href="{:U('Goods/goods', array('class_id' => $value['id']))}">{$value.class_name}</a>
+							</dd>
+						</foreach>
+					</dl>
+					<dl class="clearfix">
+						<dt class="fl">价格区间：</dt>
+						<dd class="fl">
+							<a href="{:U('Index/goods')}?price=1&class_id={$_GET['class_id']}">100元以下</a>
+						</dd>
+						<dd class="fl">
+							<a href="{:U('Index/goods')}?price=2&class_id={$_GET['class_id']}">100-500元</a>
+						</dd>
+						<dd class="fl">
+							<a href="{:U('Index/goods')}?price=3&class_id={$_GET['class_id']}">500-1000元</a>
+						</dd>
+						<dd class="fl">
+							<a href="{:U('Index/goods')}?price=4&class_id={$_GET['class_id']}">1000元以上</a>
+						</dd>
+					</dl>
+					<dl class="clearfix">
+						<dt class="fl">关键词：</dt>
+						<form action="__SELF__" method="post">
+							<dd class="fl"><input type="text" name="title" value="{$Think.post.title}"></dd>
+							<dd class="fl"><input type="button" value="搜索" onclick="javascript:$('form').submit();"></dd>
+							<dd class="fl"><input type="button" value="刷新" onclick="chongzhi()"></dd>
+						</form>
+					</dl>
+				</div>
+				<!-- 商品列表 -->
+				<div class="details_con_list">商品列表</div>
+				<div class="details_con_commodity">
+					<ul class="clearfix">
+						<if condition="!empty($result['result'])">
+							<foreach name="result.result" item="vo">
+								<li class="fl">
+									<a href="{:U('Goods/goods_details')}?id={$vo.id}">
+										<div class="groundfloor_con_img">
+											<img src="{$vo.pic_url}" alt="{$vo.title}" width="130" height="130">
+										</div>
+										<p>【{$vo.title}】</p>
+										<p>{$vo.description}</p>
+										<p>￥{$vo.price_old}</p>
+									</a>
+								</li>
+							</foreach>
+						</if>
+					</ul>
+					{$result.page}
+				</div>
+			</div>
+		</div>
+</section>
+<script>
+function chongzhi(){
+	window.location.href = window.location.href;
+}
+</script>
+</block>

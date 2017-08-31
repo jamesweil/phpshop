@@ -1,0 +1,18 @@
+<div class="guessYouLike1 clearfix">
+	<h4 class="fl">猜你喜欢</h4>
+	<span class="fr clearfix"  onclick="GoodsObj.changeFor('guess', {$page})">换一换</span>
+</div>
+<if condition="!empty($data)">
+	<ul class="guessYouLike2" id="addGuess">
+		<foreach name="data" key ='key' item="value">
+			<li class="fl">
+				<div class="like2-img">
+					<a href="{:U('goodsDetails', array($goodsModel::$id_d => $value[$goodsModel::$id_d]))}"><img height="100" width="100" src="{$value[$goodsImages::$picUrl_d]}" alt=""></a>
+				</div>
+				<p>{$value[$goodsModel::$title_d]}</p>
+				<span>(已有2人评论)</span>
+				<i>￥<if condition="!empty($_SESSION['user_d'])">{$value[$specModel::$preferential_d]}<else/>{$value[$specModel::$price_d]}</if></i>
+			</li>
+		</foreach>
+	</ul>
+</if>

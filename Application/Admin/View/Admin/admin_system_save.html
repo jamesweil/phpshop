@@ -1,0 +1,69 @@
+<extend name="Public/publicHTML"/>
+<block name="content">
+    <link rel="stylesheet" type="text/css" href="__CSS__/checkbox_css/SimpleSwitch.css"/>
+    <script type="text/javascript" src="__JS__/checkbox_js/SimpleSwitch.min.js"></script>
+    <div class="list">
+        <form id="my_form">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details">
+
+                <tbody>
+                <tr>
+                    <td>
+                        <div align="right">开启短信：</div>
+                    </td>
+                    <td>
+                        <select class="select" name='config[{$sms_open.id}]'>
+                            <option
+                            <if condition="$sms_open.status == '0'"> selected</if>
+                            value= '0' >不开启</option>
+                            <option
+                            <if condition="$sms_open.status == '1'"> selected</if>
+                            value="1">华信</option>
+                            <option
+                            <if condition="$sms_open.status == '2'"> selected</if>
+                            value="2">阿里大于</option>
+                        </select>
+                    </td>
+                </tr>
+                <foreach name="config" item="value">
+                    <tr>
+                        <td>
+                            <div align="right">{$value.check_title}：</div>
+                        </td>
+                        <td>
+                            <!--<input type="checkbox" name="my-checkbox" class="" data-type="simple-switch" size="24" style="margin-top:-20px;" />-->
+                            <span style="margin-left:20px;color: red;">关闭:</span>
+                            <input type="radio" class="input" name="config[{$value.id}]"
+                            <if condition="$value.status == '0'">checked</if>
+                            value="0">
+                            <span style="margin-left:20px;color: green;">开启:</span>
+                            <input type="radio" class="input" name="config[{$value.id}]"
+                            <if condition="$value.status == '1'">checked</if>
+                            value="1">
+                        </td>
+                    </tr>
+                </foreach>
+                </tbody>
+            </table>
+        </form>
+
+    </div>
+    <div class="footer">
+        <button type="button" class="button" id="button" style="min-width:160px;" onclick="config_save_mysql();">确 认
+        </button>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('config_check').val() == 1) {
+                $('._simple-switch-track').addClass('_simple-switch-track on');
+                $('._simple-switch-track').removeClass('._simple-switch-track');
+            }
+        })
+
+        var ADMIN_ADD_USER = "{:U('admin_system_save')}";
+    </script>
+    <script type="text/javascript">
+        SimpleSwitch.init();
+    </script>
+    <script type="text/javascript" src="__JS__/admin/adminAdd.js"></script>
+</block>

@@ -1,0 +1,679 @@
+<include file="Public/indexPublic"/>
+<include file="Cart/top2"/>
+
+
+<div class="conrm-section w">
+    <div class="thisPon">
+        <div class="ponState clearfix">
+            <span class="fl one">1</span>
+            <span class="fl two">2</span>
+            <span class="fl three active">3</span>
+        </div>
+        <div class="ponTitle clearfix">
+            <i class="fl l">我的购物车</i>
+            <i class="fl c">确认订单信息</i>
+            <i class="fl r active">成功提交订单</i>
+        </div>
+    </div>
+    <!--填写核对订单信息-->
+    <div class="orInfio">
+        <h2 class="t">填写并核对订单信息</h2>
+        <ul class="detailed">
+            <li class="receipt">
+                <div class="clearfix receiptCh">
+                    <h6 class="fl">收货人信息</h6>
+                    <a href="javascript:;" class="fr">新增加收货地址</a>
+                </div>
+
+                <foreach name="addr_list" item="addr">
+                    <div id="chose_address_id" data-id="{$addr['id']}" class="consignee-item clearfix" <if condition="$addr['status'] neq 1">style="display:none"</if> >
+                        <div class="fl <if condition="$addr['status'] eq 1">active<else />place</if> " onclick="chose_address(this)">
+                            {$addr['alias']|default=$addr['realname']}
+                            <em></em>
+                        </div>
+                        <span class="fl">{$addr['realname']}</span>
+                        <span class="fl ed"> {$addr['addr_alone']} </span>
+                        <span class="fl">{$addr['mobile']}</span>
+                        <a href="javascript:;" class="fr">编辑</a>
+                    </div>
+                </foreach>
+                <div class="addr-switch switch-on" id="consigneeItemAllClick" onclick="show_consignee_all(this)">
+                    <span>更多地址</span><b></b>
+                </div>
+            </li>
+            <li class="distribution">
+                <h6>配送方式</h6>
+                <div class="payment clearfix">
+
+                <foreach name="carry" item="vo" key="k">
+                    <span  class="fl" data-discount="{$vo['discount']}" data-id="{$vo['id']}">{$vo['name']}<em></em></span>
+                </foreach>
+                </div>
+            </li>
+
+            <li class="confirm">
+                <div class="clearfix titPart">
+                    <h6 class="fl">确认订单信息</h6>
+                    <a href="javascript:history.back(-1);" class="fr">返回修改购物车</a>
+                </div>
+                <div class="payment clearfix">
+                    <div class="subject clearfix">
+                        <span class="fl ition">商品信息</span>
+                        <span class="fl atte">商品属性</span>
+                        <span class="fl price">积分</span>
+                        <span class="fl number">数量</span>
+                        <span class="fl sual">小计(积分/金额)</span>
+                    </div>
+
+                    <foreach name="goods_list" item="vo">
+                        <div class="paymentCon clearfix" data-id="{$vo['cart_id']}">
+                            <div class="con-parent clearfix fl">
+                                <a href="javascript:;" class="fl">
+                                    <img src="{$vo['pic_url']}">
+                                </a>
+                                <div class="fl ition" style="padding-left: 10px;">
+                                    <h5>{$vo['title']}</h5>
+                                    <a href="javascript:;">{$vo['description']}</a>
+                                </div>
+                            </div>
+                            <div class="fl atte">
+                            <if condition="empty($vo['spec'])">
+                                {$vo['title']}
+                            <else />
+                                <foreach name="vo['spec']" item="spec_item">
+                                    {$spec_item['name']}:{$spec_item['item']}<br>
+                                </foreach>
+                            </if>
+                            </div>
+                            <div class="fl price">{$vo['integral']}</div>
+                            <div class="fl number">{$vo['goods_num']}</div>
+                            <div class="fl sual">{$vo['goods_num'] * $vo['integral']}/{$goods_info['total_money']}</div>
+                        </div>
+                    </foreach>
+
+                    <!--配送方式-->
+                    <div class="ditrnMode">
+                        配送方式：{$carry[0]['carry_title']}
+                    </div>
+                    <!--订单备注-->
+                    <div class="rderNote clearfix">
+                        <span class="fl">添加订单备注：</span>
+                        <input type="text" class="fl" placeholder="提示：请勿填写有关支付、收货、发票方面的信息">
+                        <em class="fl"> 提示：请勿填写有关支付、收货、发票方面的信息</em>
+                    </div> 
+                </div>
+            </li>
+            <!--发票信息-->
+            <li class="iceInion">
+                <h6>发票信息</h6>
+                <div class="whether">
+                    <span>不开发票</span><a href="javascript:;">修改</a>
+                </div>
+            </li>
+        </ul>
+        <div class="atmoney">
+            <p><b>{$goods_info['count']}</b>&nbsp;件商品，总商品金额：积分 {$goods_info['total']},金额￥: {$goods_info['total_money']}</p>
+            <p class="yunfei">运费：￥0</p>
+            <!--<p>运费：￥{$goods_carry}</p>-->
+        </div>
+        <div class="total">
+            <p class="one">
+                <span>应付总额：</span> 
+                <b class="total_money" data-id="{$pay_nubmer}">￥{$pay_nubmer}</b>
+            </p>
+            <p class="two">寄送至：{$addr_default['addr_alone']} &nbsp; &nbsp;收货人：{$addr_default['realname']} &nbsp; &nbsp;{$addr_default['mobile']}</p>
+        </div>
+        <div class="randbtn clearfix">
+            <input type="button" value="提交订单" class="fr" onclick="return confirm()">
+            <a href="javascript:history.back(-1);" class="fr">返回购物车</a>
+        </div>
+    </div>
+</div>
+
+<!--地址编辑and新建-->
+<div class="ui-dialog">
+    <div class="ui-dialog-child"></div>
+    <div class="consignee">
+        <div class="ui-dialog-title clearfix">
+            <span class="fl">新增收货人信息</span>
+            <a href="javascript:;" class="fr"></a>
+        </div>
+        <div class="inPtn">
+            <p class="clearfix">
+                <span class="fl"><i>*</i> 收货人：</span>
+                <input type="text" class="fl itxt" id="realname">
+            </p>
+            <p class="clearfix">
+                <span class="fl"><i>*</i> 所在地区：</span>
+                <select name="province" id="prov"></select>
+                <select name="city" id="city"></select>
+                <select name="area" id="area"></select> 
+            </p>
+            <p class="clearfix">
+                <span class="fl"><i>*</i> 详细地址：</span>
+                <input type="text" class="fl itxt" id="address">
+            </p>
+            <p class="clearfix">
+                <span class="fl"><i>*</i> 手机号码：</span>
+                <input type="text" class="fl itxt" id="mobile">
+            </p>
+            <p class="clearfix">
+                <span class="fl">地址别名：</span>
+                <input type="text" class="fl itxt" id="alias">
+            </p>
+            <p class="clearfix">
+                <span class="fl">邮政编码：</span>
+                <input type="text" class="fl itxt" id="zipcode">
+            </p>
+            <input id="address_change_type" type="submit" class="submit" value="保存收货人信息" onclick="return address_change(this)">
+        </div>
+    </div>
+</div>
+
+<script src="__JS__/header.js"></script>
+<script type="text/javascript">
+
+    /**
+     * 显示所有的收货人
+     */
+    function show_consignee_all(ele) {
+
+        var close_css = '', open_css='';
+        if ($(ele).hasClass('switch-off')) { // 点击了关闭
+            close_css = 'switch-off';
+            open_css  = 'switch-on';
+
+            // 将选中对象移动到第一个位置
+            $(ele).siblings('.consignee-item').each(function(index, obj){
+                var div = $(obj).find('div');
+                if (div.hasClass('active')) {
+                    $(obj).css('display', 'block');
+                    $(ele).siblings('.receiptCh').after($(obj).prop("outerHTML"));
+                    $(obj).remove();
+                    return true;
+                }
+
+                $(obj).css('display', 'none');
+            });
+
+        } else { // 点击了打开
+            close_css = 'switch-on';
+            open_css  = 'switch-off';
+
+            $(ele).siblings('.consignee-item').each(function(index, obj){
+                if (index == 0) {
+                    return true;
+                }
+                if ($(obj).css('display') == 'none') {
+                    $(obj).css('display', 'block');
+                } else {
+                    $(obj).css('display', 'none');
+                }
+            })
+        }
+
+        $(ele).removeClass(close_css);
+        $(ele).addClass(open_css);
+
+    }
+
+    /**
+     * 选择收货人地址
+     */
+    function chose_address(ele) {
+        $(ele).parent().siblings('.consignee-item').each(function(index, obj) {
+            var div = $(obj).find('div');
+            if (div.hasClass('active')) {
+                div.removeClass('active');
+                div.addClass('place');
+            }
+        });
+        $(ele).removeClass('place');
+        $(ele).addClass('active');
+        render_total(ele);
+    }
+
+    /**
+     * 收货地址
+     */
+    function find_address(ele, target) {
+        var href = "{:U('/Home/UserAddress/find')}";
+        var addr_id = $(ele).parent().attr('data-id');
+        $.ajax({
+            url:href,
+            type:'POST',
+            data:{'addr_id':addr_id},
+            success: function(data){
+                if (data && target) {
+                    target(data);
+                }
+            }
+        })
+    }
+
+
+    /**
+     * 渲染对话框
+     * @param  {array} data 数据
+     * @param  {integer} type 行为:1.添加 2.编辑
+     */
+    function render_dialog(data, type) {
+        if (data.length < 1) {
+            data = {
+                id: '',
+                title:'新增收货地址',
+                realname:'',
+                prov: '',
+                city: '',
+                dist: '',
+                address: '',
+                mobile: '',
+                alias: '',
+                zipcode: ''
+            };
+        }
+
+        var dialog = $('.ui-dialog');
+        dialog.find('.ui-dialog-title span').html(data.title);
+        var field = dialog.find('.inPtn p');
+
+        // 名字
+        field.eq(0).find('input').val(data.realname);
+
+        // 地址
+        var sel = field.eq(1).find('select');
+        sel.empty();
+        if (type == 2) {
+            sel.each(function(index, ele) {
+                var name = $(ele).attr('name')
+                if (name.length < 0) {return true;}
+                switch(name) {
+                    case 'province': 
+                        region_find(0, ele, data.prov);
+                    break;
+                    case 'city':
+                        region_find(data.prov, ele, data.city);
+                    break;
+                    case 'area': 
+                        region_find(data.city, ele, data.area);
+                    break;
+                }
+            });
+        } else {
+            region_find(0, sel[0], 0);
+        }
+
+        // 详细地址
+        field.eq(2).find('input').val(data.address);
+
+        // 手机
+        field.eq(3).find('input').val(data.mobile);
+
+        // 别名
+        field.eq(4).find('input').val(data.alias);
+
+        // 邮编
+        field.eq(5).find('input').val(data.zipcode);
+
+        // 新增 || 编辑
+        $('#address_change_type').attr('data-type', type);
+        $('#address_change_type').attr('data-id', data.id);
+    }
+
+
+    /**
+     * 地址提交
+     */
+    function address_change(obj) {
+        var field = $(obj).parent().find('p');
+        var data  = {};
+        data.id   = $(obj).attr('data-id');
+
+        // 名字
+        data.realname = field.eq(0).find('input').val();
+        if (data.realname == null || data.realname.length < 1) {
+            layer.tips('名字必填', '#realname');
+            return false;
+        }
+
+        // 地址
+        var vali = true;
+        field.eq(1).find('select').each(function(index, ele) {
+            var name = $(ele).attr('name')
+            switch(name) {
+                case 'province': 
+                    data.prov = $(ele).val();
+                    data.prov_name = $(ele).find("option:selected").text();
+                    if (data.prov == null || data.prov.length < 1) {
+                        layer.tips('国家必填', '#prov');
+                        vali = false
+                        return false;
+                    }
+                break;
+                case 'city': 
+                    data.city = $(ele).val();
+                    data.city_name = $(ele).find("option:selected").text();
+                    if (data.city == null || data.city.length < 1) {
+                        layer.tips('城市必填', '#city');
+                        vali = false
+                        return false;
+                    }
+                break;
+                case 'area': 
+                    data.dist = $(ele).val();
+                    data.dist_name = $(ele).find("option:selected").text();
+                    if (data.dist == null || data.dist.length < 1) {
+                        layer.tips('区域必填', '#dist');
+                        vali = false
+                        return false;
+                    }
+                break;
+            }
+        });
+        if (!vali) {
+            return false;
+        }
+
+        // 详细地址
+        data.address = field.eq(2).find('input').val();
+        if (data.address == null || data.address.length < 1) {
+            layer.tips('详细地址必填', '#address');
+            return false;
+        }
+
+        // 手机
+        data.mobile  = field.eq(3).find('input').val();
+        var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/; 
+        if(!myreg.test(data.mobile)) { 
+            layer.tips('请正确填写手机号', '#mobile');
+            return false; 
+        } 
+
+        // 别名
+        data.alias   = field.eq(4).find('input').val();
+        if (data.alias.length < 1) {
+            data.alias = data.realname;
+        }
+
+        // 邮编
+        data.zipcode = field.eq(5).find('input').val();
+
+        var href = "{:U('/Home/UserAddress/addReceiveAddress')}";
+        var act  = $(obj).attr('data-type');
+        if (act == 2) {
+            href = "{:U('/Home/UserAddress/editAddress')}";
+        }
+        $.ajax({
+            url: href,
+            data: data,
+            type: 'POST',
+            success: function(ret) {
+                if (ret.status != 1) {
+                    layer.msg('编辑失败');
+                    return false;
+                }
+
+                (act == 1) ? data.id = ret.data : true;
+                $('.ui-dialog').removeClass('active');
+                change_address_list(data, parseInt(act));
+            }
+        });
+        return false;
+    }
+
+    /**
+     * 修改收货地址列表
+     * @param  {array} data
+     * @param  {integer} type: 1.添加 2.修改
+     */
+    function change_address_list(data, type) {
+        var obj = null;
+        var receipt = $('.orInfio .detailed li.receipt');
+        switch(type) {
+            case 1:
+                obj = '<div class="consignee-item clearfix"><div class="fl" onclick="chose_address(this)"></div><span class="fl"></span><span class="fl ed"></span><span class="fl"></span><a href="javascript:;" class="fr">编辑</a></div>';
+
+                // 清空样式,添加当前样式
+                var item = receipt.find('.consignee-item');
+                if (item.length > 0) {
+                    item.each(function(index, ele){
+                        if ($(ele).find('div').hasClass('active')) {
+                            $(ele).find('div').removeClass('active');
+                            $(ele).find('div').addClass('place');
+                        }
+                    });
+                    item.eq(0).before(obj);
+                } else {
+                    receipt.find('div').eq(0).after(obj);
+                }
+                obj = receipt.find('.consignee-item').eq(0);
+            break;
+            case 2:
+                var consignee = $(receipt).find('.consignee-item');
+                $(consignee).each(function(index, item) {
+                    if ($(item).attr('data-id') == data.id) {
+                        obj = item;
+                        return false;
+                    }
+                });
+            break;
+        }
+
+        $(obj).attr('data-id', data.id);
+        $(obj).find('div').html(data.alias+'<em></em>');
+        $(obj).find('span').eq(0).text(data.realname);
+        var address = data.prov_name+data.city_name+data.dist_name+data.address;
+        $(obj).find('span').eq(1).text(address);
+        $(obj).find('span').eq(2).text(data.mobile);
+
+        var ele = (obj).find('div');
+        render_total(ele);
+    }
+
+
+    /**
+     * 渲染订单信息
+     */
+    function render_total(consignee) {
+        consignee = $(consignee).parent();
+        var realname = $(consignee).find('span').eq(0).text();
+        var address  = $(consignee).find('span').eq(1).text();
+        var mobile   = $(consignee).find('span').eq(2).text();
+        var orInfio  = $('.orInfio .total .two');
+        orInfio.text('寄送至：'+address+' 收货人：'+realname+' '+mobile);
+    }
+
+
+    /**
+     * 快递选择
+     */
+    function chose_carry(ele) {
+        var text  = $(ele).text();
+        var carry = $('.orInfio .detailed .confirm .payment .ditrnMode')
+        carry.text('快递方式：'+text);
+    }
+
+
+    /**
+     * 提交订单
+     */
+    function confirm() {
+        // 收货人
+        var consignee_id = 0;
+        var items = $('.orInfio .receipt .consignee-item');
+        items.each(function(index, ele) {
+            if ($(ele).find('div').hasClass('active')) {
+                consignee_id = $(ele).attr('data-id');
+                return true;
+            }
+        });
+
+        // 支付方式
+        var pay_id = 0;
+        var pay_type = $('.orInfio .receipt .method .payment span');
+        pay_type.each(function(index, ele) {
+            if ($(ele).hasClass('active')) {
+                pay_id = $(ele).attr('data-id');
+                return true;
+            }
+        });
+
+        // 配送方式
+        var carry_id = 0;
+        var carry_type = $('.orInfio .receipt .distribution div span');
+        carry_type.each(function(index, ele){
+            if ($(ele).hasClass('active')) {
+                carry_id = $(ele).attr('data-id');
+                return true;
+            }
+        });
+
+        // 购物车ID
+        var cart_ids = '';
+        var goods    = $('.orInfio .detailed .confirm .paymentCon');
+        goods.each(function(index, ele) {
+            cart_ids += ','+$(ele).attr('data-id');
+        });
+        cart_ids = cart_ids.substring(1);
+        
+        // 订单留言
+        var message = $('.orInfio .detailed .confirm .payment .rderNote input').val();
+
+        // 发票信息
+        // TODO:发票信息
+        $data = {
+            'address_id':consignee_id,
+            'carry_type':carry_id,
+            'cart_id':cart_ids
+        }
+
+        // 提交订单
+        var href = "{:U('pay')}";
+        StandardPost(href, $data);
+        return false;
+    }
+
+
+    function StandardPost(url,args) {
+        var form = $("<form method='post'></form>");
+        form.attr({"action":url});
+        for (arg in args) {
+            var input = $("<input type='hidden'>");
+            input.attr("name", arg);
+            input.val(args[arg]);
+            form.append(input);
+        }
+        $(document.body).append(form);
+        form.submit();
+    }
+
+
+    /**
+     * 请求区域地址
+     * @param  {integer} region_id 区域id
+     * @param  {object}  select    对象
+     * @param  {integer} select_id 选中id
+     * @return {null}
+     */
+    function region_find(region_id, select, select_id) {
+        var url = "{:U('/Home/UserAddress/region')}";
+        $.get(url, {region:region_id}, function(ret) {
+            if (!ret) {
+                layer.msg('地址信息获取失败');
+                return false;
+            }
+
+            var sel = $(select);
+            sel.empty();
+            $.each(ret, function(index, data) {
+                var option = $('<option>').val(data.id).text(data.name);
+                if (data.id == select_id) {
+                    option.attr('selected', true);
+                }
+                sel.append(option);
+            });
+            if (select_id == 0) {
+                sel.trigger('change');
+            }
+        });
+    }
+
+$(function(){
+
+    // 支付方式选择
+    $('.conrm-section .orInfio .detailed li.method .payment span').on('click',function() {
+        $('.conrm-section .orInfio .detailed li.method .payment span').removeClass('active').eq($(this).index()).addClass('active');
+    });
+
+    // 配送方式选择
+    $('.conrm-section .orInfio .detailed li.distribution .payment span').on('click',function(){
+
+        //新增,判断是否选择收货地址
+        var addressId = $('#chose_address_id').attr('data-id');
+        if(addressId === undefined){
+            layer.msg('请先选择收货地址');
+        }else{
+            var data = {};
+            data['id'] = $(this).attr('data-id');
+            data['addressId'] = addressId;
+            data['discount'] = $(this).attr('data-discount');
+            var _this = $(this);
+            //查询运费
+            $.post("{:U('sumFreight')}",data,function(e){
+                if(e.status == 1){
+                    $('.conrm-section .orInfio .detailed li.distribution .payment span').removeClass('active').eq($(_this).index()).addClass('active');
+                    var item = $('.orInfio .confirm .payment .ditrnMode');
+
+                    var total_money = $('.total_money').attr('data-id');
+                    item.text('配送方式：' + $(this).text());
+                    $('.yunfei').text('运费：￥ '+e.data.money);
+                    total_money = parseFloat(total_money) + parseFloat(e.data.money);
+                    $('.total_money').text('￥ '+total_money);
+                }else{
+                    layer.msg(e.message);
+
+                }
+            })
+        }
+
+    });
+
+    // 新增收货地址
+    $('.orInfio .detailed .receipt .receiptCh a').on('click',function(){
+        $('.ui-dialog').addClass('active');
+        render_dialog([], 1);
+    });
+
+    // 编辑地址
+    $('.orInfio .detailed .receipt').on('click', '.consignee-item a', function(){
+        find_address(this, function(data){
+            render_dialog(data, 2);
+        });
+
+        $('.ui-dialog').addClass('active');
+    });
+
+    // 关闭对话框
+    $('.ui-dialog .consignee .ui-dialog-title a').on('click',function(){
+        $('.ui-dialog').removeClass('active');
+    });
+
+    // 地址选择,有限获取顶级数据
+    var area = $('.ui-dialog .inPtn p').eq(1).find('select');
+    area.on('change', function(){
+        var index  = $(this).index();
+        var select = area[index];
+
+        if (select) {
+            region_find($(this).val(), select, 0);
+            $.each(area, function(sort, ele) {
+                if (sort > (index-1)) {
+                    $(ele).empty();
+                }
+            });
+        }
+    });
+});
+</script>
+
+<include file="Public/indexFooter"/>

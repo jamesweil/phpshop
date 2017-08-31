@@ -1,0 +1,58 @@
+<div class="subject clearfix">
+	<span class="fl ition">商品信息</span> <span class="fl atte">商品属性</span> <span
+		class="fl price">单价</span> <span class="fl number">数量</span> <span
+		class="fl dint">优惠方式</span> <span class="fl sual">小计</span>
+</div>
+<if condition="!empty($goodsSpec)"> <php>$price = 0;</php> <php>$number
+= 0;</php> <foreach name="goodsSpec" key='key' item='value'> <php>$number
+= !empty($_POST['goods_num']) ? $_POST['goods_num'] :
+$value[$cartModel::$goodsNum_d];</php>
+<div class="paymentCon clearfix">
+	<div class="con-parent clearfix fl">
+		<a href="javascript:;" class="fl position-parent"> <img
+			src="{$value[$goodsImage::$picUrl_d]}">
+		</a>
+		<div class="fl ition">
+			<input type="hidden"
+				name="goods_id[{$value[$goodsModel::$id_d]}][goods_price]"
+				value='<if condition="!empty($value[$goodsModel::$priceMember_d])"><php> echo $price = $value[$goodsModel::$priceMember_d]; </php><else/><php> echo $price = $value[$cartModel::$priceNew_d]; </php></if>' />
+			<if condition="!empty($value['cart_id'])"> <input type="hidden"
+				name="cart_id[]" value="{$value['cart_id']}" /> </if>
+			<input type="hidden"
+				name="goods_id[{$value[$goodsModel::$id_d]}][goods_id]"
+				value="{$value[$goodsModel::$id_d]}" /> <input type="hidden"
+				name="goods_id[{$value[$goodsModel::$id_d]}][goods_num]"
+				value="{$number}" /> <a href="javascript:;">{$value[$goodsModel::$description_d]}</a>
+		</div>
+	</div>
+	<div class="fl atte">{$value[$specModel::$key_d]}</div>
+	<div class="fl price">{$price}</div>
+	<div class="fl number">{$number}</div>
+	<div class="fl dint">
+		暂无 
+	</div>
+	<div class="fl sual" id="sslh">{$price}</div>
+</div>
+</foreach> <volist name="gifts_data" id="gift">
+<div class="paymentCon clearfix">
+	<div class="con-parent clearfix fl">
+		<a href="javascript:;" class="fl position-parent"> <img
+			src="{$gift.img_url}"> <span class="icon">赠品</span>
+		</a>
+		<div class="fl ition">
+			<a href="javascript:;">{$gift.title}</a>
+		</div>
+	</div>
+	<div class="fl atte">{$gift.new_type}</div>
+	<div class="fl price">{$gift.price}.00</div>
+	<div class="fl number">{$gift.gift_number}</div>
+	<div class="fl dint">{$gift.discount}</div>
+	<div class="fl sual" id="sslh">{$gift.Subtotal}.00</div>
+</div>
+</volist> </if>
+<!--订单备注-->
+<div class="rderNote clearfix">
+	<span class="fl">添加订单备注：</span> <input type="text" class="fl"
+		name="{$orderModel::$remarks_d}" placeholder="提示：请勿填写有关支付、收货、发票方面的信息">
+	<em class="fl"> 提示：请勿填写有关支付、收货、发票方面的信息</em>
+</div>

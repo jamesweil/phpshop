@@ -1,0 +1,91 @@
+<extend name="Public/publicHTML" />
+<block name="nav">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<script src="__COMMON__/bootstrap/js/bootstrap.min.js"></script> <br />
+</block>
+<block name="content">
+<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i>运费模板列表
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="navbar navbar-default">
+					<form action="{:U('goods_list')}" id="search"
+						class="navbar-form form-inline" method="get">
+						<div class="form-group">
+							<label class="control-label" for="input-order-id">关键词</label>
+							<div class="input-group">
+								<input type="text" name="" value="" placeholder="搜索词"
+									id="input-order-id" class="form-control">
+							</div>
+						</div>
+						<!--排序规则-->
+						<button type="submit" id="button-filter search-order"
+							onclick="javascript:$('#search').submit();"
+							class="btn btn-primary">
+							<i class="fa fa-search"></i> 筛选
+						</button>
+						<button type="button"
+							onclick="location.href='{:U('addSiteHtml')}'"
+							class="btn btn-primary pull-right">
+							<i class="fa fa-plus"></i>添加站点
+						</button>
+					</form>
+				</div>
+				<div id="ajax_return">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<foreach name="tableTitile" key="key" item="value">
+										<th class="sorting text-left">{$value}</th>
+									</foreach>
+									<th class="sorting text-left">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<if condition="!empty($data)"> <foreach
+									name="data" item="row">
+								<tr>
+									<td class="text-left">{$row[$model::$id_d]}</td>
+										<td class="text-left">{$row[$model::$ipAddress_d]}</td>
+									<td class="text-left">{$row[$regionModel::$name_d]}</td>
+									<td class="text-left">{$row[$model::$siteName_d]}</td>
+									<td class="text-left">{$row[$model::$url_d]}</td>
+									
+									<td class="text-left shelves-one"><php> if
+										($row[$model::$status_d] == 1) {</php> <img
+										src="__COMMON__/img/yes.png" onclick="" class="cursor"
+										data-flag="true" /> <php>} else {</php> <img
+										src="__COMMON__/img/cancel.png" onclick="" class="cursor"
+										data-flag="false" /> <php>}</php></td>
+									<td class="text-left">{$row[$model::$createTime_d]|date="Y-m-d",###}</td>
+									<td class="text-left">{$row[$model::$updateTime_d]|date="Y-m-d",###}</td>
+									<td class="text-left shelves-one"><php> if
+										($row[$model::$def_d] == 1) {</php> <img
+										src="__COMMON__/img/yes.png" onclick="" class="cursor"
+										data-flag="true" /> <php>} else {</php> <img
+										src="__COMMON__/img/cancel.png" onclick="" class="cursor"
+										data-flag="false" /> <php>}</php></td>
+									<td class="text-left"><a
+										href="{:U('modifyGoods', array($model::$id_d => $row[$model::$id_d]))}"
+										class="btn btn-primary">编辑</a><input type="button"
+										class="btn btn-danger del_btn confirm_btn" data-id="{$row.id}"
+										data-toggle="modal" data-target="#myModal" value="删除" /></td>
+								</tr>
+								</foreach> </if>
+							</tbody>
+						</table>
+						<div class="page"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script src="__COMMON__/js/alert.js"></script> <script
+	src="__JS__/express/express.js"></script> </block>

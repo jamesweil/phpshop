@@ -1,0 +1,235 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link href="__COMMON__/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="__COMMON__/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
+<link href="__COMMON__/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__COMMON__/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__COMMON__/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+
+<div class="wrapper">
+<section class="content ">
+    <!-- Main content -->
+    <div class="container-fluid">
+        <div class="pull-right">
+            <a href="javascript:history.go(-1)" data-toggle="tooltip" title=""
+                class="btn btn-default" data-original-title="返回"><i
+                class="fa fa-reply"></i></a> 
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-list"></i> 编辑最佳组合
+                </h3>
+            </div>
+            <div class="panel-body ">
+                <!--表单数据-->
+                <form method="post" id="promotion">
+                    <!--通用信息-->
+                    <div class="tab-content col-md-10">
+                        <div class="tab-pane active" id="tab_tongyong">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>选择商品:</td>
+                                        <td>
+                                        <a class="btn btn-primary" href="javascript:void(0);" onclick="Tool.selectGoods('{:U('searchGoods',['eleID'=>'goods_list', 'pid'=>1])}')"><i class="fa fa-search"></i>添加商品</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="form-group">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="display: none">选择</th>
+                                                            <th class="text-left">商品名称</th>
+                                                            <th class="text-left">价格</th>
+                                                            <th class="text-left">库存</th>
+                                                            <th class="text-left">操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="goods_list">
+                                                    <if condition="!empty($info)">
+                                                        <tr>
+                                                            <td style="display: none">
+                                        <input type="hidden" name="goods_id" checked="checked" value="{$info['goods_id']}" />
+                                                            </td>
+                                                            <td class="text-left">{$info.title}</td>
+                                                            <td class="text-left">{$info.price_member}</td>
+                                                            <td class="text-left">{$info.stock}</td>
+                                                            <td class="text-left">
+                                    <a href="javascript:void(0)" onclick="javascript:$(this).parent().parent().remove();">删除</a>
+                                                            </td>
+                                                        </tr>
+                                                    </if>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>组合列表：</td>
+                                        <td>
+                                        <a class="btn btn-primary" href="javascript:void(0);" onclick="sub_list(this)"><i class="fa fa-search"></i>选择组合</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="form-group">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="display: none">选择</th>
+                                                            <th class="text-left">商品名称</th>
+                                                            <th class="text-left">价格</th>
+                                                            <th class="text-left">库存</th>
+                                                            <th class="text-left">操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="sub_list">
+
+                                                    <foreach name="list" item="vo">
+                                                        <tr>
+                                                            <td style="display: none">
+                                                            <input type="hidden" name="goods_id" checked="checked" value="{$vo['goods_id']}" />
+                                                            </td>
+                                                            <td class="text-left">{$vo.title}</td>
+                                                            <td class="text-left">{$vo.price_member}</td>
+                                                            <td class="text-left">{$vo.stock}</td>
+                                                            <td class="text-left">
+                            <a href="javascript:void(0)" onclick="javascript:$(this).parent().parent().remove();">删除</a>
+                                                            </td>
+                                                        </tr>
+                                                    </foreach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none;">
+                                        <td><input id="combo_id" type="hidden" name="id" value="{$info['id']|default=0}" />
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td><input class="btn btn-default" type="reset"
+                                            value="重置"/>
+                                            <input type="hidden" name="" value="">
+                                        </td>
+                                        <td class="text-right">
+                                        <input class="btn btn-primary" type="button" onclick="add(this)" value="保存"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+                <!--表单数据-->
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript" src="__COMMON__/js/jquery-form.js"></script> 
+<script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script> 
+
+<script type="text/javascript">
+
+function callBack(tableHtml, elementID)
+{
+    layer.closeAll('iframe');
+
+    if (elementID == 'sub_list') {
+        $('#'+elementID).append(tableHtml);
+
+    } else {
+        $('#'+elementID).html(tableHtml);
+    }
+}
+
+// 删除行
+function delete_row(obj) 
+{
+    $(obj).parent().parent().remove();
+}
+
+// 组合商品列表
+function sub_list(obj)
+{
+    var id_list  = '';
+    var obj_list = $('#sub_list input');
+    obj_list.each(function(index, obj) {
+        id_list += ','+$(obj).val();
+    });
+    // 主商品不能作为选中的配件
+    id_list += ','+$('#goods_list input').val();
+    if (id_list.length > 0) {
+        id_list = id_list.substring(1);
+    }
+    
+    var url = '{:U('searchGoods', ['multi'=>1, 'eleID'=>'sub_list'])}';
+    url += '/id_list/'+id_list;
+    Tool.selectGoods(url);
+}
+
+function add(obj)
+{
+    var url = "{:U('Combo/comboHandle')}";
+
+    var goods_id = $('#goods_list input').val();
+    if (goods_id < 1) {
+        layer.msg('请选择要添加组合的商品');
+        return false;
+    }
+    var sub_ids  = '';
+    var obj_list = $('#sub_list input');
+    if (obj_list.length > 5) {
+        layer.msg('最多选择5件组合商品');
+        return false;
+    }
+    obj_list.each(function(index, obj) {
+        sub_ids += ','+$(obj).val();
+    });
+    if (sub_ids.length > 0) {
+        sub_ids = sub_ids.substring(1);
+    } else {
+        layer.msg('请添加组合商品');
+        return false;
+    }
+
+    var data = {
+        'goods_id': goods_id,
+        'sub_ids':  sub_ids
+    };
+
+    var id = $('#combo_id').val();
+    if (id != 0) {
+        data.id = id;
+        url += '/act/save';
+    } else {
+        url += '/act/add';
+    }
+
+    StandardPost(url, data);
+}
+
+function StandardPost(url,args) 
+{
+    var form = $("<form method='post'></form>");
+    form.attr({"action":url});
+    for (arg in args)
+    {
+        var input = $("<input type='hidden'>");
+        input.attr({"name":arg});
+        input.val(args[arg]);
+        form.append(input);
+    }
+    $(document.body).append(form);
+    form.submit();
+}
+
+</script>
+</block>

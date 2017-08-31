@@ -1,0 +1,262 @@
+<include file="Public/indexPublic"/>
+<include file="Cart/top2"/>
+
+<link rel="stylesheet" href="__PUBLIC__/Home/css/goods.css">
+
+<div class="cart w">
+    <div class="cart-filter-bar clearfix">
+        <div class="fl">
+            <ul class="switch-cart clearfix">
+                <li class="fl <if condition='$type eq 1'>active</if>"><a href="{:U('goods', ['type'=>1])}">全部商品（<b>{$cart_count}</b>）</a></li>
+                <li class="fl <if condition='$type eq 2'>active</if>"><a href="{:U('goods', ['type'=>2])}">降价商品（<b>{$cart_cuts}</b>）</a></li>
+            </ul>
+        </div>
+        <div class="cart-store fr">
+            <span>已选商品（不含运费） <b>￥0.00</b></span>
+            <input type="button" value="结算"  onclick="comfirm_now()">
+        </div>
+    </div>
+    
+    <div class="cart-main">
+        <div class="cart-thead clearfix">
+            <label class="fl t-checkbox"><input type="checkbox"> 全选</label>
+            <span class="fl t-goods">商品信息</span>
+            <span class="fl t-good">颜色</span>
+            <span class="fl t-price">单价</span>
+            <span class="fl t-quantity">数量</span>
+            <span class="fl t-sum">金额</span>
+            <span class="fl">操作</span>
+        </div>
+        <dl class="cart-list"  style="display: block;">
+            <!-- <dt class="clearfix">
+                <span class="fl">满送活动</span>
+                <em class="fl">满200元,送文具大礼包一套（赠完即止）</em>
+            </dt> -->
+
+            <foreach name="cart_goods" item="goods">
+
+                <dd class="clearfix" data-id="{$goods['cart_id']}" data-goods-id="{$goods['goods_id']}" data-url="{:U('/Home/cart/update_num')}">
+                    <div class="cart-checkbox fl">
+                        <input type="checkbox">
+                    </div>
+                    <div class="p-goods fl clearfix">
+                        <div class="p-img fl">
+                            <a href="javascript:;"><img src="{$goods.pic_url}"></a>
+                        </div>
+                        <div class="p-name fl">
+                            <a href="{:U('/Home/goods/goodsDetails', ['id'=>$goods['goods_id']])}"> {$goods.title}</a>
+                        </div>
+                    </div>
+                    <div class="p-good fl"> 
+                    <if condition="empty($goods['spec'])">{$goods.title}</if>
+                    <foreach name="goods['spec']" item="vo">
+                        {$vo.name} : {$vo.item}<br>
+                    </foreach>
+                    </div>
+                    <div class="p-price fl">
+                        <i>￥{$goods.price_market}</i><br>
+                        <b>￥{$goods.price_member}</b>
+                    </div>
+                    <div class="p-quantity fl clearfix">
+                        <a href="javascript:;" class="fl decrement <if condition='$goods.goods_num eq 1'>active</if> ">-</a>
+<input type="text" class="fl" value="{$goods.goods_num}" onblur="update_input_number('{:U('/Home/cart/update_num')}', {$goods['cart_id']}, this, 1)">
+                        <a href="javascript:;" class="fl increment">+</a>
+                    </div>
+                    <div class="p-sum fl">￥<em>{$goods['sum']}</em></div>
+                    <div class="p-ops fl">
+                        <a href="{:U('/Home/cart/move_coll', ['act'=>'add', 'goods_id'=>$goods['goods_id']])}" class="cart-follow">移入收藏夹</a>
+                        <a href="{:U('/Home/cart/cart_del', ['cart_id'=>$goods[cart_id]])}" class="cart-remove">删除</a>
+                    </div>
+                </dd>
+                
+            </foreach>
+        </dl>
+
+        <dl class="cart-list package-list">
+            <foreach name="package_list" item="vo1" k="key">
+                <dt class="clearfix"  data-url="{:U('/Home/cart/update_num')}"  data-id="{$vo1['cart_id']}">
+
+                    <label class="checkbox-main checkbox-warp fl"><input type="checkbox">【套餐{$key+1}】</label>
+                    <div class="p-quantity fl clearfix"><b>￥{$vo1['discount']}</b></div>
+                    <div class="search-main fl clearfix">
+                        <a href="javascript:;" class="fl decrement <if condition='$vo1.goods_num eq 1'>active</if> ">-</a>
+<input type="text" class="fl" value="{$vo1['goods_num']}" onblur="update_input_number('{:U('/Home/cart/update_num')}', {$vo1['cart_id']}, this, 2)">
+                        <a href="javascript:;" class="fl increment">+</a>
+                    </div>
+                    <div class="p-sum fl">￥<em style="color: #d45558;">{$vo1['discount_sum']}</em></div>
+                    <div class="p-ops fl">
+                        <a href="{:U('/Home/cart/cart_del', ['cart_id'=>$vo1['cart_id']])}" class="fr delete-btn">删除</a>
+                    </div>
+                </dt>
+
+                <foreach name="vo1['sub']" item="vo2">
+
+                <dd class="clearfix" data-id="{$vo1['cart_id']}">
+                    <div class="p-goods fl clearfix">
+                        <div class="p-img fl">
+                            <a href="{:U('/Home/goods/goodsDetails', ['id' => $vo2['goods_id']])}"><img src="{$vo2['pic_url']}"></a>
+                        </div>
+                        <div class="p-name fl">
+                            <a href="{:U('/Home/goods/goodsDetails', ['id' => $vo2['goods_id']])}">{$vo2['title']}</a>
+                        </div>
+                    </div>
+                    <div class="p-good fl">
+                        <if condition="empty($vo2['spec'])">{$vo2['title']}</if>
+                        <foreach name="vo2['spec']" item="vo3">{$vo3['name']}:{$vo3['item']} &nbsp; </foreach>
+                    </div>
+                    <div class="p-price fl">
+                        <i>￥{$vo2['price_member']}</i><br>
+                        <b>￥{$vo2['discount']}</b>
+                    </div>
+                    <div class="p-quantity fl clearfix">{$vo1['goods_num']}</div>
+                    <div class="p-sum fl">￥<em>{$vo2['sum']}</em></div>
+                    <div class="p-ops fl">
+                        <a href="javascript:;" class="cart-remove"></a>
+                    </div>
+                </dd>
+
+                </foreach>
+            </foreach>
+        </dl>
+
+
+<!-- 
+        <div class="p-single clearfix">
+            <a href="javascript:;" class="fr">去凑单</a> 
+            <span class="fr">再买82.00元，满200元,送文具大礼包一套（赠完即止）商品合计：<em>￥0.00</em></span> 
+        </div> -->
+
+
+        <!--结算浮动条-->
+        <div class="ui-ceilinglamp">
+            <div class="toolbar-wrap w">
+                <div class="fl toolbar-left">
+                    <label><input type="checkbox"> 全选</label>
+                    <a href="{:U('/Home/cart/cart_del')}" onclick="return delete_many(this);" class="remove-batch">删除</a>
+                    <a href="{:U('/Home/cart/move_coll')}" onclick="return move_many(this)" class="follow-batch">移入收藏夹</a>
+                </div>
+                <div class="fr toolbar-right">
+                    <span class="fl">已选商品 <em class="active">0</em> 件合计</span>
+                    <span class="fl active">（不含运费）：<em>￥</em><b>0.00</b></span>
+                    <input type="button" value="结算" class="fl" onclick="comfirm_now()">
+                </div>
+            </div>
+        </div>  
+        <!--已删除商品-->
+        <if condition="empty($cart_del) eq false">
+            <div class="cart-removed">
+                <div class="r-tit">已删除商品，您可以重新购买或加关注：</div>
+            <volist name="cart_del" id="data">
+                <div class="r-item clearfix">
+                    <div class="r-name fl">
+                        <a href="javascript:;">{$data.title}</a>
+                    </div>
+                    <div class="r-price fl">¥{$data.price_member}</div>
+                    <div class="r-quantity fl">{$data.goods_num}</div>
+                    <div class="r-ops fl">
+<a href="{:U('/Home/cart/cart_add')}" data-id="{$data['goods_id']}" goods-num="{$data['goods_num']}" onclick="return again(this)">重新购买</a>
+<a href="{:U('/Home/cart/move_coll', ['goods_id'=>$data['goods_id']])}">移到我的收藏夹</a>
+                    </div>
+                </div>
+                </volist>
+            </div>
+        <else />
+            <div class="cart-removed" style="display: none;">
+                <div class="r-tit">已删除商品，您可以重新购买或加关注：</div>
+
+                <div class="r-item clearfix">
+                    <div class="r-name fl">
+                        <a href="javascript:;"></a>
+                    </div>
+                    <div class="r-price fl"></div>
+                    <div class="r-quantity fl"></div>
+                    <div class="r-ops fl">
+                        <a href="{:U('/Home/cart/cart_add')}">重新购买</a>
+                        <a href="{:U('/Home/cart/move_coll')}">移到我的收藏夹</a>
+                    </div>
+                </div>
+            </div>
+        </if>
+
+        <!--喜欢 关注-->
+        <div class="guessLike">
+            <ol class="clearfix nav-botm">
+                <li class="fl active"><a href="javscript:;">猜你喜欢</a></li>
+                <li class="fl"><a href="javscript:;">我的关注</a></li>
+                <li class="fl"><a href="javscript:;">最近浏览</a></li>
+            </ol>
+            <div class="goods-list">
+                <ul class="c-panel-main active clearfix">
+                    <foreach name="guessLove" item="vo">
+                        <li class="fl">
+                            <div class="img-pat">
+                                <a href="{:U('/Home/goods/goodsDetails', ['id' => $vo['id']])}">
+                                    <img src="{$vo.pic_url}">
+                                </a>
+                            </div>
+                            <p> {$vo.title}</p>
+                            <i>￥{$vo.price}</i>
+                        </li>
+                    </foreach>
+                </ul>
+                <ul class="c-panel-main clearfix">
+                <foreach name="collection" item="vo">
+                    <li class="fl">
+                        <div class="img-pat">
+                            <a href="{:U('/Home/goods/goodsDetails', ['id' => $vo['id']])}">
+                                <img src="{$vo['pic_url']}">
+                            </a>
+                        </div>
+                        <p> {$vo['title']}</p>
+                        <i>￥{$vo['price']}</i>
+                    </li>
+                </foreach>
+                </ul>
+                <ul class="c-panel-main clearfix">
+                    <foreach name="recent" item="vo">
+                        <li class="fl">
+                            <div class="img-pat">
+                                <a href="{:U('/Home/goods/goodsDetails', ['id' => $vo['id']])}">
+                                    <img src="{$vo['pic_url']}">
+                                </a>
+                            </div>
+                            <p> {$vo['title']}</p>
+                            <i>￥{$vo['price']}</i>
+                        </li>
+                    </foreach>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--删除-->
+<div class="ui-dia-parent-t">
+    <div class="ui-mask"></div>
+    <div class="ui-dia">
+        <div class="ui-dialog-title clearfix">
+            <span class="fl"></span>
+            <a href="javascript:;" class="fr"></a>
+        </div>
+        <div class="ui-dialog-content">
+            <div class="item-fore">
+                <h3></h3>
+                <p></p>
+            </div>
+            <div class="op-btns">
+                <a href="javascript:;" class="btn-2"></a>
+                <a href="javascript:;" class="btn-1"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="__PUBLIC__/Home/js/shoppingCart.js"></script>
+<script src="__JS__/cart/cart.js"></script>
+<script type="text/javascript">
+var BUILD = "{:U('Settlement/cartSettlement')}";
+var delete_many_url = "{:U('goods')}";
+</script>
+
+<include file="Public/indexFooter"/>

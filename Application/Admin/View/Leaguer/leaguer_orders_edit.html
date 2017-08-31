@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Common/My97Date/WdatePicker.js"></script>
+<script>
+   window.onload = function () { 
+        new uploadPreview({ UpBtn: "pic_url", DivShow: "imgdiv", ImgShow: "imgShow" });
+   }
+</script>
+<script>
+    var ue = UE.getEditor('editor');
+	var ue2 = UE.getEditor('editor2');
+</script>
+<script>
+function check_form(){
+	var title = $('#title').val();
+	if(title == ''){
+		layer.msg('活动名称不能为空');
+		return false;
+	}
+	var pic_url = $('#pic_url').val();
+	if(pic_url == ''){
+		layer.msg('代表图片不能为空');
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+
+<form name="form3" method="post" action="__SELF__" enctype="multipart/form-data" onSubmit="return check_form();">
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details" style=" margin-top:2px;">
+        <tbody>
+          <tr>
+	        <td width="23%"><div align="right"><span style="color:#F00;">*</span> 旅游线路：</div></td>
+	        <td width="77%">{$result.tourism_title}</td>
+          </tr>	
+	      <tr>
+	        <td><div align="right">提交日期：</div></td>
+	        <td>{$result.create_time}</td>
+          </tr>      
+	      <tr>
+	        <td colspan="2"><div align="center">一、日期和人数</div></td>
+          </tr>
+          <tr>
+	        <td><div align="right">出行日期：</div></td>
+	        <td>{$result.date}</td>
+          </tr>
+	      <tr>
+	        <td><div align="right">成人人数：</div></td>
+	        <td><input type="text" class="input" name="renshu_chengren" id="renshu_chengren" value="{$result.renshu_chengren}"></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">成人价格：</div></td>
+	        <td><input type="text" class="input" name="price_chengren" id="price_chengren" value="{$result.price_chengren}"></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">儿童人数：</div></td>
+	        <td><input type="text" class="input" name="renshu_ertong" id="renshu_ertong" value="{$result.renshu_ertong}"></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">儿童价格：</div></td>
+	        <td><input type="text" class="input" name="price_ertong" id="price_ertong" value="{$result.price_ertong}"></td>
+          </tr>
+	      <tr>
+	        <td colspan="2"><div align="center">二、资源和保险</div></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">单房差价格：</div></td>
+	        <td><input type="text" class="input" name="danfang_price" id="danfang_price" value="{$result.danfang_price}"></td>
+          </tr>
+          <tr>
+	        <td><div align="right">单房差数量：</div></td>
+	        <td><input type="text" class="input" name="danfang_count" id="danfang_count" value="{$result.danfang_count}"></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">保险1：</div></td>
+	        <td><input type="text" class="input" name="baoxian1_price" id="baoxian1_price" value="{$result.baoxian1_price}"></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">保险2：</div></td>
+	        <td><input type="text" class="input" name="baoxian2_price" id="baoxian2_price" value="{$result.baoxian2_price}"></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">保险3：</div></td>
+	        <td><input type="text" class="input" name="baoxian3_price" id="baoxian3_price" value="{$result.baoxian3_price}"></td>
+          </tr>
+	      <tr>
+	        <td colspan="2"><div align="center">三、客户资料</div></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">联系人：</div></td>
+	        <td><input type="text" class="input" name="link_man" id="link_man" value="{$result.link_man}"></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">手机号码：</div></td>
+	        <td><input type="text" class="input" name="link_tel" id="link_tel" value="{$result.link_tel}"></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">电子邮件：</div></td>
+	        <td><input type="text" class="input" name="link_email" id="link_email" value="{$result.link_email}"></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">备注信息：</div></td>
+	        <td><textarea name="link_remark" id="link_remark" style="width:400px; height:100px;">{$result.link_remark}</textarea></td>
+          </tr>
+	      <tr>
+	        <td><div align="right"></div></td>
+	        <td>&nbsp;</td>
+          </tr>
+	      <tr>
+	        <td><div align="right"></div></td>
+	        <td>&nbsp;</td>
+          </tr>
+
+        </tbody>
+  </table> 
+</div>
+<div class="footer">
+     <button type="submit" class="button" id="button" style="min-width:160px;" onclick="admin_add();">保存信息</button>
+</div>
+</form> 
+</body>
+</html>

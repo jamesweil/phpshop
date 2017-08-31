@@ -1,0 +1,51 @@
+<form method="post" enctype="multipart/form-data" target="_blank"
+	id="form-order">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover font_size">
+			<thead>
+				<tr>
+					<foreach name="notes" key='key' item="value"> <if
+						condition="$key === $logModel::$id_d">
+					<td style="width: 1px;" class="text-center"><input
+						type="checkbox"
+						onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+					<else />
+					<td class="text-center cursor">{$value}</td>
+					</if> </foreach>
+					<td class="text-center">操作</td>
+				</tr>
+			</thead>
+			<tbody>
+				<if condition="!empty($data['data'])">
+					<foreach name="data['data']" key="key" item="list">
+						<tr>
+							<td class="text-center"><input type="checkbox"
+								name="selected[]" value="{$list[$logModel::$id_d]}"></td>
+							<td class="text-center">{$list[$adminModel::$account_d]}</td>
+							<td class="text-center">{$logType[$list[$logModel::$type_d]]}</td>
+							<td class="text-center">{$list[$logModel::$tableId_d]}</td>
+							<td class="text-center">{$list[$logModel::$tableName_d]}</td>
+							<td class="text-center">{$list[$logModel::$comment_d]}</td>
+							<td class="text-center">{$list[$logModel::$createTime_d]|date='Y-m-d
+								H:i',###}</td>
+							<td class="text-center">{$list[$logModel::$ip_d]}</td>
+							<td class="text-center"><a
+								onclick="Tool.alertEdit('{:U('lookDetail',array($logModel::$id_d => $list[$logModel::$id_d]))}', '日志详情', 800, 600)"
+								data-toggle="tooltip" title="" class="btn btn-info"
+								data-original-title="查看详情"><i class="fa fa-eye"></i></a> <a
+								onclick="Tool.deleteData('{:U('deleteLogByParent')}', {$list[$logModel::$id_d]})"
+								data-toggle="tooltip" class="btn btn-danger" title="删除"><i
+									class="fa fa-trash-o"></i></a>
+							</td>
+						</tr>
+					</foreach>
+				</if>
+			</tbody>
+		</table>
+	</div>
+</form>
+<div class="row">
+	<div class="col-sm-6 text-left"></div>
+	<div class="col-sm-6 text-right">{$data.page}</div>
+</div>
+<script type="text/javascript" src="__JS__/common.js"></script>

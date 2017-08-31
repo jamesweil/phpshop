@@ -1,0 +1,129 @@
+<extend name="Public/publicHTML" />
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<section class="content">
+	<div class="container-fluid">
+		<div class="pull-right">
+			<a href="" data-toggle="tooltip" title="" class="btn btn-default"
+				data-original-title="返回"><i class="fa fa-reply"></i></a>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 添加包邮地址
+				</h3>
+			</div>
+			<div class="panel-body">
+
+				<form method="post" id="formId">
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab_tongyong">
+							<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<td>包邮件数:</td>
+										<td><input type="text" isNumber="1" 
+											value="{$data[$conditionModel::$mailArea_num_d]}"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											name="{$conditionModel::$mailArea_num_d}"
+											class="form-control w380 title req" id="title">
+											<span id="err_title" class="rxd">包邮件数没有填写</span></td>
+									</tr>
+									<tr>
+										<td>包邮重量：</td>
+										<td><input type="text" isNumber="1" 
+											value="{$data[$conditionModel::$mailArea_wieght_d]}"
+											name="{$conditionModel::$mailArea_wieght_d}"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											class="form-control w380 title req" id="title">
+											<span id="err_title" >（单位：kg)</span></td>
+									</tr>
+									<tr>
+										<td>包邮体积：</td>
+										<td><input type="text" isNumber="1" 
+											value="{$data[$conditionModel::$mailArea_volume_d]}"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											name="{$conditionModel::$mailArea_volume_d}"
+											class="form-control w380 title req" id="title">
+											<span id="err_title">(单位：dm^3)</span></td>
+									</tr>
+									
+									<tr>
+										<td>包邮金额：</td>
+										<td><input type="text" isNumber="1"
+											value="{$data[$conditionModel::$mailArea_monery_d]}"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											name="{$conditionModel::$mailArea_monery_d}"
+											class="form-control w380 title req" id="title">
+											<span id="err_title" class="rxd">包邮金额没有填写</span></td>
+									</tr>
+									
+									<tr>
+										<td>选择地区:</td>
+										<td>
+											<div class="form-group">
+												<div class="col-xs-2">
+													<a class="btn btn-primary" href="javascript:void(0);"
+														onclick="Freight.selectGoods('{:U('selectArea')}')"><i class="fa fa-search"></i>添加地区</a>
+												</div>
+												<div class="col-xs-2">
+													<span id="err_goods" class="rxd">添加地区</span>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<div class="form-group">
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+															<th style="display: none">选择</th>
+															<th class="text-left">地区名称</th>
+															<th class="text-left">操作</th>
+														</tr>
+													</thead>
+													<tbody id="goods_list">
+														<if condition="!empty($regData)">
+															<foreach name="regData" key="key" item="value">
+																<tr>
+																	<td class="rxd"><input type="hidden" name="{$areaModel::$mailArea_d}[]" value="{$key}"/></td>
+																	<td>{$value}</td>
+																	<td><a href="javascript:void(0)"onclick="javascript:$(this).parent().parent().remove();">删除</a></td>
+																</tr>
+															</foreach>
+														</if>
+													</tbody>
+												</table>
+											</div>
+										</td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="pull-right">
+						<input type="hidden" name="{$conditionModel::$freightId_d}" value="{$_GET['id']}"/>
+						<input type="submit"
+							onclick="Freight.addTemplate('formId', <if condition=" $add === true ">'{:U('addArea')}'<else/>'{:U('saveEdit')}'</if>);"
+							class="btn btn-primary" data-toggle="tooltip"
+							data-original-title="保存" value='保存' />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script> <script
+	type="text/javascript" src="__COMMON__/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="__COMMON__/js/jquery-form.js"></script>
+<script type="text/javascript" src="__JS__/region/freight.js?a={:time()}"></script>
+<script type="text/javascript">Freight.id = {$data[$conditionModel::$id_d]}</script> </block>

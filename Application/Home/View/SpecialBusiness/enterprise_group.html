@@ -1,0 +1,36 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="regod-section clearfix">
+		
+		<!--位置-->
+		<div class="thisPosition w">
+			<span>您的位置：</span><b>首页</b> > <b>我的商城</b> > <b>特色业务</b> > <b>企业团购</b>
+		</div>
+		<!--商品-->
+		<form action="__SELF__" method="post" onsubmit="return check()">
+			<div class="exchge-centent-main w">
+				<input type="text" name="code" id="code" placeholder="请输入兑换券" class="txt"><br>
+				<input type="submit" value="马上兑换" class="btn">
+			</div>
+		</form>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+<script>
+	function check(){
+		var code = $('#code').val();
+		if(code == ''){
+	        layer.tips('请填写兑换码!', '#code',{
+	        	 tips:[4,'#f29202']
+	        });
+	        return false;
+	    }
+	}
+</script>
+</block>

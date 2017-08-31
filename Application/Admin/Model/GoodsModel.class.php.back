@@ -1,0 +1,275 @@
+<?php
+
+// +----------------------------------------------------------------------
+// | OnlineRetailers [ WE CAN DO IT JUST THINK IT ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2003-2023 www.yisu.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author: 王强 <opjklu@126.com>\n
+// +----------------------------------------------------------------------
+
+namespace Admin\Model;
+
+use Think\Model;
+use Common\Model\BaseModel;
+
+class GoodsModel extends BaseModel
+{
+    //主键
+    public static $id_d; 
+    
+    //品牌编号
+    public static $brandId_d;
+    
+    //商品名称
+    public static $title_d;
+    
+    //普通价格
+    public static $priceMarket_d;
+    
+    //会员价格
+    public static $priceMember_d;
+   
+    //库存
+    public static $stock_d;	
+    
+    //是否是热销   0 不是   1 是
+    public static $selling_d;
+   
+    //上下架   1 上架    0 下架
+    public static $shelves_d;	
+    
+    //排序
+    public static $sortNum_d;	
+   
+    //商品分类ID
+    public static $classId_d;	
+    
+    /**
+     * 推荐
+     * @var int
+     */
+    public static $recommend_d;
+    
+    //赠送积分
+    public static $dIntegral_d;	
+   
+    //返利抵现金金额
+    public static $integralRebate_d;
+    
+    //商品货号
+    public static $code_d;
+    
+    //顶部推荐
+    public static $top_d;	
+    
+    //是否包邮
+    public static $minYunfei_d;
+    
+    //当季热卖
+    public static $seasonHot_d;
+    
+    //是否限购:    1 限购  0 不限购
+    public static $restrictions_d;
+    
+    //商品简介
+    public static $description_d;
+    
+    //是否团购 默认0 不团购 1是
+    public static $groupBuy_d;
+    
+    public static $updateTime_d	;
+    public static $createTime_d;
+    
+    private static  $obj;
+
+	public static $goodsType_d;
+
+    
+    public static function getInitnation()
+    {
+        $name = __CLASS__;
+        return self::$obj = !(self::$obj instanceof $name) ? new self() : self::$obj;
+    }
+    
+    /**
+     * 重写父类方法
+     */
+    protected  function _before_insert(& $data, $options)
+    {
+        $data[self::$createTime_d] = time();
+         
+        $data[self::$updateTime_d] = time();
+         
+        return $data;
+    }
+     
+    /**
+     * 重写父类方法
+     */
+    protected function _before_update(& $data, $options)
+    {
+        $data[self::$updateTime_d] = time();
+    
+        return $data;
+    }
+    
+    /**
+     * add
+     */
+    public function add($data='',$options=array(),$replace=false)
+    {
+        if (empty($data))
+        {
+            return false;
+        }
+        
+        if (!empty($data['cat_class_id'])) {
+            $data[self::$classId_d] = $data['cat_class_id'];
+            unset($data['cat_class_id']);
+        }
+        
+        $data = $this->create($data);
+         
+        return parent::add($data, $options, $replace);
+    }
+    
+    /**
+     * save
+     */
+    public function save($data='',$options=array())
+    {
+        if (empty($data))
+        {
+            return false;
+        }
+        
+        if (!empty($data['cat_class_id'])) {
+            $data[self::$classId_d] = $data['cat_class_id'];
+            unset($data['cat_class_id']);
+        }
+        
+        $data = $this->create($data);
+    
+        return parent::save($data, $options);
+    }
+
+
+
+
+    /**
+     * 求和,求出商品推荐类型的位运算值.
+     * @param type $shelves
+     * @return int
+     */
+    protected function calcShelves($shelves) {
+        if(isset($shelves)){
+            return array_sum($shelves);
+        }else{
+            return 0;
+        }
+    }
+    /**
+     * 商品添加
+     * @param $newdata
+     */
+    public function addGoods($newdata){
+        $this->startTrans();
+        //保存到商品表
+        $arr = [];
+        $class_id = $newdata['class_id'];
+        $newdata['class_id_2'] && ($class_id = $newdata['class_id_2']);
+        $newdata['class_id_3'] && ($class_id = $newdata['class_id_3']);
+        //设置
+        $shelves =  $this->calcShelves($newdata['shelves']);
+        $arr = [
+            'class_id'=>$class_id,
+            'title'=>$newdata['title'],
+            'description'=>$newdata['description'],
+            'code'=>$newdata['code'],
+            'brand_id'=>$newdata['brand_id'],
+            'price_market'=>$newdata['price_market'],
+            'price_member'=>$newdata['price_member'],
+            'stock'=>$newdata['stock'],
+            'd_integral'=>$newdata['d_integral'],
+            'min_yunfei'=>$newdata['min_yunfei'],
+            'shelves'=>$shelves,
+            'goods_type'=>$newdata['attribute_id'],
+
+        ];
+
+        if(($goods_id=$this->add($arr)) === false){
+            $this->rollback();
+            return false;
+        }
+
+
+
+        //保存到相册表
+        $goods_images_model = M("GoodsImages");
+        $goods_images = $newdata['goods_images'];
+        $arr1 = [];
+        foreach($goods_images as $v) {
+            $arr1[] = [
+                'goods_id' => $goods_id,
+                'pic_url' => $v,
+                'status' => 1,
+            ];
+
+        }
+        array_pop($arr1);
+
+        if($arr1 && ($goods_images_model->addAll($arr1)===false)){
+            $this->error = '保存相册失败';
+            $this->rollback();
+            return false;
+        }
+
+        //保存到规格商品价格表
+        $arr2 = [];
+        $spec_goods_price_model = M("SpecGoodsPrice");
+        $items = $newdata['item'];
+        foreach($items as $key=>$item){
+            $arr2[] = [
+                'key'=>$key,
+                'goods_id'=>$goods_id,
+                'key_name'=>$item['key_name'],
+                'price'=>$item['price'],
+                'store_count'=>$item['store_count'],
+                'sku'=>$item['sku'],
+            ];
+        }
+
+        if($arr2 && ($spec_goods_price_model->addAll($arr2)===false)){
+            $this->error = '保存规格失败';
+            $this->rollback();
+            return false;
+        }
+
+
+
+
+        //保存商品详情表
+        $goods_detail_model = M("GoodsDetail");
+        $arr4 = [
+            'goods_id'=>$goods_id,
+            'detail'=>$newdata['detail'],
+        ];
+        if($arr4 && ($goods_detail_model->add($arr4)===false)){
+            $this->error = '保存商品详情失败';
+            $this->rollback();
+            return false;
+        }
+
+        return $this->commit();
+
+    }
+
+    public function modifyGoods($newsdata){
+
+    }
+
+
+}

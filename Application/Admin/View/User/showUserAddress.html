@@ -1,0 +1,54 @@
+<extend name="public/PublicHtml" />
+
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<!-- Main content -->
+<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 收货地址列表
+				</h3>
+			</div>
+			<div class="panel-body">
+
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover">
+						<thead>
+							<tr>
+
+								<td class="text-left">收货人</td>
+
+								<td class="text-left">联系方式</td>
+
+								<td class="text-left">邮政编码</td>
+
+								<td class="text-left">地址</td>
+							</tr>
+						</thead>
+						<tbody>
+							<if condition="!empty($userAddressData)">
+								<volist name="userAddressData" id="list">
+									<tr>
+										<td class="text-left">{$list[$userAddress::$realname_d]}</td>
+		
+										<td class="text-left">{$list[$userAddress::$mobile_d]}</td>
+										<td class="text-left">{$list[$userAddress::$zipcode_d]}</td>
+										<td class="text-left">
+											{$list[$userAddress::$provId_d]},{$list[$userAddress::$city_d]},{$list[$userAddress::$dist_d]},{$list[$userAddress::$address_d]}
+										</td>
+									</tr>
+								</volist>
+							</if>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.row -->
+</section>
+</block>

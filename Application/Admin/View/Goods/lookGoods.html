@@ -1,0 +1,69 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+<div class="wrapper">
+	<section class="content">
+		<div class="container-fluid">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover">
+							<tr height="30px">
+						 	   <th class="sorting text-left">ID</th>
+                               <th class="sorting text-left">商品名称</th>
+                              <!--  <th class="sorting text-left">货号</th> -->
+                               <th class="sorting text-left">商品分类</th>
+                               <th valign="middle">市场价</th>
+                               <th class="sorting text-left">会员价</th>
+                               <th class="sorting text-left">库存</th>
+                               <th class="sorting text-left">是否上架</th>
+                               <th class="sorting text-left">是否推荐</th>
+                               <th class="sorting text-left">操作</th>
+							</tr>
+							<tbody id="goos_table">
+								<if condition="!empty($proGoods)">
+									<foreach name="proGoods" item="list">
+										<tr>
+											<td class="text-left">{$list[$goodsModel::$id_d]}</td>
+											<td class="text-left" width="157px">{$list[$goodsModel::$title_d]}</td>
+											<!-- <td class="text-left">{$list[$goodsModel::$code_d]}</td> -->
+											<td class="text-left">{$list[$goodsClassModel::$className_d]}</td>
+											<td class="text-left">{$list[$goodsModel::$priceMarket_d]}</td>
+											<td class="text-left">{$list[$goodsModel::$priceMember_d]}</td>
+											<td class="text-left">{$list[$goodsModel::$stock_d]}</td>
+											<td class="text-left"><if condition="($list[$goodsModel::$shelves_d]) eq 1">
+                                                <img src="__COMMON__/img/yes.png" key="{$goodsModel::$shelves_d}" onclick="GoodsOption.isShelves('{:U('isShelve')}', this)" data-status="{$list[$goodsModel::$shelves_d]}" data-id="{$list[$goodsModel::$id_d]}"  data-flag="true"/>
+                                                <else/>
+                                                <img src="__COMMON__/img/cancel.png" key="{$goodsModel::$shelves_d}" onclick="GoodsOption.isShelves('{:U('isShelve')}', this)" data-status="{$list[$goodsModel::$shelves_d]}"   data-id="{$list[$goodsModel::$id_d]}"  data-flag="false"/>
+                                            </if></td>
+                                            <td class="text-left">
+	                                            <if condition="($list[$goodsModel::$recommend_d]) eq 1">
+	                                                <img src="__COMMON__/img/yes.png"  key="{$goodsModel::$recommend_d}" onclick="GoodsOption.isShelves('{:U('isShelve')}', this)"  data-status="{$list[$goodsModel::$recommend_d]}" data-id="{$list[$goodsModel::$id_d]}" data-flag="true"/>
+	                                                <else/>
+	                                                <img src="__COMMON__/img/cancel.png" key="{$goodsModel::$recommend_d}" onclick="GoodsOption.isShelves('{:U('isShelve')}', this)"  data-status="{$list[$goodsModel::$recommend_d]}" data-id="{$list[$goodsModel::$id_d]}"  data-flag="false"/>
+	                                            </if>
+                                        	</td>
+                                        	<td>
+                                        		<a target="_blank" class="btn btn-primary" href="/index.php/Home/Goods/goodsDetails/{$goodsModel::$id_d}/{$list[$goodsModel::$id_d]}">预览</a>
+                                        		<a target="_blank" class="btn btn-danger del_btn confirm_btn" onclick="Tool.deleteDataClose('{:U('deleteOneGood')}', {$list[$goodsModel::$id_d]})">删除</a>
+                                        	</td>
+										</tr>
+									</foreach>
+								</if>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script> 
+<script type="text/javascript" src="__JS__/goods/goods.js?a={:time()}"></script> 
+<script type="text/javascript">
+GoodsOption.imgUrl = '__COMMON__';
+</script></block>

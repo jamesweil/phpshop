@@ -1,0 +1,71 @@
+<extend name="Public/publicHTML" />
+<block name="nav">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<script src="__COMMON__/bootstrap/js/bootstrap.min.js"></script> 
+</block>
+<block name="content">
+<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 支付配置列表
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="navbar navbar-default">
+					<form action="{:U('goods_list')}" name="searchform" id="search"
+						class="navbar-form form-inline" method="get">
+						<button type="button" onclick="Tool.alertEdit('{:U('addPayHTML')}', '添加配置', 850, 650)"
+							class="btn btn-primary pull-right">
+							<i class="fa fa-plus"></i>添加支付配置
+						</button>
+					</form>
+				</div>
+				<div id="ajax_return">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<th class="sorting text-left">ID</th>
+									<th class="sorting text-left">支付类型名称</th>
+									<th class="sorting text-left">支付账号</th>
+									<th class="sorting text-left" >商户号</th>
+									<th class="sorting text-left">微信或支付宝随机字符串</th>
+									<th class="sorting text-left">微信用户标识</th>
+									<th class="sorting text-left">平台</th>
+									<th class="sorting text-left">编辑</th>
+								</tr>
+							</thead>
+							<tbody>
+								<if condition="!empty($payConfig)">
+									<foreach name="payConfig" key="key" item="row">
+									<tr>
+										<td class="text-left">{$row[$payModel::$id_d]}</td>
+										<td class="text-left margin-padding">{$row[$payTypeModel::$typeName_d]}</td>
+										<td class="text-left">{$row[$payModel::$payAccount_d]}</td>
+                                        <td class="text-left">{$row[$payModel::$mchid_d]}</td>
+										<td class="text-left">{$row[$payModel::$payKey_d]}</td>
+										<td class="text-left">{$row[$payModel::$openId_d]}</td>
+										<td class="text-left">{$platform[$row[$payModel::$type_d]]}</td>
+										<td class="text-left"> <button
+											onclick="Tool.alertEdit('{:U('modifyPay', array('id' => $row[$payModel::$id_d], 'pay' => $row[$payTypeModel::$typeName_d]))}', '编辑配置{$row[$payTypeModel::$typeName_d]}', 900, 650)"
+											class="btn btn-primary">编辑</button> </td>
+									</tr>
+									</foreach>
+								</if>
+							</tbody>
+						</table>
+						<div class="page">{$page_show}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script> <script
+	type="text/javascript">
+     
+  </script> </block>

@@ -1,0 +1,228 @@
+<extend name="Public/indexEdit"/>
+<block name="content">
+
+<link rel="stylesheet" href="__CSS__/toastr.min.css"/>
+<link rel="stylesheet" href="__COMMON__/css/page.css"/>
+<!--当前位置-->
+	<!--当前位置-->
+	<div class="paper-current-main w">
+
+		当前位置：<span><a href="__SERVER__" class="godos_details_font">首页</a></span> > {$title} > <span class="active">{$result[$model::$title_d]}</span>
+	</div>
+	<!--内容-->
+		<!--内容-->
+	<div class="productDeta-main w clearfix">
+		<!--查看商品-->
+		<div class="procDetailInner clearfix">
+			<div class="procDeta-fl fl">
+				<div class="preview">
+			        <div id="vertical" class="bigImg">
+			            <img width="400" height="400" alt="" id="midimg" data-original='' src='<if condition="isset($first[$goodsImagesModel::$picUrl_d])">{$first[$goodsImagesModel::$picUrl_d]}</if>' />
+			            <div style="display:none;" id="winSelector"></div>
+			        </div>
+		        	<if condition="!empty($goodsImages)"> 
+				        <div class="smallImg">
+				          
+				            	<div class="scrollbutton smallImgUp disabled"></div>
+					            <div id="imageMenu">
+					                <ul>
+				                		<foreach name="goodsImages" key="key" item="value">
+						                    <li <if condition="$key === 0"> id="onlickImg" </if> ><img src="{$value[$goodsImagesModel::$picUrl_d]}" width="68" height="68"></li>
+						                </foreach>
+					                </ul>
+					            </div>
+					            <div class="scrollbutton smallImgDown"></div>
+				        </div>
+				     </if>
+			        <div id="bigView" style="display:none;"><img width="889" height="889" src=""></div>
+			    </div>
+			    <div class="clearfix product-inf">
+			  
+			    	<span class="fl">产品编码：{$specParseArray[$_GET[$model::$id_d]][$specModel::$sku_d]}</span>
+			    	<a href="{:U('collection/collection')}" data-id="{$_GET['id']}" class="fr collection clearfix" onclick="return false;" id="collection_btn">
+			    		<i class="fl"></i>
+			    		<span class="fl">收藏商品</span>
+			    	</a>
+					<div class="bshare-custom fr" style="margin-top: 3px;">
+			    	<a href="javascript:;" class="fr share clearfix" style="padding-left: 0px;">
+			    		<span class="fl">分享<a title="更多平台" class="bshare-more bshare-more-icon more-style-sharethis fl"></a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script></span>
+			    	</a>
+					</div>
+			    </div>
+			</div>
+			<div class="procDeta-fr fl">
+				<h5 class="pr-title">{$result[$model::$title_d]}</h5>
+				<div class="pr-price">
+				    <p class="pr-price-top">商品价格：<span>￥<i>
+				    <if condition="!empty($_SESSION['user_id'])">{:sprintf("%01.2f",$result[$model::$priceMember_d])}
+				    	<!-- 活动价格 -->
+					    <elseif condition="!empty($result[$model::$status_d])"/>{$result[$model::$priceMember_d]}
+					    <!-- 未登录价格 -->
+					    <else/>{$result[$model::$priceMarket_d]}
+				    </if> </i> </span></p>
+					{$giftHtml}
+					{$countHtml}
+					<p class="pr-price-bottom clearfix">
+						<span class="fl">商城APP手机购买更便宜：</span>
+						<span class="fl clearfix code-move">
+							<i class="fl"></i>
+							<em class="fl"></em>
+							<img src="{$init_qr_code}" width="100" height="100" class="code-up">
+						</span>
+						<span class="fr">送积分：{$result[$model::$dIntegral_d]}</span>
+					</p>
+				</div>
+				<div class="promotion-main">
+					<div class="promotion-fr fl" id="main">
+						<if condition="!empty($promotionInformation)">
+							<div class="pr-information">
+								<h5 class="fl">促销信息：</h5>
+										<p class="clearfix">
+											<em class="fl">{$promotionInformation['promotion']}</em>
+											<span class="fl">{$promotionInformation['discount']}</span>
+											<a href="javascript:;" class="fl">立即参加</a>
+										</p>
+										<p class="clearfix margin" >
+							</div>
+						</if>
+						<if condition="!empty($spcClassData)">
+							<foreach name="spcClassData" key ="key" item="item">
+							<div class="pr-sps clearfix spec">
+								<h5 class="fl" value="{$item[$goodsSpecModel::$id_d]}">{$item[$goodsSpecModel::$name_d]}：</h5>
+								<if condition="!empty($item['children'])">
+									<foreach name="item['children']" key="itemKey" item="value">
+										<span class='fl <if condition="false !== strpos($specParseArray[$_GET['id']][$specModel::$key_d],$value[$goodsSpecItemModel::$id_d])">active</if>' 
+										value="{$value[$goodsSpecItemModel::$id_d]}" 
+										onclick="GoodsObj.getBySpecForPrice(this, 'main','{:U('goodsDetails', null, null)}')">{$value[$goodsSpecItemModel::$item_d]}</span>
+									</foreach>
+								</if>
+							</div>
+							</foreach>
+						</if>
+						<div class="pr-quantity clearfix">
+							<h5 class="fl">购买数量：</h5>
+							<div class="choice fl">
+								<a href="javascript:;" class="fl">-</a>
+								<input id="goodsNum" type="text" class="fl" value="1">
+								<a href="javascript:;" class="fl">+</a>
+							</div>
+							<div class="fl">
+								{$result[$model::$stock_d]}
+							</div>
+						</div>
+
+<!-- 						<div class="clearfix">
+							<h5 class="fl">发货地点：</h5>
+							<div class="pr-goodplace fl">
+								<div class="pr-goodplace-default"><span value="{ $default[$sendModel::$id_d] }">{ $default[$sendModel::$stockName_d] }</span><i></i></div>
+								<div class="pr-goodplace-up clearfix">
+									<  if condition="!empty($address)"   >
+										<   foreach name="address" key ='key' item="value"   >
+											<span value="{$key}" class="fl">{$value}</span>
+										<    /  foreach     >
+									<  /  if>
+								</div>
+							</div>
+						</div>
+ -->						<div class="pr-button">
+							<form action="{$requstURL}" method="post">
+								<input type="hidden" value="{$result[$model::$id_d]}" name="goods_id">
+								<input type="hidden" value="{$_SESSION['formId']}" name="formId">
+								<input type="hidden" value="1" name="goods_num">
+								<input tyoe="hidden" value="{$gift_id}" name="gift_id">
+								<input type="hidden" value="{$result[$model::$priceMember_d]}" name="price_new">
+								<!-- <input type="hidden"  name="ware_id" value="{ $default[$sendModel::$id_d] }"/> -->
+								<input type="button" onclick="Cart.newAddCart(this, 'goodsNum', '{:U('Cart/new_cart_add')}')" value="加入购物车" class="join">
+								<input type="submit" value="立即购买"  class="collection">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--商品-->
+		<div class="pr-commodity" id="goods_recommend">
+
+		</div>
+		<!--商品评论-->
+		<div class="eva-comment">
+			<div class="productDetaLeft fl" id="bestSelling">
+				
+			</div>
+
+			<!--商品介绍记录-->
+			<div class="productDetafr fr">
+				<ul class="prod-title clearfix">
+					<li class="fl active">商品介绍</li>
+					<li class="fl">商品评价<span>&nbsp;{$comment_number|default=0}</span></li>
+					<li class="fl">商品咨询<span>&nbsp;</span></li>
+				</ul>
+				<!--介绍-->
+				<dl class="pro-comment active">
+					<dt class="clearfix">
+						<ol class="fl three">
+							<li>品牌：{$result[$model::$brandId_d]} </li>
+							<li>产品简介：{$result[$model::$description_d]}</li>
+						</ol>
+					</dt>
+					<dd class="introduce">
+						{$result[$detailModel::$detail_d]}
+					</dd>
+				</dl>
+				<!--评价-->
+				<div class="pro-comment">
+					
+					<div class="comment-parentNode" id="comment">
+			
+					</div>
+				</div>
+				<!--咨询-->
+				<dl class="pro-comment" id="Consultation">
+				
+				</dl>
+				<!--最近浏览-->
+				<div class="guessYouLike clearfix" id="guess">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Public/rightHtml"/>
+
+<script type="text/javascript" src="__JS__/evaluate.js"></script>
+
+<script type="text/javascript" src="__JS__/expansion.js"></script>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script>
+<script type="text/javascript" src="__COMMON__/js/cookie.js"></script>
+<script type="text/javascript" src="__JS__/toastr.min.js"></script>
+<script type="text/javascript" src="__JS__/goods/cart.js"></script>
+<script type="text/javascript" src="__JS__/goods/goods.js"></script>
+<script type="text/javascript">
+{:sort($specParseArray)};
+GoodsObj.value      = {:json_encode($specParseArray)};
+GoodsObj.connectUrl = "{:U('ajaxGetGuessLove')}";
+GoodsObj.goodsId    = {$_GET['id']};
+var REC_URL         = "{:U('bestSelling')}";
+var CON_URL         = "{:U('ajaxGetGoodsConsulation')}";
+var COMMENT_URL     = "{:U('ajaxGetGoodsComment')}";
+var RECOMMEND_URL   = "{:U('ajaxGetGoodsRecommend')}";
+$('.procDetailInner .procDeta-fr .pr-price .pr-price-bottom .code-move').hover(function(){
+	$(this).find('.code-up').stop().fadeIn();
+},function(){
+	$(this).find('.code-up').stop().fadeOut();
+})
+</script>
+	<script>
+		$(document).ready(function(){
+			$('.gift_hidden').css('display','none');
+		})
+		$('.gift_price').mouseover(function(){
+			$('.gift_hidden').css('display','inline');
+		})
+		$('.gift_price').mouseout(function(){
+			$('.gift_hidden').css('display','none');
+		})
+	</script>
+
+</block>

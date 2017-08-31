@@ -1,0 +1,382 @@
+<!DOCTYPE>
+<html >
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css2.css">
+    <script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+    <script src="__PUBLIC__/Common/Layer/layer.js"></script>
+    <title>结算页</title>
+</head>
+
+<body>
+<style>
+.layui-layer{
+        top: 60px !important;
+    }
+
+    .Billing ul button{
+        width:16px;
+        background: none;
+        border:none;
+    }
+    .Billing ul input{
+        width:90px;height:15px;
+        margin-top:-3px;
+        border:none;
+        /*border:1px solid #ccc;*/
+    }
+    .Billing-jifen1,.Billing-jifen2{
+        border-right:1px solid #ccc;
+        padding:0;margin-top:1px;;
+        border:1px solid #ccc;
+        width:122px;
+        height:17px;
+    }
+   .Billing-button1,.Billing-button2{
+        height:17px;
+        border-right:1px solid #ccc;
+        position: relative;
+        left:-20px;
+        top:-1px
+    }
+    .Billing-button3,.Billing-button4{
+        height:17px;
+        border-right:1px solid #ccc;
+        position: relative;
+        left:0px;
+        top:-1px
+		border-bottom:1px solid #ccc;
+    }
+
+    .Billing-button1:hover{
+        background: #ccc;;
+    }
+    .Billing-button2:hover{
+        background: #ccc;;
+    }
+    .Billing-button3:hover{
+        background: #ccc;;
+    }
+    .Billing-button4:hover{
+        background: #ccc;;
+    }
+	#jfa,#jfb{
+		color:red;
+		text-align:center;
+	}
+	
+</style>
+<script>
+    $(function(){
+        $('.li_add').click(function(){
+            $(this).find('.li_a').addClass('hover');
+            $(this).siblings('.li_add').find('.li_a').removeClass("hover");
+            var user_address = $(this).find('.addre').html();
+            var realname1 =  $(this).find('.realname1').val();
+            var mobile1 = $(this).find('.mobile1').val();
+            $('#user_address').val(user_address);
+            $('.gray_addr').html(user_address);
+            $('.realname').val(realname1);
+            $('.mobile').val(mobile1);
+        });
+
+        $('.pay_statue').click(function(){
+            $(this).addClass('hover');
+            $(this).siblings('.pay_statue').removeClass('hover');
+        });
+
+        $('.order_remarks').blur(function(){
+           if($(this).val().length>45){
+               alert('您的文字超过了规定字数');
+           }
+        });
+    })
+</script>
+
+<script>
+$(function(){
+	layer.open({
+	  type: 2,
+	  closeBtn: 0,
+	  title: '旅游协议',
+	  shadeClose: false,
+	  shade: 0.2,
+	  area: ['90%', '80%'],
+	  content: '{:U("Index/lvyou_xieyi")}' //iframe的url
+	});
+});
+</script>
+
+<!-- 栏目 -->
+<div class="vice-bj">
+    <div class="vice">
+    	<span class="left">
+			<if condition="empty($_SESSION['user_id'])">
+			<a href="{:U('Public/login')}" class="green">亲，请登录</a>
+			<a href="{:U('Public/reg')}">&#12288会员注册</a>
+			<else/>
+		欢迎您，{$_SESSION['mobile']}&nbsp;&nbsp;&nbsp;<a href="{:U('User/logout')}" class="green">退出登陆</a>
+			</if>
+        </span>
+        <strong class="right vice1">
+        <a href="{:U('User/my_order_lst')}">我的订单</a>
+        <a href="{:U('Mobile/Index/index')}" class="Phone" style="padding-left:18px;">手机掌中游</a>
+        </strong>
+    </div>
+</div>
+<!-- 头 -->
+<div class="head">
+    <a href="{:U('Index/index')}"><img src="__PUBLIC__/Home/img/logo.png" width="198" height="94"></a>
+<span>
+	<b class="left green1">1.我的购物车</b>
+	<b class="left green2">2.填写核对订单信息 </b>
+	<b class="left">3.成功提交订单</b>
+</span>
+</div>
+<!-- 内容 -->
+<form method="post" action="{:U('Cart/order_form')}" onsubmit="return check();">
+<div class="content">
+    <h3 class="size14">填写并核对订单信息</h3>
+    <div class="Order" style="width:1055px;">
+        <h3><span class="size14 bold left">联系人信息</span></h3>
+        <ul class="address">
+
+联系人: <input type="text" style="border:1px solid #ccc; height:30px; padding-left:4px;" name="realname" class="realname1" value="{$res_addr_alone.realname}"> &nbsp;&nbsp;&nbsp;
+手机号: <input style="border:1px solid #ccc; height:30px; padding-left:4px;" type="text" name="mobile" class="mobile1" value="{$res_addr_alone.mobile}">
+
+        </ul>
+        <!-- 一开始操作的时候里面默认的值就是每个值 -->
+        <input type="hidden"  class="pay_style" id="pay_style" name="pay_style" value="1"/>
+
+        <div style="clear: both;"></div>
+
+
+        <h3><span class="size14 bold left">支付方式</span></h3>
+        <ul class="address">
+            <li>
+				<a href="javascript:;"  class="hover pay_statue">支付宝支付</a>
+                <a href="javascript:;"  class="pay_statue">微信支付</a>
+			</li>
+        </ul>
+        <h3><span class="size14 bold left">产品详情</span></h3>
+        <ul class="commodity">
+            <foreach name="list" item="vo" >
+                <li>
+                        <img src="__PUBLIC__/Uploads/goods/{$vo.pic_url}" width="80" height="80" class="left">
+                        <span class="name left" style="height: 60px;">
+                            {$vo.goods_title}
+                        </span>
+                        <div style="font-size:14px; color:#F00; float:right; margin-right:100px; border:1px solid #ccc; padding:10px 30px;">
+
+                            出发城市 : {$vo.chufa_address}<br/>
+                            出发日期 : {$vo.chufa_date}<br/>
+                            成人 : {$vo.goods_num} 人 * {$vo.chufa_price} 元<br>
+                            儿童 : {$vo.goods_num_et} 人 * {$vo.chufa_price_et} 元<br/>
+                            送 : {$vo.fanli_jifen} 积分
+                        </div>
+                </li>
+                
+                    <input type="hidden" name="pic_url[]" value="{$vo.pic_url}">
+                    <input type="hidden" name="goods_title[]" value="{$vo.goods_title}">
+                    <input type="hidden" name="price_new[]" value="{$vo.price_new}">
+                    <input type="hidden" name="id[]" value="{$vo.id}">
+                    
+                    <input type="hidden" name="type[]" value="{$vo.type}">
+
+                    <input type="hidden" name="taocan_name[]" value="{$vo.taocan_name}">
+                    <input type="hidden" name="fanli_jifen[]" value="{$vo.fanli_jifen}">
+                    <input type="hidden" name="yunfei" value="{$youfei|default=0}">
+
+                    <input type="hidden" name="chufa_address[]" value="{$vo.chufa_address}">
+                    <input type="hidden" name="chufa_date[]" value="{$vo.chufa_date}">
+
+                    <input type="hidden" name="goods_num[]" value="{$vo.goods_num}">
+                    <input type="hidden" name="goods_num_et[]" value="{$vo.goods_num_et}">
+
+                    <input type="hidden" name="chufa_price[]" value="{$vo.chufa_price}">
+                    <input type="hidden" name="chufa_price_et[]" value="{$vo.chufa_price_et}">
+
+                    <input type="hidden" name="checkbox[]" value="{$vo.id}">
+
+            </foreach>
+                 </ul>
+                 <input type="hidden" name="order_type" value="{$order_type}">
+        <p style="margin-bottom:10px;">添加订单备注</p>
+        <p class="prompt"><input type="text" placeholder="限45个字 （定制类商品，请将购买需求在备注中做详细说明）" class="order_remarks" name="order_remarks"><span class="gray">提示：请勿填写有关支付、收货、发票方面的信息</span></p>
+    </div>
+</div>
+<!-- 结算 -->
+<div class="Billing">
+    <ul class="Handle">
+        <li><b class="right Billing-Money red size20" id='pay_sum'>￥{$price_sum}</b><span class="right">应付总额：</span></li>
+        <li class="gray">寄送至：<span class="gray_addr">{$data_alone['addr_alone']}</span>  收货人：<span class="gray_realname">{$data_alone['realname']}</span> <span class="gray_mobile">{$data_alone['mobile']}</span></li>
+		
+		<!--积分模块-->
+		<IF condition="$order_type eq 1">
+        <!--旅游订单-->		
+			<IF condition="$grade neq '合伙人'">
+			 <li><span><span style='font-weight:bold'>积分可用余额:</span>{$jfb}</span> &nbsp;<span class="Shipment">积分B账户支付：</span>
+					<div class="right Billing-jifen2" >
+						<button class="Billing-button3" type="button" onclick="jianNum2()">-</button><input type="hidden" id="jfa" name="jfa" value='0'><input type="text" onkeyup='clearJf()' id="jfb" name="jfb" value='0'><button type="button" class="Billing-button3" onclick="addNum2()">+</button>
+					</div>
+			 </li>
+			</IF>
+		<ELSE/><!--购物订单-->
+			<IF condition="$grade eq '合伙人'">
+			 <li><span><span style='font-weight:bold'>积分可用余额:</span>{$jfb}</span> &nbsp;<span class="Shipment">积分账户支付：<input type="hidden" id="jfa" name="jfa" value='0'></span>
+					<div class="right Billing-jifen2" >
+						<button class="Billing-button3" type="button" onclick="jianNum2()">-</button><input type="text" id="jfb" name="jfb" value='0'><button type="button" class="Billing-button3" onclick="addNum2()">+</button>
+					</div>
+			 </li>
+			<ELSE/>
+				<li><span><span style='font-weight:bold'>积分可用余额:</span>{$jfa}</span> &nbsp;<span class= "Shipment">积分A账户支付：</span>
+					<div class="right Billing-jifen1">
+						<button class="Billing-button3" type="button" onclick="jianNum1()">-</button><input type="text" onkeyup='clearJf()' id="jfa" name="jfa" value='0'><button type="button" class="Billing-button3" onclick="addNum1()">+</button>
+					</div>
+			 </li>
+			 <li><span><span style='font-weight:bold'>积分可用余额:</span>{$jfb}</span> &nbsp;<span class="Shipment">积分B账户支付：</span>
+					<div class="right Billing-jifen2" >
+						<button class="Billing-button3" type="button" onclick="jianNum2()">-</button><input type="text" onkeyup='clearJf()' id="jfb" name="jfb" value='0'><button type="button" class="Billing-button3" onclick="addNum2()">+</button>
+					</div>
+			 </li>
+			</IF>
+		</IF>
+<div style="font-size:16px; color:#F00; margin-top:10px;">温馨提示：积分兑换商品至少支付1元人民币</div>
+	</ul>
+	<div><input type='hidden' value="{$jfa}" id="jf1"><input type="hidden" value="{$jfb}" id='jf2'></div>
+	<div><input type='hidden' value="{$city_inp}" id="city_inp"></div>
+	<script>
+		var str=$("#pay_sum").text();
+		str=str.replace(/￥/ig,"");
+		str=Number(str);
+		var jf1=Number($('#jf1').val());
+		var jf2=Number($('#jf2').val());
+		function clearJf(){
+			if($("#jfa").val()-0>jf1){
+				$("#jfa").val(jf1);
+			}
+			if($("#jfb").val()-0>jf2){
+				$("#jfb").val(jf2);
+			}
+			if($("#jfa").val()-0<0){
+				$("#jfa").val(0);
+			}
+			if($("#jfb").val()-0<0){
+				$("#jfb").val(0);
+			}
+			new_price=str-$("#jfa").val()-0-$("#jfb").val();
+			$("#pay_sum").text(new_price);
+		}
+		function addNum1(){
+		//alert(str-0);
+		if($("#jfa").val()-0+1<=jf1 && str!=0){
+			$("#jfa").val($("#jfa").val()-0+1);
+			var price_a=$("#jfa").val();
+			var price_b=$("#jfb").val();
+		  $("#pay_sum").text(str-0-price_a-price_b);
+		}
+		  
+		  //layer.tips('这是测试的内容哦', '.aa1', {
+				//tips: [2, '#0FA6D8'] //还可配置颜色
+			//});
+		}
+		function addNum2(){
+		if($("#jfb").val()-0+1<=jf2 && str!=0){
+		  $("#jfb").val($("#jfb").val()-0+1);
+		  var price_a=$("#jfa").val();
+			var price_b=$("#jfb").val();
+		  $("#pay_sum").text(str-0-price_a-price_b);
+		}
+		}
+		function jianNum1(){
+		if($("#jfa").val()-1 >=0){
+		var price_a=$("#jfa").val();
+			var price_b=$("#jfb").val();
+			$("#jfa").val($("#jfa").val()-1);
+			
+
+				$("#pay_sum").text(str-0-price_a-price_b+1);
+
+		}
+		  
+		}
+		function jianNum2(){
+		if($("#jfb").val()-1 >=0){
+		    var price_a=$("#jfa").val();
+			var price_b=$("#jfb").val();
+			$("#jfb").val($("#jfb").val()-1);
+			
+
+				$("#pay_sum").text(str-0-price_a-price_b+1);
+			
+		  
+		}
+		  
+		}
+	</script>
+    <input type="hidden" name="price_sum" value="{$price_sum}">
+    <input type="hidden" name="orders_num" value="{$orders_number}">
+	<input type="hidden" name="use_jf_currency" value="{$jf_b}">
+    <input type="hidden" name="use_jf_limit" value="{$jf_a}">
+
+
+<a class="submit left" href="{:U('Index/index')}" style="width:200px;">返回首页</a>
+
+<button class="submit right" style="border: none;">支付</button>
+
+</div>
+</form>
+
+<!-- 底部 -->
+<div class="bottom">
+    <p>
+        <a href="#">关于我们</a>
+        <span>|</span>
+        <a href="#"> 联系我们</a>
+        <span>|</span>
+        <a href="#">人才招聘</a>
+        <span>|</span>
+        <a href="#"> 商家入驻</a>
+        <span>|</span>
+        <a href="#"> 广告服务</a>
+        <span>|</span>
+        <a href="#">  友情链接</a>
+        <span>|</span>
+        <a href="#">销售聪明</a>
+        <span>|</span>
+        <a href="#">掌掌社区</a>
+        <span>|</span>
+        <a href="#">掌掌公益</a>
+        <span>|</span>
+        <a href="#">English Site</a>
+    </p>
+</div>
+
+</body>
+
+<script>
+     $(function(){
+        $('.pay_statue').click(function(){
+           var zhi =  $(this).html();
+            $(this).siblings('.pay_statue').removeClass('hover');
+            $(this).addClass('hover');
+           if(zhi=='支付宝支付'){
+                $('#pay_style').val(1);
+           }else{
+               $('#pay_style').val(2);
+           }
+        });
+    })
+
+
+	function getCity(a){
+		var str=$(a).html();
+		var lastIndex = str.lastIndexOf(' ');
+		var lastStr = str.substring(lastIndex + 1);
+		$("#city_inp").val(lastStr);
+	}
+
+</script>
+
+
+</html>

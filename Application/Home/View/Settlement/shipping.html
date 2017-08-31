@@ -1,0 +1,12 @@
+<h5>配送方式</h5>
+<div class="payment clearfix">
+	<if condition="!empty($expressData)"> 
+		<foreach name="expressData" key="key" item="value"> 
+			<span class='fl' value="{$key}" discount="{$value[$expressModel::$discount_d]}" >{$value[$expressModel::$name_d]}<em></em></span>
+		</foreach> 
+	</if>
+</div>
+<script type="text/javascript">
+ var URL = "{:U('sumFreight')}";
+</script>
+<script src="__JS__/settlement/shipping.js"></script>

@@ -1,0 +1,127 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="repair-content-main">
+		<div class="img-parent">
+			<img src="__IMG__/w41.jpg">
+			<div class="form">
+				<div class="bottom-bg"></div>
+				<form action="{:U('Service/repair_ys')}" method="post" onsubmit="return check_repair_ys()">
+					<div class="top-input">
+						<ul>
+							<li class="clearfix">
+								<span class="fl">维修项目：</span>
+								<input type="text" name="tuihuo_case" id="tuihuo_case" class="fl txt">
+							</li>
+							<li class="clearfix">
+								<span class="fl">维修地点：</span>
+								<input type="text" name="address" id="address" class="fl txt">
+							</li>
+							<li class="clearfix">
+								<span class="fl">联系电话：</span>
+								<input type="text" name="tel" id="tel" class="fl txt">
+							</li>
+							<li class="clearfix">
+								<span class="fl">详细描述：</span>
+								<textarea name="explain" id="explain" class="fl"></textarea>
+							</li>
+						</ul>
+						<div class="submit-parent">
+							<input type="submit" value="确认提交">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="con-wrap w">
+			<ul class="tools-main clearfix">
+				<li class="fl">
+					<a href="javascript:;" class="intro">
+						<img src="__IMG__/w46.jpg">
+						<img src="__IMG__/w46_active.jpg" class="active">
+					</a>
+					<span>省钱、省时、省心</span>
+				</li>
+				<li class="fl">
+					<a href="javascript:;" class="intro">
+						<img src="__IMG__/w47.jpg">
+						<img src="__IMG__/w47_active.jpg" class="active">
+					</a>
+					<span>拥有专业团队为您服务</span>
+				</li>
+				<li class="fl">
+					<a href="javascript:;" class="intro">
+						<img src="__IMG__/w48.jpg">
+						<img src="__IMG__/w48_active.jpg" class="active">
+					</a>
+					<span>提供优质维修体验</span>
+				</li>
+				<li class="fl active">
+					<a href="javascript:;" class="intro">
+						<img src="__IMG__/w49.jpg">
+						<img src="__IMG__/w49_active.jpg" class="active">
+					</a>
+					<span>维修足不出户</span>
+				</li>
+			</ul>
+		</div>
+		<div class="con-main w">
+			<p class="title">注：提交申请后，商城技术支持会电话为您服务。若问题解决，则受理结束；如果问题未解决，则按维修流程为您服务。</p>
+			<dl class="explain">
+				<dt>服务说明</dt>
+				<dd>商城维修会受到商城物流覆盖区域范围影响，不同的区域和商品品牌，售后到家时效不一致。由于办公设备类产品存在不易复现的间歇性故障，因此以上查询实现结果有可能会存在偏差，如有异常情况，商城将及时与您联系。</dd>
+			</dl>
+			<dl class="beCareful">
+				<dt>注意事项</dt>
+				<dd class="clearfix">
+					<span class="fl">1.</span>
+					<p class="fl">商城维修涉及的品牌、时效及费用仅针对部分特定商品，具体以查询结果为准。</p>
+				</dd>
+				<dd class="clearfix">
+					<span class="fl">2.</span>
+					<p class="fl">此服务仅支持商城物流配送范围。</p>
+				</dd>
+				<dd class="clearfix">
+					<span class="fl">3.</span>
+					<p class="fl">如遇自然灾害，交通管制等不可控因素及法定节假日，商城维修时效顺延。</p>
+				</dd>
+				<dd class="clearfix">
+					<span class="fl">4.</span>
+					<p class="fl">
+						商城维修不提供数据备份，盗版系统及软件安装，个人信息保管服务内容，请您自行备份个人信息资料等，以免造成资料丢失，商城对资料丢失不承担任何法律责任。
+					</p>
+				</dd>
+				<dd class="clearfix">
+					<span class="fl">5.</span>
+					<p class="fl">对于商城维修范围内的商品，不代表该商品同时符合保内免费维修条件。</p>
+				</dd>
+				<dd class="clearfix">
+					<span class="fl">6.</span>
+					<p class="fl">对于保修期外的商品，维修时效与客户支付维修费用的时效相关，维修时效将做相应的顺延。</p>
+				</dd>
+			</dl>
+		</div>
+	</div>
+	<!--尾部-->
+<script src="__JS__/Service/service.js"></script>	
+<!-- <script src="js/header.js"></script> -->
+	<script>
+		//划入效果
+		$('.repair-content-main .con-wrap .tools-main a').on('mouseenter mouseleave',function(e){
+			var w = $(this).width(); 
+			var h = $(this).height(); 
+			var x = (e.pageX - $(this).offset().left - (w / 2)) * (w > h ? (h / w) : 1); 
+			var y = (e.pageY - $(this).offset().top - (h / 2)) * (h > w ? (w / h) : 1); 
+			var direction = Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90) + 3) % 4; 
+			var eventType = e.type;
+			var aPos=[{left:0,top:-179},{left:155,top:0},{left:0,top:179},{left:-155,top:0}];
+			if(eventType == 'mouseenter'){
+				$(this).find('.active').css(aPos[direction]).stop(true,true).animate({left:0,top:0},200);
+			}else{
+				$(this).find('.active').stop(true,true).animate(aPos[direction],200);    
+			}
+		});
+	</script>
+</block>

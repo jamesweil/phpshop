@@ -1,0 +1,82 @@
+<extend name="Public/publicHTML" />
+<block name="nav">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<script src="__COMMON__/bootstrap/js/bootstrap.min.js"></script> <br />
+</block>
+<block name="content">
+<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i>支付类型列表
+				</h3>
+			</div>
+			<div class="panel-body">
+				<!-- <div class="navbar navbar-default">
+					<form action="{:U('goods_list')}" id="search"
+						class="navbar-form form-inline" method="get">
+						<button type="button"
+							onclick="location.href='{:U('addSiteHtml')}'"
+							class="btn btn-primary pull-right">
+							<i class="fa fa-plus"></i>添加站点
+						</button>
+					</form>
+				</div> -->
+				<div id="ajax_return">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<foreach name="comment" key="key" item="value">
+									<th class="sorting text-left">{$value}</th>
+									</foreach>
+									<!-- <th class="sorting text-left">操作</th> -->
+								</tr>
+							</thead>
+							<tbody>
+								<if condition="!empty($data)"> <foreach name="data"
+									item="row">
+								<tr>
+									<td class="text-left">{$row[$model::$id_d]}</td>
+									<td class="text-left">{$row[$model::$typeName_d]}</td>
+									<td class="text-left">{$row[$model::$createTime_d]|date="Y-m-d
+										H:i:s", ###}</td>
+									<td class="text-left">{$row[$model::$updateTime_d]|date="Y-m-d
+										H:i:s", ###}</td>
+									<td class="text-left"><img
+										src="{$imageType[$row[$model::$status_d]]}"
+										data-status="{$row[$model::$status_d]}"
+										data-id = "{$row[$model::$id_d]}"
+										onclick="SwitchStatus.getInstance(this).switchImage()" /></td>
+									<td class="text-left"><img
+										data-id = "{$row[$model::$id_d]}"
+											data-status="{$row[$model::$isDefault_d]}"
+										class="all"
+										onclick="SwitchStatus.setURL(EDIT_DEFAULT).getInstance(this).setDefault()"
+										src="{$imageType[$row[$model::$isDefault_d]]}" /></td>
+
+
+									<!-- <td class="text-left"><a
+										href="{:U('modifyGoods', array($model::$id_d => $row[$model::$id_d]))}"
+										class="btn btn-primary">配置</a></td> -->
+								</tr>
+								</foreach> </if>
+							</tbody>
+						</table>
+						<div class="page"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script src="__COMMON__/js/alert.js"></script> <script
+	src="__COMMON__/js/noticeAdmin.js?a=3454"></script> <script
+	src="__COMMON__/js/switchStatus.js?a=11546546546546546546546465454"></script> <script>
+var IMG_TYPE = {$jsonImageType};
+var EDIT_DEFAULT = "{:U('editDefault')}";
+var EDIT_STATUS_URL = "{:U('editIsOpen')}";
+SwitchStatus.setURL(EDIT_STATUS_URL);
+SwitchStatus.setImagType(IMG_TYPE);
+</script> </block>

@@ -1,0 +1,135 @@
+
+<!--二级头部-->
+<div class="home-header">
+	<div class="home-header-main clearfix">
+		<!--logo-->
+		<a href="javascript:;" class="logo fl">
+			<p></p>
+			<h2>亿速网络</h2>
+		</a>
+		<!--搜索框-->
+		<div class="home-search-parent fl">
+			<div class="home-search clearfix">
+				<input type="text" id="pp" class="fl input">
+				<input type="button"  class="fl btn" value="搜&nbsp;索">
+				<div class="gg"></div>
+			</div>
+			<style>
+			.gg{
+			width: 520px;
+			overflow: hidden;
+			background-color: white!important;
+			position: relative;
+			z-index: 99999;
+			border: 1px solid #999999;
+			border-top: none;
+			border-bottom: none;
+			}
+			.gg div{
+			width: 100%;
+			height: 30px;
+			line-height: 30px;
+			border-bottom: 1px solid #999999;
+			background-color: white!important;
+			}
+			.gg div:first-child{
+			border-top: none;
+			}
+			.gg div a{
+			color: #333333;
+			text-decoration:none;
+			background-color: white;
+			display: block;
+			font-size: 12px;
+			text-indent: 10px;
+			}
+			.gg div a:first-child{
+			border-top: none;
+			}
+			.gg div a:hover{
+			background-color: #cd292b;
+			color: white;
+			}
+			</style>
+			<dl class="home-hotsearch clearfix">
+				<dt class="fl">热门搜索：</dt>
+				<foreach name="hot_words" item="hot_word">
+				<dd class="fl">
+					<a href="javascript:;">{$hot_word.hot_words}</a>
+				</dd>
+				</foreach>
+			</dl>
+		</div>
+		<!--购物车-->
+		<div class="home-shopping fl">
+			<div class="home-shopping-top clearfix">
+				<em class="fl"></em> <span class="fl"><a
+					href="{:U('Cart/goods_cart')}">我的购物车</a></span> <i class="fl"></i>
+			</div>
+			<div class="home-individual clearfix">
+				<span class="fl"></span> <em class="fl" id="couts">{$cartCount?$cartCount:0}</em>
+				<i></i>
+			</div>
+			<dl class="home-shopping-up">
+				<if condition="$cartCount==0"><dt>购物车没有任何东西，赶紧选吧。</dt></if>
+				<if condition="$cartCount!=0">
+					<volist name="carts" id="cart">
+						<if condition="$cart['buy_type']==1">
+							<dd class="clearfix active">
+								<a href="javscript:;" class="fl">
+									<img src="{$cart.pic_url}" alt="">
+								</a>
+								<a href="{:U('Goods/goodsDetails',['id'=>$cart['goods_id'],'goods_num'=>$cart['goods_num']])}" class="fl con">
+									{$cart.title}
+								</a>
+								<strong class="fl">
+									<span>￥{$cart.price_new}</span>x{$cart.goods_num}<br>
+									<a href="javascript:;" class="dels" data="{$cart.id}">删除</a>
+								</strong>
+							</dd>
+						</if>
+						<if condition="$cart['buy_type']==2">
+							<dd class="clearfix active">
+								<a href="javscript:;" class="fl">
+
+								</a>
+								<a href="{:U('Cart/goods')}" class="fl con">
+									套餐
+								</a>
+								<strong class="fl">
+									<span>￥{$cart.price_new}</span><br>
+									<a href="javascript:;" class="dels" data="{$cart.id}">删除</a>
+								</strong>
+							</dd>
+						</if>
+					</volist>
+				</if>
+			</dl>
+		</div>
+		<!--二维码-->
+		<div class="fr home-code"></div>
+	</div>
+</div>
+<script>
+	$('#pp').keyup(function(){
+		var _url ="{:U('Goods/search')}";
+		var _data=$(this).val();
+		$.post(_url,{title:_data},function(data){
+			if(data.status==0){
+				/*	layer.msg(data.message);*/
+			}
+			if(data.status==1){
+				var _a=data.data;
+				var _b="{:U('Goods/goodsDetails')}"
+				var _html='';
+				for (var i in _a){
+					_html +='<div><a href="'+_b+'?id='+_a[i].id+'"> '+_a[i].title+'</a></div>';
+				}
+			}
+			$('.gg').html(_html);
+			if(data.status==2){
+				$('.gg').html('');
+			}
+		})
+	})
+</script>

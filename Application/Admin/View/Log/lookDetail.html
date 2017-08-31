@@ -1,0 +1,61 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<div class="wrapper">
+	<!-- Main content -->
+	<section class="content">
+		<div class="container-fluid">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i>日志详情
+					</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-bordered table-hover font_size">
+						<thead>
+							<tr>
+								<foreach name="notes" key='key' item="value"> <if
+									condition="$key === $logContentModel::$id_d">
+								<td style="width: 1px;" class="text-center"><input
+									type="checkbox"
+									onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+								<else />
+								<td class="text-center cursor">{$value}</td>
+								</if> </foreach>
+								<td class="text-center">操作</td>
+							</tr>
+						</thead>
+						<tbody>
+							<if condition="!empty($data)"> <foreach name="data"
+								key="key" item="list">
+							<tr>
+								<td class="text-center"><input type="checkbox"
+									name="selected[]" value="{$list[$logContentModel::$id_d]}"></td>
+								<td class="text-center">{$list[$logContentModel::$key_d]}</td>
+								<td class="text-center">{$list[$logContentModel::$value_d]}</td>
+								<td class="text-center">{$list[$logContentModel::$currentValue_d]}</td>
+								<td class="text-center">{$list[$logContentModel::$comment_d]}</td>
+								
+								<td class="text-center"> <a
+									onclick="Tool.deleteDataClose('{:U('deleteLogById')}', {$list[$logContentModel::$id_d]})"
+									data-toggle="tooltip" class="btn btn-danger" title="删除"><i
+										class="fa fa-trash-o"></i></a></td>
+							</tr>
+							</foreach> </if>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- /.row -->
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper --> <script
+	src="__COMMON__/My97Date/WdatePicker.js"></script> <script
+	src="__COMMON__/js/jquery-form.js"></script> <script
+	src="__COMMON__/js/alert.js"></script> </block>

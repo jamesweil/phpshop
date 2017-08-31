@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Common/Ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="__PUBLIC__/Common/uploadPreview.min.js"></script>
+</head>
+<body>
+
+<form id="form3" method="post" action="" >
+<div class="list"><!-- onsubmit="return false;" -->
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details" style=" margin-top:2px;">
+      	  <tr>
+	        <td colspan="2" style=" background:#E4EEFA;"><h3 style="margin-left:50px;">发布APP信息信息</h3></td>
+       	  </tr>
+        <tbody>
+	     <tr>
+	        <td><div align="right">版本号：</div></td>
+	        <td><input type="text" style="color:#F00; font-weight:600;width:400px" name="version_num" id="version_num" placeholder='示例值 V1.01' ></td>
+          </tr>
+		  <tr>
+	        <td><div align="right">应用平台：</div></td>
+	        <td><select name='app_type'>
+			<option  value="android">android</option>
+			<option  value="ios">ios</option>
+			</select></td>
+          </tr>
+		  <tr>
+	        <td><div align="right">下载地址：</div></td>
+	        <td><input type="text" style="color:#F00; font-weight:600;width:400px" name="url" id="url" placeholder='以http://开头的地址' /></td>
+          </tr>
+		  <tr>
+	        <td><div align="right">更新说明：</div></td>
+	        <td>
+				<textarea style="color:#F00; font-weight:600;width:400px;height:300px" name="intro" id="intro"></textarea>
+			</td>
+          </tr>
+        </tbody>
+  </table> 
+</div>
+<div class="footer">
+     <button type="button" class="button"  id="button" style="min-width:160px;" onclick="check_form();return false;">发布</button>
+</div>
+</form>
+<script>
+function refresh(){
+		window.location.href="{:U('index')}"
+	}
+function check_form(){
+	if($("#version_num").val()==''){
+		return false;
+	}else if($("#url").val()==''){
+		return false;
+	}else if($("#intro").val()==''){
+		return false;
+	}else{
+		$("#form3").submit();
+		//refresh();
+	}
+}
+</script>
+</body>
+</html>

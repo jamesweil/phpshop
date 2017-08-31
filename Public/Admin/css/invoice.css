@@ -1,0 +1,285 @@
+.bill_Text_up_xj {
+	height: 20px;
+	display: block;
+	float: left;
+	outline: none;
+	text-indent: 15px;
+	font-size: 12px;
+	overflow: hidden;
+	line-height: 20px;
+	margin-top: 10px;
+	color: #005ea7;
+}
+
+.bill_Text_up_xj.active {
+	display: none;
+}
+
+.bill_Text_up_gs {
+	width: 340px;
+	height: 32px;
+	float: left;
+	border: 1px solid #D1D1D1;
+	outline: none;
+	text-indent: 15px;
+	font-size: 12px;
+	overflow: hidden;
+	line-height: 32px;
+	margin-left: 80px;
+	margin-top: 15px;
+	display:none;
+}
+
+.bill_Text_up_gs.active {
+	display: block;
+}
+
+.detailed {
+	position: relative;
+}
+
+.bill_off:hover {
+	color: #333333;
+}
+
+.bill_off {
+	background-color: #EAEAEA;
+	color: #333333;
+}
+
+.bill_save:hover {
+	color: white;
+}
+
+.bill_save {
+	background-color: #D0101B;
+	color: white;
+}
+
+.bill_bottom a {
+	display: block;
+	width: 70px;
+	height: 32px;
+	float: left;
+	margin-right: 15px;
+	text-align: center;
+	line-height: 32px;
+	font-size: 12px;
+	border-radius: 5px;
+}
+
+.bill_bottom {
+	width: 400px;
+	height: 35px;
+	margin-left: 125px;
+	margin-top: 25px;
+}
+
+.bill_Text_content_wb {
+	width: 400px;
+	height: 100px;
+	border: 1px solid #D1D1D1;
+	display: block;
+	margin-left: 80px;
+	margin-top: 20px;
+	resize: none;
+	text-indent: 20px;
+	outline: none;
+	font-size: 12px;
+	color: #999999;
+	padding-top: 10px;
+}
+
+.bill_Text_content_top_right a.active {
+	background-image: url("../img/bill_Selected.png");
+}
+
+.bill_Text_content_top_right a {
+	display: block;
+	width: 98px;
+	height: 32px;
+	float: left;
+	text-decoration: none;
+	background-image: url("../img/No_bill.png");
+	background-size: 100% 100%;
+	text-align: center;
+	line-height: 32px;
+	margin-right: 15px;
+	color: #666666;
+}
+
+.bill_Text_content_top_right {
+	width: 340px;
+	height: 35px;
+	float: left;
+	font-size: 12px;
+}
+
+.bill_Text_content_top_left {
+	width: 80px;
+	height: 35px;
+	float: left;
+	font-size: 12px;
+	color: #666666;
+	line-height: 35px;
+}
+
+.bill_Text_content_top {
+	width: 100%;
+	overflow: hidden;
+}
+
+.bill_Text_content {
+	width: 500px;
+	overflow: hidden;
+	margin-top: 20px;
+	margin-left: 45px;
+}
+
+.bill_Text_up_input {
+	width: 340px;
+	height: 32px;
+	display: block;
+	float: left;
+	border: 1px solid #D1D1D1;
+	outline: none;
+	text-indent: 15px;
+	font-size: 12px;
+	overflow: hidden;
+	position: relative;
+	line-height: 32px;
+	cursor: pointer;
+}
+
+.bill_Text_up_left {
+	width: 80px;
+	height: 35px;
+	float: left;
+	font-size: 12px;
+	color: #666666;
+	line-height: 35px;
+}
+
+.bill_Text_up {
+	width: 500px;
+	overflow: hidden;
+	margin-top: 20px;
+	margin-left: 45px;
+	line-height:35px;
+}
+
+.bill_Text_kind a.active {
+	background-image: url("../img/bill_Selected.png");
+}
+
+.bill_Text_kind a {
+	width: 98px;
+	height: 32px;
+	display: block;
+	background-image: url("../img/No_bill.png");
+	background-size: 100% 100%;
+	font-size: 12px;
+	color: #666666;
+	text-align: center;
+	line-height: 32px;
+	float: left;
+	margin-right: 15px;
+}
+
+.bill_Text_kind {
+	width: 500px;
+	overflow: hidden;
+	margin-top: 20px;
+	margin-left: 45px;
+}
+
+.bill_Text_genre a {
+	width: 98px;
+	height: 32px;
+	display: block;
+	background-image: url("../img/No_bill.png");
+	background-size: 100% 100%;
+	font-size: 12px;
+	color: #666666;
+	text-align: center;
+	line-height: 32px;
+	float: left;
+	margin-right: 15px;
+}
+
+.bill_Text_genre a.active {
+	background-image: url("../img/bill_Selected.png");
+}
+
+.bill_Text_genre {
+	width: 500px;
+	overflow: hidden;
+	margin-top: 30px;
+	margin-left: 45px;
+}
+
+.bill_Text {
+	width: 100%;
+	overflow: hidden;
+}
+
+.dialog_gb img {
+	display: block;
+	margin: auto;
+	margin-top: 10px;
+}
+
+.dialog_gb {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: block;
+}
+
+.bill_Title {
+	width: 100%;
+	height: 40px;
+	background-color: #F3F3F3;
+	font-size: 14px;
+	color: #555;
+	text-indent: 20px;
+	line-height: 40px;
+	position: relative;
+}
+
+.bill {
+	width: 630px;
+	height: 500px;
+	background-color: white;
+	position: absolute;
+	top: 640px;
+	left: 285px;
+	z-index: 299999999;
+	border: 5px solid #CECECE;
+	border-radius: 5px;
+	display: none;
+}
+
+.bill.active {
+	display: block;
+}
+.Invoice_background {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #333333;
+	filter: alpha(opacity = 20);
+	-moz-opacity: 0.2;
+	-khtml-opacity: 0.2;
+	opacity: 0.2;
+	z-index: 199999999;
+	display: none;
+}
+
+.Invoice_background.active {
+	display: block;
+}

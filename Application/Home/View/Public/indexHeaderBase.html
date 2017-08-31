@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{$intnetTitle}</title>
+<link rel="stylesheet" href="__CSS__/base.css">
+<link rel="stylesheet" href="__CSS__/style.css">
+<script src="__JS__/jquery-1.7.2.min.js"></script>
+<if condition="!isset($noLoad) "> <script
+	src="__JS__/jquery.lazyload.min.js"></script> </if>
+<script type="text/javascript">
+	window.flag = true;
+</script>
+<script>
+	function addAd(ele) {
+		var _id = $(ele).attr('gg');
+		var _reurl = $(ele).attr('data');
+		var _locatUrl = "{:U('Ad/addhit')}";
+		$.post(_locatUrl, {
+			id : _id
+		}, function(data) {
+			console.log(data.msg);
+		}, 'JSON')
+		window.location.href = _reurl;
+	}
+</script>
+</head>
+<body>
+	<!--头部-->
+	<div class="top1">
+		<div class="header-2016">
+			<div class="w clearfix">
+				<!--头部左内容-->
+				<ul class="fl" id="areaList">
+
+				</ul>
+				<!--头部右内容-->
+				<ul class="fr clearfix nav-right">
+					<li class="fl clearfix"><span class="fl">欢迎来到亿速网络！</span> <if
+							condition="$userId['user_name']!=null">{$userId.user_name} <a
+							href="{:U('public/logout')}" class="fl active">【退出】</a> </if> <if
+							condition="$userId['user_name']==null"> <a
+							href="{:U('public/login')}" class="fl active">【登录】</a> <a
+							href="{:U('public/reg_user_name')}" class="fl active">【注册】</a> </if></li>
+					<li class="fl">|<a href="{:U('Order/order_myorder')}">我的订单</a>|
+					</li>
+					<li class="fl customerService"><a
+						href="{:U('Order/order_myorder')}">个人中心<i></i></a>
+						<div>
+							<p>
+								<a href="{:U('Order/order_myorder')}">我的信息</a>
+							</p>
+							<p>
+								<a href="{:U('Order/order_myorder')}">我的订单</a>
+							</p>
+							<p>
+								<a href="{:U('Assets/coupon')}">我的优惠券</a>
+							</p>
+							<p>
+								<a href="{:U('Assets/myCollection')}">我的收藏</a>
+							</p>
+							<p>
+								<a href="{:U('Assets/integral')}">我的积分</a>
+							</p>
+						</div></li>
+					<li class="fl clearfix mobile"><span class="fl">|</span>
+						<div class="mobile-phone fl">
+							<b></b> <s></s>
+						</div> <a href="javascript:;" class="fl">APP下载</a></li>
+					<li class="fl customerService">|<a href="javascript:;">客户服务<i></i></a>|
+						<div>
+							<p>
+								<a href="{:U('Service/return_repair')}">返修退换货</a>
+							</p>
+							<p>
+								<a href="{:U('Service/after_sale')}">售后管理</a>
+							</p>
+							<p>
+								<a href="{:U('Service/advisoryReply')}">咨询回复</a>
+							</p>
+							<p>
+								<a href="{:U('Service/opinion')}">意见建议</a>
+							</p>
+							<p>
+								<a href="{:U('Service/repair_choice')}">上门维修服务</a>
+							</p>
+							<p>
+								<a href="{:U('Service/announcement')}">网站公告</a>
+							</p>
+							<p>
+								<a href="{:U('Service/report_center')}">投诉中心</a>
+							</p>
+						</div>
+					</li>
+					<li class="fl customerService"><a href="javascript:;">网络导航<i></i></a>
+						<div>
+							<p>
+								<a href="javascript:;">我的信息</a>
+							</p>
+							<p>
+								<a href="javascript:;">我的订单</a>
+							</p>
+							<p>
+								<a href="javascript:;">我的快速订单</a>
+							</p>
+							<p>
+								<a href="javascript:;">我的优惠券</a>
+							</p>
+							<p>
+								<a href="javascript:;">我的收藏</a>
+							</p>
+							<p>
+								<a href="javascript:;">报表中心</a>
+							</p>
+							<p>
+								<a href="javascript:;">电子杂志订阅</a>
+							</p>
+							<p>
+								<a href="javascript:;">我的积分</a>
+							</p>
+						</div></li>
+					<li class="fl telephone"><em></em>{$intnet_phone}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="home-section">
+		<!--二级头部-->
+		<div class="home-header">
+			<div class="home-header-main clearfix">
+				<!--logo-->
+				<a href="javascript:;" class="logo fl">
+					<p></p>
+					<h2>亿速网络</h2>
+
+				</a>
+				<!--搜索框-->
+				<div class="home-search-parent fl">
+					<div class="home-search clearfix">
+						<form action="{:U('Goods/goodsDetails')}" method="get">
+							<input type="text" class="fl input" id="pp" /> <input
+								type="hidden" name="id" class="fl input" value="" /> <input
+								type="submit" class="fl btn" id="search"
+								onmouseover="searcher()" value="搜&nbsp;索" />
+							<div class="gg"></div>
+						</form>
+					</div>
+					<dl class="home-hotsearch clearfix">
+						<dt class="fl">热门搜索：</dt>
+						<foreach name="hot_words" item="hot_word">
+						<dd class="fl">
+							<a href="javascript:;">{$hot_word.hot_words}</a>
+						</dd>
+						</foreach>
+					</dl>
+				</div>
+
+				<!--购物车-->
+				<div class="home-shopping fl">
+					<div class="home-shopping-top clearfix">
+						<em class="fl"></em> <span class="fl"><a
+							href="{:U('Cart/goods')}">我的购物车</a></span> <i class="fl"></i>
+					</div>
+					<div class="home-individual clearfix">
+						<span class="fl"></span> <em class="fl">0</em> <i></i>
+					</div>
+					<dl class="home-shopping-up">
+						<dt>购物车没有任何东西，赶紧选吧。</dt>
+						<if condition="$cartCount!=0"> <volist name="carts" id="cart">
+						<dd class="clearfix active">
+							<a href="javscript:;" class="fl"> <img src="{$cart.pic_url}"
+								alt="">
+							</a> <a
+								href="{:U('Goods/goods_details',['id'=>$cart['id'],'goods_num'=>$cart['goods_num']])}"
+								class="fl con"> {$cart.title} </a> <strong class="fl">
+								<span>￥{$cart.price_new}</span>x{$cart.goods_num}<br> <a
+								href="javascript:;" class="dels" data="{$cart.id}">删除</a>
+							</strong>
+						</dd>
+						</volist> </if>
+					</dl>
+				</div>
+				<!--二维码-->
+				<div class="fr home-code"></div>
+			</div>
+		</div>
+
+		<!--二级导航-->
+		<div class="homeNavBar">
+			<div class="w clearfix">
+				<dl class="fl level paper paperone">
+					<dt class="clearfix">
+						<i class="fl"></i> <span class="fl">全部商品分类</span> <em class="fl"></em>
+					</dt>
+					<foreach name="goods_categories" item="top_cat"> <eq
+						name="top_cat.fid" value="0">
+					<dd class="menu">
+						<div class="clearfix">
+							<i class="fl {$top_cat.css_class}"></i> <span class="fl"><a
+								href="{:U('Product/productList',['cid'=>$top_cat['id']])}">{$top_cat.class_name}</a></span>
+							<em class="fr"></em>
+						</div>
+						<div class="i-mc">
+							<ul class="clearfix classification1">
+								<foreach name="goods_categories" item="second_cat"> <eq
+									name="second_cat.fid" value="$top_cat.id">
+								<li class="fl"><a
+									href="{:U('Product/productList',['cid'=>$second_cat['id']])}">{$second_cat.class_name}</a>
+								</li>
+								</eq> </foreach>
+							</ul>
+							<foreach name="goods_categories" item="second_cat"> <eq
+								name="second_cat.fid" value="$top_cat.id">
+							<dl class="classification2 clearfix">
+								<dt class="fl">
+									<a
+										href="{:U('Product/productList',['cid'=>$second_cat['id']])}">{$second_cat.class_name}&nbsp;></a>
+								</dt>
+								<foreach name="goods_categories" item="third_cat"> <eq
+									name="third_cat.fid" value="$second_cat.id">
+								<dd class="fl clearfix">
+									<a href="{:U('Product/productList',['cid'=>$third_cat['id']])}"
+										class="fl">{$third_cat.class_name}</a>
+								</dd>
+								</eq> </foreach>
+							</dl>
+							</eq> </foreach>
+						</div>
+					</dd>
+					</eq> </foreach>
+					</dd>
+				</dl>
+
+				<ul class="fr clearfix navitems-2016">
+					<li class="fl"><a href="__SERVER__">首页</a></li>
+					<foreach name="navs" item="nav">
+					<li class="fl"><a href="{$nav.link}/id/{$nav.id}.html">{$nav.nav_titile}</a>
+						<if condition="$nav.type eq 1"> <span><img
+							src="__IMG__/new1.gif" alt=""></span> </if></li>
+					</foreach>
+				</ul>
+			</div>
+		</div>
+
+		<script>
+			//全部展开商品分类  展开
+			$('.homeNavBar .level').on('mouseenter', function() {
+				$(this).removeClass('paper');
+			}).on('mouseleave', function() {
+				$(this).addClass('paper')
+			});
+			//广告图关闭
+			$('.adt .delete').on('click', function() {
+				$('.lates-centent .adt').remove();
+			});
+			//内容选择
+			$('#selected1 .title ul li').on(
+					'mouseenter',
+					function() {
+						$('#selected1 .title ul li').removeClass('hover').eq(
+								$(this).index()).addClass('hover');
+					});
+			$('#selected2 .title ul li').on(
+					'mouseenter',
+					function() {
+						$('#selected2 .title ul li').removeClass('hover').eq(
+								$(this).index()).addClass('hover');
+					});
+			//内容效果
+			$('.promotion .two .con').on(
+					'mouseenter',
+					function() {
+						$('.promotion .two .conFr').eq($(this).index()).stop()
+								.animate({
+									right : 30
+								}, 500)
+					}).on(
+					'mouseleave',
+					function() {
+						$('.promotion .two .conFr').eq($(this).index()).stop()
+								.animate({
+									right : 10
+								}, 500)
+					});
+		</script>
+
+		<!--ajax商品搜索功能-->
+		<script>
+			$('#pp').keyup(
+					function() {
+						var _url = "{:U('Goods/search')}";
+						var _data = $(this).val();
+						$.post(_url, {
+							title : _data
+						}, function(data) {
+							if (data.status == 0) {
+								/*	layer.msg(data.message);*/
+							}
+							if (data.status == 1) {
+								var _a = data.data;
+								var _b = "{:U('Goods/goodsDetails')}";
+								var _html = '';
+								for ( var i in _a) {
+									_html += '<div><a href="' + _b + '?id='
+											+ _a[i].id + '"> ' + _a[i].title
+											+ '</a></div>';
+								}
+							}
+							$('.gg').html(_html);
+							$('input[name="id"]').val(_a[1].id);
+							if (data.status == 2) {
+								$('.gg').html('');
+							}
+						}, 'json')
+					})
+		</script>

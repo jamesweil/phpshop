@@ -1,0 +1,25 @@
+
+<if condition="!empty($userAddress)"> <foreach name="userAddress"
+	item="addr">
+<div data-id="{$addr[$model::$id_d]}"
+	class='consignee-item clearfix <if condition="$addr[$model::$status_d] neq 1">none</if>'>
+	<div
+		class='fl myAddress <if condition="$addr[$model::$status_d] eq 1">active<else/>place</if>'
+		data-id="{$addr[$model::$id_d]}"
+		onclick="InterAddress.choseAddress(this)">
+		{$addr[$model::$alias_d]|default=$addr[$model::$realname_d]} <em></em>
+	</div>
+	<span class="fl">{$addr[$model::$realname_d]}</span> <span
+		class="fl ed">
+		{$addr[$model::$provId_d]}、{$addr[$model::$city_d]}、
+		{$addr[$model::$dist_d]}、{$addr[$model::$address_d]}</span> <span class="fl">{:substr_replace($addr[$model::$mobile_d],'****',3,4)}</span>
+	<a href="javascript:;"
+		onclick="InterAddress.editAddress({$addr[$model::$id_d]}, '{:U('editAddress')}')"
+		class="fr">编辑</a>
+</div>
+</foreach> </if>
+<div class="addr-switch switch-on cursor" id="consigneeItemAllClick"
+	onclick="InterAddress.showConsigneeAll(this)">
+	<span>更多地址</span><b></b>
+</div>
+<script type="text/javascript" src="__JS__/settlement/address.js"></script>

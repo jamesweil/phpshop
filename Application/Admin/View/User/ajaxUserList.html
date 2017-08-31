@@ -1,0 +1,89 @@
+
+<form method="post" enctype="multipart/form-data" target="_blank"
+	id="form-order">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<td style="width: 1px;" class="text-center"><input
+						type="checkbox"
+						onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+
+					<td class="text-right"><a
+						href="javascript:Order.sort('conditionForm', '{$userModel::$id_d}');">ID</a>
+					</td>
+					<td class="text-left">会员名称</td>
+					<td class="text-left">会员等级</td>
+
+					<td class="text-left">邮件地址</td>
+
+					<td class="text-left"><a
+						href="javascript:Order.sort('conditionForm','{$userModel::$mobile_d}');">手机号码</a>
+					</td>
+					<!-- <td class="text-left"><a
+						href="javascript:Order.sort('conditionForm','{$balanceModel::$accountBalance_d}');">余额</a>
+					</td>
+					<td class="text-left"><a
+						href="javascript:Order.sort('conditionForm','{$balanceModel::$lockBalance_d}');">锁定余额</a>
+					</td> -->
+					<td class="text-left"><a
+						href="javascript:Order.sort('conditionForm','{$userModel::$integral_d}');">积分</a>
+					</td>
+					<td class="text-left"><a
+						href="javascript:Order.sort('conditionForm','{$userModel::$createTime_d}');">注册日期</a>
+					</td>
+					<td class="text-right">操作</td>
+				</tr>
+			</thead>
+			<tbody>
+				<if condition="!empty($data['data'])"> <volist
+					name="data['data']" id="list">
+				<tr>
+					<td class="text-center"><input type="checkbox"
+						name="selected[]" value="{$list[$userModel::$id_d]}"> <input
+						type="hidden" name="shipping_code[]" value="flat.flat"></td>
+					<td class="text-right">{$list[$userModel::$id_d]}</td>
+					<td class="text-left">{$list[$userModel::$userName_d]}</td>
+					<td class="text-left">{$list[$levelModel::$levelName_d]}</td>
+					<td class="text-left" width="164">{$list[$userModel::$email_d]} <if
+							condition="($list[$userModel::$validateEmail_d] eq 0) AND ($list[$userModel::$email_d])">
+						(未验证) </if>
+					</td>
+					<td class="text-left">{$list[$userModel::$mobile_d]}</td>
+					<!-- <td class="text-left">{$list[$balanceModel::$accountBalance_d]}</td>
+					<td class="text-left">{$list[$balanceModel::$lockBalance_d]}</td> -->
+					<td class="text-left">{$list[$userModel::$integral_d]}</td>
+					<td class="text-left">{$list[$userModel::$createTime_d]|date='Y-m-d
+						H:i',###}</td>
+					<td class="text-right"><a
+						onclick="Tool.alertEdit('{:U('detail',array($userModel::$id_d=>$list[$userModel::$id_d]))}', '会员详情', 800, 600)"
+						data-toggle="tooltip" title="" class="btn btn-info"
+						data-original-title="查看详情"><i class="fa fa-eye"></i></a> <a
+						onclick="Tool.alertEdit('{:U('showUserAddress',array($userModel::$id_d=>$list[$userModel::$id_d]))}','会员收货地址', 800, 600)"
+						data-toggle="tooltip" title="" class="btn btn-info"
+						data-original-title="收货地址"><i class="fa fa-home"></i></a> <a
+						onclick="Tool.alertEdit('{:U('userRecharge',array($userModel::$id_d=>$list[$userModel::$id_d]))}', '会员账户', 800, 600)"
+						data-toggle="tooltip" title="" class="btn btn-info"
+						data-original-title="账户"><i class="glyphicon glyphicon-yen"></i></a>
+						<a
+						onclick="Order.deleteUser('{:U('deleteUser')}', {$list[$userModel::$id_d]})"
+						id="button-delete6" data-toggle="tooltip" title=""
+						class="btn btn-danger" data-original-title="删除"><i
+							class="fa fa-trash-o"></i></a></td>
+				</tr>
+				</volist> </if>
+			</tbody>
+		</table>
+	</div>
+</form>
+<div class="row">
+	<div class="col-sm-3 text-left"></div>
+	<div class="col-sm-6 text-right">{$data.page}</div>
+
+</div>
+<script>
+    $(".pagination  a").click(function(){
+		var page = $(this).data('p');
+        Order.ajaxForMyOrder('conditionForm', page);
+    });
+</script>

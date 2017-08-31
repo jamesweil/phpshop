@@ -1,0 +1,314 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+		<div class="ficationFl fl">
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">订单中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Order/order_myorder')}">·&nbsp;&nbsp;我的订单</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('OrderGroup/order_group')}">·&nbsp;&nbsp;团购订单</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('Order/cancel_order_record')}">·&nbsp;&nbsp;取消订单记录</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">资产中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Assets/balance')}">·&nbsp;&nbsp;余额</a>
+				</dd>
+				<dd>
+					<a href="{:U('Cart/goods')}">·&nbsp;&nbsp;我的购物车</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myCollection')}">·&nbsp;&nbsp;我的收藏</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myComment')}">·&nbsp;&nbsp;我的评价</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/coupon')}">·&nbsp;&nbsp;优惠券</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/integral')}">·&nbsp;&nbsp;积分</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/punkte')}">·&nbsp;&nbsp;积分兑换</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/gekauft')}">·&nbsp;&nbsp;我购买过的产品</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myTracks')}">·&nbsp;&nbsp;浏览足迹</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em> 
+					<span class="fl">财务中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Finance/my_invoice')}">·&nbsp;&nbsp;我的发票</a>
+				</dd>				
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+					<dd>
+						<a href="{:U('Finance/my_shipment')}">·&nbsp;&nbsp;我的发货</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/my_payment')}">·&nbsp;&nbsp;我的付款</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/other_orders')}">·&nbsp;&nbsp;其他订单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/closed_order')}">·&nbsp;&nbsp;已出兑账单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/outstanding_order')}">·&nbsp;&nbsp;未出兑账单</a>
+					</dd>
+				</if>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">特色业务</span>
+				</dt>
+				<dd>
+					<a href="{:U('SpecialBusiness/enterprise_group')}">·&nbsp;&nbsp;企业团购</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/purchase_requisition')}">·&nbsp;&nbsp;采购需求单</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/join_application')}">·&nbsp;&nbsp;加盟申请</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/printer_rental')}">·&nbsp;&nbsp;打印机租赁</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">商品中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('GoodsCenter/goods_search')}">·&nbsp;&nbsp;商品搜索</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">客户服务</span>
+				</dt>
+				<dd>
+					<a href="{:U('Service/return_repair')}">·&nbsp;&nbsp;返修退换货</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/after_sale')}">·&nbsp;&nbsp;售后管理</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/advisoryReply')}">·&nbsp;&nbsp;咨询回复</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/opinion')}">·&nbsp;&nbsp;意见建议</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/repair_choice')}">·&nbsp;&nbsp;上门维修服务</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/announcement')}">·&nbsp;&nbsp;网站公告</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/report_center')}">·&nbsp;&nbsp;投诉中心</a>
+				</dd>
+			</dl>
+			<dl data="false" class="active">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">用户设置</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserSet/address')}">·&nbsp;&nbsp;收货地址</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('UserSet/enterprise')}">·&nbsp;&nbsp;企业信息</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('UserSet/security')}">·&nbsp;&nbsp;安全设置</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">个人资料</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserData/user_data')}">·&nbsp;&nbsp;个人资料</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/bind_account')}">·&nbsp;&nbsp;账号绑定</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/special_application')}">·&nbsp;&nbsp;申请账期支付</a>
+				</dd>
+			</dl>
+		</div>
+		<!--内容-->
+		<div class="mordrMain fr userSer-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">收货地址</a></li>
+				</ul>
+			</div>
+			<ul class="content-form-main">
+				<li class="con-title">
+					<span>新增收货地址</span>
+					电话号码、手机号选填一项,其余均为必填项
+				</li>
+				<form action="{:U('UserSet/address_add')}" method="post" onsubmit="return address_add();">
+					<li class="form-main clearfix">
+					    <span class="fl">所在地区<em>*</em></span>
+					    <select name="prov" id="prov" style="width:100px; height:30px;">
+			                <option value="0">请选择省份</option>
+			                <volist name="prov" id="vo">  
+			                <option value="{$vo.id}">{$vo.name}</option>
+			                </volist>
+			            </select>
+			            <select name="city" id="city" style="width:100px; height:30px;">
+			                <option value="0">请选择城市</option>
+			            </select>
+			            <select name="dist" id="dist" style="width:100px; height:30px;">
+			                <option value="0">请选择地区</option>
+			            </select>
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl">详细地址<em>*</em></span>
+						<textarea class="fl" name="address" id="address" placeholder="建议您如实填写详细收货地址，例如街道名称，门牌号码，楼层和房间号等信息"></textarea>
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl">邮政编码<em>*</em></span>
+						<select id="select_change" style="width:100px; height:30px;">
+							<option value="0">无</option>
+							<option value="1">填写</option>
+						</select>
+						<input type="number" name="zipcode" id="zipcode" class="txt" style="display:none;">
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl">收货人姓名<em>*</em></span>
+						<input type="text" name="realname" id="realname" class="txt">
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl">手机号码<em>*</em></span>
+						<input type="number" name="mobile" id="mobile" class="txt">
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl"></span>
+						<label><input type="checkbox" name="status" id="status" value="1" class="check">设置为默认收货地址</label>
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl"></span>
+						<input type="submit" value="保存" class="submit">
+					</li>
+				</form>
+			</ul>			
+			<dl class="content-data-main">
+				<dt class="clearfix">
+					<span class="fl consignee">收货人</span>
+					<span class="fl region">所在地区</span>
+					<span class="fl address">详细地址</span>
+					<span class="fl z-code">邮编</span>
+					<span class="fl mobile-p">手机</span>
+					<span class="fl oper">操作</span>
+				</dt>
+				<volist name="data" id="vo">
+					<dd class="clearfix">
+						<span class="fl consignee">{$vo.realname}</span>
+						<span class="fl region">{$vo.prov} {$vo.city} {$vo.dist} </span>
+						<span class="fl address">{$vo.address}</span>
+						<span class="fl z-code">
+						    <empty name="vo.zipcode">
+						        无
+						    <else/>
+								{$vo.zipcode}
+						    </empty>
+						</span>
+						<span class="fl mobile-p">{$vo.mobile}</span>
+						<span class="fl oper clearfix">
+							<a href="javascript:;" onclick="edit({$vo.id})">修改</a> |
+							<a href="javascript:;" onclick="del({$vo.id})">删除</a>
+							<eq name="vo.status" value="1">
+								<input type="button" value="默认地址" class="setUp">
+                            <else/>
+								<input type="button" value="设为默认" class="default" data-value="{$vo.id}">
+							</eq>
+						</span>
+					</dd>
+				</volist>
+			</dl>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script type="text/javascript" src="__JS__/userset/address.js"></script>	
+
+<script>
+$(function(){
+    $('#prov').change(function(){
+        var code=$('#prov option:selected').val();
+        $.get('{:U('UserSet/city')}',{'code':code},function(data){
+        	if (data.data==1) {
+        		$('#city').html('<option value="">请选择城市</option>');
+                for (var i = 0; i<data['city'].length; i++) {
+                	$('#city').append('<option value="'+data['city'][i].id+'">'+data['city'][i].name+'</option>');
+                };
+        	}else{
+        		$('#city').html('');
+        	};
+              
+        }) 
+    }) 
+
+    $('#city').change(function(){
+        var code=$('#city option:selected').val();
+        $.get('{:U('UserSet/area')}',{'code':code},function(data){
+        	if (data.data==1) {
+        		$('#dist').html('<option value="">请选择地区</option>');
+                for (var i = 0; i<data['dist'].length; i++) {
+                	$('#dist').append('<option value="'+data['dist'][i].id+'">'+data['dist'][i].name+'</option>');
+                };
+        	}else{
+        		$('#dist').html('');
+        	};
+        })
+    })
+	$('#select_change').change(function(){
+		if($(this).val()==1)
+		{
+			$(this).css('display','none');
+			$('#zipcode').css('display','block');
+		}
+	})
+
+})
+
+</script>
+<!-- <script src="__JS__/header.js"></script>
+ -->
+</block>

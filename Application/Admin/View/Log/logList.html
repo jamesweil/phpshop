@@ -1,0 +1,87 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+
+<link href="__COMMON__/daterangepicker/daterangepicker-bs3.css"
+	rel="stylesheet" type="text/css" />
+<script src="__COMMON__/daterangepicker/moment.min.js"
+	type="text/javascript"></script> <script
+	src="__COMMON__/daterangepicker/daterangepicker.js"
+	type="text/javascript"></script>
+
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<div class="wrapper">
+	<!-- Main content -->
+	<section class="content">
+		<div class="container-fluid">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i> 日志
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="navbar navbar-default">
+						<form action="" id="searchForm" url="{:U('ajaxGetListLog')}"
+							class="navbar-form form-inline" method="post"
+							onsubmit="return false">
+							<div class="form-group">
+								<select name="{$logModel::$type_d}" id="type_id"
+									class="form-control">
+									<option value="">日志类型</option>
+									<foreach name="logType" item="v" key="k">
+									<option value="{$k}">{$v}</option>
+									</foreach>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<select name="{$logModel::$tableName_d}" id="type_id"
+									class="form-control">
+									<option value="">操作表</option>
+									<foreach name="tableNote" item="v" key="k">
+									<option value="{$k}">{$v}</option>
+									</foreach>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label" for="input-order-id">管理员账号</label>
+								<div class="input-group">
+									<input type="text" name="{$logModel::$adminId_d}"
+										placeholder="管理员账号" id="input-order-id" class="input-sm">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="input-date-added">日志生成时间</label>
+								<div class="input-group">
+									<input type="text" name="{$logModel::$createTime_d}"
+										value="{$timegap}" placeholder="下单日期" id="create_time"
+										class="input-sm">
+								</div>
+							</div>
+							<div class="form-group">
+								<button type="submit"
+									onclick="Tool.ajaxGetList('searchForm', 1, 'ajaxReturn')"
+									id="button-filter" class="btn btn-primary pull-right">
+									<i class="fa fa-search"></i> 筛选
+								</button>
+							</div>
+						</form>
+					</div>
+					<div id="ajaxReturn"></div>
+				</div>
+			</div>
+		</div>
+		<!-- /.row -->
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper --> <script src="__COMMON__/js/jquery-form.js"></script>
+<script src="__COMMON__/js/alert.js?a={:time()}"></script> <script
+	src="__JS__/log/log.js?a={:time()}"></script> <script
+	type="text/javascript">
+		Tool.ajaxGetList("searchForm", 1, 'ajaxReturn');
+	</script> </block>

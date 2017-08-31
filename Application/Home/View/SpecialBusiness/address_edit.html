@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__JS__/jquery-1.7.2.min.js"></script>
+<script src="__LAYER__/layer.js"></script>
+<script>
+function check(){
+	var realname = $('#realname').val();
+    var province = $('#province').val();
+    var city = $('#city').val();
+    var area = $('#area').val();
+    var address = $('#address').val();
+    var mobile = $('#mobile').val();
+    var email = $('#email').val();
+    var alias = $('#alias').val();
+    var id = $('#id').val();
+	if(realname == ''){
+		layer.tips('请填写收货人!', '#realname');alias
+		return false;
+	}
+    if(province == ''){
+        layer.tips('请选择省份!', '#area');
+        return false;
+    }
+    if(address == ''){
+        layer.tips('请填写详细地址!', '#address');
+        return false;
+    }
+    if(mobile == ''){
+        layer.tips('请填写收货人联系电话!', '#mobile');
+        return false;
+    }
+    if(!/^1[34578]\d{9}$/.test(mobile)){
+        layer.tips('请输入正确的手机号', '#mobile',{
+            tips:[4,'#f29202']
+        });
+       return false;
+    }
+	$.post(	"__SELF__",{"realname":realname,"province":province,"city":city,"area":area,"address":address,"mobile":mobile,"alias":alias,'id':id},function(data){
+				if(data == 1){
+					layer.msg('修改成功，正在跳转中...',{icon: 1,time: 2000},function(){
+						 parent.location.href="{:U('SpecialBusiness/settlement')}";
+						// window.location.reload();    //刷新父页面
+					});
+				}else{
+					layer.msg('修改失败，请重新输入',{icon: 2,time: 2000},function(){
+						window.location.reload();
+					});
+				}
+			}, "json");
+}
+</script>
+</head>
+<body>
+<div class="list">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details">
+        <tbody>
+            <tr>
+                <td width="20%"><label class="label">
+                  <div align="right"><span style="color:red;">*&nbsp;</span>收货人：</div>
+                </label></td>
+                <td width="80%"><input type="text" id="realname" name="realname"  size="30" value="{$data.realname}" />
+                <span></span>
+                </td>
+            </tr>
+            <tr>
+                <td><div align="right"><span style="color:red;">*&nbsp;</span>所在地区：</div></td>
+                <td>
+                <select name="province" id="province"></select><select name="city" id="city"></select><select name="area" id="area"></select>
+                <span></span>
+                </td>
+            </tr>  
+            <tr>
+                <td ><label class="label">
+                  <div align="right"><span style="color:red;">*&nbsp;</span>详细地址：</div>
+                </label></td>
+                <td ><input type="text" id="address" name="address" size="30" value="{$data.address}"/></td>
+            </tr>
+            <tr>
+                <td ><label class="label">
+                  <div align="right"><span style="color:red;">*&nbsp;</span>手机号码：</div>
+                </label></td>
+                <td ><input type="text" id="mobile" name="mobile" size="30" value="{$data.mobile}"/></td>
+            </tr>
+            <tr>
+                <td ><label class="label">
+                  <div align="right">邮箱：</div>
+                </label></td>
+                <td ><input type="text" id="emali" name="email" size="30" value="{$data.email}"/>
+                    <span>用来接收订单提醒邮件，便于您及时了解订单状态</span>
+                </td>
+            </tr>
+            <tr>
+                <td ><label class="label">
+                  <div align="right">地址别名：</div>
+                </label></td>
+                <td ><input type="text" id="alias" name="alias" size="30" value="{$data.alias}"/>
+                </td>
+            </tr>     
+        </tbody>
+    </table>
+</div>
+
+<div class="footer">
+    <div class="save_button">
+        <input type="hidden" name="id" id="id" value="{$data.id}">
+        <button type="submit" class="button" style="width:180px;" onclick="check();">保 存</button>
+    </div>
+</div>
+<script language="javascript" src="__COMMON__/js/PCASClass.js"></script>    
+<script language="javascript">
+    new PCAS("province","city","area","{$data.prov}","{$data.city}","{$data.dist}");
+</script>
+</body>
+</html>

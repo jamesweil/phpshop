@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Common/My97Date/WdatePicker.js"></script>
+<script>
+//刷新
+function refresh(){
+	window.location.href = window.location.href;
+}
+//删除
+function del(id){
+	$("#del"+id+" td").css('background','#CBDFF2');
+	parent.layer.confirm('真的要删除吗？', {
+		btn: ['确认','取消'], //按钮
+		shade: 0.5 //显示遮罩
+	}, function(){
+		$.post("{:U('Tourism/tourism_date_del')}", { "id": id},function(data){
+			if(data.code == 1){
+				parent.layer.msg('删除成功', { icon: 1, time: 1000 }, function(){
+						$("#del"+id).remove();
+					});
+			}else{
+				parent.layer.msg('删除失败', {icon: 2, time: 2000 }); 
+			}
+		}, "json");
+	},function(){
+		$("#del"+id+" td").css('border-top','0');
+		$("#del"+id+" td").css('border-bottom','1px solid #EFEFEF');
+	});
+}
+
+//发团计划
+function date(id){
+	parent.layer.open({
+		type: 2,
+		shadeClose: true,
+		shade: 0.3,
+		area: ['800px', '490px'],
+		title: '添加发团计划表',
+		content: "{:U('Tourism/tourism_date_add')}?id="+id
+	});
+}
+</script>
+</head>
+<body>
+
+<form action="__SELF__" method="get">
+<div class="search" style=" line-height:50px; padding-left:30px; margin-top:3px;">
+	开始日期： <input type="text" class="Wdate" style="padding:4px;" name="begin_date" value="{$_GET['begin_date']}" onclick="WdatePicker()"/>
+	  &nbsp;&nbsp;
+     结束日期： <input type="text" class="Wdate" style="padding:4px;" name="end_date" value="{$_GET['end_date']}" onclick="WdatePicker()"/>&nbsp;&nbsp;
+    <input name="id" type="hidden" value="{$tourism_id}"/>
+    <button type="submit" class="button">查 询</button>
+    <button type="button" class="button" onclick="refresh()">刷 新</button>
+</div>
+</form>
+
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="list_table">
+      <thead>
+	    <tr>
+	      <td width="10%"><div align="center">ID</div></td>
+	      <td width="22%"><div align="center">开团日期</div></td>
+          <td width="22%"><div align="center">成人价格</div></td>
+          <td width="22%"><div align="center">儿童价格</div></td>
+          <td width="24%"><div align="center">操作</div></td>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="result" item="vo">       
+	    <tr id="del{$vo.id}">
+          <form action="__SELF__" method="post">
+	      <td height="50"><div align="center">{$vo.nid}</div></td>
+	      <td><div align="center">
+	        <input name="date" id="date" class="Wdate" style="padding:4px 10px;" type="text" onfocus="WdatePicker({doubleCalendar:true,minDate:'%y-%M-%d'})" value="{$vo.date}">
+	      </div></td>
+          <td><div align="center">
+            <input name="price" id="price" class="input" type="text" value="{$vo.price}" style="width:100px"/> 元
+          </div></td>
+          <td><div align="center">
+            <input name="price_ertong" id="price_ertong" class="input" type="text" value="{$vo.price_ertong}" style="width:100px;"/>
+            元 </div></td>
+          <td><div align="center">
+            <input name="id" type="hidden" value="{$vo.id}"/>
+            <button type="submit" name="submit" style="padding:5px 15px; cursor:pointer;">保存修改</button>	        
+            <a class="a_button" href="javascript:;" onClick="del({$vo[id]})">删除</a>
+          </div></td>
+          </form>
+        </tr>        
+        </foreach>
+        </tbody>
+  </table>
+</div>
+
+<!-- 分页 -->
+<div class="page">
+  <div align="center">{$page}</div>
+</div>
+
+</body>
+</html>

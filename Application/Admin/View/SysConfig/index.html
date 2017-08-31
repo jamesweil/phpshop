@@ -1,0 +1,108 @@
+<extend name="Public:publicHTML" />
+
+<block name="content">
+<link rel="stylesheet"
+	href="__PUBLIC__/Admin/css/system/bootstrap.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/system/system.css" />
+<link href="__COMMON__/daterangepicker/daterangepicker-bs3.css"
+	rel="stylesheet" type="text/css" />
+<script src="__COMMON__/daterangepicker/moment.min.js"
+	type="text/javascript"></script> <script
+	src="__COMMON__/daterangepicker/daterangepicker.js"
+	type="text/javascript"></script>
+<div class="aw-content-wrap">
+
+	<if condition="!empty($data)"> <foreach name="data" key='key'
+		item="value">
+	<form class="form">
+		<div class="mod">
+			<div class="mod-head">
+				<h3>
+					<span class="pull-left">{$value.config_class_name}：<input
+					<if condition="!empty($value['parent_key'])">
+						readonly="readonly" </if> type="text" value="{$value.parent_key}"
+						name="parent_key"/>
+					</span> <span class="pull-right"><a href="javascript:;"
+						onclick="sys.submit(this, '{:U('saveConfig')}');"
+						class="btn btn-xs btn-primary mod-site-save">快速保存</a></span>
+				</h3>
+			</div>
+			<div class="tab-content mod-content">
+				<input type="hidden" value="{$value.id}" name="class_id" />
+				<if condition="!empty($value['children'])">
+				<table class="table table-striped">
+					<foreach name="value.children" key='key' item='child'> <switch
+						name="child.type"> <case value="radio|checkbox">
+					<tr>
+						<td>
+							<div class="form-group">
+								<span class="col-sm-4 col-xs-3 control-label">{$child.config_class_name}:</span>
+								<div class="col-sm-6 col-xs-8">
+									<div class="btn-group mod-btn">
+										<label type="button" class=" mod-btn-color">
+											<{$child.show_type} type="{$child.type}"
+											name="{$child.type_name}" value="0"<?php if ($child['value'] == 0) { ?>
+											checked="checked"<?php } ?> /> 是
+										</label> <label type="button" class=" mod-btn-color">
+											<{$child.show_type} type="{$child.type}"
+											name="{$child.type_name}" value="1"<?php if ($child['value'] == 1) { ?>
+											checked="checked"<?php } ?> /> 否
+										</label>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					</case> <case value="text|password|datetime">
+					<tr>
+						<td>
+							<div class="form-group">
+								<span class="col-sm-4 col-xs-3 control-label">{$child.config_class_name}:</span>
+								<div class="col-sm-5 col-xs-8"><{$child.show_type}
+									name="{$child.type_name}" type="{$child.type}"
+									class="form-control" value="{$child['value']}"/></div>
+							</div>
+						</td>
+					</tr>
+					</case> <case value="image">
+
+					<tr>
+						<td>
+							<div class="col-sm-3">
+							    <span class="col-sm-4 col-xs-3 control-label">{$child.config_class_name}:</span>
+								<img src="{$child['value']}" width="100" id="logo" height="100" />
+							</div>
+							<div class="goods_xc">
+								<input type="hidden" name="{$child.type_name}" class="allPic"
+									value="{$child['value']}" /> <a href="javascript:void(0);"
+									onclick="Tool.uploadify('{:C('upload_url')}/uploadNum/1/path/intnet/input/logo/callBack/Tool.requstFather/config/intnet_logo_config');"><img
+									src="__IMG__/add-button.jpg" width="100" height="100" /></a> <br />
+								<a href="javascript:void(0)">&nbsp;&nbsp;</a>
+							</div>
+						</td>
+					</tr>
+
+					</case> 
+					<case value="autoCreateImage">
+						<td>
+							<div class="form-group">
+							<input type="hidden" name="{$child.type_name}" value="{$child['value']}" />
+					  			<span class="col-sm-4 col-xs-3 control-label">{$child.config_class_name}:</span>
+					  			<img src="{$child['value']}" width="80" height="80" />
+					  		</div>
+					  	</td>
+					</case>
+					
+					</switch> </foreach>
+				</table>
+				</if>
+			</div>
+		</div>
+	</form>
+	</foreach> </if>
+</div>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery.form.js"></script>
+<script type="text/javascript" src="__COMMON__/js/listener.js"></script>
+<script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script>
+ <script
+	type="text/javascript" src="__PUBLIC__/Admin/js/sys/sys.js?a={:time()}"></script> </block>

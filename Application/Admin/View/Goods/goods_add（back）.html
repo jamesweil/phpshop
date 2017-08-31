@@ -1,0 +1,261 @@
+  <extend name="Public/public"/>
+
+<block name="content">
+	<link rel="stylesheet"  href="__JS__/laydate/need/laydate.css"/>
+	<script src="__JS__/laydate/laydate.js"></script>
+	<script src="__COMMON__/js/Ueditor/ueditor.config.js"></script>
+	<script src="__COMMON__/js/Ueditor/ueditor.all.min.js"> </script>
+	<script src="__COMMON__/js/Ueditor/lang/zh-cn/zh-cn.js"></script>
+	<script src="__JS__/goods/uploadPreview.min.js"></script>
+	<link rel="stylesheet"  href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet"  href="__CSS__/goods/goods.css?a={:time()}"/>
+	<div class="nav">
+		<div class="nav_title">
+	    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a"><php>echo urldecode($_GET['menu_title']);</php></span></h4>
+	    </div>
+	</div>
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="panel-title"><i class="fa fa-list"></i>商品详情</h3>
+              </div>
+              <div class="panel-body">
+                  <ul class="nav nav-tabs">
+                      <li class="active"><a href="#tab_tongyong" data-toggle="tab">通用信息</a></li>
+                      <li><a href="#tab_goods_images" data-toggle="tab">商品相册</a></li>
+                      <li><a href="#tab_goods_spec" data-toggle="tab">商品规格</a></li>                        
+                      <li><a href="#tab_goods_attr" data-toggle="tab">商品属性</a></li>
+                      <li><a href="#tab_goods_shipping" data-toggle="tab">商品物流</a></li>
+                  </ul>
+                  <!--表单数据-->
+                  <form method="post" id="addEditGoodsForm">
+                  
+                      <!--通用信息-->
+                  <div class="tab-content">                 	  
+                      <div class="tab-pane active" id="tab_tongyong">
+                         
+                          <table class="table table-bordered">
+                              <tbody>
+                              <tr>
+                                  <td>商品名称:</td>
+                                  <td>
+                                      <input type="text"  name="title" class="form-control"/>
+                                      <span id="err_title" style="color:#F00; display:none;"></span>                                        
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>商品简介:</td>
+                                  <td>
+                                   <textarea rows="3" cols="80" name="description"></textarea>
+                                      <span id="err_description" style="color:#F00; display:none;"></span>
+                                  </td>                                                                       
+                              </tr>
+                              <tr>
+                                  <td>商品货号</td>
+                                  <td>                                                                               
+                                      <input type="text" name="code" class="form-control" />
+                                      <span id="err_goods_sn" style="color:#F00; display:none;"></span>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>商品分类:</td>
+                                  <td>
+                                    <div class="col-xs-3">
+                                    <select name="class_id" onchange="GoodsOption.change(this,'{:U('getChildren')}');" class="form-control" style="width:250px;margin-left:-15px;">
+                                      <option value="0">请选择商品分类</option> 
+                                      	<if condition ="!empty($goodsClass)">                                     
+                                           <foreach name="goodsClass" item="v" >
+                                            	<optgroup label="{$v[$model::$className_d]}" value="{$v[$model::$id_d]}"  >
+	                                            	<if condition="!empty($v['children'])">
+	                                            		<foreach name="v['children']" item="children" >
+	                                            			<if condition="$children[$model::$fId_d] == $v[$model::$id_d]">	                                                                                    
+	                                                			<option value="{$children[$model::$id_d]}"  class="parse">{$children[$model::$className_d]}</option>
+	                                                		</if>
+	                                                	</foreach>
+	                                                </if>
+                                                </optgroup>
+	                                       </foreach>                    
+                                        </if>
+                                    </select>
+                                    </div>
+                                    <div class="col-xs-3">                        
+                                    <select name="cat_class_id" id="parent_id_2" class="form-control">
+                                      <option value="0">请选择商品分类</option>
+                                    </select> 
+                                    </div>    
+                                    <span id="err_cat_id" ></span>                                 
+                                  </td>
+                              </tr>                                 
+                                         
+                              <tr>
+                                  <td>商品品牌:</td>
+                                  <td>
+									<select name="brand_id" id="brand_id" class="form-control" >
+                                     		 <option value="">所有品牌</option>
+                                          <foreach name="brandList" item="v" key="k" >
+                                             <option value="{$v[$brandModel::$id_d]}" >
+                                             		{$v[$brandModel::$brandName_d]}
+                                             </option>
+                                      	 </foreach>
+                                    </select>                                    
+                                  </td>
+                              </tr>
+                             
+                              <tr>
+                                  <td>市场价:</td>
+                                  <td>
+                                      <input type="text"  name="price_market" class="form-control"  onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
+                                      <span id="err_market_price" style="color:#F00; display:none;"></span>					                                        
+                                  </td>
+                              </tr>  
+                              <tr>
+                                  <td>会员价:</td>
+                                  <td>
+                                      <input type="text"  name="price_member" class="form-control"  onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
+                                      <span id="err_cost_price" style="color:#F00; display:none"></span>					                                        
+                                  </td>
+                              </tr>       
+                                                          
+                              <tr>
+                                  <td>是否包邮:</td>
+                                  <td>
+					                                      是:<input type="radio" value="1" name="min_yunfei" /> 
+					                                      否:<input type="radio" value="0" name="min_yunfei" /> 
+                                  </td>
+                              </tr>                                
+                              <tr>
+                                  <td>库存数量:</td>
+                                  <td>
+                                      <input type="text" class="form-control"  name="stock" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"/>
+                                      <span id="err_stock" style="color:#F00; display:none;"></span>					                                        
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>赠送积分:</td>
+                                  <td>
+                                      <input type="text" class="form-control"   name="d_integral" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
+                                      <span id="err_d_integral" style="color:#F00; display:none;"></span>					                                        
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>设置:</td>
+                                  <td>
+                                  	<input type="checkbox" checked="checked"  value="1" name="shelves"/> 上架&nbsp;&nbsp;
+                                    <input type="checkbox" checked="checked" value="1" name="recommend"/>推荐&nbsp;&nbsp;
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>商品详情描述:</td>
+                                  <td width="85%">
+									<textarea class="span12 ckeditor" id="goods_content" name="detail" title=""></textarea>
+                                      <span id="err_goods_content" style="color:#F00; display:none;"></span>                                         
+                                  </td>                                                                       
+                              </tr>   
+                              </tbody>                                
+                              </table>
+                      </div>
+                      
+                      
+                       <!--其他信息-->
+                       
+                      <!-- 商品相册-->
+                      <div class="tab-pane" id="tab_goods_images">
+                          <table class="table table-bordered">
+                              <tbody>
+                              <tr>                                    
+                                  <td>                                    
+                                      <div class="goods_xc" style="width:100px; text-align:center; margin: 5px; display:inline-block;">
+                                          <input type="hidden" name="goods_images[]" value="" />
+                                          <a href="javascript:void(0);" onclick="GoodsOption.uploadify('{:U('Upload/Upload/index', array('uploadNum' => 1, 'input' => 'logo', callBack => 'GoodsOption.requstFather'))}');"><img src="__IMG__/add-button.jpg" width="100" height="100" /></a>
+                                          <br/>
+                                          <a href="javascript:void(0)">&nbsp;&nbsp;</a>
+                                      </div>                                        
+                                  </td>
+                              </tr>                                              
+                              </tbody>
+                          </table>
+                      </div>
+                       <!--商品相册--> 
+ 
+                      <!-- 商品规格-->
+                      <div class="tab-pane" id="tab_goods_spec">
+                          <table class="table table-bordered" id="goods_spec_table">                                
+                              <tr>
+                                  <td>商品类型:</td>
+                                  <td>                                        
+                                    <select name="attribute_id" class="form-control" style="width:250px;" onchange="GoodsOption.getAttribute(this, '{:U('goodsAttribute')}', GoodsOption.parseAttr)">
+                                      <option value="0">选择商品类型</option>
+                                      <foreach name="goodsClass" item="vo" key="k" >
+                                          <option value="{$vo.id}">{$vo[$model::$className_d]}</option>
+                                      </foreach>                                        
+                                    </select>
+                                  </td>
+                              </tr>     
+                                                         
+                          </table>
+                          <div id="ajax_spec_data"><!-- ajax 返回规格--></div>
+                      </div>
+                      <!-- 商品规格-->
+
+                      <!-- 商品属性-->
+                      <div class="tab-pane" id="tab_goods_attr">
+                          <table class="table table-bordered" id="goods_attr_table">                                
+                              <tr>
+                                  <td>商品属性:</td>
+                                  <td>                                        
+                                    <select name="goods_type" id="goods_type" class="form-control" style="width:250px;">
+                                      <option value="0">选择商品属性</option>
+                                      <foreach name="goodsType" item="vo" key="k" >
+                                          <option value="{$vo.id}"<if condition="$goodsInfo[goods_type] eq $vo[id]"> selected="selected" </if> >{$vo.name}</option>
+                                      </foreach>                                        
+                                    </select>
+                                  </td>
+                              </tr>                                
+                          </table>
+                      </div>
+                      <!-- 商品属性-->
+
+                      <!-- 商品物流-->
+                      <div class="tab-pane" id="tab_goods_shipping">
+                          <h4><b>物流配送：</b><input type="checkbox" onclick="choosebox(this)">全选</h4>
+                          <table class="table table-bordered table-striped dataTable" id="goods_shipping_table">
+                              <foreach name="plugin_shipping" item="shipping" key="kk">
+                                  <tr>
+                                      <td class="title left" style="padding-right:50px;">
+                                          <b>{$shipping[name]}：</b>
+                                          <label class="right"><input type="checkbox" value="1" cka="mod-{$kk}">全选</label>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>
+                                          <ul class="group-list">
+                                              <foreach name="shipping_area" item="vv">
+                                                  <if condition="$vv[shipping_code] eq $shipping[code]">
+                                                      <li><label><input type="checkbox" name="shipping_area_ids[]" value="{$vv.shipping_area_id}" <if condition="in_array($vv['shipping_area_id'],$goods_shipping_area_ids)">checked='checked='</if> ck="mod-{$kk}">{$vv.shipping_area_name}</label></li>
+                                                  </if>
+                                              </foreach>
+                                              <div class="clear-both"></div>
+                                          </ul>
+                                      </td>
+                                  </tr>
+                              </foreach>
+                          </table>
+                      </div>
+                      <!-- 商品物流-->
+                  </div>              
+                  <div class="pull-right">
+                      <button class="btn btn-primary" onclick="GoodsOption.addGoods('addEditGoodsForm','{:U('addGoods')}');" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
+                  </div>
+	    </form><!--表单数据-->
+         </div>
+     </div>
+    <script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script> 
+    <script type="text/javascript" src="__COMMON__/js/jquery-form.js"></script>
+    <script type="text/javascript" src="__JS__/goods/ueditor.config.js?a={:time()}"></script> 
+    <script type="text/javascript" src="__JS__/goods/goods.js?a={:time()}"></script> 
+    <script type="text/javascript">
+    	GoodsOption.selectTab();
+    	GoodsOption.del 	= "{:U('Upload/Upload/deleteFile')}";
+    	GoodsOption.dbUrl	= "{:U('deleteImageByDb')}"
+    	GoodsOption.ueditor(options,'goods_content');
+    </script>
+</block>

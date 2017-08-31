@@ -1,0 +1,124 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i> 优惠券列表
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="navbar navbar-default">
+						<form class="navbar-form form-inline" action="" method="post">
+							<!--
+				            <div class="form-group">
+				              	<input type="text" class="form-control" placeholder="搜索">
+				            </div>
+				            <button type="submit" class="btn btn-default">提交</button>
+                         -->
+							<div class="form-group pull-right">
+								<a onclick="Tool.alertEdit('{:U('addConponHtml')}', '添加优惠券', 830, 600)"
+									class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加优惠券</a>
+							</div>
+						</form>
+					</div>
+					<div id="ajax_return">
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<td style="width: 1px;" class="text-center"><input
+											type="checkbox"
+											onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+										<td class="text-center">优惠券名称</td>
+										<td class="text-center">优惠券类型</td>
+										<td class="text-center">面额</td>
+										<td class="text-center">使用需满金额</td>
+										<td class="text-center">发放总量</td>
+										<td class="text-center">已发放数</td>
+										<td class="text-center">已使用</td>
+										<td class="text-center">使用截止日期</td>
+										<td style="min-width: 280px" class="text-center">操作</td>
+									</tr>
+								</thead>
+								<tbody>
+									<if condition="!empty($data['data'])">
+										<foreach name="data['data']" item="list">
+											<tr>
+												<td class="text-center"><input type="checkbox"
+													name="selected[]" value="6"></td>
+												<td class="text-center">{$list[$couponModel::$name_d]}</td>
+												<td class="text-center">{$couponType[$list[$couponModel::$type_d]]}</td>
+												<td class="text-center">{$list[$couponModel::$money_d]}</td>
+												<td class="text-center">{$list[$couponModel::$condition_d]}</td>
+												<td class="text-center">{$list[$couponModel::$createnum_d]}</td>
+												<td class="text-center">{$list[$couponModel::$sendNum_d]}</td>
+												<td class="text-center">{$list[$couponModel::$useNum_d]}</td>
+												<td class="text-center">{$list[$couponModel::$useEnd_time_d]|date='Y-m-d',###}</td>
+												<td style="min-width: 280px" class="text-center">
+													<if condition="$list[$couponModel::$type_d] eq 4">
+														<a onclick="Tool.alertEdit('{:U('makeCoupon',array(
+																'id'=>$list[$couponModel::$id_d],
+																'type'=>$list[$couponModel::$type_d])
+															)}', '{$couponType[$list[$couponModel::$type_d]]}', 600, 400)"
+															data-toggle="tooltip" title="" class="btn btn-info"
+															data-original-title="发放"><i class="fa fa-send"></i>
+														</a> 
+													<elseif condition="$list[$couponModel::$type_d] eq 1" /> 
+														<a href="javascript:void(0)"
+															onclick="Tool.alertEdit('{:U('sendCoupon',array(
+																	'id'=>$list[$couponModel::$id_d],
+																	'type'=>$list[$couponModel::$type_d])
+																)}', '{$couponType[$list[$couponModel::$type_d]]}', 1100, 600)"
+														data-toggle="tooltip" title="发放"
+														class="btn btn-info send_user"
+														data-url=""><i
+														class="fa fa-send-o"></i></a> 
+													<else /> 
+														<a
+														href="javascript:void(0)" data-toggle="tooltip" title=""
+														class="btn btn-default disabled" data-original-title="查看"><i
+														class="fa fa-send-o"></i></a> 
+													</if> 
+													<a
+														onclick="Tool.alertEdit('{:U('couponListByUser',array('id'=>$list[$couponModel::$id_d], 'type' => $list[$couponModel::$type_d]))}', '{$couponType[$list[$couponModel::$type_d]]}', 900, 550)"
+														data-toggle="tooltip" title="" class="btn btn-info"
+														data-original-title="查看"><i class="fa fa-eye"></i></a> 
+													<a
+														onclick="Tool.alertEdit('{:U('editCouponHTML',array('id'=>$list[$couponModel::$id_d]))}', '编辑-{$couponType[$list[$couponModel::$type_d]]}', 900, 600)"
+														data-toggle="tooltip" title="" class="btn btn-info"
+														data-original-title="编辑"><i class="fa fa-pencil"></i></a>
+													 <a
+														onclick="SendCoupon.deleteCoupon('{:U('deleteCoupon')}', {$list[$couponModel::$id_d]})" 
+														href="javascript:;"
+														data-toggle="tooltip" title="" class="btn btn-danger"
+														data-original-title="删除"><i class="fa fa-trash-o"></i></a>
+													</td>
+											</tr>
+										</foreach>
+									</if>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 text-left"></div>
+						<div class="col-sm-6 text-right">{$data.page}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.row -->
+	<script src="__COMMON__/js/alert.js"></script>
+	<script src="__JS__/conpon/SendCoupon.js?a={:time()}"></script>
+</section>
+</block>

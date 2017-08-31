@@ -1,0 +1,37 @@
+<extend name="Public/publicHTML"/>
+<block name="nav">
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+    <div class="nav">
+        <div class="nav_title">
+            <h4><img class="nav_img" src="__IMG__/tab.gif" /><span class="nav_a">文章分类列表</span></h4>
+        </div>
+        <div class="nav_button">
+            <a href="{:U('add')}"><button class="button">+ 文章分类添加</button></a>
+        </div>
+    </div>
+</block>
+<block name="content">
+    <table class="table table-hover">
+        <tr align="center">
+            <td>ID</td>
+            <td>文章分类名称</td>
+            <td>文字分类排序</td>
+            <td>文章分类状态</td>
+            <td>操作</td>
+        </tr>
+        <foreach name="rows" item="row">
+            <tr align="center">
+                <td>{$row.id}</td>
+                <td>{$row.name}</td>
+                <td>{$row.sort}</td>
+                <td><if condition="$row.status eq 1"><img src="__IMG__/yes.gif"><else/><img src="__IMG__/no.gif"/></if></td>
+                <td>
+                        <a class="btn btn-primary" href="{:U('edit',['id'=>$row['id']])}">编辑</a>
+                        <a class="btn btn-danger" href="{:U('remove',['id'=>$row['id']])}">删除</a>
+                   </td>
+            </tr>
+            </tr>
+        </foreach>
+    </table>
+    <div class="page">{$page_show}</div>
+</block>

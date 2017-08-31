@@ -1,0 +1,381 @@
+<extend name="Order/personalEdit"/>
+
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+		<div class="ficationFl fl">
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">订单中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Order/order_myorder')}">·&nbsp;&nbsp;我的订单</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('OrderGroup/order_group')}">·&nbsp;&nbsp;团购订单</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('Order/cancel_order_record')}">·&nbsp;&nbsp;取消订单记录</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">资产中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Assets/balance')}">·&nbsp;&nbsp;余额</a>
+				</dd>
+				<dd>
+					<a href="{:U('Cart/goods')}">·&nbsp;&nbsp;我的购物车</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myCollection')}">·&nbsp;&nbsp;我的收藏</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myComment')}">·&nbsp;&nbsp;我的评价</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/coupon')}">·&nbsp;&nbsp;优惠券</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/integral')}">·&nbsp;&nbsp;积分</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/punkte')}">·&nbsp;&nbsp;积分兑换</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/gekauft')}">·&nbsp;&nbsp;我购买过的产品</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myTracks')}">·&nbsp;&nbsp;浏览足迹</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em> 
+					<span class="fl">财务中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Finance/my_invoice')}">·&nbsp;&nbsp;我的发票</a>
+				</dd>				
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+					<dd>
+						<a href="{:U('Finance/my_shipment')}">·&nbsp;&nbsp;我的发货</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/my_payment')}">·&nbsp;&nbsp;我的付款</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/other_orders')}">·&nbsp;&nbsp;其他订单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/closed_order')}">·&nbsp;&nbsp;已出兑账单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/outstanding_order')}">·&nbsp;&nbsp;未出兑账单</a>
+					</dd>
+				</if>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">特色业务</span>
+				</dt>
+				<dd>
+					<a href="{:U('SpecialBusiness/enterprise_group')}">·&nbsp;&nbsp;企业团购</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/purchase_requisition')}">·&nbsp;&nbsp;采购需求单</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/join_application')}">·&nbsp;&nbsp;加盟申请</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/printer_rental')}">·&nbsp;&nbsp;打印机租赁</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">商品中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('GoodsCenter/goods_search')}">·&nbsp;&nbsp;商品搜索</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">客户服务</span>
+				</dt>
+				<dd>
+					<a href="{:U('Service/return_repair')}">·&nbsp;&nbsp;返修退换货</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/after_sale')}">·&nbsp;&nbsp;售后管理</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/advisoryReply')}">·&nbsp;&nbsp;咨询回复</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/opinion')}">·&nbsp;&nbsp;意见建议</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/repair_choice')}">·&nbsp;&nbsp;上门维修服务</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/announcement')}">·&nbsp;&nbsp;网站公告</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/report_center')}">·&nbsp;&nbsp;投诉中心</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">用户设置</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserSet/address')}">·&nbsp;&nbsp;收货地址</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('UserSet/enterprise')}">·&nbsp;&nbsp;企业信息</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('UserSet/security')}">·&nbsp;&nbsp;安全设置</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">个人资料</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserData/user_data')}">·&nbsp;&nbsp;个人资料</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/bind_account')}">·&nbsp;&nbsp;账号绑定</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/special_application')}">·&nbsp;&nbsp;申请账期支付</a>
+				</dd>
+			</dl>
+		</div>
+		<!--内容-->
+		<div class="conConterWrap fl">
+			<div class="data-title">
+				<div class="exhibition clearfix">
+					<div class="user fl clearfix">
+						<img src="__IMG__/con1.jpg" class="fl">
+						<div class="fl">
+							<h2>欢迎，亿速网络用品商城</h2>
+							<span>
+								<switch name="user.member_status">
+									<case value="0">普通会员</case>
+									<case value="1">渠道会员</case>
+									<case value="2">月结会员</case>	
+								</switch>
+							</span>
+						</div>
+					</div>
+					<a href="{:U('UserSet/address')}" class="fl address">
+						我的收货地址
+					</a>
+					<dl class="fl discount">
+						<dt class="clearfix">
+							<span class="fl">我的优惠信息</span>
+							<em class="fl"></em>
+						</dt>
+						<dd>商城优惠券：<b>{$z_count}</b></dd>
+						<dd>商城积分：<b>{$integral.integral}</b></dd>
+					</dl>
+				</div>
+			</div>
+			<ul class="clearfix state-single">
+				<li class="fl"><a href="{:U('Order/paymentForlist')}">待付款</a></li>
+				<li class="fl"><a href="{:U('Order/shipped')}">待发货</a></li>
+				<li class="fl"><a href="{:U('Order/receiptOfGoods')}">待收货</a></li>
+				<li class="fl"><a href="{:U('Order/paymentsWaite')}">待评价<b>{$count.comment_count}</b></a></li>
+				<li class="fl active"><a href="{:U('Order/ReturnPrice')}">退款</a></li>
+			</ul>
+
+			<!--我的订单-->
+			<dl class="myOrder">
+				<dt class="clearfix">
+					<h3 class="fl clearfix">
+						<em class="fl"></em>
+						<span class="fl">我的订单</span>
+					</h3>
+					<a href="{:U('Order/order_myorder')}" class="fr">查看全部订单</a>
+				</dt>
+				<volist name="data" id="data">
+					<dd class="clearfix">
+						<div class="imgParent fl">
+							<img src="{$data.images}">
+						</div>
+						<div class="fl name">{$data.realname}</div>
+						<div class="fl payment">
+							<b>￥{$data.price_sum}</b>
+							<span>{$data.pay_type}</span>
+						</div>
+						<div class="fl timer">
+							<span>{$data.date}</span>
+							<span>{$data.time}</span>
+						</div>
+						<div class="fl state"><if condition="($data.order_status eq '0') AND ($data.order_type eq '0')">未支付<br><a href="{:U('PayOrder/payOrder',array('order_id'=>$data['id']))}">立即支付</a><else/>{$data.order_status}</if></div>
+						<a href="{:U('Order/order_details',array('id'=>$data['id']))}" class="fl see">查看</a>
+					</dd>
+				</volist>
+			</dl>
+			<!--查看更多-->
+			<input type="hidden" class="count_page" value="0">
+			<div class="seeMore">展开更多信息</div>
+			<!--内容-->
+			<div class="likeParent">
+				<div class="title">
+					<h3 class="fl">根据浏览 猜您喜欢</h3>
+					<a href="javascript:;" class="fr clearfix">
+
+						<em class="fl"></em>
+						<span class="fl">换一换</span>
+					</a>
+				</div>
+				<ul class="content clearfix">
+				    <volist name="love" id="love">
+						<li class="fl">
+							<div class="imgPt">
+								<a href="javascript:;"><img src="{$love.goods_pic}"></a>
+							</div>
+							<a href="{:U('Goods/goodsDetails',array('id'=>$love['gid']))}" class="con">{$love.goods_name}</a>
+							<span>￥{$love.goods_price}元</span>
+							<div class="operation">
+								<input type="button" class="cart_add" value="加入购物车" data-value="{$love.gid}">
+								<input type="button" class="colle" value="收藏" data-value="{$love.gid}">
+							</div>
+						</li>
+					</volist>
+				</ul>
+			</div>
+		</div>
+		<!--最热爆款-->
+		<div class="ficationfr fr">
+			<dl>
+				<dt>最热爆款</dt>
+				<volist name="goods" id="goods">
+					<dd>
+						<div class="fl imgPart">
+							<a href="javascript:;"><img src="{$goods.images}" alt=""></a>
+						</div>
+						<a href="{:U('Goods/goodsDetails',array('id'=>$goods['goods_id']))}" class="fl conPart">
+							<p>{$goods.title}</p>
+							<b>￥{$goods.price_member}元</b>
+						</a>
+					</dd>
+                </volist>
+			</dl>
+
+			<ul class="discount">
+				<volist name="coupon.res" id="coupon">
+					<li class="clearfix active">
+						<div class="fl">
+							<b>￥</b>
+							<span>{$coupon.money}</span>
+						</div>
+						<div class="fr">
+							<p>满{$coupon.condition}元可用</p>
+							<div class="line"></div>
+							<p>{$coupon.use_start_time|date="Y-m-d",###}--{$coupon.use_end_time|date="Y-m-d",###}</p>
+						</div>
+					</li>
+				</volist>
+			</ul>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+<script>
+//猜你喜欢-换一换
+	$('.likeParent .title a').on('click',function(){
+        $.ajax({
+	        url : 'love_ajax',
+	        dataType : 'json',
+	        type : 'post',
+	        data : {page:0},
+	        success:function(data){	
+	        console.log(data)        	
+	            $('.likeParent .content li').remove(); 
+	            for (var i = 0; i < data.length; i++) {                         
+	            	$('.likeParent .content').append('<li class="fl"><div class="imgPt"><a href="javascript:;"><img src="'+data[i].goods_pic+'"></a></div><a href="javascript:;" class="con">'+data[i].goods_name+'</a><span>￥'+data[i].goods_price+'元</span><div class="operation"><input type="button" class="cart_add" value="加入购物车" data-value="'+data[i].gid+'"><input type="button" class="colle" value="收藏" data-value="'+data[i].gid+'"></div></li>')
+	            };
+	        },
+	        error:function(){
+	        },
+	    });
+	})
+//加入购物车
+$('.likeParent .content').on('click','li .cart_add',function(){
+	var goods_id = $(this).attr('data-value');
+	$.post("/index.php/Home/Order/cart_add", { "goods_id": goods_id},function(data){
+        if(data == 1){
+            parent.layer.msg('添加购物车成功!', { icon: 1, time: 2000 }, function(){
+                });
+        }else{
+            parent.layer.msg('添加失败!', {icon: 2, time: 2000 });
+        }
+    }, "json");
+})
+//收藏
+$('.likeParent .content').on('click','li .colle',function(){
+	var goods_id = $(this).attr('data-value');
+	$.post("/index.php/Home/Order/colle_add", { "goods_id": goods_id},function(data){
+        if(data == 1){
+            parent.layer.msg('添加收藏成功!', { icon: 1, time: 2000 }, function(){
+                });
+        }else if(data == 2){
+            parent.layer.msg('商品已收藏!', {icon: 2, time: 2000 }); 
+        }else if(data == 3){
+            parent.layer.msg('未知错误!', {icon: 2, time: 2000 }); 
+        }else{
+            parent.layer.msg('收藏失败!', {icon: 2, time: 2000 });
+        }
+    }, "json");
+})
+//加载更多
+$('.person-section .seeMore').on('click',function(){
+	var page = $('.count_page').val();
+        var page = parseInt(page)+5;
+	$.ajax({
+        url : 'orderList',
+        dataType : 'json',
+        type : 'post',
+        data : {page:page},
+        success:function(data){	
+        console.log(data)
+            $('.count_page').val(data['page']);        	 
+            for (var i = 0; i < data['data'].length; i++) { 
+	            if(data['data'][i]['order_status'] == '0'){
+	                $('.person-section .myOrder').append('<dd class="clearfix"><div class="imgParent fl"><img src="'+data['data'][i].images+'"></div><div class="fl name">'+data['data'][i].realname+'</div><div class="fl payment"><b>￥'+data['data'][i].price_sum+'</b><span>'+data['data'][i].pay_type+'</span></div><div class="fl timer"><span>'+data['data'][i].date+'</span><span>'+data['data'][i].time+'</span></div><div class="fl state">待支付<br><a href="'+'/'+'index.php'+'/'+'Home'+'/'+'PayOrder'+'/'+'payOrder'+'/'+'order_id'+'/'+''+data['data'][i].id+'.html">立即支付</a></div><a href="'+'/'+'index.php'+'/'+'Home'+'/'+'Order'+'/'+'order_details'+'/'+'id'+'/'+''+data['data'][i].id+'.html" class="fl see">查看</a></dd>')
+	            }else{
+	                $('.person-section .myOrder').append('<dd class="clearfix"><div class="imgParent fl"><img src="'+data['data'][i].images+'"></div><div class="fl name">'+data['data'][i].realname+'</div><div class="fl payment"><b>￥'+data['data'][i].price_sum+'</b><span>'+data['data'][i].pay_type+'</span></div><div class="fl timer"><span>'+data['data'][i].date+'</span><span>'+data['data'][i].time+'</span></div><div class="fl state">'+data['data'][i].order_status+'</div><a href="'+'/'+'index.php'+'/'+'Home'+'/'+'Order'+'/'+'order_details'+'/'+'id'+'/'+''+data['data'][i].id+'.html" class="fl see">查看</a></dd>')
+	            }                        
+            };
+        },
+        error:function(){
+        },
+    });
+})
+</script>
+</block>

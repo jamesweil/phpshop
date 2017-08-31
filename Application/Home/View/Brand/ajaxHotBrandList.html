@@ -1,0 +1,33 @@
+
+<!--内容1-->
+<if condition="!empty($goodsData)"> <foreach name="goodsData"
+	key='key' item='value'>
+<div class="borasp-brandlistitem">
+	<div class="borasp-title clearfix">
+		<h2 class="fl">{$value[$brandModel::$brandName_d]}</h2>
+		<a href="javascript:;" class="fr">更多</a>
+	</div>
+	<div class="borasp-centent">
+		<div class="borasp-top clearfix">
+			<a href="javascript:;" class="borasp-top-img fl"> <img
+				src="{$value[$brandModel::$brandLogo_d]}" height="664"  width="314" alt="">
+			</a> <a href="javascript:;" class="fr"> <img
+				src="../images/con-10.jpg">
+				<p>{$value[$brandModel::$brandDescription_d]}</p>
+			</a>
+		</div>
+		<ul class="borasp-con clearfix">
+			<if condition="!empty($value['children'])">
+				<foreach name="value['children']" key="key" item="goods">
+					<li class="fl"><a href="{:U('Goods/goodsDetails',array('id' => $goods[$goodsModel::$id_d]))}">
+							<div class="imgParent">
+								<img  height="269" width="170" src="<if condition='!empty($goods[$goodsImage::$picUrl_d])'>{$goods[$goodsImage::$picUrl_d]}<else/>{$goods[$goodsModel::$title_d]}</if>">
+							</div>
+							<p>{$goods[$goodsModel::$title_d]}</p> <span>￥<b><if condition="!empty($_SESSION['user_id'])">{$goods[$goodsModel::$piceMember_d]}<else/>{$goods[$goodsModel::$priceMarket_d]}</if></b></span>
+					</a></li>
+				</foreach>
+			</if>
+		</ul>
+	</div>
+</div>
+</foreach> </if>

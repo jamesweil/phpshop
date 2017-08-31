@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+    <script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+    <script src="__PUBLIC__/Common/Layer/layer.js"></script>
+    <script src="__PUBLIC__/Common/Ueditor/ueditor.config.js"></script>
+    <script src="__PUBLIC__/Common/Ueditor/ueditor.all.min.js"> </script>
+    <script src="__PUBLIC__/Common/Ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script src="__PUBLIC__/Common/uploadPreview.min.js"></script>
+
+</head>
+<body>
+
+<div class="nav">
+    <div class="nav_title">
+        <h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a">用费管理 -> 设置运费</span></h4>
+    </div>
+</div>
+<form name="form3" method="post" action="{:U('add')}" enctype="multipart/form-data" onSubmit="return check_form();">
+    <div class="list">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details" style=" margin-top:2px;">
+
+            <tr>
+                <td width="20%"><div align="right">
+                    <div align="right"><span style="color:#F00;">*</span> 选择配送区域：</div></td>
+                <td width="48%">
+                   <!--  {:arr2select('province',$rows,$community,'areaid','name')} -->
+					<foreach name="rows" item="vo" >
+					<div style="display:inline-table;width:78px"><input type="checkbox" name="province[]" value="{$vo.areaid}" style="position:relative;top:8px;">&nbsp;{$vo.name}&nbsp;</div>
+					<if condition="(($key+1)%7 eq 0)"><br/></if>
+					</foreach>
+                </td>
+                <td width="10%" class="shi">
+                </td>
+                <td width="10%" class="qu">
+                </td>
+            </tr>
+            <tr>
+                <td width="20%">
+                    <div align="right"><span style="color:#F00;">*</span> 首重选择：</div></td>
+                <td width="50%">
+                    首重1公斤: <input type="radio" name="ykg" value="1" checked style="position:relative;top:8px;">
+					首重3公斤: <input type="radio" name="ykg" value="3" style="position:relative;top:8px;">
+                </td>
+                <!-- <td width="10%">
+                    首重3公斤:<input type="radio" name="ykg" value="3" style="position:relative;top:8px;">
+                </td> -->
+            </tr>
+            <tr>
+                <td width="20%">
+                    <div align="right"><span style="color:#F00;">*</span> 首重价格：</div></td>
+                <td width="10%">
+                  <input type="text" name="money" value="{$money}">
+                </td>
+            </tr>
+            <tr>
+                <td width="20%">
+                    <div align="right"><span style="color:#F00;">*</span> 每超出首重1kg价格：</div></td>
+                <td width="10%">
+                    <input type="text" name="onemoney"  value="{$onemoney}">
+                </td>
+
+            </tr>
+            <!-- <tr>
+                <td width="20%">
+                    <div align="right"><span style="color:#F00;">*</span> 超出首重3kg价格：</div></td>
+                <td width="10%">
+                    <input type="text" name="threemoney"  value="{$threemoney}">
+                </td>
+
+            </tr>
+            <tr>
+                <td width="20%">
+                    <div align="right"><span style="color:#F00;">*</span> 超出首重5kg价格：</div></td>
+                <td width="10%">
+                    <input type="text" name="fivemoney" value="{$fivemoney}">
+                </td>
+
+            </tr>
+            <tr>
+                <td width="20%">
+                    <div align="right"><span style="color:#F00;">*</span> 超出首重7kg价格:</div></td>
+                <td width="10%">
+                    <input type="text" name="sevenmoney" value="{$sevenmoney}">
+                </td>
+
+            </tr>
+            <tr>
+                <td width="20%">
+                    <div align="right"><span style="color:#F00;">*</span>超出首重9kg价格:</div></td>
+                <td width="10%">
+                    <input type="text" name="ninemoney" value="{$ninemoney}">
+                </td>
+
+            </tr> -->
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">
+        <input type="hidden" name="id" value="{$id}" />
+        <button type="submit" class="button" id="button" style="min-width:160px;" onclick="admin_add();">保存信息</button>
+    </div>
+</form>
+<script type="text/javascript">
+    $(function() {
+     $(".province").change(function(){
+        var id=$(this).val();
+         $.post('{:U("Freight/province")}', {'id': id}, function (data) {
+
+             var html = '<select class="cls" name="city">'+
+                     '<option  value="">--请选择--</option>';
+             $(data).each(function () {
+                 // console.debug(this.nick)
+                 html += '<option value="' + this.areaid + '">' + this.name + '</option>'
+
+             });
+             html += '</select>'
+             // console.debug(html);
+             $(".shi").empty();
+             $(".shi").append(html);
+
+         })
+     })
+        $(".shi").on('change','.cls',function(){
+
+            var id=$(this).val();
+           // alert(id)
+            //return false;
+            $.post('{:U("Freight/province")}', {'id': id}, function (data) {
+
+                if(data!=false){
+
+                var html = '<select class="clss" name="area">'+
+                        '<option  value="">--请选择--</option>';
+                $(data).each(function () {
+                    // console.debug(this.nick)
+                    html += '<option value="' + this.id + '">' + this.name + '</option>'
+
+                });
+                html += '</select>'
+                // console.debug(html);
+                $(".qu").empty();
+                $(".qu").append(html);
+
+                }
+            })
+        })
+
+    });
+</script>
+
+</body>
+</html>

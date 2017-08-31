@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Common/Layer/extend/layer.ext.js"></script>
+<script src="__PUBLIC__/Common/My97Date/WdatePicker.js"></script>
+
+<script>
+//查看详情
+	function look_detail(id){
+		parent.layer.open({
+			type: 2,
+			title: '订单',
+			shadeClose: true,
+			shade: 0.5,
+			maxmin: true,
+			area: ['80%', '90%'],
+			content: "{:U('Goods/order_lst_detail')}?id="+id //iframe的url
+		});
+	}
+	function refresh(){
+		window.location.href="{:U('Goods/orders_list')}"
+	}
+
+//删除用户
+function del(id){
+	$("#del"+id+" td").css('background','#CBDFF2');
+	parent.layer.confirm('真的要删除吗？', {
+		btn: ['确认','取消'], //按钮
+		shade: 0.5 //显示遮罩
+	}, function(){
+		$.post("{:U('Goods/goods_orders_del')}", { "id": id},function(data){
+			if(data == 1){
+				parent.layer.msg('删除成功', { icon: 1, time: 1000 }, function(){
+						$("#del"+id).remove();
+					});
+			}else{
+				parent.layer.msg('删除失败', {icon: 2, time: 2000 }); 
+			}
+		}, "json");
+	},function(){
+		$("#del"+id+" td").css('border-top','0');
+		$("#del"+id+" td").css('border-bottom','1px solid #EFEFEF');
+	});
+}
+</script>
+</head>
+<body>
+<style>
+	.tr_content {
+		line-height: 32px;
+		height:32px;
+		font-size: 14px;
+	}
+	
+	.layui-layer-title{
+		font-weight:bold;
+	}
+</style>
+<div class="nav">
+	<div class="nav_title">
+    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a">用户管理 - 区间销售明细表</span></h4>
+    </div>
+</div>
+
+<form action="__SELF__" method="get">
+	<div class="search" style=" line-height:50px; padding-left:30px; margin-top:3px;">
+		订单编号：<input type="text" class="input" name="orders_num" value="{$_GET['orders_num']}" maxlength="30" size="20" />
+		  &nbsp;&nbsp;&nbsp;&nbsp;
+		开始日期：<input type="text" class="input" name="begin_time" value="{$_GET['begin_time']}" onClick="WdatePicker()"/>
+        结束日期：<input type="text" class="input" name="end_time" value="{$_GET['end_time']}" onClick="WdatePicker()"/>
+
+
+		&nbsp;&nbsp;&nbsp;&nbsp;
+	  <button type="submit" class="button">查 询</button>
+	  <a href="{:U('Caiwu/daochu_excel_qj')}?begin_time={$_GET['begin_time']}&end_time={$_GET['end_time']}" class="button" style="background:#146AC1; padding:5px 20px;">导出区间 excel 报表</a> (默认查询7日内的数据 , 时间间隔尽量在一个月内)
+
+	</div>
+</form>
+
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="list_table">
+      <thead>
+	    <tr>
+	      <td width="4%"><div align="center">序号</div></td>
+
+	      <td width="6%"><div align="center">交易日期</div></td>
+	      <td width="8%"><div align="center">完成日期</div></td>
+	      <td width="6%"><div align="center">付款单位</div></td>
+
+
+	      <td width="15%"><div align="center">商品名称</div></td>
+	      <td width="8%"><div align="center">套餐</div></td>
+	      <td width="6%"><div align="center">数量</div></td>
+	      <td width="5%"><div align="center">邮费</div></td>
+	      <td width="6%"><div align="center">付款合计</div></td>
+	      <td width="6%"><div align="center">售价</div></td>
+	      <td width="6%"><div align="center">积分</div></td>
+	      <td width="24%"><div align="center">交易单号</div></td>
+	    </tr>
+        </thead>
+        <tbody>
+        <foreach name="result" item="vo" key="k">
+	  		<tr class="tr_content" onmouseover="$(this).css('color','red')" onmouseleave="$(this).css('color','#555')">
+	  		<!-- <tr id="del{$vo.id}"> -->
+	  		  <td width="4%"><div align="center">{$k+1}</div></td>
+			
+
+				<td width="6%"><div align="center">{$vo.pay_time|date="Y-m-d H:i:s",###}</div></td>
+				<td><div align="center">{$vo.done_time}</div></td>
+				<td><div align="center">{$vo.realname}</div></td>
+ 
+				<td width="15%"><div align="center">{$vo.goods_title}</div></td>
+				<td width="8%"><div align="center">{$vo.taocan_name}</div></td>
+				<td width="6%"><div align="center">{$vo.goods_num}</div></td>
+				<td width="5%"><div align="center">{$vo.yunfei}</div></td>
+				<td width="6%"><div align="center">{$vo.pay_sum}</div></td>
+				<td width="6%"><div align="center">{$vo.price_new}</div></td>
+				<td width="6%"><div align="center">{$vo.fanli_jifen}</div></td>
+				<td width="24%"><div align="center">{$vo.orders_num}</div></td>
+			</tr>
+
+        </foreach>
+        </tbody>
+
+<script>
+
+function done(id){	
+	//prompt层
+	var index=layer.prompt({
+	  title: '输入操作密码，并确认',
+	  formType: 1 //prompt风格，支持0-2
+	}, function(pass){
+	$(".layui-layer-btn0").attr("disabled","disabled");
+	$(".layui-layer-btn0").text("提交中...");
+	  $.post("{:U('Goods/done')}",{
+					   'order_id':id,
+					   'password':pass
+					},function(data){
+						if(data==1){
+							layer.close(index);
+							layer.msg('已经成功标记为确认收货', {
+								  icon: 1,
+								  time: 2000 //2秒关闭（如果不配置，默认是3秒）
+								}, function(){
+									window.location.href="__SELF__";
+								});
+						}else if(data==2){
+							layer.close(index); 
+							layer.msg('密码错误');
+						}else{
+							layer.close(index);
+							layer.msg('标记出错');
+						}
+					})
+	});	
+}
+
+</script>        
+
+</table>
+</div>
+
+<!-- 分页 -->
+<div class="page">
+  <div align="center">{$page}</div>
+</div>
+
+
+</body>
+</html>

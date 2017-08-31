@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{$intnetTitle}</title>
+    <link rel="stylesheet" href="__CSS__/pay.css"/>
+    <script src="__JS__/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+
+<div class="pay_success_header">
+    <div class="pay_success_header_auto">
+        <a href="{:U('Index/index')}"> <img src="{$logo_name}" alt="" class="pay_success_header_img"/></a>
+        <div class="pay_success_header_right">
+            <div class="pay_success_ss">
+                <form action="{:U('Goods/goodsDetails')}" method="get"> 
+                    <input type="text" class="fl input" id="pp"/>
+                    <input type="hidden" name="id" value=""/>
+                    <input type="submit" class="fl btn" id="search" onmouseover="searcher()" value="搜&nbsp;索"/>
+                    <div class="gg"></div> 
+                </form>
+            </div>
+
+            <dl class="home-hotsearch clearfix">
+                <dt class="fl">热门搜索：</dt>
+                <foreach name="hot_words" item="hot_word">
+                    <dd class="fl"><a href="{:U('Product/ProductList',['id'=>$hot_word['id']])}">{$hot_word.hot_words}</a></dd>
+                </foreach>
+            </dl>
+        </div>
+    </div>
+
+</div>
+
+<block name="content">
+	
+</block>
+
+<div class="pay_success_footer">
+    <div class="pay_success_footer_top">
+        <a href="javascript:;">于我们关</a>
+        <span>|</span>
+        <a href="javascript:;">联系我们</a>
+        <span>|</span>
+        <a href="javascript:;">加盟我们</a>
+        <span>|</span>
+        <a href="javascript:;">商城APP</a>
+        <span>|</span>
+        <a href="javascript:;">友情链接</a>
+    </div>
+    <div class="pay_success_footer_dh">{$record_number} ｜ 有任何问题请联系我们在线客服 电话：{$intnet_phone}</div>
+    <div class="pay_success_footer_dh">&copy;{$str}</div>
+</div>
+
+    <script>
+        $('#pp').keyup(function(){
+            var _url ="{:U('Goods/search')}";
+            var _data=$(this).val();
+            $.post(_url,{title:_data},function(data){
+                if(data.status==0){
+                    /*  layer.msg(data.message);*/
+                    return;
+                }
+                if(data.status==1){
+                    var _a = [];
+                    var _a=data.data;
+                    var _b="{:U('Goods/goodsDetails')}"
+                    var _html='';
+                    for (var i in _a){
+                        _html +='<div><a href="'+_b+'?id='+_a[i].id+'"> '+_a[i].title+'</a></div>';
+                    }
+                    $('.gg').html(_html);
+                    $('input[name="id"]').val(_a[0].id);
+                    return;
+                }
+                if(data.status==2){
+                    $('.gg').html('');
+                }
+            })
+        })
+        function searcher(){};
+    </script>
+</body>
+</html>

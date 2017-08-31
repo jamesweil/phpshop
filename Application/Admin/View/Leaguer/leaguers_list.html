@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script>
+//删除旅游产品
+function del(id){
+	$("#del"+id+" td").css('background','#CBDFF2');
+	parent.layer.confirm('真的要删除吗？', {
+		btn: ['确认','取消'], //按钮
+		shade: 0.5 //显示遮罩
+	}, function(){
+		$.post("{:U('Tourism/tourisms_del')}", { "id": id},function(data){
+			if(data.code == 1){
+				parent.layer.msg('删除成功', { icon: 1, time: 1000 }, function(){
+						$("#del"+id).remove();
+					});
+			}else{
+				parent.layer.msg('删除失败', {icon: 2, time: 2000 }); 
+			}
+		}, "json");
+	},function(){
+		$("#del"+id+" td").css('border-top','0');
+		$("#del"+id+" td").css('border-bottom','1px solid #EFEFEF');
+	});
+}
+//编辑活动
+function edit(id){
+	window.location.href = "{:U('Tourism/tourisms_edit')}?id="+id;
+}
+//添加属性
+function addsize(id){
+	parent.layer.open({
+		type: 2,
+		shadeClose: true,
+		shade: 0.3,
+		area: ['700px', '80%'],
+		title: '添加商品属性',
+		content: "{:U('Goods/goods_addsize')}?id="+id
+	});
+}
+//排序
+function sort(){
+	var str_id = '';
+	var str_sort = '';
+	$('input[name="id"]').each(function(){
+		var id = $(this).val();
+ 		var sort_num = $('#sort_num'+id).val();
+		str_id +=  ','+id;
+		str_sort += ','+sort_num;
+	});
+	$.get("{:U('Goods/goods_sort')}", { str_id: str_id,str_sort:str_sort },function(data){
+		if(data == 1){
+			parent.layer.msg('排序成功', {
+				icon: 1,
+				shade: 0.3,
+				time: 2000 //2秒关闭（如果不配置，默认是3秒）
+			}, function(){
+				window.location.href="__SELF__";
+			});
+		}else{
+			layer.msg('排序失败');
+		}
+	});
+}
+</script>
+</head>
+<body>
+
+<div class="nav">
+	<div class="nav_title">
+    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a"><php>echo urldecode($_GET['menu_title']);</php></span></h4>
+    </div>
+</div>
+
+<form action="__SELF__" method="POST">
+<div class="search" style=" line-height:50px; padding-left:30px; margin-top:3px;">
+	标题：<input type="text" class="input" name="title" value="" maxlength="30" size="20" />
+	  &nbsp;&nbsp;
+     标签： <input type="text" class="input" name="keyword" value="" maxlength="30" size="20" />&nbsp;&nbsp;
+     商品分类：<select name="class_id" style="height:30px;">
+     <foreach name="result_class" item="vo_class">
+     	<option value="{$vo_class.id}">{$vo_class.class_name}</option>
+     </foreach>
+     </select>
+     &nbsp;&nbsp;
+    <button type="submit" class="button">查 询</button>
+    <button type="button" class="button" onclick="refresh()">刷 新</button>
+    <button type="button" class="button" onclick="sort()">保存排序</button>
+</div>
+</form>
+
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="list_table">
+      <thead>
+	    <tr>
+	      <td width="7%"><div align="center">排序</div></td>
+	      <td width="12%"><div align="center">代表图片</div></td>
+	      <td width="13%"><div align="center">标题</div></td>
+	      <td width="8%"><div align="center">现价/元</div></td>
+	      <td width="9%"><div align="center">上架</div></td>
+	      <td width="10%"><div align="center">热销</div></td>
+	      <td width="7%"><div align="center">库存</div></td>
+	      <td width="12%"><div align="center">分类</div></td>
+	      <td width="22%"><div align="center">操作</div></td>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="result" item="vo">
+	    <tr id="del{$vo.id}">
+	      <td height="50"><div align="center">
+          	  <input type="text" name="sort_num" id="sort_num{$vo.id}" style="width:60px;height:30px;text-align:center;font-size:14px;" value="{$vo.sort_num}">
+              <input type="hidden" name="id" id="id{$vo.id}" value="{$vo.id}"/></div></td>
+	      <td><div align="center"><img style="height:50px; width:60px; border-radius:4px; margin-top:5px;" src="__PUBLIC__/Uploads/goods/{$vo.pic_url}" /></div></td>
+	      <td><div align="center">{$vo.title}</div></td>
+	      <td><div align="center">{$vo.price_new}</div></td>
+	      <td><div align="center"><if condition="$vo.shangjia == 1">上架<else/><span style="color:#00F;">下架</span></if></div></td>
+	      <td><div align="center"><if condition="$vo.rexiao == 1"><span style="color:#F00;">热销</span><else/>否</if></div></td>
+	      <td><div align="center">{$vo.kucun}</div></td>
+	      <td><div align="center">{$vo.class_name}</div></td>
+	      <td><div align="center">
+	        <!--  <a class="a_button" href="javascript:;" onClick="addsize({$vo.id});">添加规格</a>-->      
+	        <a class="a_button" href="javascript:;" onClick="edit({$vo.id});">编辑</a>
+	        <a class="a_button" href="javascript:;" onclick="del({$vo[id]})">删除</a>
+          </div></td>
+        </tr>
+        </foreach>
+        </tbody>
+  </table>
+</div>
+
+<!-- 分页 -->
+<div class="page">
+{$page}
+</div>
+
+
+</body>
+</html>

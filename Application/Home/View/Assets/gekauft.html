@@ -1,0 +1,92 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr">
+			<div class="title clearfix">
+				<ul class="clearfix fl">
+					<li class="fl hover active"><a href="javascript:;">所有订单 (<i>29</i>)</a></li>
+				</ul>
+			</div>
+			<!--订单搜索范围查找-->
+			<div class="rangeSearch"></div>
+
+			<!--宝贝交易状态-->
+			<ol class="clearfix tradingStatus">
+				<li class="fl one">宝贝</li>
+				<li class="fl two">单价</li>
+				<li class="fl three">数量</li>
+				<li class="fl four">商品操作</li>
+				<li class="fl four">实付款</li>
+				<li class="fl five">交易状态</li>
+				<li class="fl four">交易操作</li>
+			</ol>
+			<!--page-->
+			<div class="myderPagePt clearfix">  
+				<button class="fr btn">下一页</button>                     
+				<button class="fr active">上一页</button> 
+			</div>
+			<!--订单-->
+			<volist name="data" id="vo">				
+				<div class="myderCentent">
+					<div class="ctitle clearfix">
+						<label class="fl">
+							<input type="checkbox">
+							<span>{$vo.create_time|date="Y-m-d H:i:s",###}</span>
+						</label>
+						<span class="fl sPent">
+							<em>订单号：</em>
+							<em>{$vo.order_sn_id}</em>
+						</span>
+						<i class="fr"></i>
+					</div>
+					<div class="con clearfix">
+						<div class="fl clearfix conFl">
+							<volist name="vo.goods" id="goods">
+								<div class="conLoop">
+									<div class="one clearfix fl">
+										<div class="imgsPt fl">
+											<img src="{$goods.images}">
+										</div>
+										<div class="conRight fl">
+											<a href="{:U('Goods/goodsDetails',array('id'=>$goods['id']))}" class="hover">{$goods.title}</a>
+											<p>商品编号：{$goods.id}</p>
+											<p>采购单位：中箱（20）</p>
+										</div>
+									</div>
+									<div class="two fl">￥{$goods.goods_price}</div>
+									<div class="three fl">{$goods.goods_num}</div>
+									<div class="four fl">
+										<a href="{:U('Service/report',array('goods'=>$goods['goods_id']))}" class="hover">投诉卖家</a>
+									</div>
+								</div>
+							</volist>
+						</div>
+						<div class="fr clearfix conFr">
+							<div class="four fl">
+								<p>￥{$vo.price_sum}</p>
+								<p>(含运费：￥{$vo.mail_area_monery})</p>
+							</div>
+							<div class="five fl">
+								<p>已收货</p>
+								<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+							</div>
+							<div class="five fl details">
+								<a href="javascript:;" class="convertible">评价</a><br>
+								<a href="{:U('Order/buy_again_order',array('id'=>$vo['order_id']))}" class="hover">再次购买</a>
+							</div>
+						</div>
+					</div>
+				</div>
+            </volist>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="__JS__/header.js"></script> -->
+</block>

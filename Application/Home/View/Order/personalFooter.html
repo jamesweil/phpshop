@@ -1,0 +1,68 @@
+<div class="public-footer">
+		<div class="public-footer-top clearfix">
+			<ul class="code clearfix fl">
+				<li class="code-fl fl">
+					<img class="lazy" src="{$init_qr_code}">
+					<p>亿速网络官方微信服务号 扫一扫，享更多优惠</p>
+				</li>
+				<li class="code-fr fl">
+					<p class="active">{$intnet_phone}</p>
+					<p>工作日(9:00-18:00)</p>
+				</li>
+			</ul>
+			<div class="footer007 fl clearfix">
+				<foreach name="article_lists" item="article_list">
+					<dl class="fl">
+						<dt>{$key}</dt>
+						<foreach name="article_list" item="article">
+							<dd>
+								<a href="{:U('Article/articleDetails',['id'=>$article['id']])}">{$article.name}</a>
+							</dd>
+						</foreach>
+					</dl>
+				</foreach>
+			</div>
+		</div>
+		<div class="footer009">
+			<img class="lazy" data-original="__IMG__/footer.png" alt="">
+		</div>
+		<div class="footer10">
+			<a href="javascript:;">关于我们</a>|
+			<a href="javascript:;">联系我们</a>|
+			<a href="javascript:;">加盟我们</a>|
+			<a href="javascript:;">商城APP</a>|
+			<a href="javascript:;">友情链接</a>
+		</div>
+		<div class="footer10">
+			<a href="javascript:;">{$record_number}</a>|
+			<a href="javascript:;">有任何问题请联系我们在线客服 电话：{$intnet_phone}</a>
+		</div>
+		<div class="footer10">
+			<a href="javascript:;">互联网出版许可证编号新出网证(京)字150号</a>|
+			<a href="javascript:;">出版物经营许可证</a>|
+			<a href="javascript:;">网络文化经营许可证京网文[2014]2148-348号</a>|
+			<a href="javascript:;">违法和不良信息举报电话：4006561155</a>
+		</div>
+		<div class="footer10">
+			<span>{$whatWen}</span>
+		</div>
+		<div class="footer11">
+			<a href="javascript:;"><img class="lazy" data-original="__IMG__/1.jpg" alt=""></a>
+			<a href="javascript:;"><img class="lazy" data-original="__IMG__/2.jpg" alt=""></a>
+			<a href="javascript:;"><img class="lazy" data-original="__IMG__/3.jpg" alt=""></a>
+			<a href="javascript:;"><img class="lazy" data-original="__IMG__/4.jpg" alt=""></a>
+			<a href="javascript:;"><img class="lazy" data-original="__IMG__/5.jpg" alt=""></a>
+			<a href="javascript:;"><img class="lazy" data-original="__IMG__/6.jpg" alt=""></a>
+			<a href="javascript:;"><img class="lazy" data-original="__IMG__/7.jpg" alt=""></a>
+			<a href="javascript:;"><img class="lazy" data-original="__IMG__/8.jpg" alt=""></a>
+			<a href="javascript:;"><img class="lazy" data-original="__IMG__/9.jpg" alt=""></a>
+			<a href="javascript:;"><img class="lazy" data-original="__IMG__/10.jpg" alt=""></a>
+		</div>
+	</div>
+<script src="__LAYER__/layer.js"></script>
+	<script type="text/javascript">
+	var AREA_LIST_CITY = "{:U('getList')}";
+	</script>
+<script src="__JS__/header.js"></script>
+</body>
+</html>

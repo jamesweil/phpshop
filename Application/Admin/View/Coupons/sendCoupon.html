@@ -1,0 +1,76 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="navbar navbar-default">
+					<form  id="search-form"
+						class="navbar-form form-inline" method="post">
+						<div class="form-group">
+							<select name="{$userLevel::$id_d}" id="{$userLevel::$id_d}" class="form-control">
+								<option value="">请选择</option>
+								<if condition="!empty($data)">
+									<foreach name="data" item="vo">
+										<option value="{$vo[$userLevel::$id_d]}"<if
+											condition="$vo[$userLevel::$id_d] eq $levelId">selected</if>>
+										{$vo[$userLevel::$levelName_d]}
+									</option>
+									</foreach>
+								</if>
+							</select>
+						</div>
+						<input type="hidden" name="{$couponModel::$cId_d}" id="{$couponModel::$cId_d}" class='axp'  value="{$_GET['id']}">
+						<input type="hidden" name="{$couponModel::$type_d}" id="{$couponModel::$type_d}" class='axp' value="{$_GET['type']}">
+						<button type="button" onclick="SendCoupon.sendCouponByUserLevel('{:U('sendCouponByUserLevel')}', 'axp', '{$userLevel::$id_d}')"  id="button-filter" class="btn btn-info">确定发送优惠券</button>
+					</form>
+				</div>
+				<div class="navbar navbar-default">
+					<form action="" id="conditionForm" class="navbar-form form-inline" url="{:U('ajaxGetUser')}"
+						method="post" onsubmit="return false">
+						<div class="form-group">
+							<label class="control-label" for="input-mobile">手机号码</label>
+							<div class="input-group">
+								<input type="text" name="{$user::$mobile_d}" value={$_POST[$user::$mobile_d]}"" placeholder="手机号码"
+									id="input-mobile" class="form-control">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label" for="input-email">email</label>
+							<div class="input-group">
+								<input type="text" name="{$user::$email_d}" value="{$_POST[$user::$email_d]}" placeholder="email"
+									id="input-email" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="input-order-id">昵称关键词</label>
+							<div class="input-group">
+								<input type="text" name="{$user::$userName_d}" value="{$_POST[$user::$userName_d]}"
+									placeholder="搜索词" id="input-order-id" class="form-control">
+							</div>
+						</div>
+						<button type="button" onclick="Order.ajaxForMyOrder('conditionForm', 1)"
+							id="button-filter search-order" class="btn btn-primary">
+							<i class="fa fa-search"></i>查找
+						</button>
+						<button type="button" onclick="SendCoupon.sendCoupon('{:U('sendCouponUser')}','axp');" id="button-filter"
+							class="btn btn-info pull-right">确定发送优惠券</button>
+					</form>
+				</div>
+				<form method="post" action="" id="form-user">
+					<input type="hidden" name="cid" id="cid" value="{$_GET['id']}">
+					<div id="ajaxGetReturn"></div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<script src="__COMMON__/js/alert.js"></script>
+<script src="__JS__/order.js"></script>
+<script src="__JS__/conpon/SendCoupon.js"></script></block>

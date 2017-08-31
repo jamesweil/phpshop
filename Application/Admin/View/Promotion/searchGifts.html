@@ -1,0 +1,96 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+<div class="wrapper">
+	<section class="content">
+		<div class="container-fluid">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="navbar navbar-default">
+						<form action="{:U('searchGoods')}" id="search-form2"
+							class="navbar-form form-inline" method="post">
+							<div class="form-group">
+								<select name="{$goodsModel::$classId_d}" id="cat_id" class="form-control">
+									<option value="">所有分类</option>
+									<if condition="!empty($classData)">
+										<foreach name="classData" item="v" key="k">
+											<option value="{$v[$classModel::$id_d]}"<if
+												condition="$v[$classModel::$id_d] eq $_POST[$goodsModel::$classId_d]">selected</if> >{$v[$classModel::$className_d]}
+											</option>
+										</foreach>
+									</if>
+								</select>
+							</div>
+							<div class="form-group">
+								<select name="{$goodsModel::$brandId_d}" id="" class="form-control">
+									<option value="">所有品牌</option>
+									<if condition="!empty($brandData)">
+										<foreach name="brandData" item="v" key="k">
+											<option value="{$v[$brandModel::$id_d]}"<if
+													condition="$v[$brandModel::$id_d] eq $_POST[$goodsModel::$brandId_d]">selected</if>>{$v[$brandModel::$brandName_d]}
+											</option>
+										</foreach>
+									</if>
+								</select>
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="input-order-id">关键词</label>
+								<div class="input-group">
+									<input type="text" name="{$goodsModel::$title_d}" value="{$_POST[$goodsModel::$title_d]}"
+										placeholder="搜索词" id="input-order-id" class="form-control">
+								</div>
+							</div>
+							<button type="submit" id="button-filter search-order"
+								class="btn btn-primary">
+								<i class="fa fa-search"></i>查找
+							</button>
+						</form>
+					</div>
+					<div id="ajax_return">
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover">
+								<thead>
+									<td class="text-left"><input type="checkbox"
+										onclick="$('input[name*=\'goods_id\']').prop('checked', this.checked);">全选</td>
+									<td class="text-left">商品名称</td>
+									<td class="text-left">价格</td>
+									<td class="text-left">库存</td>
+									<td class="text-left">操作</td>
+									</tr>
+								</thead>
+								<tbody id="goos_table">
+									<if condition="!empty($goodsData['data'])"> <foreach
+										name="goodsData['data']" key='key' item="list">
+									<tr>
+										<td class="text-left"><input type="checkbox"
+											name="goods_id[]" value="{$list[$goodsModel::$id_d]}" /></td>
+										<td class="text-left">{$list[$goodsModel::$title_d]}</td>
+										<td class="text-left">{$list[$goodsModel::$priceMember_d]}</td>
+										<td class="text-left">{$list[$goodsModel::$stock_d]}</td>
+										<td><a href="javascript:void(0)"
+											onclick="javascript:$(this).parent().parent().remove();">删除</a></td>
+									</tr>
+									</foreach> </if>
+								</tbody>
+							</table>
+						</div>
+						<div class="row">
+							<div class="text-left col-sm-10">{$goodsData.page}</div>
+							<div class="text-right col-sm-2">
+								<a href="javascript:void(0)" style="margin: 20px 0;"
+									onclick="SearchGoods.selectGifts('goos_table','btn-info');" class="btn btn-info">确定</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+<script type="text/javascript" src="__JS__/promation/searchGoods.js?a={:time()}"></script>
+</block>

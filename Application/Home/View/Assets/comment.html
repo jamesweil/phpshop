@@ -1,0 +1,155 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="header">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Common/uploadify/uploadify-base.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/comment.css" />
+
+</block>
+
+<block name='content'>
+	<include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="viewts-centent-wrap fr">
+			<div class="title">
+				<h2>评价详情</h2>
+				<p>订单号：36291476787 2016-10-02 09:16:06</p>
+			</div>
+			<div class="con-main clearfix">
+				<div class="fl products stats">
+					<div class="screenshot"><img src="images/con-1.jpg"></div>
+					<p class="products-description">
+						<a href="javascript:;">派滋 红米3高配版手机壳 小米红米3s手机壳防摔软套壳 透明</a>
+					</p>
+					<p class="products-prices">¥19.00</p>
+					<p class="keyword">红米3s/高配版-透明</p>
+				</div>
+				<div class="fl products-review">
+					<div class="msg clearfix">
+						<span class="fl"></span>
+						<em class="fl">请至少填写一件商品的评价</em>
+					</div>
+					<div class="score clearfix">
+						<div class="fl degree-title">商品满意度</div>
+						<div class="fl clearfix cmt">
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<em class="fl">4分</em>
+						</div>
+					</div>
+					<div class="score clearfix">
+						<div class="fl degree-title">商品满意度</div>
+						<div class="fl clearfix cSelection">
+							<span class="fl">手感很好</span>
+							<span class="fl">和手机很搭</span>
+							<span class="fl">材料不错</span>
+							<span class="fl">图案漂亮</span>
+							<span class="fl">保护到位</span>
+							<span class="fl">贴合手机</span>
+							<span class="fl">包装精美</span>
+							<span class="fl">颜色很喜欢</span>
+							<span class="fl">质量不错</span>
+							<span class="fl">很不错</span>
+						</div>
+					</div>
+					<div class="score clearfix">
+						<div class="fl degree-title active">嗮订单</div>
+						<div class="fl clearfix">
+							<textarea></textarea>
+						</div>
+					</div>
+					<div class="submit-parent">
+						<input type="submit" class="submit">
+						<label><input type="checkbox"> 匿名回复</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<ul class="home-tab">
+			<li>
+				<em></em>
+				<span>2</span>
+				<div class="userTips">
+					<p>将过期的优惠券：<b>0</b></p>
+					<p>使用过的优惠券：<b>0</b></p>
+					<p>以使用的优惠券：<b>0</b></p>
+				</div>
+			</li>
+			<li>
+				客服
+				<div class="userTips one">
+					<a href="javascript:;">东北</a>
+					<a href="javascript:;">华北</a>
+					<a href="javascript:;">华南</a>
+					<a href="javascript:;">华中</a>
+					<a href="javascript:;">苏沪</a>
+					<a href="javascript:;">皖浙</a>
+					<a href="javascript:;">西北</a>
+					<a href="javascript:;">西南</a>
+				</div>
+			</li>
+			<li>
+				物流
+				<div class="userTips one">
+					<a href="javascript:;">深圳仓</a>
+					<a href="javascript:;">广州仓</a>
+					<a href="javascript:;">上海仓</a>
+					<a href="javascript:;">北京仓</a>
+					<a href="javascript:;">成都仓</a>
+					<a href="javascript:;">沈阳仓</a>
+					<a href="javascript:;">南京仓</a>
+					<a href="javascript:;">西安仓</a>
+					<a href="javascript:;">济南仓</a>
+					<a href="javascript:;">武汉仓</a>
+					<a href="javascript:;">重庆仓</a>
+				</div>
+			</li>
+			<li>售后</li>
+			<li>技术</li>
+			<li>投诉</li>
+			<li>关闭</li>
+		</ul>
+		<!--一键到顶-->
+		<div class="hm-go-top-parent">
+			<div class="hm-go-top active"></div>
+			<div class="hm-tit-top">顶部</div>
+		</div>
+	</div>
+	<!--尾部-->
+
+<!-- <script src="js/header.js"></script> -->
+<script>
+	$(function(){
+		var aSpan = $('.viewts-centent-wrap .con-main .products-review .cmt span');
+		var oEm = $('.viewts-centent-wrap .con-main .products-review .cmt em');
+		var aBtn = $('.viewts-centent-wrap .con-main .products-review .cSelection span');
+		var iNow = 0;
+		aSpan.on('mouseenter',function(){
+			oEm.html($(this).index()+1 +'分');
+			for(var i = 0; i < aSpan.length; i++){
+				if(i <= $(this).index()){
+					aSpan.eq(i).addClass('hover');
+				}
+			}
+		}).on('mouseleave',function(){
+			oEm.html(iNow +'分');
+			aSpan.removeClass('hover');
+		}).on('click',function(){
+			iNow = $(this).index()+1;
+			oEm.html(iNow +'分');
+			aSpan.removeClass('active')
+			for(var i = 0; i < aSpan.length; i++){
+				if(i <= $(this).index()){
+					aSpan.eq(i).addClass('active');
+				}
+			}
+		});
+		aBtn.on('click',function(){
+			$(this).addClass('active');
+		});
+	});
+</script>
+</html>

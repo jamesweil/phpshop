@@ -1,0 +1,68 @@
+<extend name="Public/publicHTML" />
+<block name="content">
+<div class="nav">
+	<div class="nav_title">
+		<h4>
+			<img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span
+				class="nav_a">添加用户</span>
+		</h4>
+	</div>
+	<if condition=" $_SESSION['aid'] eq 1">
+	<div class="nav_button">
+		<a href="javascript:;" onclick="add();"><button class="button">+
+				添加用户</button></a>
+	</div>
+	</if>
+</div>
+
+<div class="list">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0"
+		class="list_table">
+		<thead>
+			<tr>
+				<td width="8%"><div align="center">ID</div></td>
+				<td width="12%"><div align="center">用户名</div></td>
+				<td width="11%"><div align="center">所属分组</div></td>
+				<td width="13%"><div align="center">最近登录时间</div></td>
+				<td width="9%"><div align="center">登录次数</div></td>
+				<td width="12%"><div align="center">登录状态</div></td>
+				<td width="13%"><div align="center">创建时间</div></td>
+				<td width="22%"><div align="center">操作</div></td>
+			</tr>
+		</thead>
+		<tbody>
+			<foreach name="data" item="vo">
+			<tr id="del{$vo.id}">
+				<td height="50"><div align="center">{$vo.id}</div></td>
+				<td><div align="center">{$vo.account}</div></td>
+				<td><div align="center">{$vo.group}</div></td>
+				<td><div align="center">
+						<if condition=" !empty($vo['login_time']) ">{$vo.login_time|date="Y-m-d
+						H:i:s",###}</if>
+					</div></td>
+				<td><div align="center">{$vo.login_count}</div></td>
+				<td><div align="center">
+						<if condition=" $vo.status eq 1 ">已允许<else />
+						<span style="color: #F00">已禁用</span></if>
+					</div></td>
+				<td><div align="center">{$vo.create_time|date="Y-m-d
+						H:i:s",###}</div></td>
+				<td><div align="center">
+						<if condition="$vo['id'] neq 1"> <a class="a_button"
+							href="javascript:;" onClick="edit({$vo.id});">编辑</a> <a
+							class="a_button" href="javascript:;" onclick="del({$vo[id]})">删除</a></if>
+					</div></td>
+			</tr>
+			</foreach>
+		</tbody>
+	</table>
+</div>
+
+<!-- 分页 -->
+<div class="page">{$page}</div>
+<script type="text/javascript">
+var ADMIN_ADD  = "{:U('admin_add')}";
+var ADMIN_EDIT = "{:U('admin_edit')}";
+var ADMIN_DEL  = "{:U('admin_del')}";
+</script>
+<script type="text/javascript" src="__JS__/admin/admin.js"></script> </block>

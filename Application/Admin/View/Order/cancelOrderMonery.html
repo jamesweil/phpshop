@@ -1,0 +1,10 @@
+<extend name="Public/publicHTML" />
+
+<block name="content">
+<script type="text/javascript">var data = {:json_encode($status)};</script>
+
+<script src="__PUBLIC__/Common/alert.js"></script>
+<script src="__PUBLIC__/Admin/js/sendGoods.js"></script>
+
+<script type="text/javascript">AAA(data);</script>
+</block>

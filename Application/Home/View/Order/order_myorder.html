@@ -1,0 +1,594 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+		<div class="ficationFl fl">
+			<dl data="false" class="active">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">订单中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Order/order_myorder')}">·&nbsp;&nbsp;我的订单</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('OrderGroup/order_group')}">·&nbsp;&nbsp;团购订单</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('Order/cancel_order_record')}">·&nbsp;&nbsp;取消订单记录</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">资产中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Assets/balance')}">·&nbsp;&nbsp;余额</a>
+				</dd>
+				<dd>
+					<a href="{:U('Cart/goods')}">·&nbsp;&nbsp;我的购物车</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myCollection')}">·&nbsp;&nbsp;我的收藏</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myComment')}">·&nbsp;&nbsp;我的评价</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/coupon')}">·&nbsp;&nbsp;优惠券</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/integral')}">·&nbsp;&nbsp;积分</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/punkte')}">·&nbsp;&nbsp;积分兑换</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/gekauft')}">·&nbsp;&nbsp;我购买过的产品</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myTracks')}">·&nbsp;&nbsp;浏览足迹</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em> 
+					<span class="fl">财务中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Finance/my_invoice')}">·&nbsp;&nbsp;我的发票</a>
+				</dd>				
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+					<dd>
+						<a href="{:U('Finance/my_shipment')}">·&nbsp;&nbsp;我的发货</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/my_payment')}">·&nbsp;&nbsp;我的付款</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/other_orders')}">·&nbsp;&nbsp;其他订单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/closed_order')}">·&nbsp;&nbsp;已出兑账单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/outstanding_order')}">·&nbsp;&nbsp;未出兑账单</a>
+					</dd>
+				</if>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">特色业务</span>
+				</dt>
+				<dd>
+					<a href="{:U('SpecialBusiness/enterprise_group')}">·&nbsp;&nbsp;企业团购</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/purchase_requisition')}">·&nbsp;&nbsp;采购需求单</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/join_application')}">·&nbsp;&nbsp;加盟申请</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/printer_rental')}">·&nbsp;&nbsp;打印机租赁</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">商品中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('GoodsCenter/goods_search')}">·&nbsp;&nbsp;商品搜索</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">客户服务</span>
+				</dt>
+				<dd>
+					<a href="{:U('Service/return_repair')}">·&nbsp;&nbsp;返修退换货</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/after_sale')}">·&nbsp;&nbsp;售后管理</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/advisoryReply')}">·&nbsp;&nbsp;咨询回复</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/opinion')}">·&nbsp;&nbsp;意见建议</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/repair_choice')}">·&nbsp;&nbsp;上门维修服务</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/announcement')}">·&nbsp;&nbsp;网站公告</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/report_center')}">·&nbsp;&nbsp;投诉中心</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">用户设置</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserSet/address')}">·&nbsp;&nbsp;收货地址</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('UserSet/enterprise')}">·&nbsp;&nbsp;企业信息</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('UserSet/security')}">·&nbsp;&nbsp;安全设置</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">个人资料</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserData/user_data')}">·&nbsp;&nbsp;个人资料</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/bind_account')}">·&nbsp;&nbsp;账号绑定</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/special_application')}">·&nbsp;&nbsp;申请账期支付</a>
+				</dd>
+			</dl>
+		</div>
+		<!--内容-->
+		<div class="mordrMain fr">
+			<div class="title clearfix">
+				<ul class="clearfix fl">
+					<li class="fl <if condition="$status eq '0'">hover</if>"><a href="{:U('Order/order_myorder')}">所有订单 (<i>{$count.count}</i>)</a></li>
+					<li class="fl <if condition="$status eq '1'">hover</if>"><a href="{:U('Order/paymentForlist')}">待付款(<i>{$count.payment_count}</i>)</a></li>
+					<li class="fl <if condition="$status eq '5'">hover</if>"><a href="{:U('Order/shipped')}">待发货(<i>{$count.delivery_count}</i>)</a></li>
+					<li class="fl <if condition="$status eq '2'">hover</if>"><a href="{:U('Order/receiptOfGoods')}">待收货(<i>{$count.receiving_count}</i>)</a></li>
+					<li class="fl <if condition="$status eq '3'">hover</if>"><a href="{:U('Order/paymentsWaite')}">待评价(<i>{$count.comment_count}</i>)</a></li>
+					<li class="fl <if condition="$status eq '6'">hover</if> active"><a href="{:U('Order/ReturnPrice')}">退款(<i>{$count.return_count}</i>)</a></li>
+				</ul>
+				<a href="{:U('Order/order_recycle_bin')}" class="recovery fr clearfix">
+					<em class="fl"></em>
+					<span class="fr">订单回收站（<b>{$count.recycle_count}</b>）</span>
+				</a>
+			</div>
+			<!--订单搜索范围查找-->
+			<form action="{:U('Order/search_order')}" method="post" class="form">
+				<div class="rangeSearch">
+					<div class="search clearfix">
+						<input type="text" name="name" class="fl t" id="name" placeholder="请输入商品标题或者订单编号进行搜索">
+						<input type="button" value="订单搜索" class="fl b" id="search" onclick="check_order()">
+						<div class="cndo fl">
+							<h2 class="clearfix">
+								<span class="fl">精简筛选条件</span>
+								<em class="fl"></em>
+							</h2>
+						</div>
+					</div>
+					<div class="more-part clearfix">
+						<div class="fl type clearfix">
+							<span class="fl">订单类型</span>
+							<select name="type" id="" class="fl typeCh">
+								<option>全部</option>
+							</select>
+						</div>
+						<div class="fl dealTimer clearfix">
+							<span class="fl">成交时间</span>
+							<input type="text" name="control_date" id="control_date" placeholder="请选择开始时间范围" class="fl">
+							<em class="fl">-</em>
+							<input type="text" name="control_date2" id="control_date2" placeholder="请选择结束时间范围" class="fl">
+						</div>
+						<script>
+							$('.mordrMain .rangeSearch .more-part  .dealTimer input').on('focus',function(){
+								new Calendar().show(this);
+							}).on('blur',function(){
+								new Calendar().show();
+							});
+							
+						</script>
+						<div class="fl type clearfix">
+							<span class="fl">交易状态</span>
+							<select name="trans" id="" class="fl typeCh">
+								<option value="">全部</option>
+								<option value="11">待付款</option>
+								<option value="1">已付款</option>
+								<option value="3">已发货</option>
+								<option value="4">已收货</option>
+								<option value="5">退款中的订单</option>
+							</select>
+						</div>
+						<div class="fl type clearfix" style="margin-left:100px;">
+							<span class="fl">评价状态</span>
+							<select name="comment" id="" class="fl typeCh">
+								<option value="">全部</option>
+								<option value="2">待评价</option>
+								<option value="1">已评价</option>
+							</select>
+						</div>
+					</div>
+				</div>
+            </form>
+
+			<!--宝贝交易状态-->
+			<ol class="clearfix tradingStatus">
+				<li class="fl one">宝贝</li>
+				<li class="fl two">单价</li>
+				<li class="fl three">数量</li>
+				<li class="fl four">商品操作</li>
+				<li class="fl four">实付款</li>
+				<li class="fl five">交易状态</li>
+				<li class="fl four">交易操作</li>
+			</ol>
+			<!--订单-->
+			<empty name="data">
+				<div style="width:100%;text-align:center;font-size:30px;color:red;">亲!暂时没有数据!</div>
+			<else/>
+			<volist name="data" id="vo">
+	            <div class="myderCentent" id="del{$vo.order_id}">
+					<div class="ctitle clearfix">
+						<label class="fl">
+							<input type="checkbox">
+							<span>{$vo.create_time|date="Y-m-d",###}</span>
+						</label>
+						<span class="fl sPent">
+							<em>订单号：</em>
+							<em>{$vo.order_sn_id}</em>
+						</span>
+						<if condition="($vo.order_status eq '4') OR ($vo.order_status eq '9')">
+						<i class="fr del" data-value="{$vo.order_id}"></i>
+						</if>
+
+						<div class="fr clearfix conFr">
+							<div class="four fl">
+								<span>总价格:￥{$vo.price_sum}</span>
+								<span>(含运费：￥{$vo.shipping_monery})</p>
+							</div>
+							<if condition="$vo.order_status eq '0'">
+							    <if condition="$vo.order_type eq '0'">
+									<div class="five fl">
+										<span>等待买家付款</span>
+										<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+									</div>
+									<div class="five fl details">
+										<a href="javascript:;" class="hover" onclick="cancel({$vo['order_id']})">取消订单</a>
+										<a href="{:U('PayOrder/payOrder',array('order_id'=>$vo['order_id']))}" class="payment">立即支付</a>
+									</div>
+								</if>
+								<if condition="$vo.order_type eq '1'">
+									<div class="five fl">
+										<span>货到付款</span>
+										<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+									</div>
+									<div class="five fl details">
+										<a href="javascript:;" class="hover" onclick="cancel({$vo['order_id']})">取消订单</a>
+										<a href="javascript:;" class="convertible">货到付款</a>
+									</div>
+								</if>
+							<elseif condition="$vo.order_status eq '-1'"/>
+                                <div class="five fl">
+									<span>订单已取消</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+									<a href="javascript:;" class="convertible">已取消</a>
+								</div>
+							<elseif condition="$vo.order_status eq '1'"/>
+                                <div class="five fl">
+									<span>等待发货</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+									<a href="javascript:;" class="convertible">已支付</a>
+								</div>
+							<elseif condition="$vo.order_status eq '2'"/>
+                                <div class="five fl">
+									<span>等待发货</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+									<a href="javascript:;" class="convertible">待发货</a>
+								</div>
+							<elseif condition="$vo.order_status eq '3'"/>
+                                <div class="five fl">
+									<span>已发货</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+									<a href="{:U('Order/logistics',array('id'=>$vo['order_id']))}" class="hover">查看物流</a>
+									<a href="javascript:;" class="confirm receipt" data-value="{$vo.order_id}">待收货</a>
+								</div>
+							<elseif condition="$vo.order_status eq '4' and $vo.comment_status eq '0'"/>
+                                <div class="five fl">
+									<span>交易成功</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+									<a href="{:U('Order/comment_select_goods',array('id'=>$vo['order_id']))}" class="convertible">待评价</a>
+								</div>
+							<elseif condition="$vo.order_status eq '4' and $vo.comment_status eq '1'"/>
+                                <div class="five fl">
+									<span>交易成功</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+									<a href="javascript:;" class="convertible">已评价</a>
+								</div>
+							<elseif condition="$vo.order_status eq '5'"/>
+								<div class="five fl">
+									<span>退款审核中</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+								    <a href="{:U('Service/check_list',array('id'=>$vo['order_id']))}" class="hover">查看退单</a>
+									<a href="javascript:;" class="hover">退款审核中</a>
+								</div>
+							<elseif condition="$vo.order_status eq '6'"/>
+								<div class="five fl">
+									<span>审核失败</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+									<a href="{:U('Service/check_list',array('id'=>$vo['order_id']))}" class="hover">查看退单</a>
+									<a href="javascript:;" class="convertible">审核失败</a>
+								</div>	
+							<elseif condition="$vo.order_status eq '7'"/>
+								<div class="five fl">
+									<span>审核成功</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+									<a href="{:U('Service/check_list',array('id'=>$vo['order_id']))}" class="hover">查看退单</a>
+									<a href="javascript:;" class="convertible">审核成功</a>
+								</div>
+							<elseif condition="$vo.order_status eq '8'"/>
+								<div class="five fl">
+									<span>等待退款</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+								    <a href="{:U('Service/check_list',array('id'=>$vo['order_id']))}" class="hover">查看退单</a>
+									<a href="javascript:;" class="convertible">等待退款</a>
+								</div>
+							<elseif condition="$vo.order_status eq '9'"/>
+								<div class="five fl">
+									<span>退款成功</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+									<a href="{:U('Service/check_list',array('id'=>$vo['order_id']))}" class="hover">查看退单</a>
+									<a href="javascript:;" class="convertible">退款成功</a>
+								</div>
+							<else />
+                                <div class="five fl">
+									<span>交易完成</span>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="five fl details">
+									<a href="{:U('PayOrder/payOrder',array('order_id'=>$vo['order_id']))}" class="payment">交易完成</a>
+								</div>
+							</if>
+						</div>
+					</div>
+					<div class="con clearfix">
+						<div class="fl clearfix conFl">							
+							<volist name="vo.goods" id="goods">
+								<div class="conLoop clearfix">
+									<div class="one clearfix fl">
+										<div class="imgsPt fl">
+											<img src="{$goods.images}">
+										</div>
+										<div class="conRight fl">
+											<a href="{:U('Goods/goodsDetails',array('id'=>$goods['goods_id']))}">{$goods.title}</a>
+											<p>商品编号：{$goods.goods_id}</p>
+										</div>
+									</div>
+									<div class="two fl">￥{$goods.goods_price}</div>
+									<div class="three fl">{$goods.goods_num}</div>
+									<div class="four fl">
+										    <if condition="($vo.order_status eq '4') OR ($vo.order_status eq '2')OR ($vo.order_status eq '3')OR ($vo.order_status eq '1')">
+											<a href="{:U('Service/return_goods',array('goods_id'=>$goods['goods_id'],'order_id'=>$vo['order_id']))}" class="hover">申请售后</a><br/>
+											<elseif condition="($goods.status eq '5') OR ($goods.status eq '6') OR ($goods.status eq '7') OR ($goods.status eq '8') OR ($goods.status eq '9')"/>
+											<a href="javascript:;" class="hover">已申请售后</a><br/>
+											</if>
+											<a href="{:U('Service/report',array('goods'=>$goods['goods_id']))}" class="hover">投诉卖家</a>
+										<!-- </egt> -->
+									</div>
+									<div class="status fl">
+									    <if condition="$goods.status eq '5'">
+											<a href="javascript:;" class="payment">退款审核中</a><br><a href="{:U('Service/check_list',array('id'=>$vo['order_id']))}" class="tui">查看退单</a><br>
+											<a href="{:U('Order/buy_again',array('id'=>$goods['goods_id']))}" class="tui">再次购买</a>
+										<elseif condition="$goods.status eq '6'"/>
+											<a href="javascript:;" class="payment">审核失败</a><br><a href="{:U('Service/check_list',array('id'=>$vo['order_id']))}" class="tui">查看退单</a><br>
+											<a href="{:U('Order/buy_again',array('id'=>$goods['goods_id']))}" class="tui">再次购买</a>
+										<elseif condition="$goods.status eq '7'"/>
+											<a href="javascript:;" class="payment">审核成功</a><br><a href="{:U('Service/check_list',array('id'=>$vo['order_id']))}" class="tui">查看退单</a><br>
+											<a href="{:U('Order/buy_again',array('id'=>$goods['goods_id']))}" class="tui">再次购买</a>
+										<elseif condition="$goods.status eq '8'"/>
+											<a href="javascript:;" class="payment">退款中</a><br><a href="{:U('Service/check_list',array('id'=>$vo['order_id']))}" class="tui">查看退单</a><br>
+											<a href="{:U('Order/buy_again',array('id'=>$goods['goods_id']))}" class="tui">再次购买</a>
+										<elseif condition="$goods.status eq '9'"/>
+											<a href="javascript:;" class="payment">退款成功</a><br><a href="{:U('Service/check_list',array('id'=>$vo['order_id']))}" class="tui">查看退单</a><br>
+											<a href="{:U('Order/buy_again',array('id'=>$goods['goods_id']))}" class="tui">再次购买</a>
+										<else/>
+											<a href="{:U('Order/buy_again',array('id'=>$goods['goods_id']))}" class="tui">再次购买</a>
+										</if>
+									</div>
+								</div>
+								<volist name="goods.type1" id="type1">
+									<div class="conLoop clearfix">
+										<div class="one clearfix fl">
+											<div class="imgsPt fl">
+												<span class="icon">赠品</span>
+												<img src="{$type1.img_url}">
+											</div>
+											<div class="conRight fl">
+												<a>{$type1.title}</a>
+												<p>商品编号：{$type1.goods_id}</p>
+											</div>
+										</div>
+										<div class="two fl">￥{$type1.goods_price}.00</div>
+										<div class="three fl">{$type1.goods_num}</div>
+									</div>
+								</volist>
+								<if condition="$goods.type0 neq null">
+								<div class="conLoop clearfix">
+									<div class="one clearfix fl">
+										<div class="imgsPt fl">
+											<span class="icon">赠品</span>
+											<img src="{$goods.type0.img_url}">
+										</div>
+										<div class="conRight fl">
+											<a>{$goods.type0.title}</a>
+											<p>商品编号：{$goods.type0.goods_id}</p>
+										</div>
+									</div>
+									<div class="two fl">￥{$goods.type0.goods_price}.00</div>
+									<div class="three fl">{$goods.type0.goods_num}</div>
+								</div>
+									</if>
+						</volist>
+						</div>
+					</div>
+				</div>
+            </volist>
+            </empty>
+			<div class="page">				
+				{$page}
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	<div class="ui-alert-main">
+		<h5 class="title clearfix">
+			<i class="layui-layer-ico layui-layer-ico0 fl"></i>
+			<span class="fl">订单取消申请</span>
+		</h5>
+		<div class="input-main clearfix">
+			<span class="fl"><i>*</i>取消原因:</span>
+			<div class="input-main fl"><input type="text" id="reason"></div>
+		</div>
+		<dl>
+			<dt>温馨提示:</dt>
+			<dd>·&nbsp;订单成功取消后无法恢复</dd>
+			<dd>·&nbsp;该商品已服金额将返还银行卡/平台账户</dd>
+			<dd>·&nbsp;拆单后取消订单,使用优惠券将不再返回</dd>
+		</dl>
+		<div class="drop-down clearfix">
+			<label class="fl clearfix">
+				<input type="radio" name="data" class="fl">
+				<span class="fl">不想买了</span>
+			</label>
+			<label class="fl clearfix">
+				<input type="radio" name="data"  class="fl">
+				<span  class="fl">该商品降价了</span>
+			</label>
+			<label class="fl clearfix">
+				<input type="radio" name="data"  class="fl">
+				<span class="fl">其他渠道价格更低</span>
+			</label>
+			<label class="fl clearfix">
+				<input type="radio" name="data" class="fl">
+				<span class="fl">支付方式有误/无法支付</span>
+			</label>
+			<label class="fl clearfix">
+				<input type="radio" name="data" class="fl">
+				<span class="fl">重复下单/误下单</span>
+			</label>
+			<label class="fl clearfix">
+				<input type="radio" name="data" class="fl">
+				<span class="fl">商品买了(颜色丶尺寸丶是的撒)</span>
+			</label>
+			<label class="fl clearfix">
+				<input type="radio" name="data" class="fl">
+				<span class="fl">忘记使用优惠券</span>
+			</label>
+			<label class="fl">
+				<input type="radio" name="data">
+				<span>发票信息有误</span>
+			</label>
+			<label class="fl clearfix">
+				<input type="radio" name="data" class="fl">
+				<span class="fl">配送信息有误</span>
+			</label>
+			<label class="fl clearfix">
+				<input type="radio" name="data" class="fl">
+				<span class="fl">订单不能预计时间送达</span>
+			</label>
+		</div>
+	</div>
+<script src="__JS__/order/order.js"></script>
+<!-- <script src="__JS__/header.js"></script> -->
+<script src="__JS__/myOrder.js"></script>	
+<script src="__JS__/Calendar.js"></script>
+<script>	
+ $('.myderCentent .conFr').on('click','.details .receipt',function(){
+    var id = $(this).attr('data-value');
+        parent.layer.confirm('是否确定收货？', {
+            btn: ['是','否'], //按钮
+            shade: 0.5 //显示遮罩
+        }, function(){
+            $.post("/index.php/Home/Order/confirm_receipt", { "id": id},function(data){
+                if(data == 1){
+                    parent.layer.msg('收货成功!', { icon: 1, time: 1000 }, function(){
+                            $("#del"+id).remove();
+                        });
+                }else{
+                    parent.layer.msg('收货失败!', {icon: 2, time: 2000 }); 
+                }
+            }, "json");
+        },function(){
+            // $("#del"+id+" td").css('border-top','0');
+            // $("#del"+id+" td").css('border-bottom','1px solid #EFEFEF');
+        });
+});
+ //下拉
+ $('.ui-alert-main .input-main .input-main input').on('focus',function(){
+ 	$(this).parents('.ui-alert-main').find('.drop-down').addClass('block');
+ });
+  $('.ui-alert-main .input-main .input-main input').on('blur',function(){
+  	var _this = $(this)
+ 	setTimeout(function(){
+ 		_this.parents('.ui-alert-main').find('.drop-down').removeClass('block');
+ 	},200);
+ });
+  $('.ui-alert-main .drop-down label').on('click',function(){
+  	$(this).parents('.ui-alert-main').find('.input-main input').val($(this).find('span').html())
+  });
+</script>
+</block>

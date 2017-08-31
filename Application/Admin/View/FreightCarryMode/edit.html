@@ -1,0 +1,208 @@
+<extend name="Public/publicHTML" />
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<section class="content">
+	<div class="container-fluid">
+		<div class="pull-right">
+			<a href="" data-toggle="tooltip" title="" class="btn btn-default"
+				data-original-title="返回"><i class="fa fa-reply"></i></a>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 编辑运费设置	
+
+				</h3>
+			</div>
+			<div class="panel-body">
+
+				<form method="post" id="formId">
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab_tongyong">
+							<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<td>首件:</td>
+										<td><input type="text" isNumber="1" 
+											value="{$data[$modeModel::$firstThing_d]}"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											name="{$modeModel::$firstThing_d}"
+											class="form-control w380 title req" id="title">
+											<span id="err_title" class="rxd">包邮件数没有填写</span></td>
+									</tr>
+									<tr>
+										<td>首重：</td>
+										<td><input type="text" isNumber="1"
+											value="{$data[$modeModel::$firstWeight_d]}"
+											name="{$modeModel::$firstWeight_d}"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											class="form-control w380 title req" id="title">
+											<span id="err_title" >（单位：kg)</span></td>
+									</tr>
+									<tr>
+										<td>首体积：</td>
+										<td><input type="text" isNumber="1"
+											value="{$data[$modeModel::$fristVolum_d]}" 
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											name="{$modeModel::$fristVolum_d}"
+											class="form-control w380 title req" id="title">
+											<span id="err_title">(单位：dm^3)</span></td>
+									</tr>
+									
+									<tr>
+										<td>首费：</td>
+										<td><input type="text" isNumber="1"
+											value="{$data[$modeModel::$fristMoney_d]}"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											name="{$modeModel::$fristMoney_d}"
+											class="form-control w380 title req" id="title">
+											<span id="err_title" class="rxd">包邮金额没有填写</span></td>
+									</tr>
+									
+									<tr>
+										<td>续重：</td>
+										<td><input type="text" isNumber="1"
+											value="{$data[$modeModel::$continuedHeavy_d]}"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											name="{$modeModel::$continuedHeavy_d}"
+											class="form-control w380 title req" id="title">
+											<span id="err_title" class="rxd">续重没有填写</span></td>
+									</tr>
+									
+									<tr>
+										<td>续体积：</td>
+										<td><input type="text" isNumber="1"
+											value="{$data[$modeModel::$continuedVolum_d]}"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											name="{$modeModel::$continuedVolum_d}"
+											class="form-control w380 title req" id="title">
+											<span id="err_title" class="rxd">续体积没有填写</span></td>
+									</tr>
+									
+									<tr>
+										<td>续费：</td>
+										<td><input type="text" isNumber="1"
+											value="{$data[$modeModel::$continuedMoney_d]}"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											name="{$modeModel::$continuedMoney_d}"
+											class="form-control w380 title req" id="title">
+											<span id="err_title" class="rxd">续费没有填写</span></td>
+									</tr>
+									<tr>
+										<td>续件：</td>
+										<td><input type="text" isNumber="1"
+											value="{$data[$modeModel::$continuedThing_d]}"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											name="{$modeModel::$continuedThing_d}"
+											class="form-control w380 title req" id="title">
+											<span id="err_title" class="rxd">续件没有填写</span></td>
+									</tr>
+									<tr>
+										<td>运送方式：</td>
+										<td>
+											<div class="col-xs-3">
+												<select name="{$modeModel::$carryWay_d}" isNumber="1"
+													id="cat_id"
+													class="form-control req w236">
+													<option value="0">请选择运送方式</option>
+													<if condition="!empty($company)">
+														<foreach name="company" key='key' item="value">
+															<option <if condition="$data[$modeModel::$carryWay_d] == $key"> selected="selected" </if> value="{$key}">{$value}</option>
+														</foreach>
+													</if>
+												</select>
+											</div>
+										</td>
+									</tr>
+									
+									<tr>
+										<td>选择模板：</td>
+										<td>
+											<div class="col-xs-3">
+												<select name="{$modeModel::$freightId_d}" isNumber="1"
+													id="cat_id"
+													class="form-control req w236">
+													<option value="0">请选选择模板</option>
+													<if condition="!empty($template)">
+														<foreach name="template" key='key' item="value">
+															<option value="{$key}" <if condition="$data[$modeModel::$freightId_d] == $key"> selected="selected" </if> >{$value}</option>
+														</foreach>
+													</if>
+												</select>
+											</div>
+										</td>
+									</tr>
+									
+									<tr>
+										<td>选择地区:</td>
+										<td>
+											<div class="form-group">
+												<div class="col-xs-2">
+													<a class="btn btn-primary" href="javascript:void(0);"
+														onclick="ModeSet.selectGoods('{:U('selectArea')}')"><i class="fa fa-search"></i>添加地区</a>
+												</div>
+												<div class="col-xs-2">
+													<span id="err_goods" class="rxd">添加地区</span>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<div class="form-group">
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+															<th style="display: none">选择</th>
+															<th class="text-left">地区名称</th>
+															<th class="text-left">操作</th>
+														</tr>
+													</thead>
+													<tbody id="goods_list">
+														<if condition="!empty($regData)">
+															<foreach name="regData" key="key" item="value">
+																<tr>
+																	<td class="rxd"><input type="hidden" name="{$areaModel::$mailArea_d}[]" value="{$key}"/></td>
+																	<td>{$value}</td>
+																	<td><a href="javascript:void(0)"onclick="javascript:$(this).parent().parent().remove();">删除</a></td>
+																</tr>
+															</foreach>
+														</if>
+													</tbody>
+												</table>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="pull-right">
+						<input type="hidden" name="{$modeModel::$id_d}" value="{$data[$modeModel::$id_d]}"/>
+						<input type="submit"
+							onclick="ModeSet.doSubmit('formId', '{:U('saveEdit')}');"
+							class="btn btn-primary" data-toggle="tooltip"
+							data-original-title="保存" value='保存' />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script> <script
+	type="text/javascript" src="__COMMON__/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="__COMMON__/js/jquery-form.js"></script>
+<script type="text/javascript" src="__JS__/callback.js"></script>
+<script type="text/javascript" src="__JS__/region/mode.js?a={:time()}"></script>
+</block>

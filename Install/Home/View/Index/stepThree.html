@@ -1,0 +1,100 @@
+<extend name="Public/extend"/>
+
+<block name="content">
+	<section class="section">
+    <div class="step">
+      <ul>
+        <li class="on"><em>1</em>检测环境</li>
+        <li class="current"><em>2</em>创建数据</li>
+        <li><em>3</em>完成安装</li>
+      </ul>
+    </div>
+    <form id="J_install_form" action="{:U('stepFour')}" method="post">
+      <input type="hidden" name="force" value="0" />
+      <div class="server">
+        <table width="100%">
+          <tr>
+            <td class="td1" width="100">数据库信息</td>
+            <td class="td1" width="200">&nbsp;</td>
+            <td class="td1">&nbsp;</td>
+          </tr>
+          
+		  <tr>
+            <td class="tar">数据库服务器：</td>
+            <td><input type="text" name="dbhost" id="dbhost" value="localhost" class="input"></td>
+            <td><div id="J_install_tip_dbhost"><span class="gray">数据库服务器地址，一般为localhost</span></div></td>
+          </tr>
+		  <tr>
+            <td class="tar">数据库端口：</td>
+            <td><input type="text" name="dbport" id="dbport" value="3306" class="input"></td>
+            <td><div id="J_install_tip_dbport"><span class="gray">数据库服务器端口，一般为3306</span></div></td>
+          </tr>
+          <tr>
+            <td class="tar">数据库用户名：</td>
+            <td><input type="text" name="dbuser" id="dbuser" value="root" class="input"></td>
+            <td><div id="J_install_tip_dbuser"></div></td>
+          </tr>
+          <tr>
+            <td class="tar">数据库密码：</td>
+            <td><input type="password" name="dbpw" id="dbpw" value="" class="input" autoComplete="off" onBlur="CheckData.TestDbPwd(0, '{:U('checkLink')}')"></td>
+            <td><div id="J_install_tip_dbpw"></div></td>
+          </tr>
+          <tr>
+            <td class="tar">数据库名：</td>
+            <td><input type="text" name="dbname" id="dbname" value="shopsn" class="input"></td>
+            <td><div id="J_install_tip_dbname"></div></td>
+          </tr>
+         <!--  <tr>
+          	<td class="tar">演示数据：</td>
+          	<td colspan="2"><input style="width:18px;height:18px;" type="checkbox" name="demo" checked></td>
+          </tr> -->
+        </table>
+        <table width="100%">
+          <tr>
+            <td class="td1" width="100">管理员信息</td>
+            <td class="td1" width="200">&nbsp;</td>
+            <td class="td1">&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="tar">管理员帐号：</td>
+            <td><input type="text" name="manager" id="manager" value="admin" class="input"></td>
+            <td><div id="J_install_tip_manager"></div></td>
+          </tr>
+          <tr>
+            <td class="tar">管理员密码：</td>
+            <td><input type="password" name="manager_pwd" id="manager_pwd" class="input" autoComplete="off"></td>
+            <td><div id="J_install_tip_manager_pwd"></div></td>
+          </tr>
+          <tr>
+            <td class="tar">重复密码：</td>
+            <td><input type="password" name="manager_ckpwd" id="manager_ckpwd" class="input" autoComplete="off"></td>
+            <td><div id="J_install_tip_manager_ckpwd"></div></td>
+          </tr>
+           <tr>
+            <td class="tar">数据库表前缀：</td>
+            <td><input type="text" name="dbprefix" id="dbprefix" value="db_" class="input" ></td>
+            <td><div id="J_install_tip_dbprefix"><span class="gray">建议使用默认，同一数据库安装多个亿速shop时需修改</span></div></td>
+          </tr>
+          <tr>
+            <td class="tar">Email：</td>
+            <td><input type="text" name="manager_email" class="input" value=""></td>
+            <td><div id="J_install_tip_manager_email"></div></td>
+          </tr>
+        </table>
+        <div id="J_response_tips" style="display:none;"></div>
+      </div>
+      <div class="bottom tac"> <a href="./index.php?step=2" class="btn">上一步</a>
+        <input type="button" onClick="CheckData.checkForm('{:U('checkLink')}');" class="btn btn_submit J_install_btn" value="创建数据"/>
+      </div>
+    </form>
+  </section>
+  <div  style="width:0;height:0;overflow:hidden;"> <img src="./images/install/pop_loading.gif"> </div>
+  <script src="__PUBLIC__/Common/js/jquery-1.11.3.min.js"></script> 
+  <script src="__PUBLIC__/Common/js/jquery.validate.min"></script> 
+  <script src="__PUBLIC__/Install/js/ajaxForm.js"></script> 
+  <script src="__PUBLIC__/Install/js/intnet.js?a=<?php echo time();?>"></script> 
+   <script src="__PUBLIC__/Install/js/checkDb.js?a=<?php echo time();?>"></script> 
+  <script>
+</script> 
+</block>
+

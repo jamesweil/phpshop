@@ -1,0 +1,74 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr coupn-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl hover"><a href="javascript:;">可用优惠券(<i>{$usable.count}</i>)</a></li>
+					<li class="fl"><a href="javascript:;">已用优惠券(<i>{$used.count}</i>)</a></li>
+					<li class="fl active"><a href="javascript:;">已过期优惠券(<i>{$overdue.count}</i>)</a></li>
+				</ul>
+			</div>
+			<div>
+				<ul class="content-main clearfix available active"> 
+					<volist name="usable.res" id="vo">
+						<li class="fl" id="del{$vo.id}">
+							<h2><span>¥</span>{$vo.money}</h2>
+							<p class="condition">使用条件：满{$vo.condition}可用</p>
+							<p class="timer">有效时间：<span>{$vo.use_start_time|date="Y.m.d",###}至{$vo.use_end_time|date="Y.m.d",###}</span></p>
+							<div class="use-btn">
+								<a href="javascript:;" class="btn del" value="{$vo.id}">删除</a>
+							</div>
+						</li>
+					</volist>
+					<div class="page">{$usable.page}</div>
+				</ul>
+				<ul class="content-main clearfix already">
+					<volist name="used.res" id="vo">
+						<li class="fl" id="del{$vo.id}">
+							<h2><span>¥</span>{$vo.money}</h2>
+							<p class="condition">使用条件：满{$vo.condition}可用</p>
+							<p class="timer">有效时间：<span>{$vo.use_start_time|date="Y.m.d",###}至{$vo.use_end_time|date="Y.m.d",###}</span></p>
+							<div class="use-btn">
+								<a href="javascript:;" class="btn del" value="{$vo.id}">删除</a>
+							</div>
+						</li>
+					</volist>
+					<div class="page clearfix">{$used.page}</div>
+				</ul>
+				
+				<ul class="content-main clearfix already">
+					<volist name="overdue.res" id="vo">
+						<li class="fl" id="del{$vo.id}">
+							<h2><span>¥</span>{$vo.money}</h2>
+							<p class="condition">使用条件：满{$vo.condition}可用</p>
+							<p class="timer">有效时间：<span>{$vo.use_start_time|date="Y.m.d",###}至{$vo.use_end_time|date="Y.m.d",###}</span></p>
+							<div class="use-btn">
+								<a href="javascript:;" class="btn del" value="{$vo.id}">删除</a>
+							</div>
+						</li>
+					</volist>
+					<div class="page">{$overdue.page}</div>
+				</ul>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script src="__JS__/Coupon/coupon.js"></script>	
+<!-- <script src="__JS__/header.js"></script> -->
+<script src="__JS__/Calendar.js"></script>
+<script>
+    $('.coupn-content-wrap .content-main li:nth-child(3n)').addClass('active');
+	var aLi = $('.coupn-content-wrap .title .nav li');
+	aLi.on('click',function(){
+		aLi.removeClass('hover').eq($(this).index()).addClass('hover');
+		$('.coupn-content-wrap .content-main').removeClass('active').eq($(this).index()).addClass('active');
+	});
+</script>
+</block>

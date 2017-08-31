@@ -1,0 +1,131 @@
+<extend name="Public/publicHTML" />
+<block name="nav">
+<div class="nav">
+	<div class="nav_title">
+		<h4>
+			<img class="nav_img" src="__IMG__/tab.gif" /><span class="nav_a">添加仓库</span>
+		</h4>
+	</div>
+</div>
+<br />
+<br />
+</block>
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<link rel="stylesheet" href="__CSS__/goods/goods.css" />
+<section class="content">
+	<div class="container-fluid">
+		<div class="pull-right">
+			<a href="" data-toggle="tooltip" title="" class="btn btn-default"
+				data-original-title="返回"><i class="fa fa-reply"></i></a>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 添加发货地址
+				</h3>
+			</div>
+			<div class="panel-body">
+
+				<form method="post" id="formId">
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab_tongyong">
+							<table class="table table-bordered">
+								<tbody>
+									<if condition="!empty($inputData)"> <foreach
+										name="inputData" key="key" item="value">
+									<tr>
+										<td>{$value['title']}:</td>
+										<td><{$value[$key]} type="{$value['type']}" isNumber="0"
+											name="{$key}" class="form-control w380 title req" id="title">
+											<span id="err_title" class="rxd">{$value['errorNotice']}</span>
+										</td>
+									</tr>
+									</foreach> </if>
+									<tr>
+										<td>所在地区:</td>
+										<td>
+											<div class="drop-wrap clearfix">
+												<div class="drop-main fl">
+													<div class="drop clearfix ">
+														<span class="vision">请输入/选择商品分类</span> <input type="text"
+															autocomplete="off" name="id"
+															onkeyup="MySite.select(this, 'menu')" class="fl"
+															id="provId"> <a href="javascript:;" class="fl"
+															data="false">∨</a>
+													</div>
+													<ul class="menu">
+
+													</ul>
+												</div>
+												<div class="drop-main fl">
+													<div class="drop clearfix">
+														<span class="vision">请输入/选择商品分类</span> <input type="text"
+															autocomplete="off" name="id" id="city" class="fl">
+														<a href="javascript:;" class="fl" data="false">∨</a>
+													</div>
+													<ul class="menu">
+
+													</ul>
+												</div>
+											</div>
+										</td>
+									</tr>
+
+									<tr>
+										<td>所在区域</td>
+										<td><label class="radio-inline"> <input
+												type="radio" name="{$model::$geographical_d}" class="status"
+												id="inlineRadio3" checked="checked" value="0">华东地区
+										</label> <label class="radio-inline"> <input type="radio"
+												name="{$model::$geographical_d}" class="status" value="1">
+												华东东北
+										</label><label class="radio-inline"> <input type="radio"
+												name="{$model::$geographical_d}" class="status"
+												id="inlineRadio3" checked="checked" value="2">华南西南
+										</label> <label class="radio-inline"> <input type="radio"
+												name="{$model::$geographical_d}" class="status" value="3">
+												华中西北
+										</label> </label></td>
+									</tr>
+
+									<tr>
+										<td>是否启用</td>
+										<td><label class="radio-inline"> <input
+												type="radio" name="{$model::$status_d}" class="status"
+												id="inlineRadio3" checked="checked" value="1"> 是
+										</label> <label class="radio-inline"> <input type="radio"
+												name="{$model::$status_d}" class="status" id="inlineRadio4"
+												value="0"> 否
+										</label></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="pull-right">
+						<input type="submit"
+							onclick="MySite.doSubmit('formId', '{:U('addSiteData')}');"
+							class="btn btn-primary" data-toggle="tooltip"
+							data-original-title="保存" value='保存' />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script>
+<script type="text/javascript" src="__COMMON__/js/listener.js"></script>
+<script type="text/javascript"
+	src="__COMMON__/js/jquery.validate.min.js"></script> <script
+	type="text/javascript" src="__COMMON__/js/jquery-form.js"></script> <script
+	type="text/javascript" src="__JS__/site.js?a={:time()}"></script> <script
+	type="text/javascript" src="__JS__/spinner/Spinner.js"></script> <script
+	type="text/javascript">
+var CITY_LIST = "{:U('getAreaList')}";
+Tool.area = "{$model::$areaId_d}";
+MySite.cin($('#provId').get(0), CITY_LIST, 0);
+</script> </block>

@@ -1,0 +1,87 @@
+<ul class="pr-com-title clearfix">
+	<li class="fl active">推荐配件</li>
+	<li class="fl">优惠套餐</li>
+	<li class="fl">最佳组合</li>
+</ul>
+<ul class="pr-content clearfix active">
+	<!-- 推荐配件 -->
+	<if condition="!empty($accessories)"> <foreach name="accessories"
+		item="vo">
+	<li class="fl"><a>
+			<div class="images-parent">
+				<img src="{$vo['pic_url']}" height="115px">
+			</div> <span> <input class="com_r" type="checkbox"
+				id="r_{$key}" value="{$vo['id']}" price="{$vo['price']}"
+				name="goods_id[]" /><label for="r_{$key}">{$vo['title']}</label>
+		</span> <span>￥{$vo['price']}</span>
+	</a></li>
+	</foreach>
+	<li class="pr-final fl">
+		<p class="pr-join-one">
+			<input type="button" value="加入购物车" onclick="comR.addCart()">
+		</p>
+	</li>
+	<else />
+	<div class="no_goods">暂无产品</div>
+	</if>
+</ul>
+
+<!-- 优惠套餐 -->
+<ul class="pr-content clearfix">
+	<if condition="!empty($package['sub'])"> <foreach
+		name="package['sub']" item="vo" key="k">
+	<li class="fl"><a
+		href="{:U('Goods/goodsDetails', ['id'=>$vo['goods_id']])}">
+			<div class="images-parent">
+				<img src="{$vo['pic_url']}" height="115px">
+			</div>
+			<span><label>{$vo['title']}</label></span> <span>￥{$vo['price']}</span> <if
+				condition="$k lt ($package_size-1)"> <em></em> <else /> <i></i>
+			</if>
+	</a></li>
+	</foreach> <if condition="$package_size gt 0">
+	<li class="pr-final fl">
+		<p class="clearfix">
+			<b class="fl">套餐价:</b><span class="fl">￥{$package['discount']}</span><span
+				class="fl active">省￥{$package['total']-$package['discount']}</span>
+		</p>
+		<p class="price">价格：￥{$package['total']}</p>
+		<p class="pr-join-one">
+			<input type="button" value="加入购物车"
+				onclick="Cart.addCart4Package(this, {$package['package_id']}, '{:U('Cart/cart_add', ['type'=>2])}')">
+		</p>
+	</li>
+	</if> <else />
+	<div class="no_goods">暂无产品</div>
+	</if>
+</ul>
+
+<ul class="pr-content clearfix">
+	<if condition="!empty($combo)"> <foreach name="combo" key="key"
+		item="vo">
+	<li class="fl"><a
+		href="{:U('Goods/goodsDetails', ['id'=>$vo['id']])}">
+
+			<div class="images-parent">
+				<img src="{$vo['pic_url']}" height="115px">
+			</div> <span> <input class="com_b" type="checkbox"
+				id="select_{$key}" value="{$vo['id']}" price="{$vo['price']}"
+				name="goods_id[]" /><label for="select_{$key}">{$vo['title']}</label>
+		</span> <span>￥{$vo['price']}</span>
+	</a></li>
+	</foreach>
+	<li class="pr-final fl">
+		<p class="pr-join-one">
+			<input type="button" value="加入购物车" onclick="comb.addCart()">
+		</p>
+	</li>
+	<else />
+	<div class="no_goods">暂无产品</div>
+	</if>
+</ul>
+
+<script type="text/javascript">
+var COM_URL = "{:U('AjaxAddCart/addCartByManyGoods')}";
+</script>
+<script type="text/javascript" src="__COMMON__/js/notice.js"></script>
+<script type="text/javascript" src="__JS__/goods/combination.js"></script>

@@ -1,0 +1,179 @@
+<extend name="Public/indexEdit"/>
+
+
+<block name="content">
+	<!--当前位置-->
+	<div class="paper-current-main w">
+		当前位置：首页 &gt; <span>积分商城</span> &gt; <span>{$class['class_name']|default="所有分类"}</span>
+	</div>
+	<!--内容-->
+	<div class="listpt-content-wrap w clearfix">
+		<div class="nav-wrap">
+			<dl class="clearfix nav">
+				<dt class="fl child <if condition='$class_id eq -1'>active</if>">全部</dt>
+				<foreach name="class_list" item="vo" key="k">
+				<dd class="fl child <if condition='($vo.id eq $class["id"])'>active</if> ">{$vo['class_name']}</dd>
+				</foreach>
+			</dl>
+			<div class="level-nav">
+				<foreach name="class_list" item="vo" key="k">
+				<div class="main <if condition='($vo.id eq $class["id"])'>active</if> ">
+					<foreach name="vo['child']" item="vo2" key="k2">
+					<dl class="clearfix">
+						<dt class="fl">{$vo2['class_name']}：</dt>
+						<foreach name="vo2['child']" item="vo3" key="k3">
+						<dd class="fl" data-id="{$vo3['id']}">{$vo3['class_name']}</dd>
+						</foreach>
+					</dl>
+					</foreach>
+				</div>
+				</foreach>
+
+			</div>
+		</div>
+		<div class="content-main">
+			<div class="title clearfix">
+				<div class="fl clearfix left-main">
+					<a href="javascript:;" class="fl <if condition='$order eq 1'>active</if>" data-id="1">默认排序</a>
+					<a href="javascript:;" class="fl <if condition='$order eq 2'>active</if>" data-id="2">积分值</a>
+					<a href="javascript:;" class="fl <if condition='$order eq 3'>active</if>" data-id="3">上架时间</a>
+					<label class="fl"><input type="checkbox" <if condition='$exchange eq 1'>checked</if> >只查看我能兑换</label>
+				</div>
+				<div class="fr clearfix right-main">
+					<span class="fl">相关商品<b>{$count}</b>个</span>
+					<i class="fl">{$page}/{$total}</i>
+					<span class="fl clearfxi page">
+<input type="button" value="<" class="fl <if condition='$page eq 1'>active</if>" data-page="{$page-1}">
+<input type="button" value=">" class="fl border-left <if condition='$page eq $total'>active</if>" data-page="{$page+1}">
+					</span>
+				</div>
+			</div>
+			<ul class="content clearfix">
+			<foreach name="goods" item="vo" key="k">
+				<li class="fl <if condition='$k%5 == 4'>active</if> ">
+					<div class="screenshot">
+						<a href="javascript:;"><img src="{$vo['pic_url']}"></a>
+					</div>
+					<div class="products-description">
+						<p>{$vo['title']}</p>
+						<span>{$vo['integral']} 积分</span>
+					</div>
+					<div class="button">
+						<a href="{:U('cart', ['goods_id'=>$vo['goods_id']])}"}">立即兑换</a>
+					</div>
+				</li>
+			</foreach>
+			</ul>
+		</div>
+	</div>
+
+<script src="__JS__/header.js"></script>
+<script src="__JS__/expansion.js"></script>
+<script>
+	// 分类
+	var oNav  = $('.listpt-content-wrap .nav-wrap .nav .child');
+	var _this = null;
+	oNav.on('click',function(event){
+		_this = $(this).index();
+		if (_this == 0) {
+			requestGoods({'class':-1});
+			return false;
+		}
+		oNav.removeClass('active').eq(_this).addClass('active');
+		$('.listpt-content-wrap .nav-wrap .level-nav .main').removeClass('active').eq(_this-1).addClass('active');
+	});
+
+	// 获取三级分类
+	var three = $('.listpt-content-wrap .level-nav .main dd');
+	three.on('click', function(event) {
+		var class_id = $(this).attr('data-id');
+		requestGoods({'class':class_id});
+	});
+
+	// 排序
+	var sort = $('.listpt-content-wrap .content-main .title .left-main a');
+	sort.on('click',function(event) {
+		sort.removeClass('active');
+		$(this).addClass('active');
+		var order = $(this).attr('data-id');
+		requestGoods({'order':order});
+	});
+
+	// 我能兑换
+	var can = $('.listpt-content-wrap .content-main .title .left-main input');
+	can.on('click', function(event) {
+		var checked = $(this).attr('checked');
+		if (checked) {
+			checked = 1;
+		} else {
+			checked = 0
+		}
+		requestGoods({'exchange':checked});
+	});
+
+	// 翻页
+	var page = $('.listpt-content-wrap .content-main .title .right-main .page input');
+	page.on('click', function(event) {
+		var op    = $(this).val();
+		var page  = $(this).attr('data-page');
+		var data  = {'page':page}
+		var total = {$total};
+
+		// 下一页
+		if (op == '>') {
+			if (page > total) {
+				layer.msg('没有更多了');
+				return false;
+			}
+			requestGoods(data);
+		}
+
+		// 上一页
+		if (op == '<') {
+			if (page < 1) {
+				return false;
+			}
+			requestGoods(data);
+		}
+	});
+
+
+	// 请求参数,包装公共参数
+	function requestGoods(data) {
+		var page  = {$page};
+		if (!data.page) {
+			data.page = page;
+		}
+		var order = {$order};
+		if (!data.order) {
+			data.order = order;
+		}
+		var clas  = {$class_id};
+		if (!data.class) {
+			data.class = clas;
+		}
+
+		var url   = "{:U('goods')}";
+		Post(url, data);
+	}
+
+	// 模拟post提交
+	function Post(url, args) {
+        var temp_form    = document.createElement("form");
+        temp_form.action = url;
+        temp_form.target = "_self";
+        temp_form.method = "GET";
+        temp_form.style.display = "none";
+        for (var item in args) {
+            var opt   = document.createElement("input");
+            opt.name  = item;
+            opt.value = args[item];
+            temp_form.appendChild(opt);
+        }
+        document.body.appendChild(temp_form);
+        temp_form.submit();
+    }
+
+</script>
+
+</block>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Common/Ueditor/ueditor.config.js"></script>
+<script src="__PUBLIC__/Common/Ueditor/ueditor.all.min.js"> </script>
+<script src="__PUBLIC__/Common/Ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="__PUBLIC__/Common/uploadPreview.min.js"></script>
+<script>
+   window.onload = function () { 
+        new uploadPreview({ UpBtn: "pic_url", DivShow: "imgdiv", ImgShow: "imgShow" });
+    }
+</script>
+<script>
+    var ue = UE.getEditor('editor');
+	var ue2 = UE.getEditor('editor2');
+</script>
+<script>
+function check_form(){
+	var title = $('#title').val();
+	if(title == ''){
+		layer.msg('活动名称不能为空');
+		return false;
+	}
+	return true;
+}
+</script>
+<script>
+function copyUrl2(){
+	var Url2=document.getElementById("biao1");
+	Url2.select(); // 选择对象
+	document.execCommand("Copy"); // 执行浏览器复制命令
+	layer.msg('已复制好，可贴粘。');
+}
+</script>
+</head>
+<body>
+
+<div class="nav">
+	<div class="nav_title">
+    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a">商品管理 -> 编辑商品</span></h4>
+    </div>
+</div>
+<form name="form3" method="post" action="__SELF__" enctype="multipart/form-data" onSubmit="return check_form();">
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details" style=" margin-top:2px;">
+      	  <tr>
+	        <td colspan="2" style=" background:#E4EEFA;"><h3 style="margin-left:50px;">一、基本信息</h3></td>
+       	  </tr>
+        <tbody>
+			      <tr>
+	        <td width="20%"><div align="right">本文链接：</div></td>
+	        <td width="80%"><input type="text" style="width:600px;" name="zhuanti_url" id="biao1" value="http://{$_SERVER['HTTP_HOST']}{:U('Home/Index/tourism_details')}?id={$result.id}" readonly>
+            <input type="button" onClick="copyUrl2()" style="padding:2px 15px; height:40px;" value="点击复制链接" />
+            </td>
+          </tr>
+          <tr>
+	        <td><div align="right">商品分类：</div></td>
+	        <td>{$result.class_name}<select id="class_id">
+            	<option value="">----------</option>
+            <foreach name="result_class" item="vo">
+            	<option value="{$vo.id}">{$vo.class_name}</option>
+            </foreach>
+            </select><select id="abc" name="class_id">
+            	<option value="0">----------</option>
+            </select></td>
+          </tr>
+	      <tr>
+	        <td width="20%"><div align="right">
+	        <div align="right"><span style="color:#F00;">*</span> 标题：</div></td>
+	        <td width="80%">
+	          <input name="title" type="text" class="input" id="title" size="80" value="{$result.title}"> <span style="color:#00F;">长度请限制在 30 字以内</span>
+            </td>
+          </tr>
+	      
+	      <tr>
+	        <td><div align="right"><span style="color:#F00;">*</span> 代表图片：</div></td>
+	        <td><span style="color:#F00;">手机端图片尺寸请使用 （ 200 * 200 ） 像素</span>
+	           	<div id="imgdiv">
+                <img style="height:100px; width:100px; border-radius:4px;" src="__PUBLIC__/Uploads/goods/{$result.pic_url}" />
+	           	<img style="position:relative;top:6px;margin-right:30px;" id="imgShow" width="100" height="100" />
+	           	<input type="file" name="pic_url[]" id="pic_url" /></div>   			
+            </td>
+          </tr>
+	      <tr>
+	        <td><div align="right">图片集合：</div></td>
+	        <td><span style="color:#F00;">手机端图片尺寸请使用 （ 520 * 360 ） 像素</span><br/>
+            
+            <foreach name="result_tuji" item="vo_tuji">
+            <a target="_blank" href="__PUBLIC__/Uploads/goods/{$vo_tuji}">
+            <img style="width:80px; height:80px; margin:5px 1px; border:1px solid #CCC;" src="__PUBLIC__/Uploads/goods/{$vo_tuji}"></a>         
+            </foreach>
+            <br/>
+            <span style="color:#00F; font-size:16px; margin:5px 0;"> [ 备注：更新图集会覆盖之前的图片，所以您需要再次添加之前需要的图片 ] </span><br/>
+                        
+            <input type="file" name="pic_tuji[]" /><input type="button" name="add_button" id="add_button" value="添加一行" style="padding:2px 15px; background:#00F; color:#FFF;">
+            
+			<div id="append_img"></div>
+            
+          </td>
+		  </tr>
+	      
+	      <tr>
+	        <td><div align="right">原价：</div></td>
+	        <td><input type="text" style="color:#F00; font-weight:600;" name="price_old" id="price_old" value="{$result.price_old}">
+            <span style="color:#00F;">元</span></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">现价：</div></td>
+	        <td><input type="text" style="color:#F00; font-weight:600;" name="price_new" id="price_new" value="{$result.price_new}"> 
+	        <span style="color:#00F;">元</span></td>
+          </tr>
+           <tr>
+	        <td><div align="right">积分抵现价：</div></td>
+	        <td><input type="text" style="color:#F00; font-weight:600;" name="price_new" id="price_new" value="{$result.price_new}"> 
+	        </td>
+          </tr> <tr>
+	        <td><div align="right">积分返利：</div></td>
+	        <td><input type="text" style="color:#F00; font-weight:600;" name="price_new" id="price_new" value="{$result.price_new}"> 
+	        </td>
+          </tr>
+	      <tr>
+	        <td><div align="right">库存：</div></td>
+	        <td><input type="text" style="color:#F00; font-weight:600;" name="kucun" id="kucun" value="{$result.kucun}">
+            <span style="color:#00F;">件</span></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">是否热销：</div></td>
+	        <td><input type="radio" name="rexiao" id="rexiao" value="0" <if condition="$result.rexiao == 0"> checked="checked" </if> >&nbsp;&nbsp;
+              <laber for="rexaio">否</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="rexiao" id="rexiao2" value="1" <if condition="$result.rexiao == 1"> checked="checked" </if> >
+	          <laber for="rexaio2">是</label>
+            </td>
+          </tr>
+          <tr>
+	        <td><div align="right">是否广告：</div></td>
+	        <td><input type="radio" name="advert" id="advert" value="0" <if condition="$result.advert == 0"> checked="checked" </if> >&nbsp;&nbsp;
+              <laber for="rexaio">否</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="advert" id="advert2" value="1" <if condition="$result.advert == 1"> checked="checked" </if> >
+	          <laber for="advert2">是</label>
+            </td>
+          </tr>
+          <tr>
+	        <td><div align="right">是否推荐：</div></td>
+	        <td><input type="radio" name="recommend" id="recommend" value="0" <if condition="$result.recommend == 0"> checked="checked" </if> >&nbsp;&nbsp;
+              <laber for="rexaio">否</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="recommend" id="recommend2" value="1" <if condition="$result.recommend == 1"> checked="checked" </if> >
+	          <laber for="recommend2">是</label>
+            </td>
+          </tr>
+	      <tr>
+	        <td><div align="right">上下架：</div></td>
+	        <td><input type="radio" name="shangjia" id="shangjia" value="1" <if condition="$result.shangjia == 1"> checked="checked" </if> >&nbsp;&nbsp;
+              <laber for="shangjia">上架</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="shangjia" id="shangjia2" value="0" <if condition="$result.shangjia == 0"> checked="checked" </if> >
+	          <laber for="shangjia2">下架</label></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">标签：</div></td>
+	        <td><input name="keyword" type="text" id="keyword" class="input" size="80" value="{$result.keyword}">
+            <span style="color:#00F;">多个标签，请用空格分隔开</span></td>
+          </tr>
+          <tr>
+	        <td><div align="right">说明：</div></td>
+	        <td><script id="editor" name="shuoming" type="text/plain" style="width:1000px;height:600px;">{$result.shuoming}</script></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">参数：</div></td>
+	        <td><script id="editor2" name="guige" type="text/plain" style="width:1000px;height:600px;">{$result.guige}</script></td>
+          </tr>
+	      <tr>
+	        <td><div align="right"></div></td>
+	        <td>&nbsp;</td>
+          </tr>
+	      <tr>
+	        <td><div align="right"></div></td>
+	        <td>&nbsp;</td>
+          </tr>
+        </tbody>
+  </table> 
+</div>
+<div class="footer">
+	 <input type="hidden" name="id" value="{$result.id}" />
+     <button type="submit" class="button" id="button" style="min-width:160px;" onclick="admin_add();">保存信息</button>
+</div>
+</form> 
+<script>
+$(function(){
+	$('#add_button').click(function(){
+		  var html = '<div><input type="file" name="pic_tuji[]" />'+
+            		 '<input type="button" onClick="del_tuji(this);" value="删除" style="padding:2px 10px;"><div/>';
+		$('#append_img').append(html);
+	});
+});
+</script>
+<script type="text/javascript">
+	$(function() {
+		$("#class_id").change(function() {
+			var class_id = $("#class_id").val();
+			$.ajax({
+				data:'id='+class_id,
+				type:"post",
+				url:"{:U('Leaguer/ajaxgoods')}",
+				success:function(msg) {
+					console.log(msg)
+					if(msg != 0){
+						$("#abc").html('<option value="0">----------</option>');
+						$.each(msg,function(k,v) {
+								$("#abc").append('<option value='+v.id+'>'+v.class_name+'</option>');
+						});
+					}else{
+						parent.layer.msg('没有2级分类，请添加！', {icon: 2, time: 2000 }); 
+						$("#abc").html('<option value="0">----------</option>');
+					}
+				}
+			});
+		});
+	});
+</script>
+
+</body>
+</html>

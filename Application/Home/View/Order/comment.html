@@ -1,0 +1,194 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="header">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Common/uploadify/uploadify-base.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/comment.css" />
+
+</block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<include file="Order/personalleft"/>
+		<!--内容-->
+		<div class="viewts-centent-wrap fr">
+			<div class="title">
+				<h2>评价详情</h2>
+				<p>订单号：{$order.order_sn_id} &nbsp; 时间：{$order.create_time|date="Y-m-d H:i:s",###}</p>
+			</div>
+			<div class="con-main clearfix">
+				<div class="fl products stats">
+					<div class="screenshot"><img src="{$data.images}"></div>
+					<p class="products-description">
+						<a href="javascript:;">{$data.title}</a>
+					</p>
+					<p class="products-prices">¥{$data.goods_price}</p>
+				</div>
+				<div class="fl products-review">
+					<div class="msg clearfix">
+						<span class="fl"></span>
+						<em class="fl">请至少填写一件商品的评价</em>
+					</div>
+					<div class="score clearfix">
+						<div class="fl degree-title">商品满意度</div>
+						<div class="fl clearfix cmt">
+							<span class="fl active"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<span class="fl"></span>
+							<em class="fl">1分</em>
+						</div>
+					</div>
+					<div class="score clearfix">
+						<div class="fl degree-title">买家印象</div>
+						<div class="fl clearfix cSelection">
+							<foreach name="feel" item="vo">
+							<span class="fl" data-id="{$vo['feel_id']}">{$vo['title']}</span>
+							</foreach>
+						</div>
+					</div>
+					<div class="score clearfix">
+						<div class="fl degree-title">添加评论</div>
+						<div class="fl clearfix">
+							<textarea></textarea>
+						</div>
+					</div>
+					<div class="clearfix">
+						<div class="fl degree-title" style="width: 102px;">我的晒单</div>
+						<div class="fl">
+						<form>
+							<div id="upload_queue"></div>
+							<input id="file_upload" name="file_upload" type="file" multiple="true">
+						</form>
+						</div>
+					</div>
+	
+	
+					<div class="submit-parent">
+						<input type="submit" class="submit">
+						<label><input type="checkbox"> 匿名回复</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<script type="text/javascript" src="__PUBLIC__/Common/uploadify/jquery.uploadify.js"></script>
+<script>
+
+	$(function(){
+		var aSpan = $('.viewts-centent-wrap .con-main .products-review .cmt span');
+		var oEm   = $('.viewts-centent-wrap .con-main .products-review .cmt em');
+		var aBtn  = $('.viewts-centent-wrap .con-main .products-review .cSelection span');
+		var iNow  = 0;
+		aSpan.on('mouseenter',function(){
+			oEm.html($(this).index()+1 +'分');
+			for(var i = 0; i < aSpan.length; i++){
+				if(i <= $(this).index()){
+					aSpan.eq(i).addClass('hover');
+				}
+			}
+		}).on('mouseleave',function(){
+			oEm.html(iNow +'分');
+			aSpan.removeClass('hover');
+		}).on('click',function(){
+			iNow = $(this).index()+1;
+			oEm.html(iNow +'分');
+			aSpan.removeClass('active')
+			for(var i = 0; i < aSpan.length; i++){
+				if(i <= $(this).index()){
+					aSpan.eq(i).addClass('active');
+				}
+			}
+		});
+		aBtn.on('click',function(){
+			$(this).addClass('active');
+		});
+
+		var images = ',';
+		var commit = $('.viewts-centent-wrap .con-main .products-review .submit-parent .submit');
+		commit.on('click', function(event) {
+
+			if (status) {
+				layer.msg('图片正在上传,请稍后');
+				return false;
+			}
+
+			var input = $(this).next().find('input');
+			var anonymous = (input.attr('checked')) ? 1 : 0;
+			var content = $('textarea').val();
+			if ($.trim(content) == '') {
+				layer.msg('请填写评论');
+				return false;
+			}
+
+			var score = parseInt(oEm.text());
+			var feels = '';
+			aBtn.filter('.active').each(function(index, ele) {
+				feels += ','+$(ele).attr('data-id');
+			});
+			feels   = feels.substring(1);
+
+			var data = {
+				goods_id: {$data['goods_id']},
+				order_id: {$data['order_id']},
+				anonymous: anonymous,
+				content: content,
+				score: score,
+				labels: feels,
+				show_pic: images
+			}
+			var url = "{:U('commentSubmit')}";
+			$.post(url, data, function(ret) {
+				if (ret.status == 0) {
+					layer.msg(ret.message);
+					return false;
+				} 
+				layer.msg(ret.message);
+				setTimeout(function() {
+					window.location.href = "{:U('index')}";
+				}, 1000);
+			});
+		});
+
+		// 图片上传
+		var status = 0;
+		$('#file_upload').uploadify({
+			queueID: 'upload_queue',
+			removeCompleted : false,
+			fileTypeExts:   '*.gif; *.jpg; *.jpeg, *.png',
+			swf:            '__PUBLIC__/Common/uploadify/uploadify.swf',
+			uploader:       "{:U('uploadImage')}",
+			auto:           true,
+			queueSizeLimit: 3,
+			buttonText: '选择图片',
+			onUploadStart:  function() {
+				status = 1;
+			},
+			onUploadSuccess:function(file, ret, response) {
+				eval('var data = '+ret+';');
+				if (data.length < 1) {
+					layer.msg('图片上传失败,请刷新重试');
+					return false;
+				}
+				$.each(data, function(index, ele){
+					images += ele + ',';
+				});
+			},
+			onUploadError:function(file, errorCode, errorMsg, errorString) {
+				layer.msg('图片上传失败,请刷新重试');
+			},
+			onUploadComplete:function(file) {
+				status = 0;
+			},
+			onCancel : function(file) {
+	            console.log(file.name);
+	        }
+		});
+	});
+</script>
+</block>

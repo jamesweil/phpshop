@@ -1,0 +1,104 @@
+<extend name="Public/publicHTML" />
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<section class="content">
+	<div class="container-fluid">
+		<div class="pull-right">
+			<a href="" data-toggle="tooltip" title="" class="btn btn-default"
+				data-original-title="返回"><i class="fa fa-reply"></i></a>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 添加运费模板
+				</h3>
+			</div>
+			<div class="panel-body">
+
+				<form method="post" id="formId">
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab_tongyong">
+							<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<td>模板名称:</td>
+										<td><input type="text" isNumber="0" name="{$freightsModel::$expressTitle_d}"
+											class="form-control w380 title req" id="title">
+											<span id="err_title" class="rxd">模板名称没有填写</span> <span
+											id="err_title1" class="rxd">商品名已存在，请重新取名</span></td>
+									</tr>
+									<tr>
+										<td>仓库：</td>
+										<td>
+											<div class="col-xs-3">
+												<select name="{$freightsModel::$stockId_d}" isNumber="1"
+													id="cat_id"
+													class="form-control req w236">
+													<option value="0">请选择仓库</option>
+													<if condition="!empty($stock)">
+														<foreach name="stock" key='key' item="value">
+															<option value="{$key}">{$value}</option>
+														</foreach>
+													</if>
+												</select>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>发货时间：</td>
+										<td><input type="text" class="form-control w300 req" isNumber="1"
+											onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+											onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+											id="start_time" name="{$freightsModel::$sendTime_d}" >
+											<span id="err_title" >几个小时内发货</span>
+										</td>
+									</tr>
+									
+									<tr>
+										<td>是否包邮:</td>
+										<td>
+											<input type="radio"  isNumber="1" value="1" class="req" name="{$freightsModel::$isFree_shipping_d}" /> 自定义运费
+											<input type="radio"   isNumber="1"value="2" class="req" name="{$freightsModel::$isFree_shipping_d}" /> 卖家包邮
+										</td>
+									</tr>
+									
+									<tr>
+										<td>计价方式:</td>
+										<td>
+											<input type="radio"  isNumber="1" value="1" class="req" name="{$freightsModel::$valuationMethod_d}" /> 按件数
+											<input type="radio"   isNumber="1"value="2" class="req" name="{$freightsModel::$valuationMethod_d}" /> 按重量
+											<input type="radio"  isNumber="1" value="3"  class="req"name="{$freightsModel::$valuationMethod_d}" /> 按体积
+										</td>
+									</tr>
+									
+									<tr>
+										<td>是否指定条件包邮:</td>
+										<td>
+											<input type="radio"  isNumber="1" value="1" class="req" name="{$freightsModel::$isSelect_condition_d}" /> 是
+											<input type="radio"  isNumber="1" value="0" class="req"name="{$freightsModel::$isSelect_condition_d}" /> 否
+										</td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="pull-right">
+						<input type="submit"
+							onclick="Freight.addTemplate('formId', '{:U('addFreights')}');"
+							class="btn btn-primary" data-toggle="tooltip"
+							data-original-title="保存" value='保存' />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script> <script
+	type="text/javascript" src="__COMMON__/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="__COMMON__/js/jquery-form.js"></script>
+<script type="text/javascript" src="__JS__/region/freight.js?a={:time()}"></script>
+ </block>

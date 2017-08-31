@@ -1,0 +1,110 @@
+<extend name="Public/publicHTML"/>
+<block name="nav">
+    <div class="nav">
+        <div class="nav_title">
+            <h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif"/><span class="nav_a">
+                <if condition="$sms_id eq '1'">华信-<elseif condition="$sms_id eq 2"/>阿里大于-</if>模板管理
+            </span></h4>
+        </div>
+        <div class="nav_button">
+        </div>
+    </div>
+</block>
+<block name="content">
+    <link rel="stylesheet" type="text/css" href="__CSS__/checkbox_css/SimpleSwitch.css"/>
+    <link rel="stylesheet" type="text/css" href="__CSS__/sms_template/common.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/sms_template/seller_center.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/sms_template/sms_template.css">
+    <div class="list">
+    </div>
+    <form id="form_save" onsubmit="return false">
+        <div class="set-style">
+            <if class="tab-pane active">
+                <div class="left_main" id="find_esay">
+                    <ul>
+                        <volist name="sms_check" id="category">
+                            <a href="javascript:void(0);" onclick="template_url({$category.check_id});"
+                               style="text-decoration: none;" class="active after_register" value="{$category.check_id}">
+                                <li>{$category.check_title} <a style="float:right;"></a>
+                                </li>
+                            </a>
+                        </volist>
+                    </ul>
+                </div>
+                <div>
+                    <volist name="sms_check" id="category">
+                        <div class="right_main" id="content{$category.check_id}">
+                            <div class="main-top">您正在编辑<a href="javascript:;" id="update_nameid">{$category.check_title}</a>通知模板
+                            </div>
+                            <input type="hidden" name="check[{$category.id}][check_id]" value="{$category.check_id}">
+                            <input type="hidden" name="check[{$category.id}][sms_id]" value="{$sms_id}">
+                            <!--模板id-->
+                            <input type="hidden" name="check[{$category.id}][id]" value="{$category.id}">
+                            <if condition="$sms_id eq 1">
+                                <div class="qianming">
+                                    <div style="width:75px;float:left;">短信签名：</div>
+                                    <input type="text" name="check[{$category.id}][message_sign]" id="template_titleid"
+                                           style="margin-right: 15px;" value="{$category.message_sign}"></div>
+                                <br/>
+                                <div class="qianming">
+                                    <div style="width:75px;float:left;">短信内容：</div>
+                                    <input type="text" name="check[{$category.id}][message_content]" id="signNameid"
+                                           style="margin-right: 15px;" value="{$category.message_content}"></div>
+                                <div class="qianming">
+                                    <div style="width:75px;float:left;">可变变量：</div>
+                                    <input type="text" name="check[{$category.id}][templcate_variable]" id=""
+                                           style="margin-right: 15px;" value="{$category.templcate_variable}"></div>
+                                <if condition="$category.templcate_variable eq true">
+                                    <div class="bl">
+                                        <div style="width:75px;float:left;">提示：</div>
+                                        <div style="width:88%;float: left;font-size:13px;">变量格式 { $变量名 }</div>
+                                    </div>
+                                </if>
+                                <else/>
+                                <div class="qianming">
+                                    <div style="width:75px;float:left;">模板编号：</div>
+                                    <input type="text" name="check[{$category.id}][template]" id=""
+                                           style="margin-right: 15px;" value="{$category.template}"></div>
+                                </if>
+
+                        </div>
+
+                    </volist>
+                </div>
+        </div>
+        <div class="save">
+            <input type="submit" value="保存" onclick="sms_template_save();">
+            <a href="{:U('notification_system')}">
+                <input type="button" value="返回" class="back">
+            </a>
+        </div>
+    </form>
+    <script type="text/javascript">
+        var ADMIN_SYSTEM_SAVE = "{:U('admin_system_save')}";
+        var SAVE_TEMPLATE_SAVE = "{:U('save_template_save')}";
+        //		var ADMIN_EDIT = "{:U('admin_edit')}";
+        //		var ADMIN_DEL  = "{:U('admin_del')}";
+    </script>
+    <script type="text/javascript" src="__JS__/checkbox_js/SimpleSwitch.min.js"></script>
+    <script type="text/javascript">
+        SimpleSwitch.init();
+    </script>
+    <script>
+        $(function () {
+            $(document).ready(function () {
+                var get_val = $('.after_register').eq(0).attr('value');
+                $('#content' + get_val).siblings().css('display', 'none');
+//                $('.checkbox_status').each(function () {
+//                    if ($(this).val() == 1) {
+//                        $(this).siblings('button').addClass('on');
+//                    }
+//                });
+            })
+        })
+    </script>
+    <script type="text/javascript" src="__JS__/admin/admin.js"></script>
+    </table>
+    </div>
+    <!-- 分页 -->
+    </div>
+</block>

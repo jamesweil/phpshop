@@ -1,0 +1,5 @@
+
+<if condition="!empty($brandEnglish)"> <foreach name="brandEnglish"
+	key='key' item='value'> <a href="{:U('Product/ProductList', ['brand' => $key])}" class="fl">
+	{$value}
+</a> </foreach> </if>

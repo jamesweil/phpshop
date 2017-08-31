@@ -1,0 +1,274 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+		<div class="ficationFl fl">
+			<dl data="false" class="active">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">订单中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Order/order_myorder')}">·&nbsp;&nbsp;我的订单</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('OrderGroup/order_group')}">·&nbsp;&nbsp;团购订单</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('Order/cancel_order_record')}">·&nbsp;&nbsp;取消订单记录</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">资产中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Assets/balance')}">·&nbsp;&nbsp;余额</a>
+				</dd>
+				<dd>
+					<a href="{:U('Cart/goods')}">·&nbsp;&nbsp;我的购物车</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myCollection')}">·&nbsp;&nbsp;我的收藏</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myComment')}">·&nbsp;&nbsp;我的评价</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/coupon')}">·&nbsp;&nbsp;优惠券</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/integral')}">·&nbsp;&nbsp;积分</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/punkte')}">·&nbsp;&nbsp;积分兑换</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/gekauft')}">·&nbsp;&nbsp;我购买过的产品</a>
+				</dd>
+				<dd>
+					<a href="{:U('Assets/myTracks')}">·&nbsp;&nbsp;浏览足迹</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em> 
+					<span class="fl">财务中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('Finance/my_invoice')}">·&nbsp;&nbsp;我的发票</a>
+				</dd>				
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+					<dd>
+						<a href="{:U('Finance/my_shipment')}">·&nbsp;&nbsp;我的发货</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/my_payment')}">·&nbsp;&nbsp;我的付款</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/other_orders')}">·&nbsp;&nbsp;其他订单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/closed_order')}">·&nbsp;&nbsp;已出兑账单</a>
+					</dd>
+					<dd>
+						<a href="{:U('Finance/outstanding_order')}">·&nbsp;&nbsp;未出兑账单</a>
+					</dd>
+				</if>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">特色业务</span>
+				</dt>
+				<dd>
+					<a href="{:U('SpecialBusiness/enterprise_group')}">·&nbsp;&nbsp;企业团购</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/purchase_requisition')}">·&nbsp;&nbsp;采购需求单</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/join_application')}">·&nbsp;&nbsp;加盟申请</a>
+				</dd>
+				<dd>
+					<a href="{:U('SpecialBusiness/printer_rental')}">·&nbsp;&nbsp;打印机租赁</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">商品中心</span>
+				</dt>
+				<dd>
+					<a href="{:U('GoodsCenter/goods_search')}">·&nbsp;&nbsp;商品搜索</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">客户服务</span>
+				</dt>
+				<dd>
+					<a href="{:U('Service/return_repair')}">·&nbsp;&nbsp;返修退换货</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/after_sale')}">·&nbsp;&nbsp;售后管理</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/advisoryReply')}">·&nbsp;&nbsp;咨询回复</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/opinion')}">·&nbsp;&nbsp;意见建议</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/repair_choice')}">·&nbsp;&nbsp;上门维修服务</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/announcement')}">·&nbsp;&nbsp;网站公告</a>
+				</dd>
+				<dd>
+					<a href="{:U('Service/report_center')}">·&nbsp;&nbsp;投诉中心</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">用户设置</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserSet/address')}">·&nbsp;&nbsp;收货地址</a>
+				</dd>
+				<if condition="(member_status eq '1') Or (member_status eq '2')">
+				<dd>
+					<a href="{:U('UserSet/enterprise')}">·&nbsp;&nbsp;企业信息</a>
+				</dd>
+				</if>
+				<dd>
+					<a href="{:U('UserSet/security')}">·&nbsp;&nbsp;安全设置</a>
+				</dd>
+			</dl>
+			<dl data="false">
+				<dt class="clearfix">
+					<em class="fl"></em>
+					<span class="fl">个人资料</span>
+				</dt>
+				<dd>
+					<a href="{:U('UserData/user_data')}">·&nbsp;&nbsp;个人资料</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/bind_account')}">·&nbsp;&nbsp;账号绑定</a>
+				</dd>
+				<dd>
+					<a href="{:U('UserData/special_application')}">·&nbsp;&nbsp;申请账期支付</a>
+				</dd>
+			</dl>
+		</div>
+		<!--内容-->
+		<div class="mordrMain fr">
+			<div class="title clearfix">
+				<ul class="clearfix fl">
+					<li class="fl hover"><a href="javascript:;">订单回收站 (<i>{$count.recycle_count}</i>)</a></li>
+				</ul>
+			</div>
+			<!--订单搜索范围查找-->
+			<div style="width:100%;overflow: hidden;margin-top: 10px;">
+				<div style="width: 5%;float: left;text-align: right;line-height: 25px;">说明:</div>
+				<div style="width: 95%;float: left">
+					<div style="text-indent: 5px;line-height: 25px;">1.只有已取消和完成的订单可以删除。</div>
+					<div style="text-indent: 5px;line-height: 25px;">2.被删除的订单将无法进行评价，晒单和申请售后等操作;如果想继续这些操作,可以先将被删除的订单还原。</div>
+					<div style="text-indent: 5px;line-height: 25px;">3.订单被永久删除后无法还原。</div>
+				</div>
+			</div>
+			<!--宝贝交易状态-->
+			<div style="margin-top:10px;">
+			<ol class="clearfix tradingStatus">
+				<li class="fl six">宝贝</li>
+				<li class="fl seven">订单详情</li>
+				<li class="fl eight">收货人</li>
+				<li class="fl eight">金额</li>
+				<li class="fl eight">全部状态</li>
+				<li class="fl eight">操作</li>
+			</ol>
+			</div>
+			<!--page-->
+			<div style="height:20px;">  
+			</div>
+			<!--订单-->
+			<empty name="data">
+				<div style="width:100%;margin-left:40%;font-size:30px;color:red;">亲!暂时没有数据!</div>
+			<else/>
+				<volist name="data" id="vo">
+					<div class="myderCentent" id="del{$vo.order_id}">
+						<div class="ctitle clearfix">
+							<label class="fl">
+								<input type="checkbox">
+								<span>{$vo.create_time|date="Y-m-d",###}</span>
+							</label>
+							<span class="fl sPent">
+								<em>订单号：</em>
+								<em>{$vo.order_sn_id}</em>
+							</span>
+							<i class="fr recycle" data-value="{$vo.order_id}"></i>
+						</div>
+						<div class="con clearfix">
+							<div class="fl clearfix conFl">
+							    <volist name="vo.goods" id="goods">
+									<div class="conLoop">
+										<div class="six clearfix fl">
+											<div class="imgsPt fl">
+												<img src="__SERVER__/{$goods.images}">
+											</div>
+											<div class="conRight fl">
+												<a href="javascript:;">{$goods.title}</a>
+												<p>商品编号：{$goods.goods_id}</p>
+											</div>
+										</div>
+										<div class="two fl">￥{$goods.goods_price}</div>
+										<div class="three fl">{$goods.goods_num}</div>
+										<div class="nine fl">
+											<a href="javascript:;" class="hover"></a>
+										</div>
+									</div>
+								</volist>
+							</div>
+							<div class="fr clearfix conFringht">
+							    <div class="eight fl">
+									<p>{$vo.realname}</p>
+								</div>
+								<div class="eight fl">
+									<p>￥{$vo.price_sum}</p>
+									<p>(含运费：￥{$vo.mail_area_monery})</p>
+								</div>
+								<div class="eight fl">
+									<p>交易关闭</p>
+									<a href="{:U('Order/order_details',array('id'=>$vo['order_id']))}" class="hover">订单详情</a>
+								</div>
+								<div class="eight fl details">
+									<a href="javascript:;" class="hover recycle" onclik="recycle()" data-value="{$vo.order_id}">还原订单</a><br>
+									<a href="{:U('Order/buy_again',array('id'=>$vo['order_id']))}" class="buy">立即购买</a>
+								</div>
+							</div>
+						</div>
+					</div>
+	            </volist>
+            </empty>
+			<div class="page">
+				{$page}
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script src="__JS__/order/recycle.js"></script>	
+<!-- <script src="js/header.js"></script> -->
+<script src="__JS__/myOrder.js"></script>
+<script src="__JS__/Calendar.js"></script>
+</block>

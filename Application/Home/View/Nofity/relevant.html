@@ -1,0 +1,10 @@
+<div class="pay_success_Payment_address">
+	<span class="p_s_address">货物寄送至：</span>{$address}
+</div>
+<div class="pay_success_relation">
+	<a href="{:U('Order/order_myorder')}">已买到宝贝列表</a> <span
+		class="pay_success_relation_fg">|</span> <a
+		href="{:U('Order/order_details', ['id'=>$order_id])}">订单详情</a> <span
+		class="pay_success_relation_fg">|</span> 联系卖家：<span
+		class="pay_success_relation_dh">{$intnet_phone}</span>
+</div>

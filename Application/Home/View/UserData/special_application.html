@@ -1,0 +1,135 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+    <div class="pary-content-warp">
+        <!--banner-->
+        <div class="banner">
+            <img src="__IMG__/PaymentBanner.png" class="banner-img">
+            <!--查看详情-->
+            <a href="javascript:;"></a>
+            <!--什么是账期余额-->
+            <div class="what-warp">
+                <img src="__IMG__/what.png" alt="">
+                <div class="what-title-main">
+                    <h1>什么是账期支付？</h1>
+                    <p>账期支付是指，符合条件的用户在审核通过后<span>不用付款</span>就可以进货，在确认收货后的结算日期内完成支付的交易方式。</p>
+                </div>
+            </div>
+        </div>
+        <!--优势-->
+        <div class="advantage-wrap">
+            <img src="__IMG__/advantage.png" class="position-img">
+            <!--气球-->
+            <div class="balloon-main">
+                <img src="__IMG__/balloon-right.png">
+            </div>
+        </div>
+        <!--申请填表-->
+        <div class="application-wrap">
+            <h1><img src="__IMG__/font-application.png" alt=""></h1>
+            <div class="form-wrap">
+                <div class="form-main">
+                <form action="{:U('UserData/special_application')}" method="post" onsubmit="return check();">
+                        <h1>填写下方表格，确认后提交：</h1>
+                        <ul>
+                            <li class="clearfix">
+                                <span class="fl">公司名称</span>
+                                <input type="text" name="company_name" id="company_name" class="fl border w430">
+                            </li>
+                            <li class="clearfix">
+                                <span class="fl">地区</span>
+                                <select name="province" id="province" class="province">
+                                    <option value="">请选择省份</option>
+                                    <volist name="province" id="vo">
+                                        <option value="{$vo.id}">{$vo.name}</option>
+                                    </volist>
+                                </select>
+                                <select name="city" id="city" class="city">
+                                    <option value="">请选择城市</option>
+                                </select>
+                                <select name="area" id="area" class="area">
+                                    <option value="">请选择地区</option>
+                                </select>
+                            </li>
+                            <li class="clearfix">
+                                <span class="fl">详细地址</span>
+                                <input type="text" name="address" id="address" class="fl border w600">
+                            </li>
+                            <li class="clearfix">
+                                <span class="fl">申请人</span>
+                                <input type="text" name="apply_name" id="apply_name" class="fl border w200">
+                                <span class="fl">联系方试</span>
+                                <input type="text" name="applytel" id="applytel" class="fl border w200">
+                            </li>
+                            <li class="clearfix">
+                                <span class="fl">对账人</span>
+                                <input type="text" name="respon_name" id="respon_name" class="fl border w200">
+                                <span class="fl">联系方试</span>
+                                <input type="text" name="respontel" id="respontel" class="fl border w200">
+                            </li>
+                            <li class="clearfix padding">
+                                <span class="fl">每月采购金额</span>
+                                <label><input type="radio" id="estimate" name="estimate" value="0">2000-5000元</label>
+                                <label><input type="radio" name="estimate" value="1">5000-10000元</label>
+                                <label><input type="radio" name="estimate" value="2">10000以上</label>
+                            </li>
+                            <li class="clearfix text">
+                                <span class="fl">备注</span>
+                                <textarea name="remarks" id="remarks"></textarea>
+                            </li>
+                        </ul>
+                        <p>注：申请人须有营业执照、税务登记证、组织代码证、公司开票资料</p>
+                        <input type="submit" value="提交" class="submit-btn">
+                    </form>
+                    <!--气球-->
+                    <div class="balloon-content"></div>
+                </div>
+            </div>
+        </div>
+        <!--使用流程-->
+        <div class="process-wrap">
+            <!--气球-->
+            <div class="balloon"></div>
+            <div class="process-main">
+                <h1>使用流程</h1>
+                <ul class="cleafix">
+                    <li class="fl">
+                        <div class="img-main"><img src="__IMG__/process1.png" alt=""></div>
+                        <div class="btn-main"><a href="javascript:;">01 申请账期支付</a></div>
+                    </li>
+                    <li class="fl">
+                        <div class="img-main"><img src="__IMG__/process2.png" alt=""></div>
+                        <div class="btn-main"><a href="javascript:;">02 审核通过账期支付</a></div>
+                    </li>
+                    <li class="fl">
+                        <div class="img-main"><img src="__IMG__/process3.png" alt=""></div>
+                        <div class="btn-main"><a href="javascript:;">03 使用账期交易下单</a></div>
+                    </li>
+                    <li class="fl">
+                        <div class="img-main"><img src="__IMG__/process4.png" alt=""></div>
+                        <div class="btn-main"><a href="javascript:;">04 商城发货</a></div>
+                    </li>
+                    <li class="fl">
+                        <div class="img-main"><img src="__IMG__/process5.png" alt=""></div>
+                        <div class="btn-main"><a href="javascript:;">05用户确认收货</a></div>
+                    </li>
+                    <li class="fl">
+                        <div class="img-main"><img src="__IMG__/process6.png" alt=""></div>
+                        <div class="btn-main"><a href="javascript:;">06 用户在结算日内完成还款</a></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--注意事项-->
+        <div class="beCareful-main">
+            <h2>注意事项</h2>
+            <ol>
+                <li>1.用户在确认提交申请表格后，可于48小时内查看审核结果。</li>
+                <li>2.该服务解释权在法律规定的范围内归亿速网络商城所有。</li>
+            </ol>
+        </div>
+    </div>
+    <script src="__JS__/userset/payment.js"></script>
+</block>

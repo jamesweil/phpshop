@@ -1,0 +1,63 @@
+<table class="table table-bordered" id="goods_spec_table1">                                
+    <tr>
+        <td colspan="2"><b>商品属性:</b></td>
+    </tr>
+    <foreach name="attribute" item="vo" key="k" >
+    <tr id="attri">
+        <td>{$vo[$model::$attribute_d]}:</td>
+        <td>                            
+            <foreach name="vo['children']" item="vo2" key="k2" >                            
+                <button type="button" name="{$model::$id_d}" data-spec_id='{$vo[$model::$id_d]}' data-item_id='{$vo2[$model::$id_d]}' onclick="GoodsOption.getAttr('#attri button', '{:U('getAddContentByGoodsAttribute')}', 'spec_input_tab', this)"  class="btn <?php 
+                             if(in_array($k2,$items_ids))                         
+                                    echo 'btn-success'; 
+                             else 
+                                echo 'btn-default';                          
+                             ?>" >
+                    {$vo2[$model::$attribute_d]}
+                </button>                                                        
+                        <img width="35" height="35" src="{$specImageList[$k2]|default='/Public/images/add-button.jpg'}" id="item_img_{$k2}" onclick="GetUploadify3('{$k2}');"/>    
+                        <input type="hidden" name="item_img[{$k2}]" value="{$specImageList[$k2]}" />                                                      
+                &nbsp;&nbsp;&nbsp;            
+            </foreach>         
+        </td>
+    </tr>                                    
+    </foreach>    
+</table>
+<div id="goods_spec_table2"> 
+	
+</div>
+
+<script>
+    
+    // 上传规格图片
+    function GetUploadify3(k){        
+        cur_item_id = k; //当前规格图片id 声明成全局 供后面回调函数调用
+        
+        console.log(k);
+        GetUploadify(1,'','goods','call_back3');
+    }
+    
+    
+    // 上传规格图片成功回调函数
+    function call_back3(fileurl_tmp){
+        $("#item_img_"+cur_item_id).attr('src',fileurl_tmp); //  修改图片的路径
+        $("input[name='item_img["+cur_item_id+"]']").val(fileurl_tmp); // 输入框保存一下 方便提交
+    }    
+    
+/**
+* 根据用户选择的不同规格选项 
+* 返回 不同的输入框选项
+*/
+function ajaxGetSpecInput2(spec_arr)
+{		
+
+   $("#goods_spec_table2").html('')
+   $("#goods_spec_table2").append();
+   hbdyg();  // 合并单元格
+}
+	
+ // 合并单元格
+ function hbdyg() {
+           
+        }
+</script> 

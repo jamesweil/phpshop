@@ -1,0 +1,55 @@
+<extend name="Public:publicHTML"/>
+
+<block name="nav">
+
+	<div class="nav">
+	    <div class="nav_title">
+	        <h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /> <a  class="nav_a" url="{:U('add_hot_words')}" >添加关键词</a></h4>
+	    </div>
+		    <if condition=" $_SESSION['aid'] eq 1">
+		        <div class="nav_button">
+		            <a  class="a_button" onclick="hot_words.edit_or_add(this.getAttribute('url'))" url="{:U('add_hot_words')}">添加</a>
+		        </div>
+		    </if>
+	</div>
+
+</block>
+<block name="content">
+	<div class="list">
+	    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="list_table">
+	        <thead>
+	        <tr>
+	            <td width="15%"><div align="center">关键词编号</div></td>
+	            <td width="20%"><div align="center">关键词</div></td>
+	            <td width="20%"><div align="center">商品分类</div></td>
+	            <td width="15%"><div align="center">添加时间</div></td>
+				<td width="15%"><div align="center">更新时间</div></td>
+	            <td width="12%"><div align="center">操作</div></td>
+	        </tr>
+	        </thead>
+	        <tbody>
+	        <foreach name="data.data" item="vo">
+	            <tr id="del{$vo.id}">
+	                <td height="50" class="hot" ><div  align="center">{$vo.id}</div></td>
+	                <td><div align="center">{$vo.hot_words}</div></td>
+	                <td><div align="center">{$vo.goods_class_id}</div></td>
+	                <td><div align="center">{$vo.create_time}</div></td>
+	                <td><div align="center">{$vo.update_time}</div></td>
+	                <td class="footd">
+	                    <div align="center">
+	                        <a  class="a_button"  id="form" onclick="hot_words.deleteHotWords({$vo.id},this.getAttribute('usb'))" usb="{:U('deleteHotWords')}" title="移除">移除</a>
+	                        <a  class="a_button" sub="{:U('editHotWords',array('id' => $vo['id']))}" onclick="hot_words.edit_or_add(this.getAttribute('sub'))" title="移除">编辑</a>
+	                	</div>
+	                </td>
+	            </tr>
+	        </foreach>
+	        </tbody>
+	    </table>
+	</div>
+	
+	<!-- 分页 -->
+	<div class="page">
+	    {$data.page}
+	</div>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/goods/hot_words.js"></script>
+</block>

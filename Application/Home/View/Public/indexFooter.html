@@ -1,0 +1,137 @@
+<!--右侧一键到顶 and 客服-->
+<ul class="home-tab">
+	<li>
+		<em></em>
+		<span><if condition="empty($z_count)"> 0 <else/>{$z_count} </if></span>
+		<div class="userTips">
+			<p>已过期的优惠券：<b><if condition="empty($OverdueCoupon)"> 0 <else/>{$OverdueCoupon} </if></b></p>
+			<p>使用过的优惠券：<b><if condition="empty($UsedCoupon)"> 0 <else/>{$UsedCoupon} </if></b></p>
+			<p>可以使用的优惠券：<b><if condition="empty($UsableCoupon)"> 0 <else/>{$UsableCoupon} </if></b></p>
+		</div>
+	</li>
+	<li>
+		<a  class="kefu-font" <if condition="empty($userId['user_name'])">href='{:U('public/login')}'<else/>href='javascript:;' onclick='easemobim.bind({
+        //请使用自己的租户ID
+         tenantId: "39449",
+         //是否隐藏小的悬浮按钮
+         hide: true
+        })'</if>>客服</a>
+		<div class="userTips one">
+
+		</div>
+	</li>
+	<li>
+		物流
+		<div class="userTips one">
+			<iframe name="kuaidi100" src="https://www.kuaidi100.com/frame/app/index.html?canvas_pos=600" width="600" height="360" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"></iframe>
+
+		</div>
+	</li>
+	<li>
+		<a href="{:U('Cart/goods')}" class="kefu-font">购物车</a>
+	</li>
+	<li><a  class="kefu-font" <if condition="empty($userId['user_name'])">href='{:U('public/login')}'<else/>href='javascript:;' onclick='easemobim.bind({
+        //请使用自己的租户ID
+         tenantId: "39449",
+         //是否隐藏小的悬浮按钮
+         hide: true
+        })'</if>>投诉</a>
+		<div class="userTips one">
+
+		</div>
+	</li>
+		<script>
+				window.easemobim = window.easemobim || {};
+				var trueName = "<if condition="!empty($userId['user_name'])">{$userId.user_name}<else/>''</if>";
+				easemobim.config = {
+					//访客信息，以下参数支持变量
+					visitor: {
+						trueName:trueName,
+						qq: '',
+						phone:trueName,
+						companyName: '',
+						userNickname:trueName,
+						description: '',
+						email: ''
+					},
+				};
+			</script>
+			<script src='//kefu.easemob.com/webim/easemob.js'></script>
+	<li>关闭</li>
+</ul>
+<!--一键到顶-->
+<div class="hm-go-top-parent">
+	<div class="hm-go-top active"></div>
+	<div class="hm-tit-top">顶部</div>
+</div>
+
+
+<!--尾部-->
+<div class="public-footer">
+	<div class="public-footer-top clearfix">
+		<ul class="code clearfix fl">
+			<li class="code-fl fl">
+				<img width="102" height="102" src="{$init_qr_code}" alt="二维码">
+				<p>亿速网络官方微信服务号 扫一扫，享更多优惠</p>
+			</li>
+			<li class="code-fr fl">
+				<p class="active">{$intnet_phone}</p>
+				<p>工作日(9:00-18:00)</p>
+			</li>
+		</ul>
+		<div class="footer007 fl clearfix">
+			<foreach name="article_lists" item="article_list">
+				<dl class="fl">
+					<dt>{$key|msubstr=0,5}</dt>
+					<foreach name="article_list" item="article">
+						<dd>
+							<a href="{:U('Article/articleDetails',['id'=>$article['id']])}">{$article.name|msubstr=0,8}</a>
+						</dd>
+					</foreach>
+				</dl>
+			</foreach>
+		</div>
+	</div>
+	<div class="footer009">
+		<img class="lazy" src="__IMG__/footer.png" data-original="__IMG__/footer.png" alt="">
+	</div>
+	<div class="footer10">
+		<a href="http://test.shopsn.net">上海XXXXXXXX公司</a>
+	</div>
+	<div class="footer10">
+		<a href="javascript:;">关于我们</a>|
+		<a href="javascript:;">联系我们</a>|
+		<a href="javascript:;">加盟我们</a>|
+		<a href="javascript:;">商城APP</a>|
+		<a href="javascript:;">友情链接</a>
+	</div>
+	<div class="footer11">
+		<a href="javascript:;"><img class="lazy" data-original="__IMG__/1.jpg" src="__IMG__/1.jpg" alt=""></a>
+		<a href="javascript:;"><img class="lazy" data-original="__IMG__/2.jpg" src="__IMG__/2.jpg" alt=""></a>
+		<a href="javascript:;"><img class="lazy" data-original="__IMG__/3.jpg" src="__IMG__/3.jpg" alt=""></a>
+		<a href="javascript:;"><img class="lazy" data-original="__IMG__/4.jpg" src="__IMG__/4.jpg" alt=""></a>
+		<a href="javascript:;"><img class="lazy" data-original="__IMG__/5.jpg" src="__IMG__/5.jpg" alt=""></a>
+		<a href="javascript:;"><img class="lazy" data-original="__IMG__/6.jpg" src="__IMG__/6.jpg" alt=""></a>
+		<a href="javascript:;"><img class="lazy" data-original="__IMG__/7.jpg" src="__IMG__/7.jpg" alt=""></a>
+		<a href="javascript:;"><img class="lazy" data-original="__IMG__/8.jpg" src="__IMG__/8.jpg" alt=""></a>
+		<a href="javascript:;"><img class="lazy" data-original="__IMG__/9.jpg" src="__IMG__/9.jpg" alt=""></a>
+		<a href="javascript:;"><img class="lazy" data-original="__IMG__/10.jpg" src="__IMG__/10.jpg" alt=""></a>
+	</div>
+
+	<div class="footer10">
+		<span>{$str}提供技术支持</span>
+	</div>
+	<div class="footer10">
+		<a href="http://test.shopsn.net">Powed by ShopsN © 全网电商系统 版权所有
+			保留一切权利{$intnet_phone}</a>
+	</div>
+
+</div>
+<script type="text/javascript">
+var AREA_LIST_CITY = "{:U('getList')}";
+</script>
+<script src="__JS__/header.js"></script>
+<script src="__JS__/home.js"></script>
+
+</body>
+</html>

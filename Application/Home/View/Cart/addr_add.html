@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+    <title>编辑地址</title>
+    <link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+    
+
+    <style>
+        #layui-layer1{
+            top: 60px !important;
+        }
+
+    </style>
+<body >
+<form name='register'>
+<div class="list">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details">
+        <tbody>
+        <tr>
+            <td><div align="right">收货人：</div></td>
+            <td>
+                <input type="text" name="realname" id="realname" size="24" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td width="25%"><div align="right">所在地区：</div></td>
+            <td width="75%">
+               <span class="userAddItem"  id="userAddItem" style="color:#ABAEBB;">
+                    <select class="prov"  id="prov"   name="prov"  class="address_add"></select>
+                    <select class="city"  id="city"  name="city" disabled="disabled" class="address_add"></select>
+                    <select class="dist" id="dist"   name="dist" disabled="disabled" class="address_add"></select>
+              </span>
+            </td>
+        </tr>
+        <tr>
+            <td><div align="right">详细地址：</div></td>
+            <td><input type="text" name="address" id="address" size="24" value="" /></td>
+        </tr>
+        <tr>
+            <td><div align="right">手机号：</div></td>
+            <td><input type="text" name="mobile" id="mobile" size="24" value="" /></td>
+        </tr>
+        <tr>
+            <td><div align="right">设置成默认：</div></td>
+            <td><input type="checkbox" name="status" id="status" value="1"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="footer">
+        <button type="button" class="button" id="button" style="min-width:160px;" onclick="information_add({$user_id});"> 提 交</button>
+    </div>
+</div>
+</form>
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Mobile/js/jquery.cityselect.js" type="text/javascript" style="border:0;"></script>
+    <script>
+        $(function(){
+            $("#userAddItem").citySelect({
+                url:"__PUBLIC__/Mobile/js/city.min.js",
+                prov: "",//默认值  可写可不写
+                city: "",
+                dist: "",
+                nodata: "none"
+            });
+        });
+    </script>
+    <script>
+        function information_add(id){
+            var realname = $('#realname').val();
+            if(realname==''){
+                layer.msg('收货人不能为空');
+                return false;
+            }
+            var address = $('#address').val();
+            if(address==''){
+                layer.msg('详细地址不能为空');
+                return false;
+            }
+            var mobile = $('#mobile').val();
+            if(mobile==''){
+                layer.msg('手机号不能为空');
+                return false;
+            }
+            var reg = /^1[34578]\d{9}$/;
+            if(!reg.test(mobile)){
+                layer.msg('手机号填写不正确');
+                return false;
+            }
+            var prov = $('#prov').val();
+            var city = $('#city').val();
+            var dist = $('#dist').val();
+            if($('#status').is(':checked')){
+                var status = 1;
+            }else{
+                var status=0;
+            }
+            $.ajax({
+                type: "POST",
+                url: "{:U('Cart/addr_add')}",
+                data: {user_id:id,realname:realname,address:address,mobile:mobile,prov:prov,city:city,dist:dist,status:status},
+                dataType:'json',
+                success: function(msg){
+                    if(msg==1){
+                       // layer.msg('地址添加成功');
+                        layer.msg('地址添加成功', {
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            parent.location.href="{:U('Cart/before_order')}";
+                        });
+                    }else{
+                        layer.msg('地址添加失败');
+                    }
+                }
+            });
+
+        }
+    </script>
+
+</body>
+</html>

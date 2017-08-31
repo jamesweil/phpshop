@@ -1,0 +1,123 @@
+<extend name="Public/publicHTML" />
+
+
+<block name='content'>
+
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+<section class="content">
+	<!-- Main content -->
+	<!--<div class="container-fluid">-->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i> 用户信息
+					</h3>
+				</div>
+				<div class="panel-body">
+					<form action="{:U('saveDetail')}" method="post">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<td class="col-sm-2">会员昵称:</td>
+									<td><input type="text" class="form-control"
+										name="{$userModel::$userName_d}" value="{$data[$userModel::$userName_d]}"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>用户积分:</td>
+									<td>{$data[$userModel::$integral_d]} 
+										<span class="user_edit">账户余额：{$data[$balanceModel::$accountBalance_d]}</span>
+										<span class="user_edit">账户锁定余额：{$data[$balanceModel::$lockBalance_d]}</span>
+									</td>
+									<td></td>
+								</tr>
+
+								<tr>
+									<td>邮件地址:</td>
+									<td><input type="text" class="form-control" name="{$userModel::$email_d}"
+										value="{$data[$userModel::$email_d]}"></td>
+									<td>电子邮箱</td>
+								</tr>
+								
+								<tr>
+									<td>性别:</td>
+									<td id="order-status">
+										{$data[$userModel::$sex_d]}
+									</td>
+									
+								</tr>
+								
+								<tr>
+									<td>手机:</td>
+									<td><input type="text" class="form-control" name="{$userModel::$mobile_d}"
+										value="{$data[$userModel::$mobile_d]}"></td>
+									<td></td>
+								</tr>
+								
+								<tr>
+									<td>新密码:</td>
+									<td><input type="password" class="form-control" name="{$userModel::$password_d}[]"
+										value=""></td>
+									<td></td>
+								</tr>
+								
+								<tr>
+									<td>再次输入密码:</td>
+									<td><input  type="password" class="form-control" name="{$userModel::$password_d}[]"
+										value=""></td>
+									<td></td>
+								</tr>
+								
+								
+								<if condition="!empty($data[$userModel::$memberStatus_d]) && ($data[$userModel::$memberStatus_d] == 1 || $data[$userModel::$memberStatus_d] == 2)">
+									<tr>
+										<td>折扣率:</td>
+										<td><input type="text" class="form-control" name="{$userModel::$memberDiscount_d}" 
+												   onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" 
+												   onpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+												   value="{$data[$userModel::$memberDiscount_d]}">
+										</td>
+										<td></td>
+									</tr>
+								</if>
+								<tr>
+									<td>冻结用户:</td>
+									<td><input name="{$userModel::$status_d}" type="radio" value="0"
+									<if condition="$data[$userModel::$status_d] eq 0">checked</if> >是 <input
+										name="{$userModel::$status_d}" type="radio" value="1"
+									<if condition="$data[$userModel::$status_d] eq 1">checked</if> >否</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>注册时间:</td>
+									<td>
+										{$data[$userModel::$createTime_d]|date='Y-m-d H:i',###}
+										<input type="hidden" name="{$userModel::$id_d}" value="{$data[$userModel::$id_d]}"/>
+									</td>
+									<td></td>
+								</tr>
+
+								<tr>
+									<td></td>
+									<td>
+										<button type="submit" class="btn btn-info">
+											<i class="ace-icon fa fa-check bigger-110"></i> 保存
+										</button> 
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.content -->
+</section>
+</block>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+</head>
+<body>
+  <table width="100%" border="0" class="list_table">
+	  <tr>
+	  <input type="hidden" id="id" value="{$result.id}">
+	    <td width="36%" height="75"><div align="right">快递公司：</div></td>
+	    <td width="64%">
+	    	<select name="kuaidi_name" id="kuaidi_name" style="width:150px;">
+	    		<option value="">----------------------</option>
+	    		<option value="shunfeng">顺丰速递</option>
+	    		<option value="ems">邮政EMS</option>
+	    		<option value="yuantong">圆通快递</option>
+	    		<option value="shentong">申通快递</option>
+	    		<option value="zhaijisong">宅急送</option>
+	    		<option value="yunda">韵达快递</option>
+	    		<option value="zhongtong">中通快递</option>
+	    		<option value="tiantian">天天快递</option>
+	    		<option value="huitongkuaidi">百世汇通</option>
+	    	</select>
+	    </td>
+      </tr>
+	  <tr>
+	    <td height="57"><div align="right">快递单号：</div></td>
+	    <td><input type="text" id="kuaidi_num" style="width:147px;"></td>
+      </tr>
+  </table>
+	 <div class="footer">
+	 <button class="button" style="min-width:160px;">确定</button></div>
+	 <script>
+	 $(function(){
+	 	$('.button').click(function(){
+	 		var id = $('#id').val();
+	 		var kuaidi_name = $('#kuaidi_name').val();
+	 		var kuaidi_num = $('#kuaidi_num').val();
+	 		if(kuaidi_name == ""){
+	 			layer.tips('请选择快递公司','#kuaidi_name');
+	 			return false;
+	 		}
+	 		if(kuaidi_num == ""){
+	 			layer.tips('请输入单号','#kuaidi_num');
+	 			return false;
+	 		}
+	 		$.ajax({
+	 			type:"POST",
+	 			data:"id="+id+"&kuaidi_name="+kuaidi_name+"&kuaidi_num="+kuaidi_num,
+	 			url:"{:U('Goods/kuaidi_add')}",
+	 			success:function(msg){
+	 				console.log(msg);
+	 				if(msg == 1){
+	 					parent.layer.msg('操作成功', { icon: 1, time: 1000 },function(){
+							window.parent.iframe.location.href = "{:U('Goods/orders_list')}";
+			                var index = parent.layer.getFrameIndex(window.name);
+			                parent.layer.close(index); //再执行关闭
+						});
+	 				}else{
+	 					parent.layer.msg('操作失败', {icon: 2, time: 2000 }); 
+	 				}
+	 			}
+	 		});
+	 	});
+	 })
+
+	 </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<extend name="Public/publicHTML" />
+
+
+<block name='content'>
+
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+<div class="wrapper">
+	<section class="content">
+		<!-- Main content -->
+		<!--<div class="container-fluid">-->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<i class="fa fa-list"></i> 用户信息
+						</h3>
+					</div>
+					<div class="panel-body">
+						<form id="formData" method="post">
+							<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<td class="col-sm-2">会员昵称:</td>
+										<td>{$data[$userModel::$userName_d]}</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>公司名称:</td>
+										<td>{$data[$approvalModel::$companyName_d]}</td>
+										<td></td>
+									</tr>
+
+									<tr>
+										<td>详细地址:</td>
+										<td>{$data[$approvalModel::$provId_d]}、{$data[$approvalModel::$city_d]}、{$data[$approvalModel::$dist_d]}、{$data[$approvalModel::$address_d]}</td>
+										<td></td>
+									</tr>
+
+									<tr>
+										<td>联系方式:</td>
+										<td id="order-status">
+											{$data[$approvalModel::$applytel_d]}</td>
+									</tr>
+
+									<tr>
+										<td>申请人名字:</td>
+										<td>{$data[$approvalModel::$applyName_d]}</td>
+										<td></td>
+									</tr>
+
+									<tr>
+										<td>负责人名字:</td>
+										<td>{$data[$approvalModel::$responName_d]}</td>
+										<td></td>
+									</tr>
+
+									<tr>
+										<td>负责人手机:</td>
+										<td>{$data[$approvalModel::$respontel_d]}</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>备注</td>
+										<td>{$data[$approvalModel::$remarks_d]}</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>预计每月采购办公用品金额:</td>
+										<td>{$estimate[$data[$approvalModel::$estimate_d]]}</td>
+									</tr>
+										<tr id="have" class="hidden">
+											<td>有效期:</td>
+											<td><input type="text" class="form-control w380"
+												value="{$data[$approvalUser::$beOverdue_d]}"
+												name="{$approvalUser::$beOverdue_d}"
+												onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+												onpaste="this.value=this.value.replace(/[^\d.]/g,'')" /> <span
+												id="err_d_integral" class="rxd">按天计算</span>
+											</td>
+										</tr>
+									<tr>
+										<td>是否通过:</td>
+										<td>
+											<select name="{$approvalModel::$status_d}" onchange="ChangeEvent.changeData(this, 'have')">
+												<foreach name="statusApproval" key='key' item='value'>
+													<option value="{$key}" <if condition="$data[$approvalModel::$status_d] == $key">selected="selected"</if> >{$value}</option>
+												</foreach>
+											</select>
+										 <input type="hidden" name="{$approvalModel::$id_d}" value="{$data[$approvalModel::$id_d]}" />
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td>
+											<button type="button" class="btn btn-info" onclick="Tool.ajaxToFormArray('formData', '{:U('approvalUser')}')">
+												<i class="ace-icon fa fa-check bigger-110"></i> 保存
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /.content -->
+	</section>
+</div>
+<script type="text/javascript" src="__COMMON__/js/jquery-form.js"></script>
+<script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script>
+<script type="text/javascript" src="__JS__/user/approval.js?a={:time()}"></script>
+</block>

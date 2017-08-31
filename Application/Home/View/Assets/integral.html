@@ -1,0 +1,72 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr intgl-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl <if condition="$type eq '1'">hover</if>"><a href="{:U('Assets/integral')}">积分明细</a></li>
+					<li class="fl <if condition="$type eq '2'">hover</if>"><a href="{:U('Assets/integral_use')}">积分收入</a></li>
+					<li class="fl <if condition="$type eq '3'">hover</if>active"><a href="{:U('Assets/integral_expen')}">积分支出</a></li>
+				</ul>
+			</div>
+			<div class="content-main">
+				<div class="data-wrap">
+					<ul class="data clearfix">
+						<li class="fl right">
+							<h2>可用的积分</h2>
+							<h3>{$integral.integral}</h3>
+						</li>
+						<li class="fl center">
+							<h2>将要过期的积分</h2>
+							<h3>{$integral.overdue_integral}</h3>
+							<p>(将于{$integral.overdue|date="Y.m.d",###}过期)</p>
+						</li>
+						<li class="fl left">
+							<a href="{:U('Assets/punkte')}" class="btn">兑换超值商品</a>
+						</li>
+					</ul>
+				</div>
+				<dl class="content">
+					<dt class="clearfix">
+						<span class="fl angaben">来源/用途</span>
+						<span class="fl variable">积分变化</span>
+						<span class="fl timer">日期</span>
+						<span class="fl anm">备注</span>
+					</dt>
+					<volist name="data" id="vo">
+						<dd class="clearfix">
+                           
+							<div class="products-description clearfix fl">
+								<div class="fl screenshot">
+									<img src="{$vo.images}">
+								</div>
+								<div class="fl left-main">
+									<p>{$vo.title}</p>
+									<span>编号：{$vo.goods_id}</span>
+								</div>
+							</div>
+                            <if condition="$vo.type eq 1">
+								<div class="variable fl">+{$vo.integral}</div>
+							<else/>
+								<div class="variable fl">-{$vo.integral}</div>
+							</if>
+							<div class="timer fl">{$vo.trading_time|date="Y年m月d日 H:i:s",###}</div>
+							<div class="anm fl">{$vo.remarks}</div>
+						</dd>
+					</volist>
+				</dl>
+				<div class="page">{$page}</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+		<!--尾部-->
+<!-- <script src="__JS__/header.js"></script> -->
+<script src="__JS__/Calendar.js"></script>
+</block>

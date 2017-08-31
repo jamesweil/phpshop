@@ -1,0 +1,64 @@
+  <!--二级导航-->
+    <div class="homeNavBar">
+        <div class="w clearfix">
+            <dl class="fl level">
+                <dt class="clearfix">
+                    <i class="fl"></i>
+                    <span class="fl">全部商品分类</span>
+                    <em class="fl"></em>
+                </dt>
+                <foreach name="goods_categories" item="top_cat">
+                    <eq name="top_cat.fid" value="0" >
+                    <dd class="menu">
+                        <div class="clearfix">
+                            <i class="fl {$top_cat.css_class}"></i>
+                            <span class="fl"><a href="{:U('Product/ProductList',['cid'=>$top_cat['id']])}">{$top_cat.class_name}</a></span>
+                            <em class="fr"></em>
+                        </div>
+                        <div class="i-mc">
+                            <ul class="clearfix classification1">
+                                <foreach name="goods_categories" item="second_cat">
+                                    <eq name="second_cat.fid" value="$top_cat.id">
+                                        <li class="fl">
+                                            <a href="{:U('Product/ProductList',['cid'=>$second_cat['id']])}">{$second_cat.class_name}</a>
+                                        </li>
+                                    </eq>
+                                </foreach>
+                            </ul>
+                            <foreach name="goods_categories" item="second_cat">
+                                <eq name="second_cat.fid" value="$top_cat.id">
+                                    <dl class="classification2 clearfix">
+                                        <dt class="fl">
+                                            <a href="{:U('Product/ProductList',['cid'=>$second_cat['id']])}">{$second_cat.class_name}&nbsp;></a>
+                                        </dt>
+                                        <foreach name="goods_categories" item="third_cat">
+                                            <eq name="third_cat.fid" value="$second_cat.id">
+                                                <dd class="fl clearfix">
+                                                    <a href="{:U('Product/ProductList',['cid'=>$third_cat['id']])}" class="fl">
+                                                        {$third_cat.class_name}
+                                                    </a>
+                                                </dd>
+                                            </eq>
+                                        </foreach>
+                                    </dl>
+                                 </eq>
+                            </foreach>
+                         </div>
+                   </dd>
+                   </eq>
+                 </foreach>
+               </dd>
+            </dl>
+        	<ul class="fl clearfix navitems-2016">
+            <li class="fl"><a href="{:U('Index/index')}">首页</a></li>
+            <foreach name="navs" item="nav">
+                <li class="fl">
+                    <a href="{$nav.link}/id/{$nav.id}.html">{$nav.nav_titile}</a>
+                    <if condition="$nav.type eq 1">
+                        <span><img src="__IMG__/new1.gif" alt=""></span>
+                    </if>
+                </li>
+            </foreach>
+        </ul>
+</div>
+</div>

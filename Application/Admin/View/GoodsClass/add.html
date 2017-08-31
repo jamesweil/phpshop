@@ -1,0 +1,134 @@
+<extend name="Public/publicHTML"/>
+<block name="nav">
+    <div class="nav">
+        <div class="nav_title">
+            <h4><img class="nav_img" src="__IMG__/tab.gif" /><span class="nav_a">商品分类添加</span></h4>
+        </div>
+    </div>
+    <br/><br/>
+</block>
+<block name="content">
+	<link rel="stylesheet"  href="__CSS__/goods/goods.css"/>
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="__COMMON__/ComboSelect/combo.select.css" />
+	<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+    <section class="content">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 商品分类详情</h3>
+                </div>
+                <div class="panel-body">
+
+                    <form method="post" action="{:U()}" enctype="multipart/form-data" autocomplete="off">
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_tongyong">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td>分类名称:</td>
+                                        <td>
+                                            <input type="text" value="" id="cate-name" name="class_name" class="form-control" style="width:400px;float:left"/>
+                                            <span class="cate-name-error">分类名称已经存在</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>上级分类：</td>
+                                        <td>
+                                          	<select name="fid" id="first" onchange="Tool.chanfeLevel(this)">
+												 <option value="0" selected="selected">请选择分类</option>
+											</select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>商品分类描述</td>
+                                        <td>
+                                            <textarea rows="3" cols="100" name="description"></textarea>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>分类图片</td>
+                                        <td>
+                                           
+                                            <input onclick="Tool.uploadify('{:C('upload_url')}/uploadNum/1/path/class/input/image/config/class_image_conf');" type="button" value="上传图片"/>
+
+                                            <input type="text" value="" name="pic_url" id="image" class="form-control large img_url" readonly="readonly"  style="width:500px;display:initial;"/>
+
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td>是否显示</td>
+                                        <td>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="hide_status" class="status" id="inlineRadio3" value="1"> 是
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="hide_status" class="status" id="inlineRadio4" value="0"> 否
+                                            </label>
+
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <input type="submit" class="btn btn-primary" data-toggle="tooltip"   data-original-title="保存" value='保存'>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript"src="__COMMON__/ComboSelect/jquery.combo.select.js"></script> 
+    <script type="text/javascript" src="__COMMON__/js/listener.js"></script>
+    <script type="text/javascript" src="__COMMON__/js/alert.js"></script>
+    <script type="text/javascript" src="__JS__/goods/search.js"></script>
+    
+    <script type="text/javascript" src="__JS__/goodsclass/goodsclass_add.js"></script>
+    <script>
+    var CLASS_GET_LIST = "{:U('getAllClass')}";
+        var status_value = [{$row1.hide_status|default=1}];
+
+        $("form").submit(function(e){
+            var cate_name = $("#cate-name").val();
+
+            if(!cate_name){
+                alert("分类名称不能为空");
+                return false;
+            }
+            if($("#cate-name").attr("error")){
+                alert("分类名称已经存在，请重新填写分类名称");
+                return false;
+            }
+        });
+       $("#cate-name").on({
+           blur:function(){
+               var cate_name = $("#cate-name").val();
+               var data = {cate_name:cate_name};
+               var url = '{:U("GoodsClass/testCatename")}';
+
+               $.getJSON(url,data,function(result){
+                    if(result.msg == 1){
+                        $(".cate-name-error").css("display","block");
+                        $("#cate-name").attr("error","xs");
+                    }
+               });
+           },
+           focus:function(){
+               $(".cate-name-error").css("display","none");
+               $("#cate-name").attr("error","")
+           }
+       });
+
+    </script>
+</block>

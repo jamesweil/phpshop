@@ -1,0 +1,45 @@
+<extend name="Public:publicHTML"/>
+<block name="content">
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/goods/zTreeStyle.css"/>
+<form class="form" onsubmit="hot_words.checkForm('.'+this.getAttribute('class'))">
+	<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details">
+        <tbody>
+	      <tr>
+	        <td><div align="right">商品分类：</div></td>
+	        <td>
+	       		<select name="goods_class_id"  class="tableHot">
+            		<option>----- 请选择商品分类 -----</option>
+	                  <foreach name="classData" item="vo">
+	            		<option value="{$vo.id}">{$vo.class_name}</option>
+	                  </foreach>
+            	</select> 
+            </td>
+          </tr>
+          
+           <tr>
+	        <td><div align="right">是否显示：</div></td>
+	        <td><select name="is_hide"  class="tableHot">
+            		<option>----- 请选择 -----</option>
+	            	<option value="1">隐藏</option>
+	            	<option value="0">显示</option>
+            	</select>
+            </td>
+          </tr>
+          
+	      <tr>
+	      	<td width="25%"><div align="right">关键词：</div></td>
+	      	<td width="75%"><input class="tableHot" type="text" name="hot_words"  value="" />
+            <span id="account_trips"> * 长度不低于1位</span>
+            </td>
+	      </tr>
+        </tbody>
+  </table>
+</div>
+</form>
+<div class="footer">
+     <button type="button" class="button" usb="{:U('add_save_hotwords')}" id="button" style="min-width:160px;" onclick="hot_words.submit('.form', this.getAttribute('usb'))">确 认</button>
+</div>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/goods/hot_words.js?a=123"></script>
+</block>
+

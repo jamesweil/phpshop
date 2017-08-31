@@ -1,0 +1,87 @@
+<extend name="Public/publicHTML"/>
+<block name="nav">
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+    <script src="__COMMON__/bootstrap/js/bootstrap.min.js"></script>
+    <div class="nav">
+        <div class="nav_title">
+            <h4><img class="nav_img" src="__IMG__/tab.gif" /><span class="nav_a">商品规格列表</span></h4>
+        </div>
+        <div class="nav_button">
+            <a href="{:U('add')}"><button class="button">+ 添加商品规格</button></a>
+        </div>
+    </div>
+    <br/><br/>
+</block>
+<block name="content">
+    <table class="table table-hover">
+        <tr align="center">
+            <td>ID</td>
+            <td>商品规格类型</td>
+            <td>规格名称</td>
+            <td>规格项</td>
+            <td>是否显示</td>
+            <td>创建时间</td>
+            <td>操作</td>
+        </tr>
+        <foreach name="rows" item="row">
+            <tr  align="center">
+                <td>{$row.id}</td>
+                <td>{$goodsType[$row['type_id']]}</td>
+                <td>{$row.name}</td>
+                <td>{$row.spec_item}</td>
+                <td>
+                    <if condition="$row.status eq 1">
+                        <img src="__IMG__/yes.gif"/>
+                        <else/>
+                        <img src="__IMG__/no.gif"/>
+                    </if>
+                </td>
+                <td>{:date('Y-m-d',$row['create_time'])}</td>
+                <td>
+                    <a href="{:U('edit',['id'=>$row['id']])}" class="btn btn-primary">编辑</a>
+                    <input type="button" class="btn btn-danger del_btn" data-id="{$row.id}" data-toggle="modal" data-target="#myModal" value="删除"/>
+                  <!--  <a href="{:U('remove',['id'=>$row['id']])}" class="btn btn-danger">删除</a>-->
+                </td>
+            </tr>
+        </foreach>
+    </table>
+    <div class="page">{$page_show}</div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">确认删除</h4>
+                </div>
+                <div class="modal-body">
+                    是否确认删除该数据,删除后不可恢复!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirm_btn">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            $(".del_btn").click(function(){
+                var id = $(this).attr('data-id');
+                $("#confirm_btn").attr("data-id",id);
+            });
+            $("#confirm_btn").click(function(){
+                 var id = $(this).attr('data-id');
+                 var url = '{:U("GoodsSpec/remove")}';
+                 data = {id:id};
+                 $.getJSON(url,data,function(data){
+                 if(data=="success"){
+                 ($(".del_btn[data-id='"+id+"']").parent().parent()).remove();
+                 }else{
+                 alert("删除失败");
+                 }
+                 });
+            });
+        });
+    </script>
+
+</block>

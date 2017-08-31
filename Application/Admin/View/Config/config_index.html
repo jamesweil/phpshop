@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/css.css">
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/Common/Layer/layer.js"></script>
+<script src="__PUBLIC__/Common/Ueditor/ueditor.config.js"></script>
+<script src="__PUBLIC__/Common/Ueditor/ueditor.all.min.js"> </script>
+<script src="__PUBLIC__/Common/Ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="__PUBLIC__/Common/uploadPreview.min.js"></script>
+<script>
+   window.onload = function () { 
+        new uploadPreview({ UpBtn: "pic_url", DivShow: "imgdiv", ImgShow: "imgShow" });
+    }
+</script>
+<script>
+    var ue = UE.getEditor('content');
+</script>
+<script>
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('.content', {
+			allowFileManager : true
+		});
+	});
+</script>
+<script>
+function check_form(){
+	var title = $('#title').val();
+	if(title == ''){
+		layer.msg('标题不能为空');
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+
+<div class="nav">
+	<div class="nav_title">
+    	<h4><img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span class="nav_a"><php>echo urldecode($_GET['menu_title']);</php></span></h4>
+    </div>
+</div>
+<form name="form3" method="post" action="__SELF__" enctype="multipart/form-data" onSubmit="return check_form();">
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details" style=" margin-top:2px;">
+      	  <tr>
+	        <td colspan="2" style=" background:#E4EEFA;"><h3 style="margin-left:50px;">一、基本信息</h3></td>
+       	  </tr>
+        <tbody>
+	      <tr>
+	        <td width="20%"><div align="right">
+	          <div align="right"><span style="color:#F00;">*</span> 标题：</div></td>
+	        <td width="80%">
+	          <input name="title" type="text" class="input" id="title" size="80" value="{$result.title}" /> <span style="color:#00F;">长度请限制在 30 字以内</span>
+            </td>
+          </tr>
+	      <tr>
+	        <td><div align="right"><span style="color:#F00;">*</span> 代表图片：</div></td>
+	        <td><span style="color:#F00;">图片尺寸请使用 （ 520 * 200 ） 像素</span>
+	           	<div id="imgdiv"><img style="position:relative;top:6px;margin-right:30px;" id="imgShow" width="300" height="100" src="__PUBLIC__/Uploads/article/{$result.pic_url}" />
+	           	<input type="file" name="pic_url" id="pic_url" /></div>   			
+            </td>
+          </tr>
+	      <tr>
+	        <td><div align="right">标签：</div></td>
+	        <td><input name="keyword" type="text" id="textfield4" class="input" size="80" value="{$result.keyword}" >
+            <span style="color:#00F;">多个标签，请用空格分隔开</span></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">描述：</div></td>
+	        <td><textarea name="description" id="description" style="width:680px; height: 100px;">{$result.description}</textarea></td>
+          </tr>
+	      <tr>
+	        <td><div align="right">内容：</div></td>
+	        <td><script id="content" class="content" name="content" type="text/plain" style="width:1000px;height:600px;">{$result.content}</script></td>
+          </tr>
+	      <tr>
+	        <td><div align="right"></div></td>
+	        <td>&nbsp;</td>
+          </tr>
+	      <tr>
+	        <td><div align="right"></div></td>
+	        <td>&nbsp;</td>
+          </tr>
+        </tbody>
+  </table> 
+</div>
+<div class="footer">
+	 <input type="hidden" name="id" value="{$result.id}" />
+     <button type="submit" class="button" id="button" style="min-width:160px;" onclick="admin_add();">保存信息</button>
+</div>
+</form> 
+</body>
+</html>

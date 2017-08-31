@@ -1,0 +1,155 @@
+<div class="clearfix active">
+	<div class="evaluate-top clearfix">
+		<div class="evaluate-top-left fl">
+			<div class="fl active">
+				<h2>{$level['level_3']['percent']|default="0"}%</h2>
+				<span>好评度</span>
+			</div>
+			<div class="fr praiseBar-parent">
+				<div class="clearfix praiseBar">
+					<span class="fl">好评(<em>{$level['level_3']['percent']|default="0"}</em>%)
+					</span>
+					<div class="fr clearfix">
+						<i class="fl"></i>
+					</div>
+				</div>
+				<div class="clearfix praiseBar">
+					<span class="fl">中评(<em>{$level['level_2']['percent']|default="0"}</em>%)
+					</span>
+					<div class="fr clearfix">
+						<i class="fl"></i>
+					</div>
+				</div>
+				<div class="clearfix praiseBar">
+					<span class="fl">差评(<em>{$level['level_1']['percent']|default="0"}</em>%)
+					</span>
+					<div class="fr clearfix">
+						<i class="fl"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<dl class="evaluate-top-right fl clearfix">
+			<dt class="fl">买家印象：</dt>
+			<dd class="fl">
+				<foreach name="feel" item="vo">
+				<q class="comm-tags"><span>{$vo['title']}</span><em>({$vo['num']})</em></q> &nbsp;
+				</foreach>
+			</dd>
+		</dl>
+	</div>
+	<div class="evaluate-bottom"></div>
+
+</div>
+<!--评价筛选-->
+<div class="evaluate-nav clearfix" id="comment-class">
+	<a href="javscript:;" class="fl <if condition='$type eq 0'>active</if> " data-type="0">全部评价<em>({$level['total']})</em></a> 
+	<a href="javscript:;" class="fl <if condition='$type eq 1'>active</if> " data-type="1">晒图<em>({$level['total_pic']|default="0"})</em></a> 
+	<a href="javscript:;" class="fl <if condition='$type eq 2'>active</if> " data-type="2">好评<em>({$level['level_3']['number']|default="0"})</em></a> 
+	<a href="javscript:;" class="fl <if condition='$type eq 3'>active</if> " data-type="3">中评<em>({$level['level_2']['number']|default="0"})</em></a> 
+	<a href="javscript:;" class="fl <if condition='$type eq 4'>active</if> " data-type="4">差评<em>({$level['level_1']['number']|default="0"})</em></a> 
+	<a href="javscript:;" class="fl <if condition='$type eq 5'>active</if> " data-type="5">只看当前商品评价</a>
+</div>
+<div class="comment-parentNode" id="comment">
+	<!--全部评论-->
+	<div class="comment-parent active">
+
+
+	<if condition='count($list) lt 1'>
+		<div style="text-align:center;line-height:100px">暂无评价~</div>
+	</if>
+
+		<foreach name="list" item="vo">
+		<div class="Consultation clearfix">
+			<div class="fl consuFloat">
+				<div class="top">
+				<?php 
+				$str = '';
+		        for ($i=0; $i<5 ; $i++) { 
+		         	if ($i < $vo['score']){
+		         		$str .= '<span class="active"> </span>';
+		         	} else {
+		         		$str .= '<span></span>';
+		         	}
+		        }
+		        echo $str;
+				 ?>
+				</div>
+				<div class="data">{$vo['create_time']|date="Y-m-d H:i", ###}</div>
+			</div>
+			<div class="fl consuCentent">
+				<div class="top">
+				<foreach name="vo['feel']" item="value">
+					<span>{$value['title']}</span>
+				</foreach>
+				</div>
+				<div class="center">{$vo['content']}</div>
+				<div class="bottom">
+					<div class="img-btn-main clearfix">
+						<foreach name="vo['images']" item="value">
+							<a href="javascript:;" class="fl"><img src="{$value['path']}" width="52" height="52"></a>
+						</foreach>
+					</div>
+					<div class="up-img">
+						<img src="{$value['path']}" width="370" height="278">
+					</div>
+				</div>
+			</div>
+			<div class="fl conRight">
+				<p>
+				<foreach name="vo['spec']" item="value">
+					<span>{$value['name']}</span> <em>{$value['item']}</em><br>
+				</foreach>
+				</p>
+				<p>
+					<span>{$vo['show_name']}</span> <if condition="$vo['anonymous'] eq 1"><em>（匿名）</em></if>
+				</p>
+			</div>
+		</div>
+		</foreach>
+		<div class="page">{$page}</div>
+	</div>
+	<!--晒图-->
+	<div class="comment-parent">
+		<div class="Consultation setto">
+			<!--图片选择-->
+			<div class="comments-showImgSwitch-thumbnails clearfix">
+				<!--左选择按钮-->
+				<a href="javscript:;" class="thumb-prevFl fl"></a>
+				<!--图-->
+				<div class="thumb-prevCentent fl">
+					<ul class="clearfix">
+					</ul>
+				</div>
+				<!--右选择按钮-->
+				<a href="javscript:;" class="thumb-prevFr fr"></a>
+			</div>
+		</div>
+		<!--详情图-->
+		<div class="details-parent">
+			<div class="" style="text-align: center;">
+				<img src="" style="height: 502px;">
+			</div>
+			<div class="details-data"></div>
+		</div>
+	</div>
+	<!--好评-->
+	<div class="comment-parent">
+	</div>
+	<!--中评-->
+	<div class="comment-parent">
+	</div>
+	<!--差评-->
+	<div class="comment-parent">
+	</div>
+	<!--当前评论-->
+	<div class="comment-parent">
+	</div>
+</div>
+
+<script>
+	
+    $('.home-section .eva-comment .productDetafr .pro-comment div.Consultation a').on('click',function(){
+        $(this).parents('.bottom').find('.up-img').show().parents('.bottom').find('.up-img img').attr('src',$(this).find('img').attr('src'));
+    });
+</script>

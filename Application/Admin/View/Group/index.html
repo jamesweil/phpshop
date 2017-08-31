@@ -1,0 +1,84 @@
+<extend name="Public/publicHTML" />
+<block name="nav"></block>
+
+
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<div class="wrapper">
+
+	<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 团购列表
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="navbar navbar-default">
+					<form action="{:U('index')}" id="conditionForm"
+						class="navbar-form form-inline" method="post" url="{:U('ajaxGetData')}">
+
+				            <div class="form-group">
+				              	<input type="text" name="{$model::$title_d}"  value="{$_POST[$model::$title_d]}" class="form-control" placeholder="搜索">
+				            </div>
+				            <button type="submit" class="btn btn-default">提交</button>
+				            <div class="form-group pull-right">
+					            <a href="{:U('addGroupBuy')}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加团购</a>
+				            </div>
+					</form>
+				</div>
+				<div>
+					<div class="table-responsive">             
+		              <table id="list-table" class="table table-bordered table-hover font_size">
+		                 <thead>
+		                   <tr role="row" align="center">
+			                   <th class="sorting"  align="center">团购标题</th>
+			                   <th class="sorting" tabindex="0">团购价</th>
+			                   <th class="sorting" tabindex="0">开始时间</th>
+			                   <th class="sorting" tabindex="0">结束时间</th>
+			                   <th class="sorting" tabindex="0">已参团</th>
+			                   <th class="sorting" tabindex="0">参团库存</th>
+			                   <th class="sorting" tabindex="0">折扣</th>
+			                   <th class="sorting" tabindex="0">操作</th>
+		                   </tr>
+		                 </thead>
+						<tbody>
+							  <if condition="!empty($data['data'])">
+								  <foreach name="data['data']" item="vo" key="k" >
+									  	<tr role="row" align="center">
+					                     <td align="center" class="sd">{$vo[$model::$title_d]}</td>
+					                     <td>{$vo[$model::$price_d]}</td>
+					                     <td>{$vo[$model::$startTime_d]|date="Y-m-d H:i:s", ###}</td>
+					                     <td>{$vo[$model::$endTime_d]|date="Y-m-d H:i:s", ###}</td>
+					                     <td>{$vo[$model::$buyNum_d]}</td>
+										 <td>{$vo[$model::$goodsNum_d]}</td>
+										 <td>{:sprintf("%.2f", $vo[$model::$price_d]/$vo[$goodsModel::$priceMember_d])*100}折</td>
+										 <td>
+					                      <!-- <a target="_blank" href="{:U('Home/Activity/group',array('id'=>$vo['goods_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a> -->
+					                      <a class="btn btn-primary" href="{:U('editGroupHtml',array('id'=>$vo[$model::$id_d]))}"><i class="fa fa-pencil"></i></a>
+					                      <a class="btn btn-danger" href="javascript:void(0)" onclick="Tool.deleteData('{:U('deleteData')}', {$vo[$model::$id_d]})"><i class="fa fa-trash-o"></i></a>
+										</td>
+					                   </tr>
+				                  </foreach>
+				               </if>
+		                   </tbody>
+		                 <tfoot>
+		                 </tfoot>
+		               </table>
+	               </div>
+	          </div>
+              <div class="row">
+              	    <div class="col-sm-6 text-left"></div>
+                    <div class="col-sm-6 text-right">{$data.page}</div>
+              </div>
+	          </div>
+			</div>
+		</div>
+	<!-- /.row -->
+</section>
+</div>
+<script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script> 
+</block>

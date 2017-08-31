@@ -1,0 +1,62 @@
+<form method="post" enctype="multipart/form-data" target="_blank"
+	id="form-order">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover font_size">
+			<thead>
+				<tr>
+					<td style="width: 1px;" class="text-center"><input
+						type="checkbox"
+						onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+					<td class="text-center cursor"><a onclick="Order.sort('conditionForm', 'order_sn_id');">订单编号</a>
+					</td>
+					<td class="text-center cursor"><a onclick="Order.sort('conditionForm', 'price_sum');">总金额</a></td>
+					<td class="text-center">状态</td>
+					<td class="text-center">收货人</td>
+					<!-- <td class="text-center">支付方式</td> -->
+					<td class="text-center">配送方式</td>
+					<td class="text-center cursor"><a onclick="Order.sort('conditionForm', 'create_time');">下单时间</a>
+					</td>
+					<td class="text-center">操作</td>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name="order.data" id="list">
+				<tr>
+					<td class="text-center"><input type="checkbox"
+						name="selected[]" value="6"> <input type="hidden"
+						name="shipping_code[]" value="flat.flat"></td>
+					<td class="text-center">{$list[$model::$orderSn_id_d]}</td>
+					<td class="text-center">{$list[$model::$priceSum_d]}</td>
+					<td class="text-center">{$orderStatus[$list[$model::$orderStatus_d]]}</td>
+					<td class="text-center">{$list.realname}:{$list.mobile}</td>
+					<td class="text-center">{$list[$expressModel::$name_d]}</td>
+					<td class="text-center">{$list[$model::$createTime_d]|date='Y-m-d H:i',###}</td>
+					<td class="text-center"><a
+						href="{:U('orderDetail',array('order_id' => $list[$model::$id_d]))}"
+						data-toggle="tooltip" title="" class="btn btn-info"
+						data-original-title="查看详情"><i class="fa fa-eye"></i></a> 
+						<if condition="($list[$model::$id_d] eq -1)">
+							<a
+								href="{:U('Admin/order/delete_order',array('order_id'=>$list[$model::$id_d]))}"
+								data-toggle="tooltip" class="btn btn-danger" title="删除"><i
+								class="fa fa-trash-o"></i></a> <else /> <a href="javascript:void(0)"
+								onclick="alert('该订单不得删除')" data-toggle="tooltip"
+								class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i></a>
+							</if>
+						</td>
+				</tr>
+				</volist>
+			</tbody>
+		</table>
+	</div>
+</form>
+<div class="row">
+	<div class="col-sm-6 text-left"></div>
+	<div class="col-sm-6 text-right">{$order.page}</div>
+</div>
+<script>
+$(".pagination a").click(function(){
+    var page = $(this).data('p');
+    Order.ajaxForMyOrder('conditionForm', page);
+});
+</script>

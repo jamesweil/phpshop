@@ -1,0 +1,60 @@
+<extend name="Public/indexPublic"/>
+
+<block name="payContent">
+	<link href="__CSS__/pay/balance.css" rel="stylesheet"/>
+    <!--头部-->
+    <div class="regiup-header w clearfix">
+        <div class="regiup-headerLeft fl clearfix">
+            <a href="javascript:;" class="logo fl">
+                <h2>{$intnetTitle}</h2>
+                <img src="{$logo_name}" widht="170" height="45" class="logo">
+            </a>
+            <h4 class="fl">我的收银台</h4>
+        </div>
+    </div>
+    <div class="customer-should-container w clearfix">
+        <div class="pull-left fl">
+            <p class="item-title"><span>订单提交成功，请您尽快付款</span> 订单号：{$order[$orderModel::$orderSn_id_d]} </p>
+            <p class="item-dd">请您在提交订单后24小时内完成支付。</p>
+        </div>
+        <div class="pull-right fr">应付金额<span>{$order[$orderModel::$priceSum_d]}</span>元</div>
+    </div>
+    <div class="w">
+    	<form action="{:U('blanceResult')}" method="post">
+	        <div class="pay-method click-tab-warp">
+	            <div class="tab-content-wrap">
+	                <div class="Paypass-warp">
+	                    <h6>余额支付密码(网站登录密码)：</h6>
+	                    <p>
+	                    	<input type="password" name="password" class="pass">
+	                    	<input type="hidden" name="{$orderModel::$priceSum_d}"  value="{$order[$orderModel::$priceSum_d]}">
+	                    	<input type="hidden" name="{$orderModel::$addressId_d}" value="{$order[$orderModel::$addressId_d]}">
+	                    	<input type="hidden" name="{$orderModel::$id_d}" value="{$order[$orderModel::$id_d]}">
+	                    </p>
+	                    <div class="btn-main">
+	                        <input type="submit" value="确认支付" class="btn">
+	                        <a href="javascript:;">返回商场</a>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+        </form>
+    </div>
+    <!--底部-->
+    <ul class="regi-footer">
+        <li>
+            <a href="javascript:;">关于我们</a>
+            <a href="javascript:;">联系我们</a>
+            <a href="javascript:;">加盟我们</a>
+            <a href="javascript:;">优胜APP</a>
+            <a href="javascript:;" class="active">友情链接</a>
+        </li>
+        <li>
+            <span>{$record_number}</span>
+            <span class="active">有任何问题请联系我们在线客服 电话：{$intnet_phone}</span>
+        </li>
+        <li>{$str}</li>
+    </ul>
+</body>
+</html>
+</block>
