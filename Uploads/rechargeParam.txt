@@ -1,0 +1,7 @@
+Array
+(
+    [order_sn_id] => 22
+    [trade_no] => 0
+    [wx_order_id] => 22
+    [type] => 1
+)
